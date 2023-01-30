@@ -15,6 +15,7 @@ const {
 } = require('../../utils/languageHelper');
 const { deleteFolder } = require('../../utils/aws/s3');
 const { getAllCompletedUnits } = require('../../utils/learnerHelper');
+const { sendEmail } = require('../../utils/emailing');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 /**
@@ -44,9 +45,9 @@ router.patch(
  */
 router.post(
   '/',
-  requireAuthentication,
+  // requireAuthentication,
   errorWrap(async (req, res) => {
-    const user = req.user;
+    const user = req.body.user;
     const courseData = req.body;
     if (!courseData.details) {
       return sendResponse(res, 404, ERR_NO_COURSE_DETAILS);
@@ -68,6 +69,28 @@ router.post(
 
     // Load and save the example units/lessons/vocab items for the course
     populateExampleData(newCourse._id);
+
+    const { admin_name, admin_email, name, alternative_name, description, translated_language, iso, glotto, location, population, link } = newCourse.details;
+
+    sendEmail(
+      undefined,
+      'obentabiayuk1@gmail.com',
+      '7000Languages: Pending Course Approval',
+      'course-confirmation',
+      {
+        admin_name,
+        admin_email,
+        name,
+        alternative_name,
+        description,
+        translated_language,
+        iso,
+        glotto,
+        location,
+        population,
+        link
+      },
+    );
 
     return sendResponse(
       res,
