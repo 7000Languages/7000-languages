@@ -4,7 +4,7 @@ import { colors } from 'theme'
 import PropTypes from 'prop-types'
 import { ScrollView, Text, Pressable } from 'native-base'
 import StyledButton from 'components/StyledButton'
-import { Ionicons, AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { Audio } from 'expo-av'
@@ -347,16 +347,16 @@ LanguageHome.defaultProps = {
   isLessonHome: false,
   languageName: '',
   languageDescription: '',
-  nextUpdate: () => { },
+  nextUpdate: () => {},
   lessonDescription: `${i18n.t('dialogue.setDescriptionPrompt')}`,
   singularItemText: '',
   pluralItemText: '',
   manageButtonText: '',
   addButtonText: '',
   manageIconName: '',
-  buttonCallback: () => { },
-  nextPageCallback: () => { },
-  addCallback: () => { },
+  buttonCallback: () => {},
+  nextPageCallback: () => {},
+  addCallback: () => {},
   data: [],
 }
 

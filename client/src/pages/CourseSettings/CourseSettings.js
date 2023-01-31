@@ -149,9 +149,13 @@ const CourseSettings = () => {
         style={styles.delete}
         variant="settings"
         title={i18n.t('dict.deleteCourse')}
-        leftIcon={
-          <MaterialCommunityIcons name="delete" color={colors.gray.dark} size={20} />
-        }
+        leftIcon={(
+          <MaterialCommunityIcons
+            name="delete"
+            color={colors.gray.dark}
+            size={20}
+          />
+        )}
         onPress={() => Alert.alert(
           i18n.t('dialogue.areYouSureDeleteCourse'),
           i18n.t('dialogue.actionCannotBeUndone'),

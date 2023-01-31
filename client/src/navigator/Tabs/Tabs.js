@@ -73,7 +73,7 @@ const TabNavigator = (navigationData) => {
             case 'Units':
               return (
                 <AntDesign
-                  name={focused ? "appstore1" : "appstore-o"}
+                  name={focused ? 'appstore1' : 'appstore-o'}
                   color={focused ? colors.gray.darker : colors.gray.dark}
                   size={20}
                   solid
@@ -82,7 +82,7 @@ const TabNavigator = (navigationData) => {
             case 'Settings':
               return (
                 <Ionicons
-                  name={focused ? "settings" : "settings-outline"}
+                  name={focused ? 'settings' : 'settings-outline'}
                   color={focused ? colors.gray.darker : colors.gray.dark}
                   size={25}
                   solid

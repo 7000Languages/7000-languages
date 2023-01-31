@@ -230,7 +230,7 @@ const Activity2 = ({ navigation }) => {
         || currentQuestionIdx >= questions.length
         || questionState === QUESTION_STATE.CORRECT
         || questions[currentQuestionIdx].options[idx].state
-        === QUESTION_STATE.INCORRECT
+          === QUESTION_STATE.INCORRECT
       ) {
         return
       }
@@ -352,12 +352,14 @@ const Activity2 = ({ navigation }) => {
     let variant = 'learner_incorrect'
 
     if (questionState === QUESTION_STATE.CORRECT) {
-      text = `${i18n.t('dict.confirm')} ${i18n.t('dict.audio')} ${selectedOptionIdx + 1
-        }`
+      text = `${i18n.t('dict.confirm')} ${i18n.t('dict.audio')} ${
+        selectedOptionIdx + 1
+      }`
       variant = 'learner_correct'
     } else if (selectedOptionIdx >= 0) {
-      text = `${i18n.t('dict.confirm')} ${i18n.t('dict.audio')} ${selectedOptionIdx + 1
-        }`
+      text = `${i18n.t('dict.confirm')} ${i18n.t('dict.audio')} ${
+        selectedOptionIdx + 1
+      }`
       variant = 'learner_in_progress'
     }
 

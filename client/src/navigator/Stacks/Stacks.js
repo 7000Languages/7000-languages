@@ -164,7 +164,7 @@ export const ActivityNavigator = () => (
     <ActivityStack.Screen
       name="Congrats"
       component={Congrats}
-      options={({ navigation }) => ({
+      options={() => ({
         title: `${i18n.t('dict.congratulations')}`,
         headerLeft: () => null,
         cardStyle: { backgroundColor: 'white' },

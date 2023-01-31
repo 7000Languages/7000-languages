@@ -455,7 +455,8 @@ const translations = {
         "Les apprenants devront saisir ce code afin de s'inscrire à votre cours.",
       startSearching:
         'Commencez à chercher des cours et de nouvelles langues à apprendre !',
-      getJoinCode: 'Le code est fourni par le créateur. Il est sensible à la casse.',
+      getJoinCode:
+        'Le code est fourni par le créateur. Il est sensible à la casse.',
     },
   },
   es: {
@@ -680,7 +681,8 @@ const translations = {
       courseSettingsChangeCode:
         'Los alumnos tendrán que introducir este código para unirse a su curso.',
       startSearching: '¡Empieza a buscar cursos y nuevos idiomas que aprender!',
-      getJoinCode: 'El código lo proporciona el creador. Distingue entre mayúsculas y minúsculas.',
+      getJoinCode:
+        'El código lo proporciona el creador. Distingue entre mayúsculas y minúsculas.',
     },
   },
 }
