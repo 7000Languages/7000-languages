@@ -13,6 +13,7 @@ import { patchVisibility, patchSecurityCode, deleteCourse } from 'api'
 import { useErrorWrap } from 'hooks'
 import PropTypes from 'prop-types'
 import i18n from 'utils/i18n'
+import { colors } from 'theme'
 
 const styles = StyleSheet.create({
   description: {
@@ -149,7 +150,7 @@ const CourseSettings = () => {
         variant="settings"
         title={i18n.t('dict.deleteCourse')}
         leftIcon={
-          <MaterialCommunityIcons name="delete" color="black" size={20} />
+          <MaterialCommunityIcons name="delete" color={colors.gray.dark} size={20} />
         }
         onPress={() => Alert.alert(
           i18n.t('dialogue.areYouSureDeleteCourse'),

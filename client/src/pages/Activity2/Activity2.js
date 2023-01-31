@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue.medium_light,
     height: 110,
     width: 110,
-    borderRadius: '100%',
+    borderRadius: 110,
     margin: 20,
     shadowColor: colors.gray.darker,
     shadowOffset: { width: 0, height: 4 },
@@ -230,7 +230,7 @@ const Activity2 = ({ navigation }) => {
         || currentQuestionIdx >= questions.length
         || questionState === QUESTION_STATE.CORRECT
         || questions[currentQuestionIdx].options[idx].state
-          === QUESTION_STATE.INCORRECT
+        === QUESTION_STATE.INCORRECT
       ) {
         return
       }
@@ -352,14 +352,12 @@ const Activity2 = ({ navigation }) => {
     let variant = 'learner_incorrect'
 
     if (questionState === QUESTION_STATE.CORRECT) {
-      text = `${i18n.t('dict.confirm')} ${i18n.t('dict.audio')} ${
-        selectedOptionIdx + 1
-      }`
+      text = `${i18n.t('dict.confirm')} ${i18n.t('dict.audio')} ${selectedOptionIdx + 1
+        }`
       variant = 'learner_correct'
     } else if (selectedOptionIdx >= 0) {
-      text = `${i18n.t('dict.confirm')} ${i18n.t('dict.audio')} ${
-        selectedOptionIdx + 1
-      }`
+      text = `${i18n.t('dict.confirm')} ${i18n.t('dict.audio')} ${selectedOptionIdx + 1
+        }`
       variant = 'learner_in_progress'
     }
 

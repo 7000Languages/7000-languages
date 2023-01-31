@@ -166,7 +166,7 @@ export const ActivityNavigator = () => (
       component={Congrats}
       options={({ navigation }) => ({
         title: `${i18n.t('dict.congratulations')}`,
-        headerLeft: () => <BackButton navigation={navigation} color="white" />,
+        headerLeft: () => null,
         cardStyle: { backgroundColor: 'white' },
       })}
     />

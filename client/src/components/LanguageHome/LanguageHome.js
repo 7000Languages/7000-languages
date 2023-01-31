@@ -101,7 +101,7 @@ const LanguageHome = ({
             >
               {languageName}
             </Text>
-            <Ionicons
+            <MaterialCommunityIcons
               style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -109,8 +109,8 @@ const LanguageHome = ({
                 marginRight: 20,
                 marginTop: 30,
               }}
-              name="ios-pencil"
-              size={24}
+              name="pencil"
+              size={30}
               color={colors.white.dark}
               onPress={nextUpdate}
             />
@@ -171,7 +171,7 @@ const LanguageHome = ({
                 <MaterialCommunityIcons
                   name="pencil"
                   color="black"
-                  size={20}
+                  size={30}
                   onPress={() => nextPageCallback(element)}
                 />
               )}
@@ -219,7 +219,7 @@ const LanguageHome = ({
           >
             {languageName}
           </Text>
-          <Ionicons
+          <MaterialCommunityIcons
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -227,8 +227,8 @@ const LanguageHome = ({
               marginRight: 20,
               marginTop: 30,
             }}
-            name="ios-pencil"
-            size={24}
+            name="pencil"
+            size={30}
             color={colors.white.dark}
             onPress={nextUpdate}
           />
@@ -347,16 +347,16 @@ LanguageHome.defaultProps = {
   isLessonHome: false,
   languageName: '',
   languageDescription: '',
-  nextUpdate: () => {},
+  nextUpdate: () => { },
   lessonDescription: `${i18n.t('dialogue.setDescriptionPrompt')}`,
   singularItemText: '',
   pluralItemText: '',
   manageButtonText: '',
   addButtonText: '',
   manageIconName: '',
-  buttonCallback: () => {},
-  nextPageCallback: () => {},
-  addCallback: () => {},
+  buttonCallback: () => { },
+  nextPageCallback: () => { },
+  addCallback: () => { },
   data: [],
 }
 
