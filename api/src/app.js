@@ -9,8 +9,14 @@ const { errorHandler, errorWrap } = require('./middleware');
 const { initDB } = require('./utils/mongo-setup');
 const { ENV_TEST } = require('./utils/constants');
 const bb = require('express-busboy');
-
+const { engine } = require('express-handlebars');
+const path = require('path')
 const app = express();
+
+// setting up views
+app.engine('hbs', engine({layoutsDir: path.resolve('./src/views'), defaultLayout: 'layouts/main-layout', extname: '.hbs'}));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(helmet());
 app.use(cors());

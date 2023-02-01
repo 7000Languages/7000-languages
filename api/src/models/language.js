@@ -22,7 +22,7 @@ const CourseDetails = new mongoose.Schema({
 });
 
 const Course = new mongoose.Schema({
-  approved: { type: Boolean, required: true },
+  approved: { type: Boolean, required: false },
   admin_id: { type: String, required: true },
   details: { type: CourseDetails, required: true },
 });

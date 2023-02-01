@@ -22,7 +22,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
  * Does a patch update a single course in the database, meaning
  * it makes changes to parts of the course specified in the request.
  */
-router.patch(
+router.post(
   '/:id',
   requireAuthentication,
   requireLanguageAuthorization,
@@ -72,12 +72,20 @@ router.post(
 
     const { admin_name, admin_email, name, alternative_name, description, translated_language, iso, glotto, location, population, link } = newCourse.details;
 
+    // build the url for approving or rejecting
+    const protocol = req.protocol
+    const host = req.hostname
+    const url = req.originalUrl
+    const port = process.env.PORT
+    const fullUrl = `${protocol}://${host}:${port}${url}`
+
     sendEmail(
       undefined,
-      'obentabiayuk1@gmail.com',
+      'app@7000.org',
       '7000Languages: Pending Course Approval',
       'course-confirmation',
       {
+        id: newCourse.id,
         admin_name,
         admin_email,
         name,
@@ -88,7 +96,8 @@ router.post(
         glotto,
         location,
         population,
-        link
+        link,
+        base_url: fullUrl
       },
     );
 
@@ -137,6 +146,64 @@ router.get(
       units: units,
     };
     return sendResponse(res, 200, 'Successfully fetched course', returnedData);
+  }),
+);
+
+/**
+ * Approve a particular course
+ */
+router.post(
+  '/approve/:id',
+  errorWrap(async (req, res) => {
+    let id = req.params.id;
+    const course = await models.Course.findByIdAndUpdate(id, {
+      approved: true,
+    });
+    course.save();
+
+    // send approval email to creator of the course
+    const { admin_email, name } = course.details;
+
+    sendEmail(
+      undefined,
+      admin_email,
+      '7000Languages: Course Approved',
+      'course-approved',
+      {
+        name,
+      },
+    );
+
+    res.render('course-approval-success', { pageTitle: 'Course approved' });
+  }),
+);
+
+/**
+ * Reject a particular course
+ */
+router.post(
+  '/reject/:id',
+  errorWrap(async (req, res) => {
+    let id = req.params.id;
+    const course = await models.Course.findByIdAndUpdate(id, {
+      approved: false,
+    });
+    course.save();
+
+    // send approval email to creator of the course
+    const { admin_email, name } = course.details;
+
+    sendEmail(
+      undefined,
+      admin_email,
+      '7000Languages: Course Reject',
+      'course-rejected',
+      {
+        name,
+      },
+      undefined
+    );
+    res.render('course-approval-success', { pageTitle: 'Course approved' });
   }),
 );
 
