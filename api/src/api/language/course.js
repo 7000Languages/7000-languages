@@ -45,7 +45,7 @@ router.post(
  */
 router.post(
   '/',
-  // requireAuthentication,
+  requireAuthentication,
   errorWrap(async (req, res) => {
     const user = req.body.user;
     const courseData = req.body;
