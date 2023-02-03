@@ -22,7 +22,7 @@ const ObjectId = require('mongoose').Types.ObjectId;
  * Does a patch update a single course in the database, meaning
  * it makes changes to parts of the course specified in the request.
  */
-router.post(
+router.patch(
   '/:id',
   requireAuthentication,
   requireLanguageAuthorization,
@@ -47,7 +47,7 @@ router.post(
   '/',
   requireAuthentication,
   errorWrap(async (req, res) => {
-    const user = req.body.user;
+    const user = req.user;
     const courseData = req.body;
     if (!courseData.details) {
       return sendResponse(res, 404, ERR_NO_COURSE_DETAILS);

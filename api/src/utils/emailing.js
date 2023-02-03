@@ -34,7 +34,7 @@ const sendEmail = async (from = '"7000Languages" <app@7000.org>', to, subject, t
 
   transporter.use('compile', hbs(handlebarsOptions))
 
-  await transporter.sendMail({
+  transporter.sendMail({
     from,
     to,
     subject,
@@ -43,12 +43,12 @@ const sendEmail = async (from = '"7000Languages" <app@7000.org>', to, subject, t
     attachments: [
       {
         filename: 'emailHeader.png',
-        path: `${process.cwd() }/src/public/images/emailHeader.png`,
+        path: `${process.cwd()}/src/public/images/emailHeader.png`,
         cid: 'emailHeaderImage',
       },
       {
         filename: 'bottomLogo.png',
-        path: `${process.cwd() }/src/public/images/bottomLogo.png`,
+        path: `${process.cwd()}/src/public/images/bottomLogo.png`,
         cid: 'bottomLogo',
       },
     ],
