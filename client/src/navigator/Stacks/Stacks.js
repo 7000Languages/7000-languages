@@ -30,9 +30,9 @@ import AppLanguage from 'pages/AppLanguage'
 import AccountInfo from 'pages/AccountInfo'
 import Congrats from 'pages/Congrats'
 import LearnerCourseSettings from 'pages/LearnerCourseSettings'
+import { useSelector } from 'react-redux'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
-import { useSelector } from 'react-redux'
 
 // ------------------------------------
 // Constants
@@ -133,7 +133,6 @@ export const ModalNavigator = () => (
 )
 
 export const ActivityNavigator = () => {
-
   const { i18n } = useSelector((state) => state.locale)
 
   return (
@@ -185,7 +184,6 @@ export const ActivityNavigator = () => {
 }
 
 export const AppSettingsNavigator = () => {
-
   const { i18n } = useSelector((state) => state.locale)
 
   return (
@@ -217,7 +215,6 @@ export const AppSettingsNavigator = () => {
 }
 
 export const HomeNavigator = ({ courseId, isContributor }) => {
-
   const { i18n } = useSelector((state) => state.locale)
 
   return (
@@ -355,7 +352,6 @@ export const HomeNavigator = ({ courseId, isContributor }) => {
 }
 
 export const SearchNavigator = () => {
-
   const { i18n } = useSelector((state) => state.locale)
 
   return (
@@ -383,7 +379,6 @@ export const SearchNavigator = () => {
 }
 
 export const SettingsNavigator = ({ initialRouteName }) => {
-
   const { i18n } = useSelector((state) => state.locale)
 
   return (

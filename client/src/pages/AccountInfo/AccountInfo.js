@@ -66,7 +66,6 @@ const AccountInfo = ({ navigation }) => {
   const { userEmail, profileUrl, userName } = useSelector((state) => state.auth)
   const { i18n } = useSelector((state) => state.locale)
 
-
   const goToAppLanguage = () => {
     navigation.navigate('AppLanguage')
   }

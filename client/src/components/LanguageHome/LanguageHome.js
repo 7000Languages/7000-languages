@@ -63,7 +63,6 @@ const LanguageHome = ({
 
   const [renderData, setRenderData] = useState(data)
 
-
   useEffect(() => {
     setRenderData(data)
   }, [data])

@@ -6,9 +6,8 @@ import { colors } from 'theme'
 import { AntDesign } from '@expo/vector-icons'
 import { ENGLISH, FRENCH, SPANISH } from 'utils/constants'
 import { storeLanguage, retrieveLanguage } from 'utils/i18n/utils'
-import * as Updates from 'expo-updates'
-import { changeAppLocale } from '../../redux/slices/locale.slice'
 import { useDispatch, useSelector } from 'react-redux'
+import { changeAppLocale } from '../../redux/slices/locale.slice'
 
 const styles = StyleSheet.create({
   root: {
@@ -39,7 +38,6 @@ const AppLanguage = () => {
 
   const dispatch = useDispatch()
   const { i18n } = useSelector((state) => state.locale)
-
 
   useEffect(() => {
     const getCurrentSavedLanguage = async () => {

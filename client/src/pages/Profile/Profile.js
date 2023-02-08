@@ -22,21 +22,20 @@ const styles = StyleSheet.create({
 })
 
 const Profile = ({ navigation }) => {
-
   const { i18n } = useSelector((state) => state.locale)
 
   return (
-  <View style={styles.root}>
-    <StatusBar barStyle="light-content" />
-    <Text style={styles.title}>{i18n.t('dict.profile')}</Text>
-    <StyledButton
-      title={i18n.t('actions.goToDetails')}
-      variant="primary"
-      onPress={() => {
-        navigation.navigate('Details', { from: 'Profile' })
-      }}
-    />
-  </View>
+    <View style={styles.root}>
+      <StatusBar barStyle="light-content" />
+      <Text style={styles.title}>{i18n.t('dict.profile')}</Text>
+      <StyledButton
+        title={i18n.t('actions.goToDetails')}
+        variant="primary"
+        onPress={() => {
+          navigation.navigate('Details', { from: 'Profile' })
+        }}
+      />
+    </View>
   )
 }
 

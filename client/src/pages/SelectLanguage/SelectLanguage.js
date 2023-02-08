@@ -13,8 +13,8 @@ import { AntDesign } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
 import { ENGLISH, FRENCH, SPANISH } from 'utils/constants'
 import { storeLanguage, getDeviceLocale } from 'utils/i18n/utils'
+import { useDispatch } from 'react-redux'
 import Logo from '../../../assets/images/landing-logo.svg'
-import { useSelector, useDispatch } from 'react-redux'
 import { changeAppLocale } from '../../redux/slices/locale.slice'
 
 const styles = StyleSheet.create({

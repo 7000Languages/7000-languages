@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { removeUserIDToken, removeUserRefreshToken } from 'utils/auth'
 
 const DrawerLogoutButton = () => {
-
   const { i18n } = useSelector((state) => state.locale)
   const dispatch = useDispatch()
   const logoutUser = async () => {

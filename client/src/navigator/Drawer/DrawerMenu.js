@@ -33,7 +33,6 @@ const styles = {
 }
 
 const DrawerMenu = ({ navigation }) => {
-
   const { i18n } = useSelector((state) => state.locale)
 
   return (

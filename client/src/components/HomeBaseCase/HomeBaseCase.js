@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
   },
 })
 const HomeBaseCase = ({ navigation }) => {
-
   const { i18n } = useSelector((state) => state.locale)
 
   return (
@@ -46,9 +45,7 @@ const HomeBaseCase = ({ navigation }) => {
           <AntDesign name="search1" size={24} color={colors.white.dark} />
         }
         variant="primary_short"
-        onPress={() =>
-          navigation.navigate('Search', { screen: 'LearnerSearch' })
-        }
+        onPress={() => navigation.navigate('Search', { screen: 'LearnerSearch' })}
       />
       <View
         style={{

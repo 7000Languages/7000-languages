@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   language: languageReducer,
   app: appReducer,
-  locale: localeReducer
+  locale: localeReducer,
   // add more reducers
 })
 
@@ -30,7 +30,7 @@ const rootReducer = combineReducers({
 */
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => (__DEV__ ? [...getDefaultMiddleware({serializableCheck: false}), logger] : getDefaultMiddleware()),
+  middleware: (getDefaultMiddleware) => (__DEV__ ? [...getDefaultMiddleware({ serializableCheck: false }), logger] : getDefaultMiddleware()),
 })
 
 export default store

@@ -2,11 +2,10 @@ import React from 'react'
 import StyledButton from 'components/StyledButton'
 import PropTypes from 'prop-types'
 import { View } from 'native-base'
-import Congratulations from '../../../assets/images/congrats.svg'
 import { useSelector } from 'react-redux'
+import Congratulations from '../../../assets/images/congrats.svg'
 
 const Congrats = ({ navigation }) => {
-  
   const { i18n } = useSelector((state) => state.locale)
 
   return (

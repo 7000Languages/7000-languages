@@ -67,7 +67,6 @@ const VocabBox = ({
   height,
   notes,
 }) => {
-
   const { i18n } = useSelector((state) => state.locale)
 
   const generateImage = imageURI === '' ? null : (

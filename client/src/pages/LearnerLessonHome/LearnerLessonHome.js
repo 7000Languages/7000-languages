@@ -18,7 +18,6 @@ const LearnerLessonHome = ({ navigation }) => {
   } = useSelector((state) => state.language)
   const { i18n } = useSelector((state) => state.locale)
 
-
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')
   const [lessonName, setLessonName] = useState('')

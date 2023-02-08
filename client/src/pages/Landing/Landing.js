@@ -7,7 +7,7 @@ import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
 import { authenticate } from 'slices/auth.slice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
 import { createUser } from 'api'
@@ -17,7 +17,6 @@ import {
   redirectUri,
 } from 'utils/auth'
 import Logo from '../../../assets/images/landing-logo.svg'
-import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {

@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable no-shadow */
+
 import React, { useEffect } from 'react'
 import {
   createDrawerNavigator,
@@ -95,7 +97,6 @@ const tabColors = [
 ]
 
 const generateUnitLabel = (numUnits) => {
-
   const { i18n } = useSelector((state) => state.locale)
 
   // eslint-disable-next-line no-restricted-globals

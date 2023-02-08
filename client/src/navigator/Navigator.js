@@ -43,7 +43,7 @@ const Navigator = () => {
 
     const setAppLanguage = async () => {
       const savedLanguage = await retrieveLanguage()
-      if(savedLanguage){
+      if (savedLanguage) {
         dispatch(changeAppLocale(savedLanguage))
       }
     }
