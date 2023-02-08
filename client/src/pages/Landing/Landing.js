@@ -18,6 +18,7 @@ import {
   redirectUri,
 } from 'utils/auth'
 import Logo from '../../../assets/images/landing-logo.svg'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -51,6 +52,7 @@ WebBrowser.maybeCompleteAuthSession()
 const Landing = () => {
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
+  // const { i18n } = useSelector((state) => state.locale)
 
   /*
     Sources:

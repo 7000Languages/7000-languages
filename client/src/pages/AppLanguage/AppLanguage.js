@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { Text } from 'native-base'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
-import i18n from 'utils/i18n'
 import { colors } from 'theme'
 import { AntDesign } from '@expo/vector-icons'
 import { ENGLISH, FRENCH, SPANISH } from 'utils/constants'
 import { storeLanguage, retrieveLanguage } from 'utils/i18n/utils'
 import * as Updates from 'expo-updates'
+import { changeAppLocale } from '../../redux/slices/locale.slice'
+import { useDispatch, useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -36,6 +37,10 @@ const styles = StyleSheet.create({
 const AppLanguage = () => {
   const [language, setLanguage] = useState(ENGLISH)
 
+  const dispatch = useDispatch()
+  const { i18n } = useSelector((state) => state.locale)
+
+
   useEffect(() => {
     const getCurrentSavedLanguage = async () => {
       const savedLanguage = await retrieveLanguage()
@@ -51,11 +56,7 @@ const AppLanguage = () => {
     // Save in Async Storage
     await storeLanguage(newLanguage)
 
-    // Update actual language on the app
-    i18n.locale = newLanguage
-
-    // Reload app so the entire app has the new translations
-    await Updates.reloadAsync()
+    dispatch(changeAppLocale(newLanguage))
   }
 
   return (
