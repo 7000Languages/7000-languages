@@ -8,12 +8,12 @@ import { setField, updateNumUnits } from 'slices/language.slice'
 import { updateUnits, deleteUnit } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
-import i18n from 'utils/i18n'
 
 const ManageUnits = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
   const { allUnits, currentCourseId } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])

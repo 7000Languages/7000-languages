@@ -13,7 +13,6 @@ import { getAllUserCourses } from 'utils/languageHelper'
 import { setPersonalInfo } from 'slices/auth.slice'
 import { setField } from 'slices/language.slice'
 
-import i18n from 'utils/i18n'
 import Logo from '../../../assets/images/logo-sm-gray.svg'
 
 const styles = StyleSheet.create({
@@ -49,6 +48,7 @@ const LearnerSearch = ({ navigation }) => {
   const dispatch = useDispatch()
 
   const [allCourses, setAllCourses] = useState([])
+  const { i18n } = useSelector((state) => state.locale)
 
   const trackPromise = useTrackPromise()
 

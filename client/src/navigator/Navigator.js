@@ -13,6 +13,8 @@ import {
   ActivityNavigator,
   SearchNavigator,
 } from './Stacks'
+import { retrieveLanguage } from '../utils/i18n/utils'
+import { changeAppLocale } from '../redux/slices/locale.slice'
 
 const RootStack = createStackNavigator()
 
@@ -39,6 +41,14 @@ const Navigator = () => {
         })
     }
 
+    const setAppLanguage = async () => {
+      const savedLanguage = await retrieveLanguage()
+      if(savedLanguage){
+        dispatch(changeAppLocale(savedLanguage))
+      }
+    }
+
+    setAppLanguage()
     loadUserAuth()
   }, [])
 

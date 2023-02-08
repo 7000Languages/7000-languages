@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Text } from 'native-base'
 import { colors } from 'theme'
-import i18n from 'utils/i18n'
+import store from '../../redux/store'
+
+const { i18n } = store.getState().locale
 
 const RequiredField = ({ title, fontSize }) => (
   <Text fontSize={fontSize}>

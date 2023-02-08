@@ -10,11 +10,12 @@ import { colors, images } from 'theme'
 import { Text, Image } from 'native-base'
 import * as WebBrowser from 'expo-web-browser'
 import { AntDesign } from '@expo/vector-icons'
-import i18n from 'utils/i18n'
 import PropTypes from 'prop-types'
 import { ENGLISH, FRENCH, SPANISH } from 'utils/constants'
 import { storeLanguage, getDeviceLocale } from 'utils/i18n/utils'
 import Logo from '../../../assets/images/landing-logo.svg'
+import { useSelector, useDispatch } from 'react-redux'
+import { changeAppLocale } from '../../redux/slices/locale.slice'
 
 const styles = StyleSheet.create({
   root: {
@@ -63,6 +64,7 @@ const styles = StyleSheet.create({
 WebBrowser.maybeCompleteAuthSession()
 
 const SelectLanguage = ({ navigation }) => {
+  const dispatch = useDispatch()
   const window = useWindowDimensions()
   const [language, setLanguage] = useState(ENGLISH)
 
@@ -76,7 +78,7 @@ const SelectLanguage = ({ navigation }) => {
 
   const saveLanguage = async () => {
     await storeLanguage(language)
-    i18n.locale = language
+    dispatch(changeAppLocale(language))
     navigation.navigate('Landing')
   }
 

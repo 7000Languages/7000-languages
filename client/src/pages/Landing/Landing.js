@@ -11,7 +11,6 @@ import { useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
 import { createUser } from 'api'
-import i18n from 'utils/i18n'
 import {
   exchangeAuthCode,
   getClientIdAndClientSecret,
@@ -52,7 +51,7 @@ WebBrowser.maybeCompleteAuthSession()
 const Landing = () => {
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
-  // const { i18n } = useSelector((state) => state.locale)
+  const { i18n } = useSelector((state) => state.locale)
 
   /*
     Sources:

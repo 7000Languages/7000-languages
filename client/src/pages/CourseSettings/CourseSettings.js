@@ -12,7 +12,6 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { patchVisibility, patchSecurityCode, deleteCourse } from 'api'
 import { useErrorWrap } from 'hooks'
 import PropTypes from 'prop-types'
-import i18n from 'utils/i18n'
 import { colors } from 'theme'
 
 const styles = StyleSheet.create({
@@ -38,6 +37,8 @@ const CourseSettings = () => {
   const { currentCourseId, courseDetails } = useSelector(
     (state) => state.language,
   )
+  const { i18n } = useSelector((state) => state.locale)
+
   const [visibility, setVisibility] = useState(
     courseDetails.is_private ? 'private' : 'public',
   )

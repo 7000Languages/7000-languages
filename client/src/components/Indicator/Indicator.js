@@ -4,10 +4,12 @@ import { Text, View } from 'native-base'
 import { FontAwesome } from '@expo/vector-icons'
 import { colors } from 'theme'
 import { INDICATOR_TYPES } from 'utils/constants'
-import i18n from 'utils/i18n'
+import { useSelector } from 'react-redux'
 
 const Indicator = ({ indicatorType }) => {
   let indicatorBody = null
+
+  const { i18n } = useSelector((state) => state.locale)
 
   switch (indicatorType) {
     case INDICATOR_TYPES.COMPLETE:

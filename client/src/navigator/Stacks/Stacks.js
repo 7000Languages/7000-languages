@@ -20,7 +20,6 @@ import UpdateUnit from 'pages/UpdateUnit'
 import CourseSettings from 'pages/CourseSettings'
 import UpdateCourse from 'pages/UpdateCourse'
 import Intro from 'pages/Intro'
-import i18n from 'utils/i18n'
 import LearnerSearch from 'pages/LearnerSearch'
 import LearnerUnitHome from 'pages/LearnerUnitHome'
 import LearnerLessonHome from 'pages/LearnerLessonHome'
@@ -33,6 +32,7 @@ import Congrats from 'pages/Congrats'
 import LearnerCourseSettings from 'pages/LearnerCourseSettings'
 import BackButton from './BackButton'
 import DrawerButton from './DrawerButton'
+import { useSelector } from 'react-redux'
 
 // ------------------------------------
 // Constants
@@ -132,244 +132,287 @@ export const ModalNavigator = () => (
   </ModalStack.Navigator>
 )
 
-export const ActivityNavigator = () => (
-  <ActivityStack.Navigator screenOptions={activityNavigationProps}>
-    <ActivityStack.Screen
-      name="StartActivity"
-      component={StartActivity}
-      options={({ navigation }) => ({
-        title: i18n.t('dict.activity'),
-        headerLeft: () => <BackButton navigation={navigation} color="white" />,
-        cardStyle: { backgroundColor: colors.blue.light },
-      })}
-    />
-    <ActivityStack.Screen
-      name="Activity1"
-      component={Activity1}
-      options={({ navigation }) => ({
-        title: `${i18n.t('dict.activity')} 1`,
-        headerLeft: () => <BackButton navigation={navigation} color="white" />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-    <ActivityStack.Screen
-      name="Activity2"
-      component={Activity2}
-      options={({ navigation }) => ({
-        title: `${i18n.t('dict.activity')} 2`,
-        headerLeft: () => <BackButton navigation={navigation} color="white" />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-    <ActivityStack.Screen
-      name="Congrats"
-      component={Congrats}
-      options={() => ({
-        title: `${i18n.t('dict.congratulations')}`,
-        headerLeft: () => null,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-  </ActivityStack.Navigator>
-)
+export const ActivityNavigator = () => {
 
-export const AppSettingsNavigator = () => (
-  <SettingsStack.Navigator screenOptions={settingsNavigationProps}>
-    <SettingsStack.Screen
-      name="AccountInfo"
-      component={AccountInfo}
-      options={({ navigation }) => ({
-        title: i18n.t('actions.accountInfo'),
-        headerLeft: () => <BackButton navigation={navigation} color="black" />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-    <SettingsStack.Screen
-      name="AppLanguage"
-      component={AppLanguage}
-      options={({ navigation }) => ({
-        title: `${i18n.t('dict.language')}`,
-        headerLeft: () => <BackButton navigation={navigation} color="black" />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-  </SettingsStack.Navigator>
-)
+  const { i18n } = useSelector((state) => state.locale)
 
-export const HomeNavigator = ({ courseId, isContributor }) => (
-  <Stack.Navigator
-    initialRouteName="Home"
-    screenOptions={{
-      ...homeNavigationProps,
-      headerMode: 'screen',
-    }}
-  >
-    <Stack.Screen
-      name={courseId}
-      children={(props) => (
-        <Home {...props} courseId={courseId} isContributor={isContributor} />
-      )}
-      options={({ navigation }) => ({
-        title: i18n.t('dict.courseHome'),
-        headerLeft: () => <DrawerButton navigation={navigation} />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-    <Stack.Screen
-      name="LearnerUnitHome"
-      component={LearnerUnitHome}
-      options={({ navigation }) => ({
-        title: '',
-        headerLeft: () => <BackButton navigation={navigation} color="white" />,
-        cardStyle: { backgroundColor: 'white' },
-        headerStyle: { backgroundColor: colors.blue.medium },
-      })}
-    />
-    <Stack.Screen
-      name="UnitHome"
-      component={UnitHome}
-      options={({ navigation }) => ({
-        title: '',
-        headerLeft: () => <BackButton navigation={navigation} color="white" />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-    <Stack.Screen
-      name="LearnerLessonHome"
-      component={LearnerLessonHome}
-      options={({ navigation }) => ({
-        title: '',
-        headerLeft: () => <BackButton navigation={navigation} color="white" />,
-        cardStyle: { backgroundColor: 'white' },
-        headerStyle: { backgroundColor: colors.blue.medium },
-      })}
-    />
-    <Stack.Screen
-      name="LessonHome"
-      component={LessonHome}
-      options={({ navigation }) => ({
-        title: '',
-        headerLeft: () => <BackButton navigation={navigation} color="white" />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
+  return (
+    <ActivityStack.Navigator screenOptions={activityNavigationProps}>
+      <ActivityStack.Screen
+        name="StartActivity"
+        component={StartActivity}
+        options={({ navigation }) => ({
+          title: i18n.t('dict.activity'),
+          headerLeft: () => (
+            <BackButton navigation={navigation} color="white" />
+          ),
+          cardStyle: { backgroundColor: colors.blue.light },
+        })}
+      />
+      <ActivityStack.Screen
+        name="Activity1"
+        component={Activity1}
+        options={({ navigation }) => ({
+          title: `${i18n.t('dict.activity')} 1`,
+          headerLeft: () => (
+            <BackButton navigation={navigation} color="white" />
+          ),
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+      <ActivityStack.Screen
+        name="Activity2"
+        component={Activity2}
+        options={({ navigation }) => ({
+          title: `${i18n.t('dict.activity')} 2`,
+          headerLeft: () => (
+            <BackButton navigation={navigation} color="white" />
+          ),
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+      <ActivityStack.Screen
+        name="Congrats"
+        component={Congrats}
+        options={() => ({
+          title: `${i18n.t('dict.congratulations')}`,
+          headerLeft: () => null,
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+    </ActivityStack.Navigator>
+  )
+}
 
-    <Stack.Screen
-      name="Apply"
-      component={Apply}
-      options={({ navigation }) => ({
-        title: i18n.t('actions.becomeContributorTitle'),
-        headerStyle: { backgroundColor: colors.white.light },
-        headerTitleStyle: {
-          fontSize: 18,
-          fontFamily: 'GT_Haptik_bold',
-          color: 'black',
-        },
-        headerLeft: () => <BackButton navigation={navigation} />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-    <Stack.Screen
-      name="ManageVocab"
-      component={ManageVocab}
-      options={({ navigation }) => ({
-        ...manageNavigationProps,
-        title: i18n.t('actions.manageVocab'),
-        headerLeft: () => <BackButton navigation={navigation} />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-    <Stack.Screen
-      name="ManageUnits"
-      component={ManageUnits}
-      options={({ navigation }) => ({
-        ...manageNavigationProps,
-        title: i18n.t('actions.manageUnits'),
-        headerLeft: () => <BackButton navigation={navigation} />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-    <Stack.Screen
-      name="ManageLessons"
-      component={ManageLessons}
-      options={({ navigation }) => ({
-        ...manageNavigationProps,
-        title: i18n.t('actions.manageLessons'),
-        headerLeft: () => <BackButton navigation={navigation} />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-    <Stack.Screen
-      name="UpdateUnit"
-      component={UpdateUnit}
-      options={({ navigation }) => ({
-        ...manageNavigationProps,
-        headerLeft: () => <BackButton navigation={navigation} />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
+export const AppSettingsNavigator = () => {
 
-    <Stack.Screen
-      name="UpdateLesson"
-      component={UpdateLesson}
-      options={({ navigation }) => ({
-        ...manageNavigationProps,
-        headerLeft: () => <BackButton navigation={navigation} />,
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-  </Stack.Navigator>
-)
+  const { i18n } = useSelector((state) => state.locale)
 
-export const SearchNavigator = () => (
-  <SearchStack.Navigator
-    initialRouteName="Search"
-    screenOptions={{
-      ...learnerNavigationProps,
-      headerMode: 'screen',
-    }}
-  >
-    <SearchStack.Screen
-      name="LearnerSearch"
-      component={LearnerSearch}
-      options={({ navigation }) => ({
+  return (
+    <SettingsStack.Navigator screenOptions={settingsNavigationProps}>
+      <SettingsStack.Screen
+        name="AccountInfo"
+        component={AccountInfo}
+        options={({ navigation }) => ({
+          title: i18n.t('actions.accountInfo'),
+          headerLeft: () => (
+            <BackButton navigation={navigation} color="black" />
+          ),
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+      <SettingsStack.Screen
+        name="AppLanguage"
+        component={AppLanguage}
+        options={({ navigation }) => ({
+          title: `${i18n.t('dict.language')}`,
+          headerLeft: () => (
+            <BackButton navigation={navigation} color="black" />
+          ),
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+    </SettingsStack.Navigator>
+  )
+}
+
+export const HomeNavigator = ({ courseId, isContributor }) => {
+
+  const { i18n } = useSelector((state) => state.locale)
+
+  return (
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        ...homeNavigationProps,
+        headerMode: 'screen',
+      }}
+    >
+      <Stack.Screen
+        name={courseId}
+        children={(props) => (
+          <Home {...props} courseId={courseId} isContributor={isContributor} />
+        )}
+        options={({ navigation }) => ({
+          title: i18n.t('dict.courseHome'),
+          headerLeft: () => <DrawerButton navigation={navigation} />,
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+      <Stack.Screen
+        name="LearnerUnitHome"
+        component={LearnerUnitHome}
+        options={({ navigation }) => ({
+          title: '',
+          headerLeft: () => (
+            <BackButton navigation={navigation} color="white" />
+          ),
+          cardStyle: { backgroundColor: 'white' },
+          headerStyle: { backgroundColor: colors.blue.medium },
+        })}
+      />
+      <Stack.Screen
+        name="UnitHome"
+        component={UnitHome}
+        options={({ navigation }) => ({
+          title: '',
+          headerLeft: () => (
+            <BackButton navigation={navigation} color="white" />
+          ),
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+      <Stack.Screen
+        name="LearnerLessonHome"
+        component={LearnerLessonHome}
+        options={({ navigation }) => ({
+          title: '',
+          headerLeft: () => (
+            <BackButton navigation={navigation} color="white" />
+          ),
+          cardStyle: { backgroundColor: 'white' },
+          headerStyle: { backgroundColor: colors.blue.medium },
+        })}
+      />
+      <Stack.Screen
+        name="LessonHome"
+        component={LessonHome}
+        options={({ navigation }) => ({
+          title: '',
+          headerLeft: () => (
+            <BackButton navigation={navigation} color="white" />
+          ),
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+
+      <Stack.Screen
+        name="Apply"
+        component={Apply}
+        options={({ navigation }) => ({
+          title: i18n.t('actions.becomeContributorTitle'),
+          headerStyle: { backgroundColor: colors.white.light },
+          headerTitleStyle: {
+            fontSize: 18,
+            fontFamily: 'GT_Haptik_bold',
+            color: 'black',
+          },
+          headerLeft: () => <BackButton navigation={navigation} />,
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+      <Stack.Screen
+        name="ManageVocab"
+        component={ManageVocab}
+        options={({ navigation }) => ({
+          ...manageNavigationProps,
+          title: i18n.t('actions.manageVocab'),
+          headerLeft: () => <BackButton navigation={navigation} />,
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+      <Stack.Screen
+        name="ManageUnits"
+        component={ManageUnits}
+        options={({ navigation }) => ({
+          ...manageNavigationProps,
+          title: i18n.t('actions.manageUnits'),
+          headerLeft: () => <BackButton navigation={navigation} />,
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+      <Stack.Screen
+        name="ManageLessons"
+        component={ManageLessons}
+        options={({ navigation }) => ({
+          ...manageNavigationProps,
+          title: i18n.t('actions.manageLessons'),
+          headerLeft: () => <BackButton navigation={navigation} />,
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+      <Stack.Screen
+        name="UpdateUnit"
+        component={UpdateUnit}
+        options={({ navigation }) => ({
+          ...manageNavigationProps,
+          headerLeft: () => <BackButton navigation={navigation} />,
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+
+      <Stack.Screen
+        name="UpdateLesson"
+        component={UpdateLesson}
+        options={({ navigation }) => ({
+          ...manageNavigationProps,
+          headerLeft: () => <BackButton navigation={navigation} />,
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+    </Stack.Navigator>
+  )
+}
+
+export const SearchNavigator = () => {
+
+  const { i18n } = useSelector((state) => state.locale)
+
+  return (
+    <SearchStack.Navigator
+      initialRouteName="Search"
+      screenOptions={{
         ...learnerNavigationProps,
-        title: i18n.t('actions.search'),
-        headerLeft: () => (
-          <BackButton navigation={navigation} color={colors.white.dark} />
-        ),
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-  </SearchStack.Navigator>
-)
+        headerMode: 'screen',
+      }}
+    >
+      <SearchStack.Screen
+        name="LearnerSearch"
+        component={LearnerSearch}
+        options={({ navigation }) => ({
+          ...learnerNavigationProps,
+          title: i18n.t('actions.search'),
+          headerLeft: () => (
+            <BackButton navigation={navigation} color={colors.white.dark} />
+          ),
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+    </SearchStack.Navigator>
+  )
+}
 
-export const SettingsNavigator = ({ initialRouteName }) => (
-  <Stack.Navigator
-    initialRouteName={initialRouteName}
-    screenOptions={{
-      ...settingsNavigationProps,
-      headerMode: 'screen',
-    }}
-  >
-    <Stack.Screen
-      name="CourseSettings"
-      component={CourseSettings}
-      options={() => ({
-        title: i18n.t('dict.settings'),
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-    <Stack.Screen
-      name="LearnerCourseSettings"
-      component={LearnerCourseSettings}
-      options={() => ({
-        title: i18n.t('dict.settings'),
-        cardStyle: { backgroundColor: 'white' },
-      })}
-    />
-  </Stack.Navigator>
-)
+export const SettingsNavigator = ({ initialRouteName }) => {
+
+  const { i18n } = useSelector((state) => state.locale)
+
+  return (
+    <Stack.Navigator
+      initialRouteName={initialRouteName}
+      screenOptions={{
+        ...settingsNavigationProps,
+        headerMode: 'screen',
+      }}
+    >
+      <Stack.Screen
+        name="CourseSettings"
+        component={CourseSettings}
+        options={() => ({
+          title: i18n.t('dict.settings'),
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+      <Stack.Screen
+        name="LearnerCourseSettings"
+        component={LearnerCourseSettings}
+        options={() => ({
+          title: i18n.t('dict.settings'),
+          cardStyle: { backgroundColor: 'white' },
+        })}
+      />
+    </Stack.Navigator>
+  )
+}
 
 SettingsNavigator.propTypes = {
   initialRouteName: PropTypes.string,

@@ -8,7 +8,6 @@ import CourseHome from 'pages/CourseHome'
 import LearnerCourseHome from 'pages/LearnerCourseHome'
 import { getCourse } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
-import i18n from 'utils/i18n'
 
 const Home = ({ navigation, courseId, isContributor }) => {
   const dispatch = useDispatch()
@@ -17,6 +16,7 @@ const Home = ({ navigation, courseId, isContributor }) => {
   const trackPromise = useTrackPromise()
 
   const { currentCourseId, allCourses } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   const [courseDescription, setCourseDescription] = useState('')
   const [courseName, setCourseName] = useState('')

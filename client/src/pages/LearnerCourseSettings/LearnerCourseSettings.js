@@ -7,7 +7,6 @@ import { removeCourse } from 'slices/language.slice'
 import { Entypo } from '@expo/vector-icons'
 import { leaveCourse } from 'api'
 import PropTypes from 'prop-types'
-import i18n from 'utils/i18n'
 import { colors } from 'theme'
 
 const styles = StyleSheet.create({
@@ -31,6 +30,7 @@ const styles = StyleSheet.create({
 
 const LearnerCourseSettings = () => {
   const { currentCourseId } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   const dispatch = useDispatch()
 

@@ -10,10 +10,9 @@ import {
 import { useErrorWrap } from 'hooks'
 import { createCourse } from 'api'
 import { getAllUserCourses } from 'utils/languageHelper'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setField } from 'slices/language.slice'
 import RequiredField from 'components/RequiredField'
-import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   formBody: {
@@ -80,6 +79,7 @@ const Apply = ({ navigation }) => {
   const [link, setLink] = useState(false)
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
+  const { i18n } = useSelector((state) => state.locale)
 
   // Confirms validation of course for pressing 'Submit'
   const areRequiredFieldsFilled = name !== ''

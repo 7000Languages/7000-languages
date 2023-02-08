@@ -8,7 +8,6 @@ import { updateVocabs, setField, updateNumVocab } from 'slices/language.slice'
 import { updateVocabItems, deleteVocabItem } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
-import i18n from 'utils/i18n'
 
 const ManageVocab = ({ navigation }) => {
   const errorWrap = useErrorWrap()
@@ -16,6 +15,8 @@ const ManageVocab = ({ navigation }) => {
   const { lessonData, currentCourseId, currentLessonId } = useSelector(
     (state) => state.language,
   )
+  const { i18n } = useSelector((state) => state.locale)
+
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])
 

@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { Text } from 'native-base'
-import i18n from 'utils/i18n'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux' // import at the top of the file
 import { ACTIVITY_TYPE, TOTAL_ACTIVITIES } from 'utils/constants'
@@ -47,6 +46,7 @@ const styles = StyleSheet.create({
 
 const StartActivity = ({ navigation, route }) => {
   const { lessonData } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   const [lessonTitle, setLessonTitle] = useState('')
 

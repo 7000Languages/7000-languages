@@ -5,7 +5,7 @@ import { Text } from 'native-base'
 import { DrawerActions } from '@react-navigation/native'
 import FontIcon from 'react-native-vector-icons/FontAwesome5'
 import { colors } from 'theme'
-import i18n from 'utils/i18n'
+import { useSelector } from 'react-redux'
 
 const styles = {
   root: {
@@ -32,36 +32,41 @@ const styles = {
   },
 }
 
-const DrawerMenu = ({ navigation }) => (
-  <SafeAreaView style={styles.head}>
-    <View style={styles.root}>
-      <Text
-        style={{
-          paddingBottom: 10,
-        }}
-        fontFamily="heading"
-        fontWeight="regular"
-        fontStyle="normal"
-        color="black"
-        fontSize="25px"
-      >
-        {i18n.t('actions.myCourses')}
-      </Text>
-    </View>
-    <View>
-      <FontIcon.Button
-        name="times"
-        size={25}
-        color={colors.gray.dark}
-        backgroundColor="transparent"
-        underlayColor={colors.gray.semi_transparent}
-        onPress={() => {
-          navigation.dispatch(DrawerActions.closeDrawer())
-        }}
-      />
-    </View>
-  </SafeAreaView>
-)
+const DrawerMenu = ({ navigation }) => {
+
+  const { i18n } = useSelector((state) => state.locale)
+
+  return (
+    <SafeAreaView style={styles.head}>
+      <View style={styles.root}>
+        <Text
+          style={{
+            paddingBottom: 10,
+          }}
+          fontFamily="heading"
+          fontWeight="regular"
+          fontStyle="normal"
+          color="black"
+          fontSize="25px"
+        >
+          {i18n.t('actions.myCourses')}
+        </Text>
+      </View>
+      <View>
+        <FontIcon.Button
+          name="times"
+          size={25}
+          color={colors.gray.dark}
+          backgroundColor="transparent"
+          underlayColor={colors.gray.semi_transparent}
+          onPress={() => {
+            navigation.dispatch(DrawerActions.closeDrawer())
+          }}
+        />
+      </View>
+    </SafeAreaView>
+  )
+}
 
 DrawerMenu.propTypes = {
   navigation: PropTypes.shape({

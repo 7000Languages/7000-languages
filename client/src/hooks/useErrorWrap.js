@@ -1,7 +1,6 @@
 import { Alert } from 'react-native'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setLoading } from 'slices/app.slice'
-import i18n from 'utils/i18n'
 import { ERROR_ALERT_TITLE } from '../utils/constants'
 
 /**
@@ -16,6 +15,7 @@ const defaultErrorCallback = () => {}
 
 const useErrorWrap = () => {
   const dispatch = useDispatch()
+  const { i18n } = useSelector((state) => state.locale)
 
   const errorWrapper = async (
     func,

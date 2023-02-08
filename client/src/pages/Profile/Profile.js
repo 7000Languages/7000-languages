@@ -5,7 +5,7 @@ import {
 } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
-import i18n from 'utils/i18n'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -21,7 +21,11 @@ const styles = StyleSheet.create({
   },
 })
 
-const Profile = ({ navigation }) => (
+const Profile = ({ navigation }) => {
+
+  const { i18n } = useSelector((state) => state.locale)
+
+  return (
   <View style={styles.root}>
     <StatusBar barStyle="light-content" />
     <Text style={styles.title}>{i18n.t('dict.profile')}</Text>
@@ -33,7 +37,8 @@ const Profile = ({ navigation }) => (
       }}
     />
   </View>
-)
+  )
+}
 
 Profile.propTypes = {
   navigation: PropTypes.shape({ navigate: PropTypes.func }),

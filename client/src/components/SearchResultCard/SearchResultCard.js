@@ -4,9 +4,9 @@ import {
 import { StyleSheet, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import i18n from 'utils/i18n'
 import StyledButton from 'components/StyledButton'
 import { joinCourse } from 'api'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   privateJoinButton: {
@@ -33,6 +33,8 @@ const SearchResultCard = ({
   const [isClicked, setIsClicked] = useState(false)
   const [joinModalVisible, setJoinModalVisible] = useState(false)
   const [joinCode, setJoinCode] = useState('')
+
+  const { i18n } = useSelector((state) => state.locale)
 
   const submitJoinCourse = async () => {
     const { success, message } = await joinCourse(courseId, joinCode)
