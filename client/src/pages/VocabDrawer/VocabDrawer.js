@@ -14,7 +14,6 @@ import { RECORDING, MEDIA_TYPE } from 'utils/constants'
 import RecordAudioView from 'components/RecordAudioView'
 import { useSelector, useDispatch } from 'react-redux'
 import { addVocab, updateVocab } from 'slices/language.slice'
-import i18n from 'utils/i18n'
 import { getFileURI, deleteFileURI } from 'utils/cache'
 
 import {
@@ -74,6 +73,7 @@ const VocabDrawer = ({ navigation }) => {
     courseDetails,
     lessonData,
   } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   const [originalLanguage] = useState(courseDetails.translated_language)
   const [translatedLanguage] = useState(courseDetails.name)

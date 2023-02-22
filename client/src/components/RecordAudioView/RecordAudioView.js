@@ -5,7 +5,7 @@ import { colors } from 'theme'
 import { RECORDING } from 'utils/constants'
 import { StyleSheet, TouchableOpacity } from 'react-native'
 import { View, Text } from 'native-base'
-import i18n from 'utils/i18n'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   incompleteView: {
@@ -87,6 +87,8 @@ const RecordAudioView = ({
   const [isActive, setIsActive] = useState(false) // true if the user is recording
   const [playSeconds, setPlaySeconds] = useState(0) // keeps track of how long the recording is playing
   const [isPlayActive, setIsPlayActive] = useState(false) // true if the user is listening to the recording
+
+  const { i18n } = useSelector((state) => state.locale)
 
   // resets the audio time
   function reset() {

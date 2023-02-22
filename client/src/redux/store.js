@@ -4,7 +4,7 @@ import logger from 'redux-logger'
 import authReducer from './slices/auth.slice'
 import languageReducer from './slices/language.slice'
 import appReducer from './slices/app.slice'
-
+import localeReducer from './slices/locale.slice'
 /*
   This is the store. A store holds the whole state tree of your application.
   The only way to change the state inside it is to dispatch an action on it.
@@ -19,6 +19,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   language: languageReducer,
   app: appReducer,
+  locale: localeReducer,
   // add more reducers
 })
 
@@ -29,7 +30,7 @@ const rootReducer = combineReducers({
 */
 const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => (__DEV__ ? [...getDefaultMiddleware(), logger] : getDefaultMiddleware()),
+  middleware: (getDefaultMiddleware) => (__DEV__ ? [...getDefaultMiddleware({ serializableCheck: false }), logger] : getDefaultMiddleware()),
 })
 
 export default store

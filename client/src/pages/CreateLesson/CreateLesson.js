@@ -10,7 +10,6 @@ import { addLesson } from 'slices/language.slice'
 import { createLesson } from 'api'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
-import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   container: {
@@ -31,6 +30,8 @@ const CreateLesson = ({ navigation }) => {
   const { currentCourseId, currentUnitId } = useSelector(
     (state) => state.language,
   )
+  const { i18n } = useSelector((state) => state.locale)
+
   const [name, setName] = useState('') // the name of the lesson
   const [purpose, setPurpose] = useState('') // the purpose/description of the lesson
 

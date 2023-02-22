@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import LearnerHome from 'components/LearnerHome'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
-import i18n from 'utils/i18n'
 import { colors } from 'theme'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const LearnerCourseHome = ({ navigation, courseDescription, courseName }) => {
   const { allUnits, courseDetails } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   const dispatch = useDispatch()
 

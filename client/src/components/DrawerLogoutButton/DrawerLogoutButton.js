@@ -5,11 +5,11 @@ import { colors } from 'theme'
 import { Text } from 'native-base'
 import { logout } from 'slices/auth.slice'
 import { clear } from 'slices/language.slice'
-import { useDispatch } from 'react-redux'
-import i18n from 'utils/i18n'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeUserIDToken, removeUserRefreshToken } from 'utils/auth'
 
 const DrawerLogoutButton = () => {
+  const { i18n } = useSelector((state) => state.locale)
   const dispatch = useDispatch()
   const logoutUser = async () => {
     removeUserIDToken()

@@ -6,7 +6,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setField, resetField } from 'slices/language.slice'
 import { getLesson, downloadImageFile, downloadAudioFile } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
-import i18n from 'utils/i18n'
 import { getFileURI } from 'utils/cache'
 import { MEDIA_TYPE } from 'utils/constants'
 
@@ -17,6 +16,7 @@ const LessonHome = ({ navigation }) => {
   const {
     currentCourseId, currentLessonId, currentUnitId, lessonData,
   } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   const [data, setData] = useState([])
   const [lessonDescription, setLessonDescription] = useState('')

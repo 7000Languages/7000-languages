@@ -7,9 +7,9 @@ import StyledButton from 'components/StyledButton'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import StyledCard from 'components/StyledCard'
 import { useErrorWrap } from 'hooks'
-import i18n from 'utils/i18n'
 import VocabBox from 'components/VocabBox'
 import { Audio } from 'expo-av'
+import { useSelector } from 'react-redux'
 
 const { width } = Dimensions.get('window')
 
@@ -53,6 +53,7 @@ const LearnerHome = ({
   const errorWrap = useErrorWrap()
 
   const [renderData, setRenderData] = useState(data)
+  const { i18n } = useSelector((state) => state.locale)
 
   useEffect(() => {
     setRenderData(data)

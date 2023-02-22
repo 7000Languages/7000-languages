@@ -7,11 +7,10 @@ import Constants from 'expo-constants'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
 import { authenticate } from 'slices/auth.slice'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import { AntDesign } from '@expo/vector-icons'
 import { createUser } from 'api'
-import i18n from 'utils/i18n'
 import {
   exchangeAuthCode,
   getClientIdAndClientSecret,
@@ -51,6 +50,7 @@ WebBrowser.maybeCompleteAuthSession()
 const Landing = () => {
   const dispatch = useDispatch()
   const errorWrap = useErrorWrap()
+  const { i18n } = useSelector((state) => state.locale)
 
   /*
     Sources:

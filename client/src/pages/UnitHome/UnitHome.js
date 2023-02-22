@@ -7,7 +7,6 @@ import { setField, resetField } from 'slices/language.slice'
 import { getUnit } from 'api'
 import { useErrorWrap, useTrackPromise } from 'hooks'
 
-import i18n from 'utils/i18n'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const UnitHome = ({ navigation }) => {
@@ -21,6 +20,7 @@ const UnitHome = ({ navigation }) => {
   } = useSelector(
     (state) => state.language,
   )
+  const { i18n } = useSelector((state) => state.locale)
 
   const [data, setData] = useState([])
   const [unitDescription, setUnitDescription] = useState('')

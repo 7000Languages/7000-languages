@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
 import { Text } from 'native-base'
-import i18n from 'utils/i18n'
 import PropTypes from 'prop-types'
 import { FontAwesome } from '@expo/vector-icons'
 import { useErrorWrap } from 'hooks'
@@ -61,6 +60,7 @@ const Activity2 = ({ navigation }) => {
   const {
     lessonData, currentCourseId, currentUnitId, currentLessonId,
   } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   const [questions, setQuestions] = useState([]) // Represents a list of all questions that the user will answer for this activity
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(-1) // The current index of the question that the user is on

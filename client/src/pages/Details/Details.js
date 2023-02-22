@@ -5,7 +5,7 @@ import {
 } from 'react-native'
 import StyledButton from 'components/StyledButton'
 import { colors } from 'theme'
-import i18n from 'utils/i18n'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
 
 const Details = ({ route, navigation }) => {
   const { from } = route.params
+  const { i18n } = useSelector((state) => state.locale)
+
   return (
     <View style={styles.root}>
       <StatusBar barStyle="light-content" />

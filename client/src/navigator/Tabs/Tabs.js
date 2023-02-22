@@ -6,7 +6,6 @@ import { AntDesign, Ionicons } from '@expo/vector-icons'
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux'
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'
-import i18n from 'utils/i18n'
 import { NO_COURSE_ID } from 'utils/constants'
 import { HomeNavigator, SettingsNavigator } from '../Stacks'
 
@@ -25,6 +24,7 @@ const tabHiddenRoutes = ['Apply']
 
 const TabNavigator = (navigationData) => {
   const { currentCourseId, allCourses } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   // Determine if we are showing a Learner Course. If so, we need to hide the Settings icon
   const courseIndex = allCourses.findIndex(

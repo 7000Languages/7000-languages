@@ -3,7 +3,6 @@ import { Text, Image } from 'native-base'
 import { StyleSheet, View, TouchableOpacity } from 'react-native'
 import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
-import i18n from 'utils/i18n'
 import DrawerLogoutButton from 'components/DrawerLogoutButton'
 import { images } from 'theme'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -65,6 +64,7 @@ const styles = StyleSheet.create({
 
 const AccountInfo = ({ navigation }) => {
   const { userEmail, profileUrl, userName } = useSelector((state) => state.auth)
+  const { i18n } = useSelector((state) => state.locale)
 
   const goToAppLanguage = () => {
     navigation.navigate('AppLanguage')

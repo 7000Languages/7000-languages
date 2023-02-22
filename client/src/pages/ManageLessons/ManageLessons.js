@@ -8,12 +8,12 @@ import { setField, updateNumLessons } from 'slices/language.slice'
 import { updateLessons, deleteLesson } from 'api'
 import _ from 'lodash'
 import { INDICATOR_TYPES } from 'utils/constants'
-import i18n from 'utils/i18n'
 
 const ManageLessons = ({ navigation }) => {
   const errorWrap = useErrorWrap()
   const dispatch = useDispatch()
   const { allLessons, currentCourseId } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   const [selected, setSelected] = useState([])
   const [unselected, setUnselected] = useState([])

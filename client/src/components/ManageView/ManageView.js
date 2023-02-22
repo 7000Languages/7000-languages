@@ -16,7 +16,7 @@ import {
   DRAGGABLE_LIST_CARD_HEIGHT,
 } from 'utils/constants'
 import { moveFromList } from 'utils/manageHelper'
-import i18n from 'utils/i18n'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -78,6 +78,8 @@ const ManageView = ({
   const [unselectedData, setUnselectedData] = useState(initialUnselectedData)
   const [deletedData, setDeletedData] = useState([])
   const [shouldShowButtons, setShouldShowButtons] = useState(false)
+
+  const { i18n } = useSelector((state) => state.locale)
 
   /* Updates the data shown in the draggable list component whenever the props update */
   useEffect(() => {
@@ -383,7 +385,7 @@ const ManageView = ({
           </View>
           <Text
             fontFamily="body"
-            fontWeight="regular"
+            fontWeight="normal"
             fontSize="md"
             color="gray.medium"
           >

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import LanguageHome from 'components/LanguageHome'
 import { useSelector, useDispatch } from 'react-redux'
 import { setField } from 'slices/language.slice'
-import i18n from 'utils/i18n'
 import { INDICATOR_TYPES } from '../../utils/constants'
 
 const CourseHome = ({ navigation, courseDescription, courseName }) => {
   const { allUnits, courseDetails } = useSelector((state) => state.language)
+  const { i18n } = useSelector((state) => state.locale)
 
   const dispatch = useDispatch()
 

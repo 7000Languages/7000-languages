@@ -9,7 +9,7 @@ import StyledCard from 'components/StyledCard'
 import NumberBox from 'components/NumberBox'
 import { Audio } from 'expo-av'
 import { useErrorWrap } from 'hooks'
-import i18n from 'utils/i18n'
+import store from '../../redux/store'
 
 const { width } = Dimensions.get('window')
 
@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 })
+
+const { i18n } = store.getState().locale
 
 const LanguageHome = ({
   isLessonHome,

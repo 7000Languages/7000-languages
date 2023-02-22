@@ -10,7 +10,6 @@ import { updateSingleLesson } from 'api'
 import { useSelector, useDispatch } from 'react-redux'
 import { useErrorWrap } from 'hooks'
 import RequiredField from 'components/RequiredField'
-import i18n from 'utils/i18n'
 
 const styles = StyleSheet.create({
   container: {
@@ -36,6 +35,7 @@ const UpdateLesson = ({ navigation }) => {
   const { currentLessonId, currentCourseId, allLessons } = useSelector(
     (state) => state.language,
   )
+  const { i18n } = useSelector((state) => state.locale)
 
   const [name, setName] = useState('')
   const [purpose, setPurpose] = useState('')

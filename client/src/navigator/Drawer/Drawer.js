@@ -1,4 +1,6 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable no-shadow */
+
 import React, { useEffect } from 'react'
 import {
   createDrawerNavigator,
@@ -15,7 +17,6 @@ import { setField } from 'slices/language.slice'
 import { setPersonalInfo } from 'slices/auth.slice'
 import { useDispatch, useSelector } from 'react-redux'
 import NumberBox from 'components/NumberBox'
-import i18n from 'utils/i18n'
 import DrawerMenu from './DrawerMenu'
 import TabNavigator from '../Tabs'
 import SplitDrawerItemList from './SplitDrawerItemList'
@@ -96,6 +97,8 @@ const tabColors = [
 ]
 
 const generateUnitLabel = (numUnits) => {
+  const { i18n } = useSelector((state) => state.locale)
+
   // eslint-disable-next-line no-restricted-globals
   if (isNaN(numUnits)) {
     return numUnits
@@ -171,6 +174,8 @@ const DrawerMenuContainer = (props) => {
     state, firstRouteNames, secondRouteNames, ...rest
   } = props
   const newState = { ...state }
+
+  const { i18n } = useSelector((state) => state.locale)
 
   const navigateToSettings = () => {
     props.navigation.navigate('AppSettings', { screen: 'AccountInfo' })
@@ -275,7 +280,6 @@ const DrawerMenuContainer = (props) => {
         leftIcon={
           <FontAwesome name="user" size={20} color={colors.gray.dark} />
         }
-        style={{ marginBottom: 35 }}
         variant="settings"
         onPress={navigateToSettings}
       />

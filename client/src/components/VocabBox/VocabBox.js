@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { colors } from 'theme'
 import StyledButton from 'components/StyledButton'
-import i18n from 'utils/i18n'
+import { useSelector } from 'react-redux'
 
 const styles = StyleSheet.create({
   root: {
@@ -67,6 +67,8 @@ const VocabBox = ({
   height,
   notes,
 }) => {
+  const { i18n } = useSelector((state) => state.locale)
+
   const generateImage = imageURI === '' ? null : (
     <Box style={styles.indicator}>
       <Image
