@@ -1,11 +1,13 @@
-import { Image, Pressable, SafeAreaView, Text } from 'react-native'
 import React, { useState } from 'react'
-import styles from './Onboarding.style'
+import { Image, Pressable, SafeAreaView, Text } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { RootStackParamList } from '../../navigation/types'
-import { InitLanguageSelect } from '../../components'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Entypo } from '@expo/vector-icons'
+
+import styles from './Onboarding.style'
+
+import { RootStackParamList } from '../../navigation/types'
+import { InitLanguageSelect } from '../../components'
 
 type NavProps = NativeStackScreenProps<RootStackParamList, 'Onboarding'>
 

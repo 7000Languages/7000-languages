@@ -1,7 +1,7 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { RootStackParamList } from './types';
-import {Splash, Onboarding} from '../screens';
+import {Splash, Onboarding, Login} from '../screens';
 
 import BottomNavigator from './BottomNavigator';
 import DrawerNavigator from './DrawerNavigator';
@@ -14,7 +14,7 @@ const MainNavigator = () => {
 
   return (
     <Navigator
-      initialRouteName="Onboarding"
+      initialRouteName="Login"
       screenOptions={{
         headerShown: false,
       }}
@@ -24,6 +24,7 @@ const MainNavigator = () => {
       <Screen name="Onboarding" component={Onboarding} />
       <Screen name="DrawerNavigator" component={DrawerNavigator} />
       <Screen name="BottomNavigator" component={BottomNavigator} />
+      <Screen name="Login" component={Login} />
     </Navigator>
   );
 }
