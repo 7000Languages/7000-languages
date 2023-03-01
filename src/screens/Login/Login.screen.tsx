@@ -7,7 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import styles from './Login.style'
 
 import { RootStackParamList } from '../../navigation/types'
-import { InitLanguageSelect, PrimaryBtn } from '../../components'
+import { PrimaryBtn } from '../../components'
 
 type NavProps = NativeStackScreenProps<RootStackParamList, 'Login'>
 

@@ -5,3 +5,7 @@ export type RootStackParamList = {
     BottomNavigator: undefined
     Login: undefined
 }
+
+export type CourseStackParamList = {
+    Home: undefined
+}

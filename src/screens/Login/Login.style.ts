@@ -60,7 +60,11 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 16,
   },
-  loginBtnStyle: { backgroundColor: "#ffffff" },
+  loginBtnStyle: {
+    backgroundColor: "#ffffff",
+    position: "absolute",
+    bottom: 60,
+  },
 });
 
 export default styles;

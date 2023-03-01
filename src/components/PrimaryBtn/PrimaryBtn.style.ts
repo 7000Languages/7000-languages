@@ -8,8 +8,6 @@ const styles = StyleSheet.create({
         width: DEVICE_WIDTH * 0.8,
         borderRadius: 10,
         alignSelf: 'center',
-        position: 'absolute',
-        bottom: 40,
         justifyContent: 'center',
         alignItems : 'center',
         flexDirection: 'row'

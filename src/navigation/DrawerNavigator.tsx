@@ -9,10 +9,10 @@ const DrawerNavigator = () => {
   const { Screen, Navigator } = Drawer;
 
   return (
-    <Navigator>
+    <Navigator screenOptions={{ headerShown: false }}>
       <Screen name="BottomNavigator" component={BottomNavigator} />
     </Navigator>
   );
 };
 
-export default DrawerNavigator;
+export default DrawerNavigator; 
