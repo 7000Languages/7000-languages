@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, Pressable } from 'react-native'
+import { Text, Pressable, TouchableOpacity } from 'react-native'
 
 import styles from './InitLanguageSelect.style'
 
@@ -9,12 +9,12 @@ interface IProps {
     onPress: () => void
 }
 
-const InitLanguageSelect:React.FC<IProps> = () => {
+const InitLanguageSelect:React.FC<IProps> = ({ title, smallText, onPress }) => {
   return (
-    <Pressable style={styles.container}>
-      <Text style={styles.title}>InitLanguageSelect</Text>
-      <Text style={styles.smallText}>InitLanguageSelect</Text>
-    </Pressable>
+    <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.smallText}>{smallText}</Text>
+    </TouchableOpacity>
   )
 }
 

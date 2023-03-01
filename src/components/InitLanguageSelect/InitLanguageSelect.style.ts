@@ -3,22 +3,31 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/sizes";
 
 const styles = StyleSheet.create({
   container: {
-    width: DEVICE_WIDTH * 0.65,
-    height: DEVICE_HEIGHT * 0.23,
+    width: 216,
+    height: 150,
     backgroundColor: "#F9F9F9",
-    marginVertical: 24,
+    marginVertical: 18,
     borderRadius: 8,
-    padding: 18
+    justifyContent: 'space-around',
+    alignSelf: 'center'
   },
   title: {
     fontWeight: "800",
     fontSize: 16,
     color: "#000000",
+    position: 'absolute',
+    top: 18,
+    left: 18,
+    lineHeight: 20
   },
   smallText: {
-    fontWeight: "800",
+    fontWeight: "700",
     fontSize: 12,
     color: "#7A100E",
+    position: 'absolute',
+    bottom: 18,
+    left: 18,
+    lineHeight: 20
   },
 });
 

@@ -14,11 +14,27 @@ const styles = StyleSheet.create({
         top:0,
         left: 0
     },
+    scroll:{
+        marginTop: 150,
+        width: DEVICE_WIDTH,
+    },
     wordLogo: {
         position: 'absolute',
         zIndex: 1,
         top: StatusBarHeight + 20,
         left: 30
+    },
+    nextAndIconContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 55,
+        right: 30
+    },
+    nextText: {
+        color: '#ffffff',
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 });
 
