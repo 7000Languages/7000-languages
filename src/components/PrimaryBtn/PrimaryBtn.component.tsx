@@ -15,7 +15,7 @@ const PrimaryBtn:React.FC<IProps> = ({ onPress, style, label, leftIcon, labelSty
   return (
     <TouchableOpacity activeOpacity={0.6} style={[styles.container, style]} onPress={onPress}>
       <View style={styles.iconContainer}>{leftIcon}</View>
-      <Text style={[labelStyle]}>{label}</Text>
+      <Text style={[styles.label, labelStyle]}>{label}</Text>
     </TouchableOpacity>
   );
 }

@@ -14,6 +14,10 @@ const styles = StyleSheet.create({
     },
     iconContainer:{
         marginRight: 10
+    },
+    label:{
+        color: '#ffffff',
+        fontWeight: 'bold',
     }
 });
 

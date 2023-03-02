@@ -4,16 +4,25 @@ import { useIsFocused } from "@react-navigation/native";
 
 import styles from "./FocusAwareStatusBar.style";
 
-const FocusAwareStatusBar = (props: StatusBarProps) => {
+interface IProps extends StatusBarProps {
+  statusBackground?: boolean;
+}
+
+const FocusAwareStatusBar: React.FC<IProps> = ({
+  statusBackground,
+  ...rest
+}) => {
   const isFocused = useIsFocused();
 
-  return (
-    isFocused ? (
+  return isFocused ? (
+    statusBackground ? (
       <View style={styles.StatusBar}>
-        <StatusBar {...props} />
+        <StatusBar {...rest} />
       </View>
-    ): null
-  );
+    ) : (
+      <StatusBar {...rest} />
+    )
+  ) : null;
 };
 
 export default FocusAwareStatusBar;

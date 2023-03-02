@@ -8,4 +8,5 @@ export type RootStackParamList = {
 
 export type CourseStackParamList = {
     Home: undefined
+    BecomeContributor: undefined
 }
