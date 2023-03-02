@@ -13,7 +13,7 @@ interface IProps {
 
 const PrimaryBtn:React.FC<IProps> = ({ onPress, style, label, leftIcon, labelStyle }) => {
   return (
-    <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
+    <TouchableOpacity activeOpacity={0.6} style={[styles.container, style]} onPress={onPress}>
       <View style={styles.iconContainer}>{leftIcon}</View>
       <Text style={[labelStyle]}>{label}</Text>
     </TouchableOpacity>
