@@ -5,6 +5,7 @@ import FocusAwareStatusBar from "./FocusAwareStatusBar/FocusAwareStatusBar.compo
 import CustomInput from "./CustomInput/CustomInput.component";
 import CheckBoxText from "./CheckBoxText/CheckBoxText.component";
 import DrawerContent from "./DrawerContent/DrawerContent.component";
+import Language from "./Language/Language.component";
 
 export {
     PrimaryBtn,
@@ -13,5 +14,6 @@ export {
     FocusAwareStatusBar,
     CustomInput,
     CheckBoxText,
-    DrawerContent   
+    DrawerContent,   
+    Language
 }

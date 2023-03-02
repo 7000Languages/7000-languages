@@ -14,4 +14,5 @@ export type CourseStackParamList = {
 export type DrawerStackParamList = {
     BottomNavigator: undefined
     AccountInfo: undefined
+    Language: undefined
 }

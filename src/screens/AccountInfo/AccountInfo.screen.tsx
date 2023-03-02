@@ -47,7 +47,7 @@ const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
       <Text style={styles.settingText}>
         Here is the settings for you to manage your app.
       </Text>
-      <TouchableOpacity style={styles.languageTouch}>
+      <TouchableOpacity style={styles.languageTouch} onPress={()=>navigation.navigate('Language')}>
         <Text style={styles.languageText}>Language</Text>
         <Entypo name="chevron-thin-right" size={20} color="black" />
       </TouchableOpacity>
