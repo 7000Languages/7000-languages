@@ -10,3 +10,8 @@ export type CourseStackParamList = {
     Home: undefined
     BecomeContributor: undefined
 }
+
+export type DrawerStackParamList = {
+    BottomNavigator: undefined
+    AccountInfo: undefined
+}

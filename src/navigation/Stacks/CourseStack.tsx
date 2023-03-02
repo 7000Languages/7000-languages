@@ -10,7 +10,7 @@ const CourseStack = () => {
   const { Navigator, Screen } = Stack;
 
   return (
-    <Navigator initialRouteName="BecomeContributor" screenOptions={{ headerShown: false }}>
+    <Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
         <Screen name="Home" component={Home} />
         <Screen name="BecomeContributor" component={BecomeContributor} />
     </Navigator>

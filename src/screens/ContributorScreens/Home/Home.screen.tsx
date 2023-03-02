@@ -36,7 +36,7 @@ const Home:React.FC<NavProps> = ({ navigation }) => {
           />
           <View style={styles.divider} />
           <Text style={styles.missionStatement}>{`Our mission is to help communities\n teach, learn, and sustain their\n endangered languages.`} <Text style={{ fontWeight: 'bold' }}>{`We’d love to\n support your revitalization efforts.`}</Text></Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('BecomeContributor')}>
             <Text style={styles.becomeText}>Become a Contributor</Text>
           </TouchableOpacity>
       </View>

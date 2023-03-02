@@ -1,23 +1,30 @@
-import React from 'react'
-import { View, Text } from 'react-native'
-import { DEVICE_WIDTH } from '../../constants/sizes';
+import React from "react";
+import { View, Text, ViewStyle, TextStyle } from "react-native";
 
-import styles from './Header.style';
+import styles from "./Header.style";
 
 interface IProps {
-    title: string;
-    leftIcon?: React.ReactNode;
-    rightIcon?: React.ReactNode;
+  title: string;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
+  headerStyle?: ViewStyle;
+  headerTitleStyle?: TextStyle;
 }
 
-const Header:React.FC<IProps> = ({ title, leftIcon }) => {
+const Header: React.FC<IProps> = ({
+  title,
+  leftIcon,
+  headerStyle,
+  headerTitleStyle,
+  rightIcon,
+}) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, headerStyle]}>
       <View style={styles.leftIconContainer}>{leftIcon}</View>
-      <Text style={[styles.title, { left: DEVICE_WIDTH * 0.5 - title.length * 8.5 } ]}>{title}</Text>
-      <View style={styles.leftIconContainer}>{leftIcon}</View>
+      <Text style={[styles.title, headerTitleStyle]}>{title}</Text>
+      <View style={styles.rightIconContainer}>{rightIcon}</View>
     </View>
   );
-}
+};
 
-export default Header
+export default Header;

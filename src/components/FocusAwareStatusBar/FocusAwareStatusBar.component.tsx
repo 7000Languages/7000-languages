@@ -6,17 +6,19 @@ import styles from "./FocusAwareStatusBar.style";
 
 interface IProps extends StatusBarProps {
   statusBackground?: boolean;
+  backgroundColor?: string;
 }
 
 const FocusAwareStatusBar: React.FC<IProps> = ({
   statusBackground,
+  backgroundColor,
   ...rest
 }) => {
   const isFocused = useIsFocused();
 
   return isFocused ? (
     statusBackground ? (
-      <View style={styles.StatusBar}>
+      <View style={[styles.StatusBar, { backgroundColor }]}>
         <StatusBar {...rest} />
       </View>
     ) : (
