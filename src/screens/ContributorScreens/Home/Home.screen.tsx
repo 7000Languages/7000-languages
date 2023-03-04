@@ -9,6 +9,7 @@ import { CourseStackParamList } from '../../../navigation/types'
 import { FocusAwareStatusBar, Header, PrimaryBtn } from '../../../components'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { DrawerActions } from '@react-navigation/native'
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'Home'>
 
@@ -22,7 +23,7 @@ const Home:React.FC<NavProps> = ({ navigation }) => {
       />
       <Header
         title="Home"
-        leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={()=>{}} />}
+        leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={()=>navigation.dispatch(DrawerActions.openDrawer())} />}
       />
       <View style={styles.content}>
           <Text style={styles.welcomeText}>Welcome, Yogi</Text>

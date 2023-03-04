@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { createDrawerNavigator, DrawerContentComponentProps } from "@react-navigation/drawer";
 import BottomNavigator from "./BottomNavigator";
 import { DrawerContent } from "../components";
@@ -8,13 +8,13 @@ import { DrawerStackParamList } from "./types";
 const Drawer = createDrawerNavigator<DrawerStackParamList>();
 
 const DrawerNavigator = () => {
-
+  
   const { Screen, Navigator } = Drawer;
 
   return (
     <Navigator
       screenOptions={{ headerShown: false, drawerType: 'back' }}
-      initialRouteName='Language'
+      initialRouteName='BottomNavigator'
       // drawerContent={(props: any) => <DrawerContent {...props} />}
     >
       <Screen name="BottomNavigator" component={BottomNavigator} />
@@ -23,5 +23,6 @@ const DrawerNavigator = () => {
     </Navigator>
   );
 };
+
 
 export default DrawerNavigator; 

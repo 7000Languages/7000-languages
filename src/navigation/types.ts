@@ -16,3 +16,7 @@ export type DrawerStackParamList = {
     AccountInfo: undefined
     Language: undefined
 }
+
+export type SettingsStackParamList = {
+    Settings: undefined
+}
