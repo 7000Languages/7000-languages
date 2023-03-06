@@ -6,6 +6,7 @@ import BecomeContributor from "./ContributorScreens/BecomeContributor/BecomeCont
 import AccountInfo from "./AccountInfo/AccountInfo.screen";
 import Languages from "./Languages/Languages.screen";
 import Settings from "./ContributorScreens/Settings/Settings.screen";
+import ContributorCourse from "./ContributorScreens/ContributorCourse/ContributorCourse.screen";
 
 export {
     Splash,
@@ -14,6 +15,7 @@ export {
     AccountInfo,
     Languages,
     Settings,
+    ContributorCourse,
     
     // contributor screens
     Home,

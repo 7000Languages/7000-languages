@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { PRIMARY_COLOR } from '../../constants/colors';
 import { DEVICE_WIDTH } from '../../constants/sizes';
 
 const styles = StyleSheet.create({
@@ -6,16 +7,16 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#ffffff',
     },
     header: {
         width: DEVICE_WIDTH,
-        height: 130,
+        height: 140,
         paddingTop: 30,
         paddingHorizontal: 10,
         backgroundColor: '#DF4E47',
-        borderBottomEndRadius: 10,
-        borderBottomStartRadius: 10
+        borderBottomEndRadius: 12,
+        borderBottomStartRadius: 12
     },
     language: {
         color: '#FFFFFF',
@@ -25,7 +26,8 @@ const styles = StyleSheet.create({
     languageDescription: {
         color: 'rgba(255, 255, 255, 0.64)',
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop: 8
     },
     editIcon: {
         position: 'absolute',
@@ -34,27 +36,36 @@ const styles = StyleSheet.create({
     },
     units: {
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 18,
     },
     manageUnitsContainer: {
         flexDirection: 'row',
-        justifyContent:'space-around',
+        justifyContent:'space-between',
         alignItems: 'center',
         width: 107,
         height: 25,
+        borderRadius: 4,
         backgroundColor: '#FBEAE9',
-        marginTop: 10
+        marginTop: 10,
+        paddingHorizontal: 5,
     },
     manageUnits: {
         color: '#DF4E47',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontSize:12
     },
     unitsContainer: {
-        marginTop: 10
+        marginTop: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: DEVICE_WIDTH * 0.95 ,
+        justifyContent: 'space-between',
+        alignSelf: 'center',
+        marginBottom: 20
     },
     addUnitContainer: {
-        width: 141,
-        height: 48,
+        maxWidth: 132,
+        height: 52,
         borderRadius: 8,
         flexDirection: 'row',
         alignItems: 'center',
@@ -64,8 +75,11 @@ const styles = StyleSheet.create({
         shadowRadius: 6,
         elevation: 8,
         position: 'absolute',
-        bottom: 40,
-        right: 20
+        bottom: 25,
+        right: 10,
+        backgroundColor: '#FBEAE9',
+        justifyContent: 'space-around',
+        paddingHorizontal: 8
     },
     addUnitText: {
         color: '#DF4E47',

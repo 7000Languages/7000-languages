@@ -6,6 +6,8 @@ import CustomInput from "./CustomInput/CustomInput.component";
 import CheckBoxText from "./CheckBoxText/CheckBoxText.component";
 import DrawerContent from "./DrawerContent/DrawerContent.component";
 import Language from "./Language/Language.component";
+import CourseUnitLessonDesign from "./CourseUnitLessonDesign/CourseUnitLessonDesign.component";
+import CourseUnitLessonItem from "./CourseUnitLessonItem/CourseUnitLessonItem.component";
 
 export {
     PrimaryBtn,
@@ -15,5 +17,7 @@ export {
     CustomInput,
     CheckBoxText,
     DrawerContent,   
-    Language
+    Language,
+    CourseUnitLessonDesign,
+    CourseUnitLessonItem
 }

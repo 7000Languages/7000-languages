@@ -36,10 +36,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   divider: {
-    width: 250,
-    color: "#eee",
+    width: 255,
+    borderColor: "#C0C0C0",
     marginVertical: 40,
-    borderWidth: 0.35,
+    borderWidth: 0.5,
   },
   missionStatement: {
     textAlign: 'center',
