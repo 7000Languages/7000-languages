@@ -9,14 +9,15 @@ interface IProps {
   numOfSubItems: number;
   index?: number;
   type: "course" | "unit" | "lesson";
+  onPress?: () => void | undefined;
 }
 
-const CourseUnitLessonItem:React.FC<IProps> = ({ title, numOfSubItems, index, type }) => {
+const CourseUnitLessonItem:React.FC<IProps> = ({ title, numOfSubItems, index, type, onPress }) => {
 
   const subItemType = type == 'course' ? 'Lessons' : 'Vocab Items'
 
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress} activeOpacity={onPress !== undefined ? 0.5 : 1}>
       <View style={styles.numberContainer}>
       <Text style={styles.number}>{index}</Text>
       </View>

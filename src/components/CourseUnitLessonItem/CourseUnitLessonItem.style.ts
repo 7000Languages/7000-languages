@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     },
     numOfSubItems: {
         color: '#A4A4A4',
-        fontWeight: 'bold',
+        fontWeight: '500',
         fontSize: 14,
         marginTop: 5
        

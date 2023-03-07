@@ -1,3 +1,5 @@
+import { LessonType, UnitType } from "../@types"
+
 export type RootStackParamList = {
     Splash: undefined
     DrawerNavigator: undefined
@@ -10,6 +12,12 @@ export type CourseStackParamList = {
     Home: undefined
     BecomeContributor: undefined
     ContributorCourse: undefined
+    ContributorUnit: {
+        item?: UnitType
+    }
+    ContributorLesson: {
+        item?: LessonType
+    }
 }
 
 export type DrawerStackParamList = {

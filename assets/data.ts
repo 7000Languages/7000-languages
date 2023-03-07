@@ -10,11 +10,11 @@ export const courses: any[] = Array(50).fill(0).map(()=>{
         admin_name: faker.internet.userName(),
         admin_email: faker.internet.email(),
         name: faker.vehicle.vehicle(),
-        alternative_name: faker.name,
+        alternative_name: faker.internet.userName(),
         description: faker.datatype.string(),
         translated_language: 'English',
         population: faker.datatype.number(),
-        location: faker.address,
+        location: 'LA, Brussels',
         link: faker.datatype.string(),
         is_private: faker.datatype.boolean(),
         code: faker.datatype.number()

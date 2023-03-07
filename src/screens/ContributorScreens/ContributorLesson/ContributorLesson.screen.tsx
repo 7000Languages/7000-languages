@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
-import styles from './ContributorCourse.style'
+import styles from './ContributorLesson.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
 import { CourseUnitLessonDesign, CourseUnitLessonItem, FocusAwareStatusBar, Header } from '../../../components'
@@ -10,14 +10,10 @@ import { Feather, Ionicons } from '@expo/vector-icons'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { courses } from '../../../../assets/data'
-import { DrawerActions } from '@react-navigation/native'
-import { UnitType } from '../../../@types'
 
-type NavProps = NativeStackScreenProps<CourseStackParamList, 'ContributorCourse'>
+type NavProps = NativeStackScreenProps<CourseStackParamList, 'ContributorLesson'>
 
-const ContributorCourse:React.FC<NavProps> = ({ navigation }) => {
-
-  const goToUnitScreen = (item:UnitType) => navigation.navigate('ContributorUnit',{item})
+const ContributorLesson:React.FC<NavProps> = ({ navigation }) => {
 
   const renderItem = ({item, index}:any) => {
     const { details } = item
@@ -25,9 +21,9 @@ const ContributorCourse:React.FC<NavProps> = ({ navigation }) => {
       <CourseUnitLessonItem
         title={details.name}
         numOfSubItems={20}
-        type={'course'}
+        type={'lesson'}
         index={index + 1}
-        onPress={()=>goToUnitScreen(item)}
+        onPress={undefined}
        />
     )
   };
@@ -40,8 +36,8 @@ const ContributorCourse:React.FC<NavProps> = ({ navigation }) => {
         statusBackground
       />
       <Header
-        title="Course"
-        leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={()=>navigation.dispatch(DrawerActions.openDrawer())} />}
+        title="Lesson"
+        leftIcon={<Feather name="arrow-left" size={24} color="#ffffff" onPress={()=>navigation.goBack()} />}
         rightIcon={
           <TouchableOpacity style={styles.helpContainer}>
             <Ionicons name="help" size={20} color={PRIMARY_COLOR} />
@@ -49,15 +45,15 @@ const ContributorCourse:React.FC<NavProps> = ({ navigation }) => {
         }
       />
       <CourseUnitLessonDesign
-        item="Spanish"
+        item="Helpful phrases"
         itemDescription="Spanish is a wonderful language that prides itself in its world reach and rich, diverse cultures."
         numOfSubItems={4}
         data={courses}
         renderItem={renderItem}
-        type='course'
+        type='lesson'
       />
     </View>
   );
 }
 
-export default ContributorCourse
+export default ContributorLesson
