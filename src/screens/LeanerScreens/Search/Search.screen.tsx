@@ -17,14 +17,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
   const [ searchTerm, setSearchTerm ] = useState('')
 
   const renderItem = ({ item }: { item: CourseType }) => {
-    const { name, translated_language, admin_name,  } = item.details;
-    return (
-      <SearchedCourse
-        name={name}
-        translation={translated_language}
-        creator={admin_name}
-      />
-    );
+    return <SearchedCourse item={item} />;
   };
 
   const ListEmptyComponent = () => {
