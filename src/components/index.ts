@@ -9,6 +9,7 @@ import Language from "./Language/Language.component";
 import CourseUnitLessonDesign from "./CourseUnitLessonDesign/CourseUnitLessonDesign.component";
 import CourseUnitItem from "./CourseUnitItem/CourseUnitItem.component";
 import LessonItem from "./LessonItem/LessonItem.component";
+import SearchedCourse from "./SearchedCourse/SearchedCourse.component";
 
 export {
     PrimaryBtn,
@@ -21,5 +22,6 @@ export {
     Language,
     CourseUnitLessonDesign,
     CourseUnitItem,
-    LessonItem
+    LessonItem,
+    SearchedCourse
 }

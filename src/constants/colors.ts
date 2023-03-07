@@ -18,7 +18,9 @@ export const themes = {
 }
 
 const PRIMARY_COLOR = '#DF4E47'
+const SECONDARY_COLOR = '#04AFB2'
 
 export {
-  PRIMARY_COLOR
+  PRIMARY_COLOR,
+  SECONDARY_COLOR
 }

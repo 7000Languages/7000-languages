@@ -18,8 +18,8 @@ const LessonItem: React.FC<IProps> = ({ image, title, translation }) => {
         style={styles.image}
       />
       <View style={styles.textsContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.subTitle}>{'Where is the beach?'}</Text>
+        <Text numberOfLines={1} style={styles.title}>{title}</Text>
+        <Text numberOfLines={1} style={styles.subTitle}>{'Where is the beach?'}</Text>
       </View>
       <TouchableOpacity style={styles.volumeContainer}>
         <Ionicons name="md-volume-medium" size={20} color="#1C1C1C" />

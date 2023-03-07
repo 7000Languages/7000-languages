@@ -45,6 +45,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation }) => {
       />
       <Header
         title="Unit"
+        headerStyle={{ backgroundColor: PRIMARY_COLOR }}
         leftIcon={
           <Feather
             name="arrow-left"

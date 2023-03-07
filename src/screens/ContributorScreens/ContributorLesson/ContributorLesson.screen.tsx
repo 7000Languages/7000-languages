@@ -33,6 +33,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation }) => {
       />
       <Header
         title="Lesson"
+        headerStyle={{ backgroundColor: PRIMARY_COLOR }}
         leftIcon={<Feather name="arrow-left" size={24} color="#ffffff" onPress={()=>navigation.goBack()} />}
         rightIcon={
           <TouchableOpacity style={styles.helpContainer}>

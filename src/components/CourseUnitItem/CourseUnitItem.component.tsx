@@ -22,7 +22,7 @@ const CourseUnitItem:React.FC<IProps> = ({ title, numOfSubItems, index, type, on
       <Text style={styles.number}>{index}</Text>
       </View>
       <View style={styles.textsContainer}>
-        <Text style={styles.title}>{title}</Text>
+        <Text numberOfLines={1} style={styles.title}>{title}</Text>
         <Text style={styles.numOfSubItems}>{numOfSubItems} {subItemType}</Text>
       </View>
       <Entypo name="chevron-thin-right" size={21} color="black" style={styles.icon} />

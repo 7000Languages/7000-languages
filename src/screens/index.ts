@@ -9,6 +9,7 @@ import Settings from "./ContributorScreens/Settings/Settings.screen";
 import ContributorCourse from "./ContributorScreens/ContributorCourse/ContributorCourse.screen";
 import ContributorUnit from "./ContributorScreens/ContributorUnit/ContributorUnit.screen";
 import ContributorLesson from "./ContributorScreens/ContributorLesson/ContributorLesson.screen";
+import Search from "./LeanerScreens/Search/Search.screen";
 
 export {
     Splash,
@@ -24,4 +25,7 @@ export {
     // contributor screens
     Home,
     BecomeContributor,
+
+    // Learner screens
+    Search,
 }

@@ -18,6 +18,7 @@ export type CourseStackParamList = {
     ContributorLesson: {
         item?: LessonType
     }
+    Search: undefined
 }
 
 export type DrawerStackParamList = {
