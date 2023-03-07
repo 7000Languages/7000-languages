@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import styles from './ContributorLesson.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { CourseUnitLessonDesign, CourseUnitLessonItem, FocusAwareStatusBar, Header } from '../../../components'
+import { CourseUnitLessonDesign, CourseUnitItem, FocusAwareStatusBar, Header, LessonItem } from '../../../components'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -18,12 +18,8 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation }) => {
   const renderItem = ({item, index}:any) => {
     const { details } = item
     return (
-      <CourseUnitLessonItem
+      <LessonItem
         title={details.name}
-        numOfSubItems={20}
-        type={'lesson'}
-        index={index + 1}
-        onPress={undefined}
        />
     )
   };

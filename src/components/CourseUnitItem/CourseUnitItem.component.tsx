@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native'
 import React from 'react'
 
-import styles from './CourseUnitLessonItem.style'
+import styles from './CourseUnitItem.style'
 import { Entypo } from '@expo/vector-icons'
 
 interface IProps {
@@ -12,7 +12,7 @@ interface IProps {
   onPress?: () => void | undefined;
 }
 
-const CourseUnitLessonItem:React.FC<IProps> = ({ title, numOfSubItems, index, type, onPress }) => {
+const CourseUnitItem:React.FC<IProps> = ({ title, numOfSubItems, index, type, onPress }) => {
 
   const subItemType = type == 'course' ? 'Lessons' : 'Vocab Items'
 
@@ -21,7 +21,7 @@ const CourseUnitLessonItem:React.FC<IProps> = ({ title, numOfSubItems, index, ty
       <View style={styles.numberContainer}>
       <Text style={styles.number}>{index}</Text>
       </View>
-      <View>
+      <View style={styles.textsContainer}>
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.numOfSubItems}>{numOfSubItems} {subItemType}</Text>
       </View>
@@ -30,4 +30,4 @@ const CourseUnitLessonItem:React.FC<IProps> = ({ title, numOfSubItems, index, ty
   )
 }
 
-export default CourseUnitLessonItem
+export default CourseUnitItem

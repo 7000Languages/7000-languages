@@ -7,7 +7,7 @@ import styles from "./ContributorUnit.style";
 import { CourseStackParamList } from "../../../navigation/types";
 import {
   CourseUnitLessonDesign,
-  CourseUnitLessonItem,
+  CourseUnitItem,
   FocusAwareStatusBar,
   Header,
 } from "../../../components";
@@ -26,7 +26,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation }) => {
   const renderItem = ({ item, index }: any) => {
     const { details } = item;
     return (
-      <CourseUnitLessonItem
+      <CourseUnitItem
         title={details.name}
         numOfSubItems={20}
         type={"unit"}
