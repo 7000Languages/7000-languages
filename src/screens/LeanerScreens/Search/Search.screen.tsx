@@ -1,13 +1,14 @@
-import { View, TextInput, Text, FlatList, Image } from "react-native";
+import { View, TextInput, Text, FlatList, Image, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
+import Modal from "react-native-modal";
 
 import styles from "./Search.style";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { CourseStackParamList } from "../../../navigation/types";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { FocusAwareStatusBar, Header, SearchedCourse } from "../../../components";
-import { PRIMARY_COLOR, SECONDARY_COLOR } from "../../../constants/colors";
-import { CourseDetailsType, CourseType } from "../../../@types";
+import { SECONDARY_COLOR } from "../../../constants/colors";
+import { CourseType } from "../../../@types";
 import { courses } from "../../../../assets/data";
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, "Search">;
@@ -15,9 +16,15 @@ type NavProps = NativeStackScreenProps<CourseStackParamList, "Search">;
 const Search: React.FC<NavProps> = ({ navigation }) => {
 
   const [ searchTerm, setSearchTerm ] = useState('')
+  const [joinCourseModalVisible, setJoinCourseModalVisible] = useState(true)
 
   const renderItem = ({ item }: { item: CourseType }) => {
-    return <SearchedCourse item={item} />;
+    return (
+      <SearchedCourse
+        onJoinCoursePress={() => setJoinCourseModalVisible(true)}
+        item={item}
+      />
+    );
   };
 
   const ListEmptyComponent = () => {
@@ -32,6 +39,36 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {/* Joinc oourse modal */}
+      <Modal isVisible={joinCourseModalVisible} animationIn="shake">
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Join a course</Text>
+            <Text style={styles.providerText}>
+              The code is provided by the creator
+            </Text>
+            <TextInput placeholder="Course code" style={styles.modalInput} />
+            <View style={styles.modalTouchContainer}>
+              <TouchableOpacity
+                style={[styles.cancelOrJoinBtn, { backgroundColor: "#DEE5E9" }]}
+                onPress={()=>setJoinCourseModalVisible(false)}
+              >
+                <Text style={styles.modalCancelText}>Cancel</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.cancelOrJoinBtn,
+                  { backgroundColor: SECONDARY_COLOR },
+                ]}
+              >
+                <Text style={styles.modalJoinText}>Join</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
       <FocusAwareStatusBar
         backgroundColor={SECONDARY_COLOR}
         barStyle="light-content"
@@ -42,7 +79,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
         headerStyle={{ backgroundColor: SECONDARY_COLOR }}
         leftIcon={
           <Feather
-            name='arrow-left'
+            name="arrow-left"
             size={24}
             color="#ffffff"
             onPress={() => navigation.goBack()}
@@ -55,14 +92,18 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
           style={styles.input}
           placeholder="Search Courses"
           placeholderTextColor={"#006F7B"}
-          cursorColor={'#006F7B'}
+          cursorColor={"#006F7B"}
           value={searchTerm}
           onChangeText={(text) => setSearchTerm(text)}
         />
-        {
-            searchTerm.length > 0 &&
-            <Ionicons name="close" size={20} color="#006F7B" onPress={() => setSearchTerm('')}/>
-        }
+        {searchTerm.length > 0 && (
+          <Ionicons
+            name="close"
+            size={20}
+            color="#006F7B"
+            onPress={() => setSearchTerm("")}
+          />
+        )}
       </View>
       <FlatList
         data={courses}

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { SECONDARY_COLOR } from "../../../constants/colors";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/sizes";
 
 const styels = StyleSheet.create({
@@ -47,6 +48,53 @@ const styels = StyleSheet.create({
     textAlign: 'center',
     marginTop: 2,
     lineHeight: 18
+  },
+  modalTouchContainer: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end'
+  },
+  modalInput: {
+    height: 41,
+    borderWidth: 1,
+    borderColor: '#7A8288',
+    marginVertical: 15,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+  },
+  modalContainer: {
+    height: 182,
+    width: DEVICE_WIDTH * 0.85,
+    backgroundColor: '#ffffff',
+    padding: 20,
+    borderRadius: 8,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#000000"
+  },
+  providerText: {
+    fontSize: 14,
+    marginTop: 6,
+    color: "#000000"
+  },
+  cancelOrJoinBtn: {
+    color: SECONDARY_COLOR,
+    width: 70,
+    height: 30,
+    borderRadius: 10,
+    marginHorizontal: 5,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  modalCancelText: {
+    fontWeight: 'bold',
+    fontSize: 12
+  },
+  modalJoinText: {
+    fontWeight: 'bold',
+    color: '#ffffff',
+    fontSize: 12
   }
 });
 

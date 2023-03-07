@@ -8,11 +8,13 @@ import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withTimin
 
 interface IProps {
     item: CourseType
+    onJoinCoursePress: () => void
 }
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 const AnimatedIcon = Animated.createAnimatedComponent(Ionicons)
-const SearchedCourse:React.FC<IProps> = ({item}) => {
+
+const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
 
   const { name, translated_language, admin_name } = item.details;
 
@@ -87,7 +89,7 @@ const SearchedCourse:React.FC<IProps> = ({item}) => {
           <Text style={styles.description}>
             Description: here is a desription from the owner
           </Text>
-          <TouchableOpacity style={styles.joinCourseTouch}>
+          <TouchableOpacity style={styles.joinCourseTouch} onPress={onJoinCoursePress}>
             <Text style={styles.joinCourseText}>Join Course</Text>
           </TouchableOpacity>
         </>
