@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#F9F9F9',
-        marginVertical: 10,
+        marginVertical: 8,
         borderRadius: 8
     },
     numberContainer: {

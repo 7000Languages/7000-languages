@@ -15,7 +15,7 @@ const DrawerNavigator = () => {
     <Navigator
       screenOptions={{ headerShown: false, drawerType: 'back' }}
       initialRouteName='BottomNavigator'
-      // drawerContent={(props: any) => <DrawerContent {...props} />}
+      drawerContent={(props: any) => <DrawerContent {...props} />}
     >
       <Screen name="BottomNavigator" component={BottomNavigator} />
       <Screen name="AccountInfo" component={AccountInfo} />
