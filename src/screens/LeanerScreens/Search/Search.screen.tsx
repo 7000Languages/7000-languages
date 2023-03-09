@@ -16,7 +16,7 @@ type NavProps = NativeStackScreenProps<CourseStackParamList, "Search">;
 const Search: React.FC<NavProps> = ({ navigation }) => {
 
   const [ searchTerm, setSearchTerm ] = useState('')
-  const [joinCourseModalVisible, setJoinCourseModalVisible] = useState(true)
+  const [joinCourseModalVisible, setJoinCourseModalVisible] = useState(false)
 
   const renderItem = ({ item }: { item: CourseType }) => {
     return (

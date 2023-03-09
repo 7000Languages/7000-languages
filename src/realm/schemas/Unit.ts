@@ -10,7 +10,7 @@ export default class Unit extends Realm.Object {
   description!: string
 
   static schema = {
-    name: 'Unit',
+    name: 'units',
     primaryKey: '_id',
     properties: {
       _id: { type: 'objectId', default: () => new BSON.ObjectId() },

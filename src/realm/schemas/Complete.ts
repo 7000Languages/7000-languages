@@ -7,7 +7,7 @@ export default class Complete extends Realm.Object {
   _lesson_id!: string
 
   static schema = {
-    name: 'Complete',
+    name: 'completes',
     primaryKey: '_id',
     properties: {
       _id: { type: 'objectId', default: () => new BSON.ObjectId() },

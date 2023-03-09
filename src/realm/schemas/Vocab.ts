@@ -12,7 +12,7 @@ export default class Vocab extends Realm.Object {
   notes!: string
 
   static schema = {
-    name: 'Vocab',
+    name: 'vocabs',
     primaryKey: '_id',
     properties: {
       _id: { type: 'objectId', default: () => new BSON.ObjectId() },

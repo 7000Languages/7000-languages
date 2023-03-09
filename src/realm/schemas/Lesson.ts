@@ -12,7 +12,7 @@ export default class Lesson extends Realm.Object {
   description!: string
 
   static schema = {
-    name: 'Lesson',
+    name: 'lessons',
     primaryKey: '_id',
     properties: {
       _id: { type: 'objectId', default: () => new BSON.ObjectId() },
@@ -21,7 +21,7 @@ export default class Lesson extends Realm.Object {
       name: 'string',
       _order: 'int',
       selected: 'bool',
-      vocab: { type: 'Vocab[]', default: [] },
+      vocab: { type: 'vocabs[]', default: [] },
       description: { type: 'string?', default: '' },
     },
   }

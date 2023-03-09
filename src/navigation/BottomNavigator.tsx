@@ -11,7 +11,7 @@ const BottomNavigator = () => {
   const { Navigator, Screen } = Tab
 
   return (
-    <Navigator initialRouteName="SettingsStack" screenOptions={{ headerShown: false }}>
+    <Navigator initialRouteName="CourseStack" screenOptions={{ headerShown: false }}>
       <Screen
         name="CourseStack"
         component={CourseStack}

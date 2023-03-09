@@ -1,17 +1,17 @@
-import User from "./User";
-import Complete from './Complete';
-import Course from './Course';
-import CourseDetails from './CourseDetails';
-import Lesson from './Lesson';
-import Unit from './Unit';
-import Vocab from './Vocab';
+import users from "./User";
+import completes from './Complete';
+import courses from './Course';
+import coursedetails from './CourseDetails';
+import lessons from './Lesson';
+import units from './Unit';
+import vocabs from './Vocab';
 
 export {
-    User,
-    Complete,
-    Course,
-    CourseDetails,
-    Lesson,
-    Unit,
-    Vocab
+    users,
+    completes,
+    courses,
+    coursedetails,
+    lessons,
+    units,
+    vocabs
 }

@@ -1,16 +1,16 @@
 import { createRealmContext } from '@realm/react'
 
 import {
-  User,
-  Complete,
-  Course,
-  CourseDetails,
-  Lesson,
-  Unit,
-  Vocab,
+  users,
+  completes,
+  courses,
+  coursedetails,
+  lessons,
+  units,
+  vocabs
 } from './schemas'
 
 export const realmContext = createRealmContext({
-  schema: [User, Complete, Course, CourseDetails, Lesson, Unit, Vocab],
+  schema: [users, completes, courses, coursedetails, lessons, units, vocabs],
   schemaVersion: 1
 })

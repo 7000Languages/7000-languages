@@ -1,6 +1,6 @@
 import { BSON } from 'realm'
 
-export default class User extends Realm.Object {
+export default class users extends Realm.Object {
 
   _id!: string
   role!: number
@@ -10,7 +10,7 @@ export default class User extends Realm.Object {
   collaboratorLanguages!: string[]
 
   static schema = {
-    name: 'User',
+    name: 'users',
     primaryKey: '_id',
     properties: {
       _id: { type: 'objectId', default: () => new BSON.ObjectId() },

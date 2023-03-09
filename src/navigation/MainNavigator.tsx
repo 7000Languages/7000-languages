@@ -5,25 +5,47 @@ import { Splash, Onboarding, Login } from "../screens";
 
 import BottomNavigator from "./BottomNavigator";
 import DrawerNavigator from "./DrawerNavigator";
+import { UserProvider } from "@realm/react";
+import { realmContext } from "../realm/realm";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const { RealmProvider } = realmContext;
 
-const MainNavigator = () => {
+const FallBackNavigator = () => {
   const { Screen, Navigator } = Stack;
-
   return (
     <Navigator
-      initialRouteName="Login"
+      initialRouteName="Splash"
       screenOptions={{
         headerShown: false,
       }}
     >
       <Screen name="Splash" component={Splash} />
-      <Screen name="Onboarding" component={Onboarding} />
-      <Screen name="DrawerNavigator" component={DrawerNavigator} />
-      <Screen name="BottomNavigator" component={BottomNavigator} />
       <Screen name="Login" component={Login} />
     </Navigator>
+  );
+};
+
+const MainNavigator = () => {
+
+  const { Screen, Navigator } = Stack;
+
+  return (
+    <UserProvider fallback={<FallBackNavigator />}>
+      <RealmProvider sync={{ flexible: true }}>
+        <Navigator
+          initialRouteName="Splash"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Screen name="Splash" component={Splash} />
+          <Screen name="Onboarding" component={Onboarding} />
+          <Screen name="DrawerNavigator" component={DrawerNavigator} />
+          <Screen name="BottomNavigator" component={BottomNavigator} />
+        </Navigator>
+      </RealmProvider>
+    </UserProvider>
   );
 };
 

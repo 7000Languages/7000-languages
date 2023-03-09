@@ -20,7 +20,7 @@ export default class CourseDetails extends Realm.Object {
   code! :string
 
   static schema = {
-    name: 'CourseDetails',
+    name: 'coursedetails',
     primaryKey: '_id',
     properties: {
       _id: { type: 'objectId', default: () => new BSON.ObjectId() },

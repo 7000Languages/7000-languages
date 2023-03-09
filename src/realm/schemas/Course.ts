@@ -8,13 +8,13 @@ export default class Course extends Realm.Object {
   details!: string
 
   static schema = {
-    name: 'Course',
+    name: 'courses',
     primaryKey: '_id',
     properties: {
       _id: { type: 'objectId', default: () => new BSON.ObjectId() },
       approved: 'bool',
-      admin_id: 'stirng',
-      details: 'CourseDetails',
+      admin_id: 'string',
+      details: 'coursedetails',
     },
   }
 }

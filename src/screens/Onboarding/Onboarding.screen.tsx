@@ -19,6 +19,10 @@ const Onboarding: React.FC<NavProps> = ({ navigation }) => {
 
   }
 
+  const goToHome = () => {
+    navigation.navigate('DrawerNavigator')
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Image style={styles.wordLogo} source={require("../../../assets/images/wordLogo.png")} />
@@ -27,7 +31,7 @@ const Onboarding: React.FC<NavProps> = ({ navigation }) => {
         <InitLanguageSelect title={`Hello! \nWelcome to 7000 Languages`} smallText='Proceed in English' onPress={changeLanguage} />
         <InitLanguageSelect title={`Bonjour! \nBienvenue sur 7000 Languages`} smallText='Proceed in English' onPress={changeLanguage} />
       </ScrollView>
-      <Pressable style={styles.nextAndIconContainer}>
+      <Pressable style={styles.nextAndIconContainer} onPress={goToHome}>
         <Text style={styles.nextText}>Next</Text>
         <Entypo name="chevron-small-right" size={25} color="#ffffff" />
       </Pressable>
