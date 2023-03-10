@@ -6,19 +6,25 @@ import {
   View,
   ScrollView,
 } from "react-native";
-import { DrawerContentScrollView } from "@react-navigation/drawer";
 
 import styles from "./DrawerContent.style";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import CourseUnitItem from "../CourseUnitItem/CourseUnitItem.component";
 import { PRIMARY_COLOR } from "../../constants/colors";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { DrawerStackParamList } from "../../navigation/types";
 
-const DrawerContent: React.FC = (props, {}) => {
+
+const DrawerContent: React.FC = (props) => {
+
+  const navigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
         <Text style={styles.myCourses}>My Courses</Text>
-        <Ionicons name="close-outline" size={24} color="black" />
+        <Ionicons name="close-outline" size={24} color="black" onPress={()=>navigation.dispatch(DrawerActions.closeDrawer())} />
       </View>
       <ScrollView
         contentContainerStyle={{
@@ -73,11 +79,11 @@ const DrawerContent: React.FC = (props, {}) => {
             <Text style={{ fontWeight: "bold" }}> Become a contributor.</Text>
           </Text>
           <TouchableOpacity style={styles.applyNowBtn}>
-            <Text style={styles.searchCourseText}>Search Courses</Text>
+            <Text style={styles.searchCourseText}>Apply Now</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.accountInfBtn}>
+      <TouchableOpacity style={styles.accountInfBtn} onPress={()=>navigation.navigate('AccountInfo')}>
         <MaterialCommunityIcons name="account" size={24} color="#5B6165" />
         <Text style={styles.accountInfText}>Account Info</Text>
       </TouchableOpacity>

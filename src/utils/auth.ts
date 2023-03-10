@@ -1,5 +1,6 @@
 import { Platform } from "react-native";
 import * as AuthSession from "expo-auth-session";
+import * as SecureStore from 'expo-secure-store';
 
 import {
   iosClientId,
@@ -80,27 +81,6 @@ export const exchangeAuthCode = async (
     })
 );
 
-
-// export const getUserByIDToken = async (idToken:string) => {
-//   const client = new OAuth2Client()
-//   try {
-//     let audience = [ iosClientId, androidClientId ];
-
-//     if (idToken) {
-//       const ticket = await client.verifyIdToken({
-//         idToken,
-//         audience: audience,
-//       });
-//       const data = ticket.getPayload();
-//       return data;
-//     }
-//     return null;
-//   } catch (error) {
-//     console.error("Error during Google Auth ID Token Verification: ", error);
-//     return null;
-//   }
-// };
-
 export const getUserInfo = async (token:string) => {
     try {
       const response = await fetch(
@@ -116,3 +96,17 @@ export const getUserInfo = async (token:string) => {
       // Add your own error handler here
     }
   };
+
+
+  export const save = async (key:string, value:string) => {
+    await SecureStore.setItemAsync(key, value);
+  }
+  
+  export const getValueFor = async(key:string) => {
+    let result = await SecureStore.getItemAsync(key);
+    if (result) {
+      return result;
+    } else {
+      console.log('Error: Failed to get value for key: ' + key);
+    }
+  }

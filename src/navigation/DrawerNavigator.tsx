@@ -13,7 +13,7 @@ const DrawerNavigator = () => {
 
   return (
     <Navigator
-      screenOptions={{ headerShown: false, drawerType: 'back' }}
+      screenOptions={{ headerShown: false, drawerType: 'slide' }}
       initialRouteName='BottomNavigator'
       drawerContent={(props: any) => <DrawerContent {...props} />}
     >

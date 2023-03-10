@@ -23,6 +23,8 @@ PODS:
     - ExpoModulesCore
   - ExpoWebBrowser (12.1.1):
     - ExpoModulesCore
+  - EXSecureStore (12.1.1):
+    - ExpoModulesCore
   - EXSplashScreen (0.18.1):
     - ExpoModulesCore
     - React-Core
@@ -396,6 +398,7 @@ DEPENDENCIES:
   - ExpoModulesCore (from `../node_modules/expo-modules-core`)
   - ExpoRandom (from `../node_modules/expo-random/ios`)
   - ExpoWebBrowser (from `../node_modules/expo-web-browser/ios`)
+  - EXSecureStore (from `../node_modules/expo-secure-store/ios`)
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -465,6 +468,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-random/ios"
   ExpoWebBrowser:
     :path: "../node_modules/expo-web-browser/ios"
+  EXSecureStore:
+    :path: "../node_modules/expo-secure-store/ios"
   EXSplashScreen:
     :path: "../node_modules/expo-splash-screen/ios"
   FBLazyVector:
@@ -555,6 +560,7 @@ SPEC CHECKSUMS:
   ExpoModulesCore: f11d8a16e8d3f26c183da2541d75edc6aa9cf8eb
   ExpoRandom: 7ee07d62e7003b74d0536e0495e3a653fe1b2a74
   ExpoWebBrowser: 033d34c478d9986da2f1679729041423837626e0
+  EXSecureStore: e8923258361cc406d0401af380f12bd05b2b720f
   EXSplashScreen: cd7fb052dff5ba8311d5c2455ecbebffe1b7a8ca
   FBLazyVector: 60195509584153283780abdac5569feffb8f08cc
   FBReactNativeSpec: 9c191fb58d06dc05ab5559a5505fc32139e9e4a2

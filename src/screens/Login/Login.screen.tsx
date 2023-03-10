@@ -4,7 +4,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
-import { useApp } from '@realm/react'
+import { useApp, useUser } from '@realm/react'
 
 import styles from './Login.style'
 
@@ -23,6 +23,7 @@ type NavProps = NativeStackScreenProps<RootStackParamList, 'Login'>
 const Login = () => {
 
   const realmApp = useApp()
+  const user = useUser()
 
   const errorWrap = useErrorWrap();
   const dispatch = useAppDispatch();
@@ -45,21 +46,26 @@ const Login = () => {
   useEffect(() => {
     errorWrap(async () => {
       if (response?.type === "success") {
-        const userData = await getUserInfo(response.authentication!.accessToken);
+        const userData = await getUserInfo(
+          response.authentication!.accessToken
+        );
+        const authID = userData.id;
         const idToken = response.params.id_token;
-        console.log(idToken)
-
-        // TODO: check if user exists already in atlas
-
 
         // Log the user in through realm to app here
         const credentials = Realm.Credentials.google({ idToken });
+
         try {
-          await realmApp.logIn(credentials).then((user) => {
+          await realmApp.logIn(credentials).then(async (user) => {
             console.log(`Logged in with id: ${user.id}`);
+
+            // check if user exists already in atlas
+            const result = await user!.functions.checkIfUserExists(authID);
+            console.log("user", JSON.stringify(result));
+            
           });
         } catch (error) {
-          console.log("Error: ", error)
+          console.log("Error: ", error);
         }
       }
     });
