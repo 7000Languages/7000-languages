@@ -95,18 +95,18 @@ export const getUserInfo = async (token:string) => {
     } catch (error) {
       // Add your own error handler here
     }
-  };
+};
 
 
-  export const save = async (key:string, value:string) => {
-    await SecureStore.setItemAsync(key, value);
+export const save = async (key: string, value: string) => {
+  await SecureStore.setItemAsync(key, value);
+};
+
+export const getValueFor = async (key: string) => {
+  let result = await SecureStore.getItemAsync(key);
+  if (result) {
+    return result;
+  } else {
+    console.log("Error: Failed to get value for key: " + key);
   }
-  
-  export const getValueFor = async(key:string) => {
-    let result = await SecureStore.getItemAsync(key);
-    if (result) {
-      return result;
-    } else {
-      console.log('Error: Failed to get value for key: ' + key);
-    }
-  }
+};
