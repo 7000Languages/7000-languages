@@ -11,7 +11,7 @@ import styles from './Login.style'
 import { iosClientId, androidClientId, expoClientId } from '../../config'
 import { RootStackParamList } from '../../navigation/types'
 import { PrimaryBtn } from '../../components'
-import {  getUserInfo, redirectUri } from '../../utils/auth'
+import {  getUserInfo, redirectUri, save } from '../../utils/auth'
 import { useErrorWrap } from '../../hooks'
 import { useAppDispatch } from '../../redux/store'
 import { authenticate } from '../../redux/slices/authSlice'
@@ -61,7 +61,12 @@ const Login = () => {
 
             // check if user exists already in atlas
             const result = await user!.functions.checkIfUserExists(authID);
-            console.log("user", JSON.stringify(result));
+
+            try {
+              save('userData', result)
+            } catch (error) {
+              console.log(`Error saving user data: ${error}`)
+            }
             
           });
         } catch (error) {
@@ -70,7 +75,7 @@ const Login = () => {
       }
     });
   }, [response]);
-
+  
   return (
     <SafeAreaView style={styles.container}>
       <Image
