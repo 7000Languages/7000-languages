@@ -1,6 +1,7 @@
 import { Platform } from "react-native";
 import * as AuthSession from "expo-auth-session";
 import * as SecureStore from 'expo-secure-store';
+import Handlebars from "react-native-handlebars";
 
 import {
   iosClientId,
