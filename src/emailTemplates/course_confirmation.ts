@@ -185,17 +185,17 @@ background-color: #f6f6f6;
 
                                     <div style="margin-top: 10px; display: flex; flex-direction: row; width: 100%; justify-content: center;">
 
-                                        <form action="{{base_url}}/approve/{{ id }}" method="post">
-                                            <input type="submit" value="Approve" style="margin: 5px; color: white; font-size: 15px; font-weight: bold; width: 140px; height: 40px; border-style: solid; border-color: #DF4E47; background-color: #DF4E47; border-radius: 10px;">
+                                        <form action="{{base_url}}/approve_or_reject_course?course_id={{id}}&decision=approve" method="post">
+                                            <input type="submit" value="Approve"
+                                                style="margin: 5px; color: white; font-size: 15px; font-weight: bold; width: 140px; height: 40px; border-style: solid; border-color: #DF4E47; background-color: #DF4E47; border-radius: 10px;">
                                         </form>
-        
 
-                                        <form action="{{base_url}}/reject/{{ id }}" method="post">
-                                            <input type="submit" value="Reject" style="margin: 5px; color: #5B6165; font-size: 15px; font-weight: bold; width: 140px; height: 40px; border-style: solid; border-color: #DEE5E9; background-color: #DEE5E9; border-radius: 10px;">
+                                        <form action="{{base_url}}/approve_or_reject_course?course_id={{id}}&decision=reject" method="post">
+                                            <input type="submit" value="Reject"
+                                                style="margin: 5px; color: #5B6165; font-size: 15px; font-weight: bold; width: 140px; height: 40px; border-style: solid; border-color: #DEE5E9; background-color: #DEE5E9; border-radius: 10px;">
                                         </form>
+                                        
                                     </div>
-
-
 
                                     <table width="100%" cellpadding="0" cellspacing="0" style="padding: 10px; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                     <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
@@ -214,7 +214,52 @@ background-color: #f6f6f6;
         <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>
         </tr>
     </table>
+
+    <script>
+
+        let approve_form = document.getElementById("approve_form")
+        let reject_form = document.getElementById("reject_form")
+
+        let approve_id = document.getElementById("approve_id").value
+        let reject_id = document.getElementById("reject_id").value
+
+        approve_form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            fetch("https://us-east-1.aws.data.mongodb-api.com/app/7000languagesrealm-xfsrn/endpoint/approve_or_reject_course", {
+                method: "POST",
+                body: JSON.stringify({
+                    course_id: approve_id,
+                    decision: "approve",
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+        })
+
+        reject_form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            fetch("https://us-east-1.aws.data.mongodb-api.com/app/7000languagesrealm-xfsrn/endpoint/approve_or_reject_course", {
+                method: "POST",
+                body: JSON.stringify({
+                    course_id: reject_id,
+                    decision: "reject",
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                }
+            })
+            .then((response) => response.json())
+            .then((json) => console.log(json));
+        })
+
+    </script>
+
 </body>
 </html>`;
 
-export default course_confirmation
+export default course_confirmation;
