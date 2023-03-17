@@ -11,10 +11,10 @@ import styles from './Login.style'
 import { iosClientId, androidClientId, expoClientId } from '../../config'
 import { RootStackParamList } from '../../navigation/types'
 import { PrimaryBtn } from '../../components'
-import {  getUserInfo, redirectUri, save } from '../../utils/auth'
+import {  getUserInfo, redirectUri } from '../../utils/auth'
+import {  save } from '../../utils/storage'
 import { useErrorWrap } from '../../hooks'
 import { useAppDispatch } from '../../redux/store'
-import { authenticate } from '../../redux/slices/authSlice'
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -23,7 +23,6 @@ type NavProps = NativeStackScreenProps<RootStackParamList, 'Login'>
 const Login = () => {
 
   const realmApp = useApp()
-  const user = useUser()
 
   const errorWrap = useErrorWrap();
   const dispatch = useAppDispatch();

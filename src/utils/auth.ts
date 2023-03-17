@@ -1,6 +1,5 @@
 import { Platform } from "react-native";
 import * as AuthSession from "expo-auth-session";
-import * as SecureStore from 'expo-secure-store';
 import Handlebars from "react-native-handlebars";
 
 import {
@@ -96,19 +95,4 @@ export const getUserInfo = async (token:string) => {
     } catch (error) {
       // Add your own error handler here
     }
-};
-
-
-export const save = async (key: string, value: string) => {
-  let testedValue = typeof value === "string" ? value : JSON.stringify(value)
-  await SecureStore.setItemAsync(key, testedValue);
-};
-
-export const getValueFor = async (key: string) => {
-  let result = await SecureStore.getItemAsync(key);
-  if (result) {
-    return JSON.parse(result);
-  } else {
-    console.log("Error: Failed to get value for key: " + key);
-  }
 };

@@ -7,14 +7,16 @@ import { PRIMARY_COLOR } from '../../constants/colors'
 
 interface IProps {
     label: string
+    onPress: (value: boolean) => void
 }
 
-const CheckBoxText:React.FC<IProps> = ({ label }) => {
+const CheckBoxText:React.FC<IProps> = ({ label, onPress }) => {
 
   const [checked, setChecked] = useState(false);
 
   const toggleChecked = () => {
     setChecked(!checked);
+    onPress(!checked)
   }
 
   return (

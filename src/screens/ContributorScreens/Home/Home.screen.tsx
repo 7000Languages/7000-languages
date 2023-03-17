@@ -5,16 +5,39 @@ import { Feather } from '@expo/vector-icons'
 
 import styles from './Home.style'
 
+import { realmContext } from "../../../realm/realm";
 import { CourseStackParamList } from '../../../navigation/types'
 import { FocusAwareStatusBar, Header, PrimaryBtn } from '../../../components'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { DrawerActions } from '@react-navigation/native'
 import { StatusBarHeight } from '../../../constants/sizes'
+import { RootState, useAppSelector } from '../../../redux/store'
+import { courses } from '../../../realm/schemas'
+
+const { useRealm, useQuery } = realmContext
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'Home'>
 
 const Home:React.FC<NavProps> = ({ navigation }) => {
+
+  const userData: any = useAppSelector((state: RootState) => state.auth.user)
+
+  // realm subscriptions
+  const realm = useRealm()
+  const coursesData = useQuery(courses)
+  console.log("Courses data: ", JSON.stringify(coursesData));
+  
+
+  realm.subscriptions.update(subs => {
+    subs.add(realm.objects('courses').filtered('admin_id = $0', userData.authID),{
+      name: 'coursesSubscription',
+    })
+    subs.add(realm.objects('coursedetails'),{
+      name: 'coursesdetailsSubscription',
+    })
+  })
+
   return (
     <View style={styles.container}>
       <FocusAwareStatusBar
@@ -39,10 +62,19 @@ const Home:React.FC<NavProps> = ({ navigation }) => {
           />
           <View style={styles.divider} />
           <Text style={styles.missionStatement}>{`Our mission is to help communities\n teach, learn, and sustain their\n endangered languages.`} <Text style={{ fontWeight: 'bold' }}>{`We’d love to\n support your revitalization efforts.`}</Text></Text>
-          <TouchableOpacity onPress={()=>navigation.navigate('BecomeContributor')}>
-            <Text style={styles.becomeText}>Become a Contributor</Text>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('BecomeContributor')}>
+          <Text style={styles.becomeText}>Become a Contributor</Text>
+        </TouchableOpacity>
       </View>
+      {
+        coursesData.map((course: any) => {
+          return (
+            <View>
+              <Text>{course.details ? course.details.name : course.admin_id}</Text>
+            </View>
+          )
+        })
+      }
     </View>
   );
 }

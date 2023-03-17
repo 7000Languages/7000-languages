@@ -6,7 +6,7 @@ import styles from "./CustomInput.style";
 interface IProps extends TextInputProps {
   label: string;
   subLabel?: string;
-  errorText: string;
+  errorText?: string;
   inputStyle?: ViewStyle;
   textArea?: boolean;
 }
@@ -29,7 +29,7 @@ const CustomInput: React.FC<IProps> = ({
         style={[styles.input, inputStyle, { height: textArea ? 100 : 45 }]}
         {...rest}
       />
-      {errorText.length > 0 && (
+      {errorText && errorText.length > 0 && (
         <Text style={styles.errorText}>{errorText}</Text>
       )}
     </View>
