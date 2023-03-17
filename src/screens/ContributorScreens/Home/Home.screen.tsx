@@ -25,9 +25,7 @@ const Home:React.FC<NavProps> = ({ navigation }) => {
 
   // realm subscriptions
   const realm = useRealm()
-  const coursesData = useQuery(courses)
-  console.log("Courses data: ", JSON.stringify(coursesData));
-  
+  const coursesData = useQuery(courses)  
 
   realm.subscriptions.update(subs => {
     subs.add(realm.objects('courses').filtered('admin_id = $0', userData.authID),{
@@ -66,15 +64,6 @@ const Home:React.FC<NavProps> = ({ navigation }) => {
           <Text style={styles.becomeText}>Become a Contributor</Text>
         </TouchableOpacity>
       </View>
-      {
-        coursesData.map((course: any) => {
-          return (
-            <View>
-              <Text>{course.details ? course.details.name : course.admin_id}</Text>
-            </View>
-          )
-        })
-      }
     </View>
   );
 }
