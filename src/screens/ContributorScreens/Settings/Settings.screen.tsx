@@ -140,7 +140,6 @@ const Settings: React.FC<NavProps> = ({ navigation }) => {
             <Picker.Item
               label="Private"
               value="private"
-              style={{ backgroundColor: "red" }}
             />
             <Picker.Item label="Public" value="public" />
           </Picker>
