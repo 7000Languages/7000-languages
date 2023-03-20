@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, Platform } from "react-native";
 import React from "react";
 import { FocusAwareStatusBar, Header } from "../../components";
 import { AntDesign, Entypo } from "@expo/vector-icons";
@@ -38,9 +38,8 @@ const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
           backgroundColor: "#ffffff",
           borderBottomWidth: 2,
           borderBottomColor: "#F9F9F9",
-          marginBottom: 20,
           position: "absolute",
-          top: StatusBarHeight,
+          top: Platform.OS == 'ios' ? StatusBarHeight : 0,
         }}
       />
       <Text style={styles.userInfo}>User Info</Text>

@@ -73,6 +73,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
         backgroundColor={SECONDARY_COLOR}
         barStyle="light-content"
         showStatusBackground
+        statusbarBackgroundColor={SECONDARY_COLOR}
       />
       <Header
         title="Search"

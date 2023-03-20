@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 import { PRIMARY_COLOR } from '../../constants/colors';
 import { DEVICE_WIDTH, StatusBarHeight } from '../../constants/sizes';
 
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         color: '#5B6165',
         fontSize: 16,
         fontWeight: 'bold',
-        marginTop: 10
+        marginTop: Platform.OS === 'ios' ? 0: StatusBarHeight
     },
     settingText: {
         color: '#5B6165',
