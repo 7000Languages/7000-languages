@@ -16,7 +16,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.languages7000.app",
+      "bundleIdentifier": "com.7000languages.app",
+      "buildNumber": "0.0.2",
       "config": {
         "usesNonExemptEncryption": false
       }
@@ -26,7 +27,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.languages7000.app"
+      "package": "com.languages7000.app",
+      "versionCode": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"

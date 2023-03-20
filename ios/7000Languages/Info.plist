@@ -25,7 +25,7 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>com.languages7000.app</string>
+          <string>com.7000languages.app</string>
         </array>
       </dict>
     </array>
