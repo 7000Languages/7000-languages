@@ -16,7 +16,7 @@ const Splash: React.FC<NavProps> = ({ navigation }) => {
 
   const user = useUser();
 
-  const getUserFromStorages = async () => {
+  const getUserFromStorage = async () => {
     try {
       let userData = await getValueFor("userData")
       if(userData){
@@ -29,7 +29,7 @@ const Splash: React.FC<NavProps> = ({ navigation }) => {
 
   useEffect(() => {
 
-    getUserFromStorages()
+    getUserFromStorage()
 
     const whereToNavigate = user?.isLoggedIn ? "Onboarding" : "Login";
     let timer = setTimeout(() => {
