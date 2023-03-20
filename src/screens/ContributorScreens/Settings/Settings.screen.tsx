@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Platform } from "react-native";
 import { Feather, MaterialCommunityIcons } from "@expo/vector-icons";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Picker } from "@react-native-picker/picker";
@@ -10,6 +10,7 @@ import styles from "./Settings.style";
 import { FocusAwareStatusBar, Header } from "../../../components";
 import { DEVICE_WIDTH, StatusBarHeight } from "../../../constants/sizes";
 import { SettingsStackParamList } from "../../../navigation/types";
+import { PRIMARY_COLOR } from "../../../constants/colors";
 
 type NavProps = NativeStackScreenProps<SettingsStackParamList, "Settings">;
 
@@ -88,7 +89,8 @@ const Settings: React.FC<NavProps> = ({ navigation }) => {
       <FocusAwareStatusBar
         backgroundColor={"#ffffff"}
         barStyle={"dark-content"}
-        statusBackground={true}
+        showStatusBackground={true}
+        statusbarBackgroundColor='#ffffff'
       />
       <Header
         title="Settings"
@@ -99,7 +101,7 @@ const Settings: React.FC<NavProps> = ({ navigation }) => {
           borderBottomColor: "#F9F9F9",
           marginBottom: 20,
           position: "absolute",
-          top: StatusBarHeight,
+          top: Platform.OS == 'ios' ? StatusBarHeight : 0,
         }}
       />
       <View style={{ paddingHorizontal: 16, alignSelf: 'center', width: DEVICE_WIDTH }}>

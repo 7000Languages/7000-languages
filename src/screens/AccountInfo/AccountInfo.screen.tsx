@@ -21,7 +21,7 @@ const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
       <FocusAwareStatusBar
         backgroundColor={"#ffffff"}
         barStyle={"dark-content"}
-        statusBackground={true}
+        showStatusBackground={true}
       />
       <Header
         title="Account Info"

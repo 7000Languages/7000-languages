@@ -41,7 +41,8 @@ const Home:React.FC<NavProps> = ({ navigation }) => {
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle="light-content"
-        statusBackground
+        showStatusBackground
+        statusbarBackgroundColor={PRIMARY_COLOR}
       />
       <Header
         title="Home"

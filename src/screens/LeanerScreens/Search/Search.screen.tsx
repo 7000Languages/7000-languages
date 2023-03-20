@@ -72,7 +72,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
       <FocusAwareStatusBar
         backgroundColor={SECONDARY_COLOR}
         barStyle="light-content"
-        statusBackground
+        showStatusBackground
       />
       <Header
         title="Search"

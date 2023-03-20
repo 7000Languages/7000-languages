@@ -38,7 +38,7 @@ const Languages:React.FC<NavProps> = ({ navigation }) => {
       <FocusAwareStatusBar
         backgroundColor={"#ffffff"}
         barStyle={"dark-content"}
-        statusBackground={true}
+        showStatusBackground={true}
       />
       <Header
         title="Language"

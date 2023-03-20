@@ -1,25 +1,28 @@
 import * as React from "react";
-import { StatusBar, StatusBarProps, View } from "react-native";
+import { Platform, StatusBar, StatusBarProps, View } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 
 import styles from "./FocusAwareStatusBar.style";
+import { PRIMARY_COLOR } from "../../constants/colors";
 
 interface IProps extends StatusBarProps {
-  statusBackground?: boolean;
+  showStatusBackground?: boolean;
   backgroundColor?: string;
+  statusbarBackgroundColor?: string;
 }
 
 const FocusAwareStatusBar: React.FC<IProps> = ({
-  statusBackground,
+  showStatusBackground,
   backgroundColor,
+  statusbarBackgroundColor,
   ...rest
 }) => {
   const isFocused = useIsFocused();
 
   return isFocused ? (
-    statusBackground ? (
+    showStatusBackground ? (
       <View style={[styles.StatusBar, { backgroundColor }]}>
-        <StatusBar {...rest} />
+        <StatusBar {...rest} backgroundColor={statusbarBackgroundColor} />
       </View>
     ) : (
       <StatusBar {...rest} />

@@ -29,7 +29,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation }) => {
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle="light-content"
-        statusBackground
+        showStatusBackground
       />
       <Header
         title="Lesson"
