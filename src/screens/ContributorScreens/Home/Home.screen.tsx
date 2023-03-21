@@ -12,7 +12,6 @@ import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { DrawerActions } from '@react-navigation/native'
 import { RootState, useAppSelector } from '../../../redux/store'
-import { courses } from '../../../realm/schemas'
 
 const { useRealm } = realmContext
 
@@ -27,8 +26,8 @@ const Home:React.FC<NavProps> = ({ navigation }) => {
   const realm = useRealm()
 
   useEffect(() => {  
-    // subscribe to realm subscriptions only when the user is online
-   isOnline && realm.subscriptions.update(subs => {
+    // subscribe to realm subscriptions only when the user is online    
+    isOnline == true && realm.subscriptions.update(subs => {
       subs.add(realm.objects('courses').filtered('admin_id = $0', userData.authID),{
         name: 'coursesSubscription',
       })
@@ -36,7 +35,7 @@ const Home:React.FC<NavProps> = ({ navigation }) => {
         name: 'coursesdetailsSubscription',
       })
     })
-  }, [realm])
+  })
   
 
 

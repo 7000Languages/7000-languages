@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { ActivityIndicator } from 'react-native'
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import NetInfo from "@react-native-community/netinfo";
@@ -38,11 +38,11 @@ const MainNavigator = () => {
 
   const dispatch = useAppDispatch()
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     
     NetInfo.addEventListener(state => {
-      setIsOnline(state.isConnected ?? false)
-      dispatch(toggleConnection(state.isConnected?? false))
+      setIsOnline(state.isInternetReachable!)
+      dispatch(toggleConnection(state.isInternetReachable!))
     });
   
   })
