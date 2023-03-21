@@ -1,4 +1,4 @@
-import { View, Image } from "react-native";
+import { View, Image, StatusBar } from "react-native";
 import React, { useEffect } from "react";
 import styles from "./Splash.style";
 import { RootStackParamList } from "../../navigation/types";
@@ -7,6 +7,8 @@ import { useUser } from "@realm/react";
 import { getValueFor } from "../../utils/storage";
 import { useAppDispatch } from "../../redux/store";
 import { setUser } from "../../redux/slices/authSlice";
+import { FocusAwareStatusBar } from "../../components";
+import { PRIMARY_COLOR } from "../../constants/colors";
 
 type NavProps = NativeStackScreenProps<RootStackParamList, "Splash">;
 
@@ -43,6 +45,7 @@ const Splash: React.FC<NavProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <StatusBar hidden />
       <Image
         style={styles.backgroundImage}
         source={require("../../../assets/images/splashBackgroundImage.png")}

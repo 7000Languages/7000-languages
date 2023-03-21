@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Text, View } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Feather } from '@expo/vector-icons'
@@ -11,30 +11,34 @@ import { FocusAwareStatusBar, Header, PrimaryBtn } from '../../../components'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { DrawerActions } from '@react-navigation/native'
-import { StatusBarHeight } from '../../../constants/sizes'
 import { RootState, useAppSelector } from '../../../redux/store'
 import { courses } from '../../../realm/schemas'
 
-const { useRealm, useQuery } = realmContext
+const { useRealm } = realmContext
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'Home'>
 
 const Home:React.FC<NavProps> = ({ navigation }) => {
 
   const userData: any = useAppSelector((state: RootState) => state.auth.user)
+  const isOnline = useAppSelector((state: RootState) => state.connection.isOnline)
 
   // realm subscriptions
   const realm = useRealm()
-  const coursesData = useQuery(courses)  
 
-  realm.subscriptions.update(subs => {
-    subs.add(realm.objects('courses').filtered('admin_id = $0', userData.authID),{
-      name: 'coursesSubscription',
+  useEffect(() => {  
+    // subscribe to realm subscriptions only when the user is online
+   isOnline && realm.subscriptions.update(subs => {
+      subs.add(realm.objects('courses').filtered('admin_id = $0', userData.authID),{
+        name: 'coursesSubscription',
+      })
+      subs.add(realm.objects('coursedetails'),{
+        name: 'coursesdetailsSubscription',
+      })
     })
-    subs.add(realm.objects('coursedetails'),{
-      name: 'coursesdetailsSubscription',
-    })
-  })
+  }, [realm])
+  
+
 
   return (
     <View style={styles.container}>

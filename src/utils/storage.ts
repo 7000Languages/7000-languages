@@ -10,6 +10,6 @@ export const getValueFor = async (key: string) => {
   if (result) {
     return JSON.parse(result);
   } else {
-    console.log("Error: Failed to get value for key: " + key);
+    console.warn("Error: Failed to get value for key: " + key);
   }
 };

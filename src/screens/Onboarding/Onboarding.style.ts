@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { DEVICE_HEIGHT, DEVICE_WIDTH, StatusBarHeight } from '../../constants/sizes';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     backgroundImage: {
         width: DEVICE_WIDTH,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     wordLogo: {
         position: 'absolute',
         zIndex: 1,
-        top: StatusBarHeight + 20,
+        top: Platform.OS == 'ios' ? StatusBarHeight + 50 : StatusBarHeight,
         left: 30
     },
     nextAndIconContainer: {
