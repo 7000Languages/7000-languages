@@ -15,11 +15,13 @@ const coursesSlice = createSlice({
     name: 'courses',
     initialState,
     reducers: {
-        setLearnerCourses: (state, action:PayloadAction<CourseType>) => {
-            state.learnerCourses = [...state.learnerCourses, action.payload]
+        setLearnerCourses: (state, action:PayloadAction<CourseType[]>) => {
+            let courses = [...action.payload]
+            state.learnerCourses = courses
         },
-        setAdminCourses: (state, action:PayloadAction<CourseType>) => {
-            state.adminCourses = [...state.adminCourses, action.payload]
+        setAdminCourses: (state, action:PayloadAction<CourseType[]>) => {
+            let courses = [...action.payload]
+            state.adminCourses = courses
         }
     }
 });

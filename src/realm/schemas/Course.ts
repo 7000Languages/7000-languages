@@ -5,7 +5,7 @@ export default class Course extends Realm.Object {
   _id!: string
   approved!: boolean
   admin_id!: string
-  details!: string
+  details!: object
 
   static schema = {
     name: 'courses',

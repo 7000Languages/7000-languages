@@ -14,7 +14,6 @@ import { CourseStackParamList } from "../../../navigation/types";
 import { realmContext } from "../../../realm/realm";
 import { RootState, useAppSelector } from "../../../redux/store";
 import course_confirmation from '../../../emailTemplates/course_confirmation'
-import { CourseType } from "../../../@types";
 
 const { useRealm } = realmContext
 

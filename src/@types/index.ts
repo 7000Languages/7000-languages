@@ -1,7 +1,7 @@
 export type UserType = {
     _id: string
     role: number
-    auth: string
+    authID: string
     adminLanguages: string[]
     learnerLanguages: string[]
     collaboratorLanguages: string[]
@@ -15,7 +15,6 @@ export type CourseType = {
 }
 
 export type CourseDetailsType = {
-    _id: string
     admin_name: string
     admin_email: string
     name: string

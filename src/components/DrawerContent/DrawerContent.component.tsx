@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   SafeAreaView,
   Text,
@@ -14,11 +14,29 @@ import { PRIMARY_COLOR } from "../../constants/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { DrawerStackParamList } from "../../navigation/types";
+import { realmContext } from "../../realm/realm";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { UserType } from "../../@types";
+import { setAdminCourses } from "../../redux/slices/coursesSlice";
+import { courses } from "../../realm/schemas";
 
 
 const DrawerContent: React.FC = (props) => {
 
   const navigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
+  const { useQuery, useRealm } = realmContext
+  const user: UserType = useAppSelector(state=>state.auth.user)
+  const adminCourses = useAppSelector(state=>state.courses.adminCourses)
+  const dispatch = useAppDispatch()
+  const realm = useRealm()
+  const coursesData: any = useQuery(courses)
+  // const coursesData: any = realm.objects('courses')
+  
+  useEffect(() => {
+    let adminCourses: any = coursesData.filter((course:any) => course.admin_id === user.authID)        
+    dispatch(setAdminCourses(adminCourses))
+  },[])
+  
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -64,14 +82,21 @@ const DrawerContent: React.FC = (props) => {
         <TouchableOpacity style={styles.contrubutorContainer}>
           <Text style={styles.contributorText}>CONTRIBUTOR</Text>
         </TouchableOpacity>
-        <CourseUnitItem
-          title="Spanish"
-          numOfSubItems={10}
-          type="course"
-          index={<Ionicons name="ios-earth" size={22} color={PRIMARY_COLOR} />}
-          indexBackground="#FBEAE9"
-          backgroundColor="#F9F9F9"
-        />
+        {
+          adminCourses.map((course) =>{
+            return (
+              <CourseUnitItem
+                title={course.details.name}
+                numOfSubItems={10}
+                type="course"
+                index={<Ionicons name="ios-earth" size={22} color={PRIMARY_COLOR} />}
+                indexBackground="#FBEAE9"
+                backgroundColor="#F9F9F9"
+                key={course._id}
+              />
+            )
+          })
+        }
         <View style={styles.applyContainer}>
           <Text style={styles.learnerQuestion}>
             Do you know an indigenous language that you would like to share with

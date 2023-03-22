@@ -7,8 +7,20 @@ import { UserType } from "../../@types";
  * @param userGoogleInfo keeps the users information from Google provider.
  */
 
-const initialState = {
-  user: {},
+interface InitialStateType {
+  user: UserType
+  userGoogleInfo: object
+}
+
+const initialState: InitialStateType = {
+  user: {
+    _id: '',
+    role: 0,
+    authID: '',
+    adminLanguages: [],
+    learnerLanguages: [],
+    collaboratorLanguages: []
+  },
   userGoogleInfo: {},
 };
 
@@ -23,7 +35,7 @@ const authSlice = createSlice({
       state.userGoogleInfo = action.payload;
     },
     logout: (state) => {
-      state.user = {};
+      state.user = initialState.user;
     },
   },
 });

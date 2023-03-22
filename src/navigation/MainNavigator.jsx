@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ActivityIndicator } from 'react-native'
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import NetInfo from "@react-native-community/netinfo";
@@ -7,13 +7,15 @@ import { RootStackParamList } from "./types";
 import { Splash, Onboarding, Login } from "../screens";
 import BottomNavigator from "./BottomNavigator";
 import DrawerNavigator from "./DrawerNavigator";
-import { UserProvider } from "@realm/react";
+import { useApp, UserProvider, useUser } from "@realm/react";
 import { realmContext } from "../realm/realm";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../constants/sizes";
 import { useAppDispatch } from "../redux/store";
 import { toggleConnection } from "../redux/slices/connectionSlice";
+import { realmAppId } from "../config";
+import { getValueFor } from "../utils/storage";
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 
 const { RealmProvider } = realmContext;
 
@@ -38,21 +40,40 @@ const MainNavigator = () => {
 
   const dispatch = useAppDispatch()
 
+  const app = useApp()
+  
+  const user = useUser()
+
   useEffect(() => {
     
     NetInfo.addEventListener(state => {
-      setIsOnline(state.isInternetReachable!)
-      dispatch(toggleConnection(state.isInternetReachable!))
+      setIsOnline(state.isConnected)
+      dispatch(toggleConnection(state.isConnected))
     });
-  
+
   })
 
+ 
+const getUser = async () => {
+  if (app.currentUser) return app.currentUser;
+  const credentials = await Realm.Credentials.anonymous();
+  return await app.logIn(credentials);
+};
+
+
   const { Screen, Navigator } = Stack;
+  const openRealmBehaviorConfig = {
+    type: "openImmediately",
+  };
 
   return (
-    <UserProvider fallback={<FallBackNavigator />}>
-      <RealmProvider 
-        sync={isOnline ? { flexible: true } : undefined}
+      <RealmProvider
+        sync={{
+          user: app.currentUser,
+          flexible: true,
+          newRealmFileBehavior: openRealmBehaviorConfig,
+          existingRealmFileBehavior: openRealmBehaviorConfig,
+        }}
         fallback={() => <ActivityIndicator size={'large'} style={{ position: 'absolute', zIndex: 999, top: DEVICE_HEIGHT * 0.5, left: DEVICE_WIDTH * 0.46 }} />}
       >
         <Navigator
@@ -67,7 +88,6 @@ const MainNavigator = () => {
           <Screen name="BottomNavigator" component={BottomNavigator} />
         </Navigator>
       </RealmProvider>
-    </UserProvider>
   );
 };
 

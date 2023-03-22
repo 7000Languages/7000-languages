@@ -12,5 +12,6 @@ import {
 
 export const realmContext = createRealmContext({
   schema: [users, completes, courses, coursedetails, lessons, units, vocabs],
-  schemaVersion: 1
+  schemaVersion: 1,
+  deleteRealmIfMigrationNeeded: true
 })
