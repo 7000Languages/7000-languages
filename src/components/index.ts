@@ -10,6 +10,7 @@ import CourseUnitLessonDesign from "./CourseUnitLessonDesign/CourseUnitLessonDes
 import CourseUnitItem from "./CourseUnitItem/CourseUnitItem.component";
 import LessonItem from "./LessonItem/LessonItem.component";
 import SearchedCourse from "./SearchedCourse/SearchedCourse.component";
+import AddUnitLessonModal from "./AddUnitLessonModal/AddUnitLessonModal.components";
 
 export {
     PrimaryBtn,
@@ -23,5 +24,6 @@ export {
     CourseUnitLessonDesign,
     CourseUnitItem,
     LessonItem,
-    SearchedCourse
+    SearchedCourse,
+    AddUnitLessonModal
 }

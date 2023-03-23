@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import styles from './ContributorCourse.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { CourseUnitLessonDesign, CourseUnitItem, FocusAwareStatusBar, Header } from '../../../components'
+import { CourseUnitLessonDesign, CourseUnitItem, FocusAwareStatusBar, Header, AddUnitLessonModal } from '../../../components'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -19,6 +19,8 @@ type NavProps = NativeStackScreenProps<CourseStackParamList, 'ContributorCourse'
 const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
   const { course } = route.params
+
+  const [addUnitModal, setAddUnitModal] = useState(false);
 
   // unit
   const { useQuery } = realmContext
@@ -43,6 +45,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <AddUnitLessonModal isModalVisible={addUnitModal} type='unit' onCloseModal={()=>setAddUnitModal(false)} />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle="light-content"
@@ -65,6 +68,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
         data={convertToArrayOfPlainObject(units)}
         renderItem={renderItem}
         type='course'
+        onAddPress={()=>setAddUnitModal(true)}
       />
     </View>
   );

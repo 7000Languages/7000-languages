@@ -17,6 +17,7 @@ interface IProps {
   data: any;
   renderItem: ListRenderItem<never> | null | undefined;
   type: "course" | "lesson" | "unit";
+  onAddPress: ()=>void
 }
 
 const CourseUnitLessonDesign: React.FC<IProps> = ({
@@ -26,6 +27,7 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
   data,
   renderItem,
   type,
+  onAddPress
 }) => {
 
   const itemTypeManage = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 0 ? 's' : ''}`: `Vocab${data.length > 0 ? 's' : ''}`
@@ -63,7 +65,7 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
           index,
         })}
       />
-      <TouchableOpacity style={styles.addUnitContainer}>
+      <TouchableOpacity style={styles.addUnitContainer} onPress={onAddPress}>
         <Ionicons name="add-circle" size={24} color="#DF4E47" />
         <Text style={styles.addUnitText}>Add {addItemType}</Text>
       </TouchableOpacity>

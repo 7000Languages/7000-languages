@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 
@@ -10,6 +10,7 @@ import {
   CourseUnitItem,
   FocusAwareStatusBar,
   Header,
+  AddUnitLessonModal,
 } from "../../../components";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { PRIMARY_COLOR } from "../../../constants/colors";
@@ -21,6 +22,8 @@ import { convertToPlainObject } from "../../../utils/helpers";
 type NavProps = NativeStackScreenProps<CourseStackParamList, "ContributorUnit">;
 
 const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
+
+  const [addLessonModal, setAddLessonModal] = useState(false);
 
   const { unit, lessons } = route.params
 
@@ -41,6 +44,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <AddUnitLessonModal isModalVisible={addLessonModal} type='lesson' onCloseModal={() => setAddLessonModal(false)} />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle="light-content"
@@ -70,6 +74,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
         data={lessons}
         renderItem={renderItem}
         type="unit"
+        onAddPress={()=>setAddLessonModal(true)}
       />
     </View>
   );
