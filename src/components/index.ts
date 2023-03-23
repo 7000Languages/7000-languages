@@ -10,7 +10,8 @@ import CourseUnitLessonDesign from "./CourseUnitLessonDesign/CourseUnitLessonDes
 import CourseUnitItem from "./CourseUnitItem/CourseUnitItem.component";
 import LessonItem from "./LessonItem/LessonItem.component";
 import SearchedCourse from "./SearchedCourse/SearchedCourse.component";
-import AddUnitLessonModal from "./AddUnitLessonModal/AddUnitLessonModal.components";
+import AddUnitLessonModal from "./AddUnitLessonModal/AddUnitLessonModal.component";
+import AddVocabModal from "./AddVocabModal/AddVocabModal.component";
 
 export {
     PrimaryBtn,
@@ -25,5 +26,6 @@ export {
     CourseUnitItem,
     LessonItem,
     SearchedCourse,
-    AddUnitLessonModal
+    AddUnitLessonModal,
+    AddVocabModal
 }

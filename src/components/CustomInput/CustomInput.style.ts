@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
    subLabel: {
     color: '#A4A4A4',
     fontSize: 12,
-    textDecorationLine: 'underline'
    }
 });
 

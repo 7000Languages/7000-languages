@@ -32,7 +32,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
     }
 
     return (
-        <Modal isVisible={isModalVisible}>
+        <Modal isVisible={isModalVisible} backdropOpacity={0.8}>
             <View style={styles.container}>
                 <View style={styles.header}>
                     <Text style={styles.title}>Add Custom {type.charAt(0).toUpperCase() + type.slice(1)}</Text>

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, TextInputProps, ViewStyle } from "react-native";
+import { View, Text, TextInput, TextInputProps, ViewStyle, TextStyle } from "react-native";
 
 import styles from "./CustomInput.style";
 
@@ -9,6 +9,7 @@ interface IProps extends TextInputProps {
   errorText?: string;
   inputStyle?: ViewStyle;
   textArea?: boolean;
+  textDecorationLine?: "none" | "underline" | "line-through" | "underline line-through" | undefined
 }
 
 const CustomInput: React.FC<IProps> = ({
@@ -17,13 +18,14 @@ const CustomInput: React.FC<IProps> = ({
   inputStyle,
   subLabel,
   textArea,
+  textDecorationLine,
   ...rest
 }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       {
-        subLabel && <Text style={styles.subLabel}>{subLabel}</Text>
+        subLabel && <Text style={[styles.subLabel, { textDecorationLine  }]}>{subLabel}</Text>
       }
       <TextInput
         style={[styles.input, inputStyle, { height: textArea ? 100 : 45 }]}
