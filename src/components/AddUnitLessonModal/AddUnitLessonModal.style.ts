@@ -1,10 +1,10 @@
 import {StyleSheet} from 'react-native';
-import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../../constants/sizes';
+import { DEVICE_WIDTH } from '../../constants/sizes';
 
 const styles = StyleSheet.create({
     container: {
         width: DEVICE_WIDTH * 0.9,
-        height: DEVICE_HEIGHT * 0.65,
+        paddingVertical: 20,
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
         backgroundColor: '#ffffff',

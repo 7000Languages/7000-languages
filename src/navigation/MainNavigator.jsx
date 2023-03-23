@@ -47,7 +47,6 @@ const MainNavigator = () => {
         sync={{
           user: app.currentUser,
           flexible: true,
-          newRealmFileBehavior: openRealmBehaviorConfig,
           existingRealmFileBehavior: openRealmBehaviorConfig,
           initialSubscriptions: {
             update: (subs, realm) => {

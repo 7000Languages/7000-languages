@@ -1,7 +1,11 @@
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, ActivityIndicator } from 'react-native'
 import Modal from 'react-native-modal'
+import { CourseType, UnitType } from '../../@types'
+import { PRIMARY_COLOR } from '../../constants/colors'
+import { realmContext } from '../../realm/realm'
+import { hasEmoji } from '../../utils/helpers'
 import CustomInput from '../CustomInput/CustomInput.component'
 import PrimaryBtn from '../PrimaryBtn/PrimaryBtn.component'
 
@@ -11,19 +15,71 @@ type IProps = {
     isModalVisible: boolean
     type: 'unit' | 'lesson'
     onCloseModal: () => void
+    course?: CourseType
+    unit?: UnitType
 }
 
-const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseModal }) => {
+const { useRealm } = realmContext
+
+const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course }) => {
 
     const [name, setName] = useState('');
     const [emoji, setEmoji] = useState('');
     const [description, setDescription] = useState('');
+    const [loading, setLoading] = useState(false);
 
     // Error states
     const [nameError, setNameError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
+    const [emojiError, setEmojiError] = useState('');
 
-    const addUnit = () => {
+    const resetErrorStates = () => {
+        setNameError('');
+        setDescriptionError('');
+        setEmojiError('');
+    }
+
+    const resetStates = () => {
+        setName('');
+        setDescription('');
+        setEmoji('');
+    }
+
+    const realm = useRealm()
+
+    const addUnit = async () => {
+        setLoading(true);
+        resetErrorStates()
+        let hasError = false;
+        if (name.length < 5) {
+            setNameError('Name of the unit is too short');
+            hasError = true;
+        }
+        if(!hasEmoji(emoji)){
+            setEmojiError('Please select an emoji');
+            hasError = true;
+        }
+        if(description.length < 5) {
+            setDescriptionError('Description of the unit is too short');
+            hasError = true;
+        }
+        if(hasError) {
+            setLoading(false)
+            return
+        }
+ 
+        realm.write(() => {
+            realm.create('units', {
+                _course_id: course?._id,
+                name: name + " " + emoji,
+                _order: 0,
+                selected: false,
+                description
+            })
+        })
+
+        resetStates()
+        setLoading(false)
 
     }
 
@@ -54,6 +110,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
                 <CustomInput
                     label={`Give your ${type} an emoji`}
                     value={emoji}
+                    errorText={emojiError}
                     onChangeText={(text: string) => setEmoji(text)}
                 />
                 <CustomInput
@@ -63,10 +120,16 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
                     onChangeText={(text: string) => setDescription(text)}
                     textArea={true}
                 />
-                <PrimaryBtn
-                    label={`Create ${type.charAt(0).toUpperCase() + type.slice(1)}`}
-                    onPress={type == 'unit' ? addUnit : addLesson}
-                />
+                {
+                    loading
+                    ?
+                    <ActivityIndicator color={PRIMARY_COLOR} size='large' />
+                    :
+                    <PrimaryBtn
+                        label={`Create ${type.charAt(0).toUpperCase() + type.slice(1)}`}
+                        onPress={type == 'unit' ? addUnit : addLesson}
+                    />
+                }
             </View>
         </Modal>
     )

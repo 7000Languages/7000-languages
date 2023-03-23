@@ -17,3 +17,9 @@ export const convertToArrayOfPlainObject = (data: Realm.Object[]) => {
 export const convertToPlainObject = (data: Realm.Object) => {
     return Object.assign({}, JSON.parse(JSON.stringify(data)));
 }
+
+export const hasEmoji = (text: string): boolean => {
+  const regex_emoji =
+    /[\p{Extended_Pictographic}\u{1F3FB}-\u{1F3FF}\u{1F9B0}-\u{1F9B3}]/u;
+  return regex_emoji.test(text);
+};

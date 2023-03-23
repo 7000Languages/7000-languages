@@ -45,7 +45,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <AddUnitLessonModal isModalVisible={addUnitModal} type='unit' onCloseModal={()=>setAddUnitModal(false)} />
+      <AddUnitLessonModal course={course} isModalVisible={addUnitModal} type='unit' onCloseModal={()=>setAddUnitModal(false)} />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle="light-content"
