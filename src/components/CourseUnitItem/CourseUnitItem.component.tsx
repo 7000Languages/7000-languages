@@ -22,7 +22,7 @@ const CourseUnitItem:React.FC<IProps> = ({ title, numOfSubItems, backgroundColor
     <TouchableOpacity
       style={[styles.container, { backgroundColor }]}
       onPress={onPress}
-      activeOpacity={onPress !== undefined ? 0.5 : 1}
+      activeOpacity={onPress !== undefined ? 0.5 : 0.7}
     >
       <View style={[styles.numberContainer, { backgroundColor: indexBackground }]}>
         <Text style={styles.number}>{index}</Text>

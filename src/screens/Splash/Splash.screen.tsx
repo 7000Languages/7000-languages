@@ -7,8 +7,6 @@ import { useUser } from "@realm/react";
 import { getValueFor } from "../../utils/storage";
 import { useAppDispatch } from "../../redux/store";
 import { setUser } from "../../redux/slices/authSlice";
-import { FocusAwareStatusBar } from "../../components";
-import { PRIMARY_COLOR } from "../../constants/colors";
 
 type NavProps = NativeStackScreenProps<RootStackParamList, "Splash">;
 

@@ -5,21 +5,24 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import styles from './ContributorLesson.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { CourseUnitLessonDesign, CourseUnitItem, FocusAwareStatusBar, Header, LessonItem } from '../../../components'
+import { CourseUnitLessonDesign, FocusAwareStatusBar, Header, LessonItem } from '../../../components'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { courses } from '../../../../assets/data'
+import { LessonType, VocabType } from '../../../@types'
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'ContributorLesson'>
 
-const ContributorLesson:React.FC<NavProps> = ({ navigation }) => {
+const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
-  const renderItem = ({item, index}:any) => {
-    const { details } = item
+  const { lesson } = route.params
+
+  const renderItem = ({item, index}:{item: VocabType, index:number}) => {
+    const { original, translation } = item
     return (
       <LessonItem
-        title={details.name}
+        title={original}
        />
     )
   };
@@ -42,10 +45,10 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation }) => {
         }
       />
       <CourseUnitLessonDesign
-        item="Helpful phrases"
-        itemDescription="Spanish is a wonderful language that prides itself in its world reach and rich, diverse cultures."
-        numOfSubItems={4}
-        data={courses}
+        item={lesson.name}
+        itemDescription={lesson.description}
+        numOfSubItems={lesson.vocab.length}
+        data={lesson}
         renderItem={renderItem}
         type='lesson'
       />

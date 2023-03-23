@@ -20,7 +20,9 @@ const coursesSlice = createSlice({
             state.learnerCourses = courses
         },
         setAdminCourses: (state, action:PayloadAction<CourseType[]>) => {
-            let courses = [...action.payload]
+
+            // convert the realm objects to plain objects. TODO: Look for a better solution as this is expensive
+            let courses = [...action.payload.map(course=>(Object.assign({}, JSON.parse(JSON.stringify((course))))))]
             state.adminCourses = courses
         }
     }

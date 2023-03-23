@@ -56,7 +56,7 @@ export type LessonType = {
     _order: number,
     selected: boolean,
     vocab: VocabType[],
-    description?: string
+    description: string
 }
 
 export type CompleteType = {

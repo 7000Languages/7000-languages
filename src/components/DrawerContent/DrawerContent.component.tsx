@@ -13,36 +13,37 @@ import CourseUnitItem from "../CourseUnitItem/CourseUnitItem.component";
 import { PRIMARY_COLOR } from "../../constants/colors";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { DrawerStackParamList } from "../../navigation/types";
+import { CourseStackParamList, DrawerStackParamList } from "../../navigation/types";
 import { realmContext } from "../../realm/realm";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { UserType } from "../../@types";
+import { CourseType, UserType } from "../../@types";
 import { setAdminCourses } from "../../redux/slices/coursesSlice";
 import { courses } from "../../realm/schemas";
 
 
 const DrawerContent: React.FC = (props) => {
 
-  const navigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
-  const { useQuery, useRealm } = realmContext
+  const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
+  const coursesNavigation = useNavigation<NativeStackNavigationProp<CourseStackParamList>>()
+
+  const { useQuery } = realmContext
   const user: UserType = useAppSelector(state=>state.auth.user)
   const adminCourses = useAppSelector(state=>state.courses.adminCourses)
   const dispatch = useAppDispatch()
-  const realm = useRealm()
   const coursesData: any = useQuery(courses)
-  // const coursesData: any = realm.objects('courses')
   
   useEffect(() => {
     let adminCourses: any = coursesData.filter((course:any) => course.admin_id === user.authID)        
     dispatch(setAdminCourses(adminCourses))
   },[])
-  
 
+  const goToContributorCourse = (course: CourseType) => coursesNavigation.navigate('ContributorCourse', { course })
+  
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
         <Text style={styles.myCourses}>My Courses</Text>
-        <Ionicons name="close-outline" size={24} color="black" onPress={()=>navigation.dispatch(DrawerActions.closeDrawer())} />
+        <Ionicons name="close-outline" size={24} color="black" onPress={()=>drawerNavigation.dispatch(DrawerActions.closeDrawer())} />
       </View>
       <ScrollView
         contentContainerStyle={{
@@ -93,6 +94,7 @@ const DrawerContent: React.FC = (props) => {
                 indexBackground="#FBEAE9"
                 backgroundColor="#F9F9F9"
                 key={course._id}
+                onPress={()=>goToContributorCourse(course)}
               />
             )
           })
@@ -108,7 +110,7 @@ const DrawerContent: React.FC = (props) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.accountInfBtn} onPress={()=>navigation.navigate('AccountInfo')}>
+      <TouchableOpacity style={styles.accountInfBtn} onPress={()=>drawerNavigation.navigate('AccountInfo')}>
         <MaterialCommunityIcons name="account" size={24} color="#5B6165" />
         <Text style={styles.accountInfText}>Account Info</Text>
       </TouchableOpacity>

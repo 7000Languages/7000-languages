@@ -16,19 +16,22 @@ import { PRIMARY_COLOR } from "../../../constants/colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { courses } from "../../../../assets/data";
 import { LessonType } from "../../../@types";
+import { convertToPlainObject } from "../../../utils/helpers";
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, "ContributorUnit">;
 
-const ContributorUnit: React.FC<NavProps> = ({ navigation }) => {
-    
-  const goToLessonScreen = (item: LessonType) => navigation.navigate("ContributorLesson", { item });
+const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
-  const renderItem = ({ item, index }: any) => {
-    const { details } = item;
+  const { unit, lessons } = route.params
+
+  const goToLessonScreen = (lesson: LessonType) => navigation.navigate("ContributorLesson", { lesson });
+
+  const renderItem = ({ item, index }: {item:LessonType, index: number}) => {
+    const { name, vocab } = item;
     return (
       <CourseUnitItem
-        title={details.name}
-        numOfSubItems={20}
+        title={name}
+        numOfSubItems={vocab.length}
         type={"unit"}
         index={index + 1}
         onPress={() => goToLessonScreen(item)}
@@ -51,7 +54,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation }) => {
             name="arrow-left"
             size={24}
             color="#ffffff"
-            onPress={() => navigation.navigate("ContributorCourse")}
+            onPress={() => navigation.goBack()}
           />
         }
         rightIcon={
@@ -61,10 +64,10 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation }) => {
         }
       />
       <CourseUnitLessonDesign
-        item="Initial Phrases"
-        itemDescription="Some text describing this unit. Hopefully they write 2-3 sentences here to make it look nice."
-        numOfSubItems={4}
-        data={courses}
+        item={unit.name}
+        itemDescription={unit.description}
+        numOfSubItems={lessons.length}
+        data={lessons}
         renderItem={renderItem}
         type="unit"
       />

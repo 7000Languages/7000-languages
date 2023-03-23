@@ -1,4 +1,4 @@
-import { LessonType, UnitType } from "../@types"
+import { CourseType, LessonType, UnitType } from "../@types"
 
 export type RootStackParamList = {
     Splash: undefined
@@ -11,12 +11,15 @@ export type RootStackParamList = {
 export type CourseStackParamList = {
     Home: undefined
     BecomeContributor: undefined
-    ContributorCourse: undefined
+    ContributorCourse: {
+        course: CourseType
+    }
     ContributorUnit: {
-        item?: UnitType
+        unit: UnitType
+        lessons: LessonType[]
     }
     ContributorLesson: {
-        item?: LessonType
+        lesson: LessonType
     }
     Search: undefined
 }

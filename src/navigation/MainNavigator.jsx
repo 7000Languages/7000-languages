@@ -19,21 +19,6 @@ const Stack = createNativeStackNavigator();
 
 const { RealmProvider } = realmContext;
 
-const FallBackNavigator = () => {
-  const { Screen, Navigator } = Stack;
-  return (
-    <Navigator
-      initialRouteName="Splash"
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Screen name="Splash" component={Splash} />
-      <Screen name="Login" component={Login} />
-    </Navigator>
-  );
-};
-
 const MainNavigator = () => {
 
   const [isOnline, setIsOnline] = useState(false);
@@ -42,8 +27,6 @@ const MainNavigator = () => {
 
   const app = useApp()
   
-  const user = useUser()
-
   useEffect(() => {
     
     NetInfo.addEventListener(state => {
@@ -53,17 +36,10 @@ const MainNavigator = () => {
 
   })
 
- 
-const getUser = async () => {
-  if (app.currentUser) return app.currentUser;
-  const credentials = await Realm.Credentials.anonymous();
-  return await app.logIn(credentials);
-};
-
-
   const { Screen, Navigator } = Stack;
+
   const openRealmBehaviorConfig = {
-    type: "openImmediately",
+    type: "openImmediately"
   };
 
   return (
@@ -73,6 +49,23 @@ const getUser = async () => {
           flexible: true,
           newRealmFileBehavior: openRealmBehaviorConfig,
           existingRealmFileBehavior: openRealmBehaviorConfig,
+          initialSubscriptions: {
+            update: (subs, realm) => {
+              subs.add(realm.objects('courses'), {
+                name: 'allCoursesSubscription',
+              })
+              subs.add(realm.objects('units'), {
+                name: 'allUnitsSubscription',
+              })
+              subs.add(realm.objects('lessons'), {
+                name: 'allLessonsSubscription',
+              })
+              subs.add(realm.objects('vocabs'), {
+                name: 'allVocabsSubscription',
+              })
+            },
+            rerunOnOpen: true,
+          },
         }}
         fallback={() => <ActivityIndicator size={'large'} style={{ position: 'absolute', zIndex: 999, top: DEVICE_HEIGHT * 0.5, left: DEVICE_WIDTH * 0.46 }} />}
       >

@@ -1,45 +1,19 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Text, View } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { Feather } from '@expo/vector-icons'
 
 import styles from './Home.style'
 
-import { realmContext } from "../../../realm/realm";
 import { CourseStackParamList } from '../../../navigation/types'
 import { FocusAwareStatusBar, Header, PrimaryBtn } from '../../../components'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { DrawerActions } from '@react-navigation/native'
-import { RootState, useAppSelector } from '../../../redux/store'
-import { useUser } from '@realm/react'
-
-const { useRealm } = realmContext
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'Home'>
 
 const Home:React.FC<NavProps> = ({ navigation }) => {
-
-  const userData: any = useAppSelector((state: RootState) => state.auth.user)
-  const isOnline = useAppSelector((state: RootState) => state.connection.isOnline)
-
-  // realm subscriptions
-  const realm = useRealm()
-  const user = useUser();
-
-
-  useEffect(() => {
-    // subscribe to realm subscriptions only when the user is online  
-    console.log(isOnline);
-     
-    if (isOnline == true) {
-      realm.subscriptions.update(subs => {
-        subs.add(realm.objects('courses'), {
-          name: 'allCoursesSubscription',
-        })
-      })
-    }
-  }, [realm, user, isOnline])
 
   return (
     <View style={styles.container}>

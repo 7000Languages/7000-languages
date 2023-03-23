@@ -9,26 +9,35 @@ import { CourseUnitLessonDesign, CourseUnitItem, FocusAwareStatusBar, Header } f
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { courses } from '../../../../assets/data'
 import { DrawerActions } from '@react-navigation/native'
-import { UnitType } from '../../../@types'
+import { LessonType, UnitType } from '../../../@types'
+import { realmContext } from '../../../realm/realm'
+import { convertToArrayOfPlainObject } from '../../../utils/helpers'
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'ContributorCourse'>
 
-const ContributorCourse:React.FC<NavProps> = ({ navigation }) => {
+const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
-  const goToUnitScreen = (item:UnitType) => navigation.navigate('ContributorUnit',{item})
+  const { course } = route.params
 
-  const renderItem = ({item, index}:any) => {
-    const { details } = item
+  // unit
+  const { useQuery } = realmContext
+  const units = useQuery('units').filter((unit: any) => unit._course_id == course._id)
+  const lessons = useQuery('lessons').filter((lesson: any) => lesson._course_id == course._id)
+
+  const goToUnitScreen = (unit: UnitType, lessons: LessonType[]) => navigation.navigate('ContributorUnit', { unit, lessons })
+
+  const renderItem = ({ item, index }: any) => {
+    const { name, _id } = item
+    const unitLessons = lessons.filter((lesson: any) => lesson._unit_id == _id)
     return (
       <CourseUnitItem
-        title={details.name}
-        numOfSubItems={20}
+        title={name}
+        numOfSubItems={unitLessons.length}
         type={'course'}
         index={index + 1}
-        onPress={()=>goToUnitScreen(item)}
-       />
+        onPress={() => goToUnitScreen(item, convertToArrayOfPlainObject(unitLessons))}
+      />
     )
   };
 
@@ -42,7 +51,7 @@ const ContributorCourse:React.FC<NavProps> = ({ navigation }) => {
       <Header
         title="Course"
         headerStyle={{ backgroundColor: PRIMARY_COLOR }}
-        leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={()=>navigation.dispatch(DrawerActions.openDrawer())} />}
+        leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />}
         rightIcon={
           <TouchableOpacity style={styles.helpContainer}>
             <Ionicons name="help" size={20} color={PRIMARY_COLOR} />
@@ -50,10 +59,10 @@ const ContributorCourse:React.FC<NavProps> = ({ navigation }) => {
         }
       />
       <CourseUnitLessonDesign
-        item="Spanish"
-        itemDescription="Spanish is a wonderful language that prides itself in its world reach and rich, diverse cultures."
-        numOfSubItems={4}
-        data={courses}
+        item={course.details.name}
+        itemDescription={course.details.description}
+        numOfSubItems={units.length}
+        data={convertToArrayOfPlainObject(units)}
         renderItem={renderItem}
         type='course'
       />

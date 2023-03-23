@@ -28,7 +28,9 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
   type,
 }) => {
 
-  const itemType = type == 'course' ? `unit${data.length > 0 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 0 ? 's' : ''}`: `Vocab${data.length > 0 ? 's' : ''}`
+  const itemTypeManage = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 0 ? 's' : ''}`: `Vocab${data.length > 0 ? 's' : ''}`
+  const itemTypeLabel = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 0 ? 's' : ''}`: `Vocabulary item${data.length > 0 ? 's' : ''}`
+  const addItemType = type == 'course' ? `Unit` : type == 'unit' ? `Lesson`: `Vocab`
   const itemHeight = type !== 'lesson' ? 68 : 88  
 
   return (
@@ -45,10 +47,10 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
       </View>
       <View style={styles.unitsContainer}>
         <Text style={styles.units}>
-          {numOfSubItems} {itemType}
+          {numOfSubItems} {itemTypeLabel}
         </Text>
         <TouchableOpacity style={styles.manageUnitsContainer}>
-          <Text style={styles.manageUnits}>Manage {itemType}</Text>
+          <Text style={styles.manageUnits}>Manage {itemTypeManage}</Text>
           <Ionicons name="settings" size={13} color="#DF4E47" />
         </TouchableOpacity>
       </View>
@@ -63,7 +65,7 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
       />
       <TouchableOpacity style={styles.addUnitContainer}>
         <Ionicons name="add-circle" size={24} color="#DF4E47" />
-        <Text style={styles.addUnitText}>Add {itemType}</Text>
+        <Text style={styles.addUnitText}>Add {addItemType}</Text>
       </TouchableOpacity>
     </View>
   );
