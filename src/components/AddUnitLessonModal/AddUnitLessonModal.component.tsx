@@ -21,7 +21,7 @@ type IProps = {
 
 const { useRealm } = realmContext
 
-const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course }) => {
+const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course, unit }) => {
 
     const [name, setName] = useState('');
     const [emoji, setEmoji] = useState('');
@@ -84,6 +84,39 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
     }
 
     const addLesson = () => {
+        setLoading(true);
+        resetErrorStates()
+        let hasError = false;
+        if (name.length < 5) {
+            setNameError('Name of the lesson is too short');
+            hasError = true;
+        }
+        if(!hasEmoji(emoji)){
+            setEmojiError('Please select an emoji');
+            hasError = true;
+        }
+        if(description.length < 5) {
+            setDescriptionError('Description of the lesson is too short');
+            hasError = true;
+        }
+        if(hasError) {
+            setLoading(false)
+            return
+        }
+ 
+        realm.write(() => {
+            realm.create('lessons', {
+                _course_id: course?._id,
+                _unit_id: unit?._id,
+                name: name + " " + emoji,
+                _order: 0,
+                selected: false,
+                description
+            })
+        })
+
+        resetStates()
+        setLoading(false)
 
     }
 

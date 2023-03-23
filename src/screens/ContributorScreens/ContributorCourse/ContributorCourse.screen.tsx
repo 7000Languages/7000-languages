@@ -36,7 +36,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
       <CourseUnitItem
         title={name}
         numOfSubItems={unitLessons.length}
-        type={'course'}
+        type='unit'
         index={index + 1}
         onPress={() => goToUnitScreen(item, convertToArrayOfPlainObject(unitLessons))}
       />

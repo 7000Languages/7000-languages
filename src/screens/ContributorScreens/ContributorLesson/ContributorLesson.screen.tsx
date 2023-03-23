@@ -18,7 +18,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
   const { lesson } = route.params
 
-  const [isModalVisible, setIsModalVisible] = useState(true)
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   const renderItem = ({item, index}:{item: VocabType, index:number}) => {
     const { original, translation } = item

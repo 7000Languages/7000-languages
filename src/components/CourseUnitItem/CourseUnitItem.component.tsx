@@ -16,7 +16,7 @@ interface IProps {
 
 const CourseUnitItem:React.FC<IProps> = ({ title, numOfSubItems, backgroundColor, index, type, onPress, indexBackground }) => {
 
-  const subItemType = type == 'course' ? 'Lessons' : 'Vocab Items'
+  const subItemType = type == 'course' ? 'Units' : type == 'unit' ? 'Lessons' : 'Vocab Items'
 
   return (
     <TouchableOpacity

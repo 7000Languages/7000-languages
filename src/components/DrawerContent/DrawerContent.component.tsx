@@ -21,7 +21,7 @@ import { setAdminCourses } from "../../redux/slices/coursesSlice";
 import { courses } from "../../realm/schemas";
 
 
-const DrawerContent: React.FC = (props) => {
+const DrawerContent: React.FC = () => {
 
   const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
   const coursesNavigation = useNavigation<NativeStackNavigationProp<CourseStackParamList>>()
@@ -74,7 +74,7 @@ const DrawerContent: React.FC = (props) => {
         <View style={styles.questionContainer}>
           <Text style={styles.learnerQuestion}>
             Do you want to learn about an indigenous language?
-            <Text style={{ fontWeight: "bold" }}> Start Learning!</Text>
+            <Text style={{ fontWeight: "bold" }}>Start Learning!</Text>
           </Text>
           <TouchableOpacity style={styles.searchCourseBtn}>
             <Text style={styles.searchCourseText}>Search Courses</Text>
@@ -85,10 +85,11 @@ const DrawerContent: React.FC = (props) => {
         </TouchableOpacity>
         {
           adminCourses.map((course) =>{
+            const units = useQuery('units').filter((unit:any) => unit._course_id == course._id)
             return (
               <CourseUnitItem
                 title={course.details.name}
-                numOfSubItems={10}
+                numOfSubItems={units.length}
                 type="course"
                 index={<Ionicons name="ios-earth" size={22} color={PRIMARY_COLOR} />}
                 indexBackground="#FBEAE9"

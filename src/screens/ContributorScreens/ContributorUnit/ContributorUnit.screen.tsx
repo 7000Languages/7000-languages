@@ -18,6 +18,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { courses } from "../../../../assets/data";
 import { LessonType } from "../../../@types";
 import { convertToPlainObject } from "../../../utils/helpers";
+import { realmContext } from "../../../realm/realm";
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, "ContributorUnit">;
 
@@ -27,6 +28,9 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   const { unit, lessons } = route.params
 
+  const { useQuery } = realmContext
+  const course = useQuery('courses').find((course: any) => course._id == unit._course_id)
+  
   const goToLessonScreen = (lesson: LessonType) => navigation.navigate("ContributorLesson", { lesson });
 
   const renderItem = ({ item, index }: {item:LessonType, index: number}) => {
@@ -35,7 +39,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
       <CourseUnitItem
         title={name}
         numOfSubItems={vocab.length}
-        type={"unit"}
+        type='lesson'
         index={index + 1}
         onPress={() => goToLessonScreen(item)}
       />
@@ -44,7 +48,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <AddUnitLessonModal isModalVisible={addLessonModal} type='lesson' onCloseModal={() => setAddLessonModal(false)} />
+      <AddUnitLessonModal unit={unit} course={convertToPlainObject(course!)}  isModalVisible={addLessonModal} type='lesson' onCloseModal={() => setAddLessonModal(false)} />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle="light-content"
