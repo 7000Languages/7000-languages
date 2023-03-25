@@ -11,6 +11,7 @@ import {
   FocusAwareStatusBar,
   Header,
   AddUnitLessonModal,
+  EditCourseUnitLesson,
 } from "../../../components";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { PRIMARY_COLOR } from "../../../constants/colors";
@@ -24,6 +25,7 @@ type NavProps = NativeStackScreenProps<CourseStackParamList, "ContributorUnit">;
 const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   const [addLessonModal, setAddLessonModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
 
   const { unit } = route.params
   const { useQuery } = realmContext
@@ -33,7 +35,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   const goToLessonScreen = (lesson: LessonType) => navigation.navigate("ContributorLesson", { lesson });
 
-  const renderItem = ({ item, index }: {item:LessonType, index: number}) => {
+  const renderItem = ({ item, index }: { item: LessonType, index: number }) => {
     const { name, vocab } = item;
     return (
       <CourseUnitItem
@@ -48,7 +50,8 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <AddUnitLessonModal unit={unit} course={convertToPlainObject(course!)}  isModalVisible={addLessonModal} type='lesson' onCloseModal={() => setAddLessonModal(false)} />
+      <EditCourseUnitLesson isModalVisible={editModal} type='unit' unit={unit} onCloseModal={() => setEditModal(false)} />
+      <AddUnitLessonModal unit={unit} course={convertToPlainObject(course!)} isModalVisible={addLessonModal} type='lesson' onCloseModal={() => setAddLessonModal(false)} />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle="light-content"
@@ -78,7 +81,8 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
         data={convertToArrayOfPlainObject(lessons)}
         renderItem={renderItem}
         type="unit"
-        onAddPress={()=>setAddLessonModal(true)}
+        onAddPress={() => setAddLessonModal(true)}
+        onEditPress={() => setEditModal(true)}
       />
     </View>
   );

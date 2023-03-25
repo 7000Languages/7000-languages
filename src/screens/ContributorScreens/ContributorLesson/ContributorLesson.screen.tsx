@@ -5,13 +5,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import styles from './ContributorLesson.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { AddVocabModal, CourseUnitLessonDesign, FocusAwareStatusBar, Header, LessonItem } from '../../../components'
+import { AddVocabModal, CourseUnitLessonDesign, EditCourseUnitLesson, FocusAwareStatusBar, Header, LessonItem } from '../../../components'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { CourseType, VocabType } from '../../../@types'
+import { VocabType } from '../../../@types'
 import { realmContext } from '../../../realm/realm'
-import { convertToArrayOfPlainObject, convertToPlainObject } from '../../../utils/helpers'
+import { convertToArrayOfPlainObject } from '../../../utils/helpers'
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'ContributorLesson'>
 
@@ -24,6 +24,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
   const getLesson: any = useQuery('lessons').find((item: any) => item._id == lesson._id) // We get the lesson again so that the list updates automatically when we add a new vocab item
 
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [editModal, setEditModal] = useState(false);
 
   const renderItem = ({item, index}:{item: VocabType, index:number}) => {
     const { original, translation, image, audio } = item
@@ -40,6 +41,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+      <EditCourseUnitLesson isModalVisible={editModal} type='lesson' lesson={getLesson} onCloseModal={() => setEditModal(false)} />
       <AddVocabModal isModalVisible={isModalVisible} lesson={getLesson} course={course} onCloseModal={()=>setIsModalVisible(false)}  />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
@@ -64,6 +66,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
         renderItem={renderItem}
         type='lesson'
         onAddPress={()=>setIsModalVisible(true)}
+        onEditPress={()=>setEditModal(true)}
       />
     </View>
   );

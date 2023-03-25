@@ -3,29 +3,32 @@ import React, { useState } from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { View, Text, ActivityIndicator } from 'react-native'
 import Modal from 'react-native-modal'
-import { CourseType, UnitType } from '../../@types'
+import { CourseType, LessonType, UnitType } from '../../@types'
 import { PRIMARY_COLOR } from '../../constants/colors'
 import { realmContext } from '../../realm/realm'
 import { hasEmoji } from '../../utils/helpers'
 import CustomInput from '../CustomInput/CustomInput.component'
 import PrimaryBtn from '../PrimaryBtn/PrimaryBtn.component'
 
-import styles from './AddUnitLessonModal.style'
+import styles from './EditCourseUnitLesson.style'
 
 type IProps = {
     isModalVisible: boolean
-    type: 'unit' | 'lesson'
+    type: 'unit' | 'lesson' | 'course'
     onCloseModal: () => void
     course?: CourseType
     unit?: UnitType
+    lesson?: LessonType
 }
 
 const { useRealm } = realmContext
 
-const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course, unit }) => {
+const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course, unit }) => {
 
     const [name, setName] = useState('');
     const [emoji, setEmoji] = useState('');
+    const [alternativeName, setAlternativeName] = useState('');
+    const [teachingLanguage, setTeachingLanguage] = useState('');
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -33,6 +36,9 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
     const [nameError, setNameError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
     const [emojiError, setEmojiError] = useState('');
+    const [alternativeNameError, setAlternativeNameError] = useState('');
+    const [teachingLanguageError, setTeachingLanguageError] = useState('');
+
 
     const resetErrorStates = () => {
         setNameError('');
@@ -48,7 +54,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
 
     const realm = useRealm()
 
-    const addUnit = async () => {
+    const editUnit = async () => {
         setLoading(true);
         resetErrorStates()
         let hasError = false;
@@ -84,7 +90,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
 
     }
 
-    const addLesson = () => {
+    const editLesson = () => {
         setLoading(true);
         resetErrorStates()
         let hasError = false;
@@ -121,15 +127,23 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
 
     }
 
+    const editCourse = () => {
+
+    }
+
     return (
         <Modal isVisible={isModalVisible} backdropOpacity={0.8}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
-                <ScrollView style={styles.inputsContianer} keyboardShouldPersistTaps='always'>
+                <ScrollView
+                    style={styles.inputsContianer}
+                    keyboardShouldPersistTaps='always'
+                    showsVerticalScrollIndicator={false}
+                >
                     <View style={styles.container}>
                         <View style={styles.header}>
-                            <Text style={styles.title}>Add Custom {type.charAt(0).toUpperCase() + type.slice(1)}</Text>
+                            <Text style={styles.title}>Edit {type.charAt(0).toUpperCase() + type.slice(1)}</Text>
                             <AntDesign name='close' size={24} color="#111827" onPress={onCloseModal} />
                         </View>
                         <View style={styles.suggestion}>
@@ -140,19 +154,42 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
                             <Text style={styles.suggestionText}>When creating a {type}, think about how it will be used. More text here explaining what they should look for when making a {type}.</Text>
                         </View>
                         <CustomInput
-                            label={`Give your ${type} a name`}
+                            label={`Change your ${type} name`}
                             value={name}
                             errorText={nameError}
                             onChangeText={(text: string) => setName(text)}
                         />
+                        {
+                            type === 'course'
+                            &&
+                            <>
+                                <CustomInput
+                                    label={`Change the alternative name `}
+                                    value={alternativeName}
+                                    errorText={alternativeNameError}
+                                    onChangeText={(text: string) => setAlternativeName(text)}
+                                />
+                                <CustomInput
+                                    label='Change the teaching language'
+                                    subLabel="You're teaching your course in this chosen language"
+                                    value={teachingLanguage}
+                                    errorText={teachingLanguageError}
+                                    onChangeText={(text: string) => setTeachingLanguage(text)}
+                                    textArea={true}
+                                />
+                            </>
+                        }
+                        {
+                            type !== 'course' &&
+                            <CustomInput
+                                label={`Change your ${type} emoji`}
+                                value={emoji}
+                                errorText={emojiError}
+                                onChangeText={(text: string) => setEmoji(text)}
+                            />
+                        }
                         <CustomInput
-                            label={`Give your ${type} an emoji`}
-                            value={emoji}
-                            errorText={emojiError}
-                            onChangeText={(text: string) => setEmoji(text)}
-                        />
-                        <CustomInput
-                            label={`What are the goals of this ${type}`}
+                            label={`Edit the ${type} description`}
                             value={description}
                             errorText={descriptionError}
                             onChangeText={(text: string) => setDescription(text)}
@@ -164,8 +201,8 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
                                 <ActivityIndicator color={PRIMARY_COLOR} size='large' />
                                 :
                                 <PrimaryBtn
-                                    label={`Create ${type.charAt(0).toUpperCase() + type.slice(1)}`}
-                                    onPress={type == 'unit' ? addUnit : addLesson}
+                                    label={`Confirm ${type.charAt(0).toUpperCase() + type.slice(1)}`}
+                                    onPress={type == 'unit' ? editUnit : type == 'lesson' ? editLesson : editCourse}
                                 />
                         }
                     </View>
@@ -175,4 +212,4 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
     )
 }
 
-export default AddUnitLessonModal
+export default EditCourseUnitLesson

@@ -18,6 +18,7 @@ interface IProps {
   renderItem: ListRenderItem<never> | null | undefined;
   type: "course" | "lesson" | "unit";
   onAddPress: ()=>void
+  onEditPress: ()=>void
 }
 
 const CourseUnitLessonDesign: React.FC<IProps> = ({
@@ -27,7 +28,8 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
   data,
   renderItem,
   type,
-  onAddPress
+  onAddPress,
+  onEditPress
 }) => {
 
   const itemTypeManage = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 1 ? 's' : ''}`: `Vocab${data.length > 1 ? 's' : ''}`
@@ -45,6 +47,7 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
           size={24}
           color="#ffffff"
           style={styles.editIcon}
+          onPress={onEditPress}
         />
       </View>
       <View style={styles.unitsContainer}>
@@ -59,7 +62,7 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
       <FlatList
         data={data}
         renderItem={renderItem}
-        getItemLayout={(data, index) => ({
+        getItemLayout={(_, index) => ({
           length: itemHeight,
           offset: itemHeight * index,
           index,

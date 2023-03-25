@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import styles from './ContributorCourse.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { CourseUnitLessonDesign, CourseUnitItem, FocusAwareStatusBar, Header, AddUnitLessonModal } from '../../../components'
+import { CourseUnitLessonDesign, CourseUnitItem, FocusAwareStatusBar, Header, AddUnitLessonModal, EditCourseUnitLesson } from '../../../components'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
@@ -21,12 +21,13 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const { course } = route.params
 
   const [addUnitModal, setAddUnitModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
 
   // unit
   const { useQuery } = realmContext
   const units = useQuery('units').filter((unit: any) => unit._course_id == course._id)
   const lessons = useQuery('lessons').filter((lesson: any) => lesson._course_id == course._id)
-
+  
   const goToUnitScreen = (unit: UnitType) => navigation.navigate('ContributorUnit', { unit })
 
   const renderItem = ({ item, index }: any) => {
@@ -45,7 +46,8 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <AddUnitLessonModal course={course} isModalVisible={addUnitModal} type='unit' onCloseModal={()=>setAddUnitModal(false)} />
+      <EditCourseUnitLesson isModalVisible={editModal} type='course' course={course} onCloseModal={() => setEditModal(false)} />
+      <AddUnitLessonModal course={course} isModalVisible={addUnitModal} type='unit' onCloseModal={() => setAddUnitModal(false)} />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle="light-content"
@@ -68,7 +70,8 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
         data={convertToArrayOfPlainObject(units)}
         renderItem={renderItem}
         type='course'
-        onAddPress={()=>setAddUnitModal(true)}
+        onAddPress={() => setAddUnitModal(true)}
+        onEditPress={() => setEditModal(true)}
       />
     </View>
   );

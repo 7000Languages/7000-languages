@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity, Image, ActivityIndicator } from 'react-native'
+import { View, Text, TouchableOpacity, Image, ActivityIndicator, KeyboardAvoidingView, ScrollView, Platform } from 'react-native'
 import { AntDesign, Entypo, Feather, FontAwesome5, Ionicons } from '@expo/vector-icons'
 import Modal from 'react-native-modal'
 import CustomInput from '../CustomInput/CustomInput.component'
@@ -148,84 +148,95 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
 
     return (
         <Modal isVisible={isModalVisible} backdropOpacity={0.8}>
-            <Animated.View
-                style={[styles.textAndIconsContainer, scaleAnimatedStyles]}>
-                <TouchableOpacity onPress={openCamera} style={styles.cameraTextAndIcon}>
-                    <Feather name="camera" size={22} color="#227093" />
-                    <Text style={styles.iconText}>Camera</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={openPicker} style={styles.cameraTextAndIcon}>
-                    <Feather name="image" size={22} color="#227093" />
-                    <Text style={styles.iconText}>Gallery</Text>
-                </TouchableOpacity>
-            </Animated.View>
-            <View style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.title}>Add a Vocab Item</Text>
-                    <AntDesign name='close' size={24} color="#111827" onPress={onCloseModal} />
-                    <Text style={styles.subTitle}>A vocab item can be a word or a phrase</Text>
-                </View>
-                <CustomInput
-                    label={`${course.details.name}*`}
-                    value={original}
-                    errorText={originalError}
-                    onChangeText={(text: string) => setOriginal(text)}
-                />
-                {
-                    audio ?
-                        <View style={styles.textAndIcon}>
-                            <AntDesign name="close" size={20} color="black" style={{ position: 'absolute', bottom: -25, right: 14 }} onPress={() => setAudio(undefined)} />
-                            <Text>{audioDuration}</Text>
-                            <Ionicons
-                                name={!playing ? 'play-circle-sharp' : 'pause-circle-sharp'}
-                                size={26}
-                                color="#5B6165"
-                                style={{ position: 'absolute', right: 10 }}
-                                onPress={togglePlaying}
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+                <ScrollView
+                    style={styles.inputsContianer}
+                    showsVerticalScrollIndicator={false}
+                    keyboardShouldPersistTaps='always'
+                >
+
+                    <Animated.View
+                        style={[styles.textAndIconsContainer, scaleAnimatedStyles]}>
+                        <TouchableOpacity onPress={openCamera} style={styles.cameraTextAndIcon}>
+                            <Feather name="camera" size={22} color="#227093" />
+                            <Text style={styles.iconText}>Camera</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={openPicker} style={styles.cameraTextAndIcon}>
+                            <Feather name="image" size={22} color="#227093" />
+                            <Text style={styles.iconText}>Gallery</Text>
+                        </TouchableOpacity>
+                    </Animated.View>
+                    <View style={styles.container}>
+                        <View style={styles.header}>
+                            <Text style={styles.title}>Add a Vocab Item</Text>
+                            <AntDesign name='close' size={24} color="#111827" onPress={onCloseModal} />
+                            <Text style={styles.subTitle}>A vocab item can be a word or a phrase</Text>
+                        </View>
+                        <CustomInput
+                            label={`${course.details.name}*`}
+                            value={original}
+                            errorText={originalError}
+                            onChangeText={(text: string) => setOriginal(text)}
+                        />
+                        {
+                            audio ?
+                                <View style={styles.textAndIcon}>
+                                    <AntDesign name="close" size={20} color="black" style={{ position: 'absolute', bottom: -25, right: 14 }} onPress={() => setAudio(undefined)} />
+                                    <Text>{audioDuration}</Text>
+                                    <Ionicons
+                                        name={!playing ? 'play-circle-sharp' : 'pause-circle-sharp'}
+                                        size={26}
+                                        color="#5B6165"
+                                        style={{ position: 'absolute', right: 10 }}
+                                        onPress={togglePlaying}
+                                    />
+                                </View>
+                                :
+                                <TouchableOpacity style={styles.audioContainer} onPress={pickAudioFikle}>
+                                    <FontAwesome5 name="file-audio" size={18} color="#9F3E1A" />
+                                    <Text style={styles.addAudio}>Add audio</Text>
+                                </TouchableOpacity>
+                        }
+                        <CustomInput
+                            label={`${course.details.translated_language}*`}
+                            value={translation}
+                            errorText={translationError}
+                            onChangeText={(text: string) => setTranslation(text)}
+                        />
+                        <CustomInput
+                            label='Context'
+                            subLabel='Use this space to give additional information about the Vocab Item, such as grammatical and cultural information, usage, or additional translations/meanings.'
+                            value={context}
+                            onChangeText={(text: string) => setContext(text)}
+                            textArea={true}
+                        />
+                        {
+                            image ?
+                                <View style={styles.imageAndIcon}>
+                                    <Image source={{ uri: image.path }} style={styles.image} resizeMode='contain' />
+                                    <AntDesign name="close" size={24} color="black" style={{ position: 'absolute', top: 5, right: 20 }} onPress={()=>setImage(undefined)} />
+                                </View>
+                                :
+                                <TouchableOpacity style={styles.addImageView} onPress={toggleImageSelection}>
+                                    <Entypo name="image-inverted" size={26} color="#9F3E1A" />
+                                    <Text style={styles.addImageText}>Add Image</Text>
+                                </TouchableOpacity>
+                        }
+                        {
+                            loading
+                            ?
+                            <ActivityIndicator style={{ alignSelf: 'center' }} size={'small'} color={PRIMARY_COLOR} />
+                            :
+                            <PrimaryBtn
+                                label="Add Item"
+                                onPress={addItem}
                             />
-                        </View>
-                        :
-                        <TouchableOpacity style={styles.audioContainer} onPress={pickAudioFikle}>
-                            <FontAwesome5 name="file-audio" size={18} color="#9F3E1A" />
-                            <Text style={styles.addAudio}>Add audio</Text>
-                        </TouchableOpacity>
-                }
-                <CustomInput
-                    label={`${course.details.translated_language}*`}
-                    value={translation}
-                    errorText={translationError}
-                    onChangeText={(text: string) => setTranslation(text)}
-                />
-                <CustomInput
-                    label='Context'
-                    subLabel='Use this space to give additional information about the Vocab Item, such as grammatical and cultural information, usage, or additional translations/meanings.'
-                    value={context}
-                    onChangeText={(text: string) => setContext(text)}
-                    textArea={true}
-                />
-                {
-                    image ?
-                        <View style={styles.imageAndIcon}>
-                            <Image source={{ uri: image.path }} style={styles.image} resizeMode='contain' />
-                            <AntDesign name="close" size={24} color="black" style={{ position: 'absolute', top: 5, right: 20 }} onPress={()=>setImage(undefined)} />
-                        </View>
-                        :
-                        <TouchableOpacity style={styles.addImageView} onPress={toggleImageSelection}>
-                            <Entypo name="image-inverted" size={26} color="#9F3E1A" />
-                            <Text style={styles.addImageText}>Add Image</Text>
-                        </TouchableOpacity>
-                }
-                {
-                    loading
-                    ?
-                    <ActivityIndicator style={{ alignSelf: 'center' }} size={'small'} color={PRIMARY_COLOR} />
-                    :
-                    <PrimaryBtn
-                        label="Add Item"
-                        onPress={addItem}
-                    />
-                }
-            </View>
+                        }
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
         </Modal>
     )
 }

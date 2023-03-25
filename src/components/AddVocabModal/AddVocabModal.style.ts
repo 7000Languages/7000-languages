@@ -98,12 +98,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     zIndex: 99999,
     justifyContent: "space-between",
-    top: 0.6 * DEVICE_HEIGHT
+    top: 0.53 * DEVICE_HEIGHT
   },
   cameraTextAndIcon: {
     width: "45%",
     alignItems: "center",
   },
+  inputsContianer: {
+    width: DEVICE_WIDTH * 0.9,
+    alignSelf: 'center',
+    marginTop: 10,
+}
 });
 
 export default styles;

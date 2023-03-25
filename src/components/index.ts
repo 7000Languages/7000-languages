@@ -12,6 +12,7 @@ import LessonItem from "./LessonItem/LessonItem.component";
 import SearchedCourse from "./SearchedCourse/SearchedCourse.component";
 import AddUnitLessonModal from "./AddUnitLessonModal/AddUnitLessonModal.component";
 import AddVocabModal from "./AddVocabModal/AddVocabModal.component";
+import EditCourseUnitLesson from './EditCourseUnitLesson/EditCourseUnitLesson.component'
 
 export {
     PrimaryBtn,
@@ -27,5 +28,6 @@ export {
     LessonItem,
     SearchedCourse,
     AddUnitLessonModal,
-    AddVocabModal
+    AddVocabModal,
+    EditCourseUnitLesson
 }
