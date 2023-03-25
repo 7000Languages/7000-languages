@@ -5,21 +5,26 @@ import styles from "./LessonItem.style";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 
 interface IProps {
-  image?: string;
-  title: string;
-  translation?: string;
+  image: string;
+  audio: string;
+  original: string;
+  translation: string;
 }
 
-const LessonItem: React.FC<IProps> = ({ image, title, translation }) => {
+const LessonItem: React.FC<IProps> = ({ image, original, translation, audio }) => {
   return (
     <View style={styles.container}>
-      <Image
-        source={require("../../../assets/images/mindGame.png")}
-        style={styles.image}
-      />
+      {
+        image.length > 0
+        &&
+        <Image
+          source={{ uri: image }}
+          style={styles.image}
+        />
+      }
       <View style={styles.textsContainer}>
-        <Text numberOfLines={1} style={styles.title}>{title}</Text>
-        <Text numberOfLines={1} style={styles.subTitle}>{'Where is the beach?'}</Text>
+        <Text numberOfLines={1} style={styles.title}>{original}</Text>
+        <Text numberOfLines={1} style={styles.subTitle}>{translation}</Text>
       </View>
       <TouchableOpacity style={styles.volumeContainer}>
         <Ionicons name="md-volume-medium" size={20} color="#1C1C1C" />

@@ -15,9 +15,8 @@ import {
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { PRIMARY_COLOR } from "../../../constants/colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { courses } from "../../../../assets/data";
 import { LessonType } from "../../../@types";
-import { convertToPlainObject } from "../../../utils/helpers";
+import { convertToArrayOfPlainObject, convertToPlainObject } from "../../../utils/helpers";
 import { realmContext } from "../../../realm/realm";
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, "ContributorUnit">;
@@ -26,11 +25,12 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   const [addLessonModal, setAddLessonModal] = useState(false);
 
-  const { unit, lessons } = route.params
-
+  const { unit } = route.params
   const { useQuery } = realmContext
-  const course = useQuery('courses').find((course: any) => course._id == unit._course_id)
-  
+
+  const course: any = useQuery('courses').find((course: any) => course._id == unit._course_id)
+  const lessons: any = useQuery('lessons').filter((lesson: any) => lesson._unit_id == unit._id)
+
   const goToLessonScreen = (lesson: LessonType) => navigation.navigate("ContributorLesson", { lesson });
 
   const renderItem = ({ item, index }: {item:LessonType, index: number}) => {
@@ -75,7 +75,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
         item={unit.name}
         itemDescription={unit.description}
         numOfSubItems={lessons.length}
-        data={lessons}
+        data={convertToArrayOfPlainObject(lessons)}
         renderItem={renderItem}
         type="unit"
         onAddPress={()=>setAddLessonModal(true)}

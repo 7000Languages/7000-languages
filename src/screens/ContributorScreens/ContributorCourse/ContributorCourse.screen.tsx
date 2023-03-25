@@ -10,7 +10,7 @@ import { Feather, Ionicons } from '@expo/vector-icons'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { DrawerActions } from '@react-navigation/native'
-import { LessonType, UnitType } from '../../../@types'
+import { UnitType } from '../../../@types'
 import { realmContext } from '../../../realm/realm'
 import { convertToArrayOfPlainObject } from '../../../utils/helpers'
 
@@ -27,7 +27,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const units = useQuery('units').filter((unit: any) => unit._course_id == course._id)
   const lessons = useQuery('lessons').filter((lesson: any) => lesson._course_id == course._id)
 
-  const goToUnitScreen = (unit: UnitType, lessons: LessonType[]) => navigation.navigate('ContributorUnit', { unit, lessons })
+  const goToUnitScreen = (unit: UnitType) => navigation.navigate('ContributorUnit', { unit })
 
   const renderItem = ({ item, index }: any) => {
     const { name, _id } = item
@@ -38,7 +38,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
         numOfSubItems={unitLessons.length}
         type='unit'
         index={index + 1}
-        onPress={() => goToUnitScreen(item, convertToArrayOfPlainObject(unitLessons))}
+        onPress={() => goToUnitScreen(item)}
       />
     )
   };

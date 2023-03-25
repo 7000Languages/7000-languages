@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#F9F9F9',
         marginVertical: 10,
-        borderRadius: 8
+        borderRadius: 8,
+        paddingLeft: 5
     },
     image:{
         width: 60,

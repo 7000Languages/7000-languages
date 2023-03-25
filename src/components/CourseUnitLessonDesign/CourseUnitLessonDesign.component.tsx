@@ -30,8 +30,8 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
   onAddPress
 }) => {
 
-  const itemTypeManage = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 0 ? 's' : ''}`: `Vocab${data.length > 0 ? 's' : ''}`
-  const itemTypeLabel = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 0 ? 's' : ''}`: `Vocabulary item${data.length > 0 ? 's' : ''}`
+  const itemTypeManage = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 1 ? 's' : ''}`: `Vocab${data.length > 1 ? 's' : ''}`
+  const itemTypeLabel = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 1 ? 's' : ''}`: `Vocabulary item${data.length > 1 ? 's' : ''}`
   const addItemType = type == 'course' ? `Unit` : type == 'unit' ? `Lesson`: `Vocab`
   const itemHeight = type !== 'lesson' ? 68 : 88  
 

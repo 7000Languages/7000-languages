@@ -16,7 +16,6 @@ export type CourseStackParamList = {
     }
     ContributorUnit: {
         unit: UnitType
-        lessons: LessonType[]
     }
     ContributorLesson: {
         lesson: LessonType

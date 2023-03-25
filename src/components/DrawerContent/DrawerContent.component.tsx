@@ -16,9 +16,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CourseStackParamList, DrawerStackParamList } from "../../navigation/types";
 import { realmContext } from "../../realm/realm";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { CourseType, UserType } from "../../@types";
+import { CourseType, UnitType, UserType } from "../../@types";
 import { setAdminCourses } from "../../redux/slices/coursesSlice";
-import { courses } from "../../realm/schemas";
+import { convertToArrayOfPlainObject } from "../../utils/helpers";
 
 
 const DrawerContent: React.FC = () => {
@@ -30,7 +30,8 @@ const DrawerContent: React.FC = () => {
   const user: UserType = useAppSelector(state=>state.auth.user)
   const adminCourses = useAppSelector(state=>state.courses.adminCourses)
   const dispatch = useAppDispatch()
-  const coursesData: any = useQuery(courses)
+  const coursesData: any = useQuery('courses')
+  const allUnits: any = useQuery('units')
   
   useEffect(() => {
     let adminCourses: any = coursesData.filter((course:any) => course.admin_id === user.authID)        
@@ -85,7 +86,7 @@ const DrawerContent: React.FC = () => {
         </TouchableOpacity>
         {
           adminCourses.map((course) =>{
-            const units = useQuery('units').filter((unit:any) => unit._course_id == course._id)
+            const units = convertToArrayOfPlainObject(allUnits).filter((unit:UnitType) => unit._course_id == course._id)
             return (
               <CourseUnitItem
                 title={course.details.name}
