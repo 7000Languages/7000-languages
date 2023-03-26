@@ -3,17 +3,14 @@ import { ActivityIndicator } from 'react-native'
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import NetInfo from "@react-native-community/netinfo";
 
-import { RootStackParamList } from "./types";
-import { Splash, Onboarding, Login } from "../screens";
+import { Splash, Onboarding } from "../screens";
 import BottomNavigator from "./BottomNavigator";
 import DrawerNavigator from "./DrawerNavigator";
-import { useApp, UserProvider, useUser } from "@realm/react";
+import { useApp } from "@realm/react";
 import { realmContext } from "../realm/realm";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../constants/sizes";
 import { useAppDispatch } from "../redux/store";
 import { toggleConnection } from "../redux/slices/connectionSlice";
-import { realmAppId } from "../config";
-import { getValueFor } from "../utils/storage";
 
 const Stack = createNativeStackNavigator();
 
