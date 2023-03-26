@@ -12,13 +12,13 @@ export type CourseStackParamList = {
     Home: undefined
     BecomeContributor: undefined
     ContributorCourse: {
-        course: CourseType
+        course_id: string
     }
     ContributorUnit: {
-        unit: UnitType
+        unit_id: string
     }
     ContributorLesson: {
-        lesson: LessonType
+        lesson_id: string
     }
     Search: undefined
 }

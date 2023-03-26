@@ -24,6 +24,7 @@ export type CourseDetailsType = {
     population: number
     location: number
     link: string
+    glotto: string
     is_private: boolean
     code: number
 }

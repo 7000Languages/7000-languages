@@ -17,11 +17,12 @@ type NavProps = NativeStackScreenProps<CourseStackParamList, 'ContributorLesson'
 
 const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
-  const { lesson } = route.params
+  const { lesson_id } = route.params
   const { useQuery } = realmContext
 
+
+  const lesson: any = useQuery('lessons').find((lesson: any) => lesson._id == lesson_id) // We get the lesson again so that the list updates automatically when we add a new vocab item
   const course: any = useQuery('courses').find((course: any) => course._id == lesson._course_id)
-  const getLesson: any = useQuery('lessons').find((item: any) => item._id == lesson._id) // We get the lesson again so that the list updates automatically when we add a new vocab item
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [editModal, setEditModal] = useState(false);
@@ -41,8 +42,8 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <EditCourseUnitLesson isModalVisible={editModal} type='lesson' lesson={getLesson} onCloseModal={() => setEditModal(false)} />
-      <AddVocabModal isModalVisible={isModalVisible} lesson={getLesson} course={course} onCloseModal={()=>setIsModalVisible(false)}  />
+      <EditCourseUnitLesson isModalVisible={editModal} type='lesson' lesson_id={lesson_id} onCloseModal={() => setEditModal(false)} />
+      <AddVocabModal isModalVisible={isModalVisible} lesson={lesson} course={course} onCloseModal={()=>setIsModalVisible(false)}  />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle="light-content"
@@ -59,10 +60,10 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
         }
       />
       <CourseUnitLessonDesign
-        item={getLesson.name}
-        itemDescription={getLesson.description}
-        numOfSubItems={getLesson.vocab.length}
-        data={convertToArrayOfPlainObject(getLesson.vocab)}
+        item={lesson.name}
+        itemDescription={lesson.description}
+        numOfSubItems={lesson.vocab.length}
+        data={convertToArrayOfPlainObject(lesson.vocab)}
         renderItem={renderItem}
         type='lesson'
         onAddPress={()=>setIsModalVisible(true)}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   SafeAreaView,
   Text,
@@ -15,10 +15,9 @@ import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CourseStackParamList, DrawerStackParamList } from "../../navigation/types";
 import { realmContext } from "../../realm/realm";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
-import { CourseType, UnitType, UserType } from "../../@types";
-import { setAdminCourses } from "../../redux/slices/coursesSlice";
+import { useAppSelector } from "../../redux/store";
 import { convertToArrayOfPlainObject } from "../../utils/helpers";
+import { UnitType, UserType } from "../../@types";
 
 
 const DrawerContent: React.FC = () => {
@@ -28,17 +27,12 @@ const DrawerContent: React.FC = () => {
 
   const { useQuery } = realmContext
   const user: UserType = useAppSelector(state=>state.auth.user)
-  const adminCourses = useAppSelector(state=>state.courses.adminCourses)
-  const dispatch = useAppDispatch()
   const coursesData: any = useQuery('courses')
   const allUnits: any = useQuery('units')
   
-  useEffect(() => {
-    let adminCourses: any = coursesData.filter((course:any) => course.admin_id === user.authID)        
-    dispatch(setAdminCourses(adminCourses))
-  },[])
-
-  const goToContributorCourse = (course: CourseType) => coursesNavigation.navigate('ContributorCourse', { course })
+  let adminCourses: any = coursesData.filter((course:any) => course.admin_id === user.authID)
+  
+  const goToContributorCourse = (course_id: string) => coursesNavigation.navigate('ContributorCourse', { course_id })
   
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -85,7 +79,7 @@ const DrawerContent: React.FC = () => {
           <Text style={styles.contributorText}>CONTRIBUTOR</Text>
         </TouchableOpacity>
         {
-          adminCourses.map((course) =>{
+          convertToArrayOfPlainObject(adminCourses).map((course) =>{
             const units = convertToArrayOfPlainObject(allUnits).filter((unit:UnitType) => unit._course_id == course._id)
             return (
               <CourseUnitItem
@@ -96,7 +90,7 @@ const DrawerContent: React.FC = () => {
                 indexBackground="#FBEAE9"
                 backgroundColor="#F9F9F9"
                 key={course._id}
-                onPress={()=>goToContributorCourse(course)}
+                onPress={()=>goToContributorCourse(course._id)}
               />
             )
           })

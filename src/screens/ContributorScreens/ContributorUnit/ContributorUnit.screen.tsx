@@ -27,30 +27,31 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
   const [addLessonModal, setAddLessonModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
 
-  const { unit } = route.params
+  const { unit_id } = route.params
   const { useQuery } = realmContext
 
-  const course: any = useQuery('courses').find((course: any) => course._id == unit._course_id)
+  const unit: any = useQuery('units').find((unit: any)=>unit._id == unit_id)
+  const course: any = useQuery('courses').find((course: any) => course._id == unit!._course_id)
   const lessons: any = useQuery('lessons').filter((lesson: any) => lesson._unit_id == unit._id)
 
-  const goToLessonScreen = (lesson: LessonType) => navigation.navigate("ContributorLesson", { lesson });
+  const goToLessonScreen = (lesson_id: string) => navigation.navigate("ContributorLesson", { lesson_id });
 
   const renderItem = ({ item, index }: { item: LessonType, index: number }) => {
-    const { name, vocab } = item;
+    const { name, vocab, _id } = item;
     return (
       <CourseUnitItem
         title={name}
         numOfSubItems={vocab.length}
         type='lesson'
         index={index + 1}
-        onPress={() => goToLessonScreen(item)}
+        onPress={() => goToLessonScreen(_id)}
       />
     );
   };
 
   return (
     <View style={styles.container}>
-      <EditCourseUnitLesson isModalVisible={editModal} type='unit' unit={unit} onCloseModal={() => setEditModal(false)} />
+      <EditCourseUnitLesson isModalVisible={editModal} type='unit' unit_id={unit_id} onCloseModal={() => setEditModal(false)} />
       <AddUnitLessonModal unit={unit} course={convertToPlainObject(course!)} isModalVisible={addLessonModal} type='lesson' onCloseModal={() => setAddLessonModal(false)} />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}

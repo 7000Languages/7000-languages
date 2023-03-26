@@ -1,9 +1,8 @@
+import React, { useEffect, useState } from 'react'
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
-import React, { useState } from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { View, Text, ActivityIndicator } from 'react-native'
 import Modal from 'react-native-modal'
-import { CourseType, LessonType, UnitType } from '../../@types'
 import { PRIMARY_COLOR } from '../../constants/colors'
 import { realmContext } from '../../realm/realm'
 import { hasEmoji } from '../../utils/helpers'
@@ -16,14 +15,14 @@ type IProps = {
     isModalVisible: boolean
     type: 'unit' | 'lesson' | 'course'
     onCloseModal: () => void
-    course?: CourseType
-    unit?: UnitType
-    lesson?: LessonType
+    course_id?: string
+    unit_id?: string
+    lesson_id?: string
 }
 
-const { useRealm } = realmContext
+const { useRealm, useQuery } = realmContext
 
-const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course, unit }) => {
+const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course_id, unit_id, lesson_id }) => {
 
     const [name, setName] = useState('');
     const [emoji, setEmoji] = useState('');
@@ -39,98 +38,113 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
     const [alternativeNameError, setAlternativeNameError] = useState('');
     const [teachingLanguageError, setTeachingLanguageError] = useState('');
 
-
+    const course: any = useQuery('courses').find((item:any) => item._id == course_id)
+    const unit: any = useQuery('units').find((item:any) => item._id == unit_id)
+    const lesson: any = useQuery('lessons').find((item:any) => item._id == lesson_id)
+    
     const resetErrorStates = () => {
         setNameError('');
         setDescriptionError('');
         setEmojiError('');
+        setAlternativeNameError('');
+        setTeachingLanguageError('');
     }
 
     const resetStates = () => {
         setName('');
         setDescription('');
         setEmoji('');
+        setAlternativeName('');
+        setTeachingLanguage('');
     }
 
     const realm = useRealm()
 
-    const editUnit = async () => {
-        setLoading(true);
+    const checkForError = () => {
         resetErrorStates()
+        setLoading(true);
         let hasError = false;
-        if (name.length < 5) {
-            setNameError('Name of the unit is too short');
+        if(name.length < 2) {
+            setNameError('Name is too short')
             hasError = true;
         }
-        if (!hasEmoji(emoji)) {
-            setEmojiError('Please select an emoji');
+        if(emoji.length > 0 && !hasEmoji(emoji)){
+            setEmojiError('Must contain an emoji')
             hasError = true;
         }
-        if (description.length < 5) {
-            setDescriptionError('Description of the unit is too short');
+        if(description.length < 15) {
+            setDescriptionError('Description should contain at least 15 characters')
+            hasError=true;
+        }
+        if(type == 'course' && teachingLanguage.length < 2) {
+            setTeachingLanguageError('Teaching language too short')
             hasError = true;
         }
-        if (hasError) {
-            setLoading(false)
-            return
+        if(type == 'course' && alternativeName.length > 0 && alternativeName.length < 2) {
+            setAlternativeNameError('Alternative name too short')
+            hasError = true;
+        }
+        if(hasError) {
+            setLoading(false);
+            return false
         }
 
-        realm.write(() => {
-            realm.create('units', {
-                _course_id: course?._id,
-                name: name + " " + emoji,
-                _order: 0,
-                selected: false,
-                description
+        return true;
+    }
+
+    const editUnit = async () => {
+        if(checkForError()){
+            realm.write(()=>{
+                unit!.name = name
+                unit!.description = description
             })
-        })
-
-        resetStates()
+        }
         setLoading(false)
-
     }
 
     const editLesson = () => {
-        setLoading(true);
-        resetErrorStates()
-        let hasError = false;
-        if (name.length < 5) {
-            setNameError('Name of the lesson is too short');
-            hasError = true;
-        }
-        if (!hasEmoji(emoji)) {
-            setEmojiError('Please select an emoji');
-            hasError = true;
-        }
-        if (description.length < 5) {
-            setDescriptionError('Description of the lesson is too short');
-            hasError = true;
-        }
-        if (hasError) {
-            setLoading(false)
-            return
-        }
-
-        realm.write(() => {
-            realm.create('lessons', {
-                _course_id: course?._id,
-                _unit_id: unit?._id,
-                name: name + " " + emoji,
-                _order: 0,
-                selected: false,
-                description
+        if (checkForError()) {
+            realm.write(()=> {
+                lesson!.name = name
+                lesson!.description = description
             })
-        })
-
-        resetStates()
+        }
         setLoading(false)
-
     }
 
     const editCourse = () => {
-
+        if (checkForError()) {
+            realm.write(() => {
+                course.details.name = name 
+                course.details.alternative_name = alternativeName
+                course.details.description = description
+                course.details.translated_language = teachingLanguage
+            })
+        }
+        setLoading(false)
     }
 
+    const settingStatesForInputs = () => {
+        if(course){
+            setName(course.details.name)
+            setAlternativeName(course.details.alternative_name)
+            setTeachingLanguage(course.details.translated_language)
+            setDescription(course.details.description)
+        }
+        if(unit){
+            setName(unit.name)
+            setDescription(unit.description)
+        }
+        if(lesson){
+            setName(lesson.name)
+            setDescription(lesson.description)
+        }
+    }
+
+    useEffect(() => {
+      settingStatesForInputs()
+    }, []);
+    
     return (
         <Modal isVisible={isModalVisible} backdropOpacity={0.8}>
             <KeyboardAvoidingView
@@ -201,7 +215,7 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
                                 <ActivityIndicator color={PRIMARY_COLOR} size='large' />
                                 :
                                 <PrimaryBtn
-                                    label={`Confirm ${type.charAt(0).toUpperCase() + type.slice(1)}`}
+                                    label={`Confirm Edit`}
                                     onPress={type == 'unit' ? editUnit : type == 'lesson' ? editLesson : editCourse}
                                 />
                         }
