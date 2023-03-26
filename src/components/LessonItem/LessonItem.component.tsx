@@ -9,9 +9,10 @@ interface IProps {
   audio: string;
   original: string;
   translation: string;
+  onEditPress: () => void;
 }
 
-const LessonItem: React.FC<IProps> = ({ image, original, translation, audio }) => {
+const LessonItem: React.FC<IProps> = ({ image, original, translation, audio, onEditPress }) => {
   return (
     <View style={styles.container}>
       {
@@ -34,6 +35,7 @@ const LessonItem: React.FC<IProps> = ({ image, original, translation, audio }) =
           name="edit"
           size={20}
           color="#1C1C1C"
+          onPress={onEditPress}
         />
       </TouchableOpacity>
     </View>

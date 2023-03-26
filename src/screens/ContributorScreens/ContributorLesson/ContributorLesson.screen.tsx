@@ -11,7 +11,8 @@ import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { VocabType } from '../../../@types'
 import { realmContext } from '../../../realm/realm'
-import { convertToArrayOfPlainObject } from '../../../utils/helpers'
+import { convertToArrayOfPlainObject, convertToPlainObject } from '../../../utils/helpers'
+import EditVocab from '../../../components/EditVocab/EditVocab.component'
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'ContributorLesson'>
 
@@ -23,12 +24,15 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
   const lesson: any = useQuery('lessons').find((lesson: any) => lesson._id == lesson_id) // We get the lesson again so that the list updates automatically when we add a new vocab item
   const course: any = useQuery('courses').find((course: any) => course._id == lesson._course_id)
+  const vocabs: any = useQuery('vocabs')
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [editModal, setEditModal] = useState(false);
+  const [editVocabModal, setEditVocabModal] = useState(false);
+  const [vocab, setVocab] = useState<any>({});
 
   const renderItem = ({item, index}:{item: VocabType, index:number}) => {
-    const { original, translation, image, audio } = item
+    const { original, translation, image, audio, _id } = item
     return (
       <LessonItem
         original={original}
@@ -36,6 +40,11 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
         image={image}
         audio={audio}
         key={index}
+        onEditPress={()=>{
+          let vocab = vocabs.find((vocab: any) => vocab._id == _id )
+          setVocab(vocab)
+          setEditVocabModal(true)
+        }}
        />
     )
   };
@@ -43,6 +52,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <EditCourseUnitLesson isModalVisible={editModal} type='lesson' lesson_id={lesson_id} onCloseModal={() => setEditModal(false)} />
+      <EditVocab isModalVisible={editVocabModal} course={course} lesson={lesson} vocab={vocab} onCloseModal={()=>setEditVocabModal(false)} />
       <AddVocabModal isModalVisible={isModalVisible} lesson={lesson} course={course} onCloseModal={()=>setIsModalVisible(false)}  />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
