@@ -8,7 +8,7 @@ import { useApp, useUser } from '@realm/react'
 
 import styles from './Login.style'
 
-import { iosClientId, androidClientId, expoClientId } from '../../config'
+import { IOS_CLIENT_ID, ANDROID_CLIENT_ID, EXPO_CLIENT_ID } from '@env'
 import { RootStackParamList } from '../../navigation/types'
 import { PrimaryBtn } from '../../components'
 import {  getUserInfo, redirectUri } from '../../utils/auth'
@@ -29,9 +29,9 @@ const Login = () => {
 
   // Google login
   const config = {
-    iosClientId,
-    androidClientId,
-    expoClientId,
+    IOS_CLIENT_ID,
+    ANDROID_CLIENT_ID,
+    EXPO_CLIENT_ID,
     redirectUri,
     scopes: ["profile"],
     responseType: "code",
@@ -40,7 +40,7 @@ const Login = () => {
     },
   };
 
-  const [request, response, promptAsync] = Google.useAuthRequest(config);
+  const [_, response, promptAsync] = Google.useAuthRequest(config);
 
   useEffect(() => {
     errorWrap(async () => {
