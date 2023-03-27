@@ -13,6 +13,7 @@ import SearchedCourse from "./SearchedCourse/SearchedCourse.component";
 import AddUnitLessonModal from "./AddUnitLessonModal/AddUnitLessonModal.component";
 import AddVocabModal from "./AddVocabModal/AddVocabModal.component";
 import EditCourseUnitLesson from './EditCourseUnitLesson/EditCourseUnitLesson.component'
+import ManageUnitLessonVocab from "./ManageUnitLessonVocab/ManageUnitLessonVocab.component";
 
 export {
     PrimaryBtn,
@@ -29,5 +30,6 @@ export {
     SearchedCourse,
     AddUnitLessonModal,
     AddVocabModal,
-    EditCourseUnitLesson
+    EditCourseUnitLesson,
+    ManageUnitLessonVocab
 }

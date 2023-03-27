@@ -5,12 +5,11 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import styles from './ContributorCourse.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { CourseUnitLessonDesign, CourseUnitItem, FocusAwareStatusBar, Header, AddUnitLessonModal, EditCourseUnitLesson } from '../../../components'
+import { CourseUnitLessonDesign, CourseUnitItem, FocusAwareStatusBar, Header, AddUnitLessonModal, EditCourseUnitLesson, ManageUnitLessonVocab } from '../../../components'
 import { Feather, Ionicons } from '@expo/vector-icons'
 import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { DrawerActions } from '@react-navigation/native'
-import { UnitType } from '../../../@types'
 import { realmContext } from '../../../realm/realm'
 import { convertToArrayOfPlainObject, convertToPlainObject } from '../../../utils/helpers'
 
@@ -22,6 +21,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
   const [addUnitModal, setAddUnitModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [manageModal, setManageModal] = useState(false);
 
   // unit
   const { useQuery } = realmContext
@@ -47,8 +47,24 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <EditCourseUnitLesson isModalVisible={editModal} type='course' course_id={course_id} onCloseModal={() => setEditModal(false)} />
-      <AddUnitLessonModal course={convertToPlainObject(course!)} isModalVisible={addUnitModal} type='unit' onCloseModal={() => setAddUnitModal(false)} />
+      <EditCourseUnitLesson 
+        isModalVisible={editModal} 
+        type='course' 
+        course_id={course_id} 
+        onCloseModal={() => setEditModal(false)} 
+      />
+      <ManageUnitLessonVocab
+        type='unit'
+        isModalVisible={manageModal}
+        data={convertToArrayOfPlainObject(units)}
+        onCloseModal={() => setManageModal(false)}
+      />
+      <AddUnitLessonModal
+        course={convertToPlainObject(course!)}
+        isModalVisible={addUnitModal}
+        type='unit' 
+        onCloseModal={() => setAddUnitModal(false)}
+      />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle="light-content"
@@ -73,6 +89,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
         type='course'
         onAddPress={() => setAddUnitModal(true)}
         onEditPress={() => setEditModal(true)}
+        onManagePress={() => setManageModal(true)}
       />
     </View>
   );

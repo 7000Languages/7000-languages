@@ -19,6 +19,7 @@ interface IProps {
   type: "course" | "lesson" | "unit";
   onAddPress: ()=>void
   onEditPress: ()=>void
+  onManagePress: ()=>void
 }
 
 const CourseUnitLessonDesign: React.FC<IProps> = ({
@@ -29,7 +30,8 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
   renderItem,
   type,
   onAddPress,
-  onEditPress
+  onEditPress,
+  onManagePress
 }) => {
 
   const itemTypeManage = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 1 ? 's' : ''}`: `Vocab${data.length > 1 ? 's' : ''}`
@@ -54,7 +56,7 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
         <Text style={styles.units}>
           {numOfSubItems} {itemTypeLabel}
         </Text>
-        <TouchableOpacity style={styles.manageUnitsContainer}>
+        <TouchableOpacity style={styles.manageUnitsContainer} onPress={onManagePress}>
           <Text style={styles.manageUnits}>Manage {itemTypeManage}</Text>
           <Ionicons name="settings" size={13} color="#DF4E47" />
         </TouchableOpacity>

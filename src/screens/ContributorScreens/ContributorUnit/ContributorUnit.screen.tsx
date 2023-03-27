@@ -12,6 +12,7 @@ import {
   Header,
   AddUnitLessonModal,
   EditCourseUnitLesson,
+  ManageUnitLessonVocab,
 } from "../../../components";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { PRIMARY_COLOR } from "../../../constants/colors";
@@ -26,6 +27,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   const [addLessonModal, setAddLessonModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+  const [manageModal, setManageModal] = useState(false);
 
   const { unit_id } = route.params
   const { useQuery } = realmContext
@@ -52,6 +54,12 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <EditCourseUnitLesson isModalVisible={editModal} type='unit' unit_id={unit_id} onCloseModal={() => setEditModal(false)} />
+      <ManageUnitLessonVocab
+        type='lesson'
+        isModalVisible={manageModal}
+        data={convertToArrayOfPlainObject(lessons)}
+        onCloseModal={() => setManageModal(false)}
+      />
       <AddUnitLessonModal unit={unit} course={convertToPlainObject(course!)} isModalVisible={addLessonModal} type='lesson' onCloseModal={() => setAddLessonModal(false)} />
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
@@ -84,6 +92,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
         type="unit"
         onAddPress={() => setAddLessonModal(true)}
         onEditPress={() => setEditModal(true)}
+        onManagePress={() => setManageModal(true)}
       />
     </View>
   );
