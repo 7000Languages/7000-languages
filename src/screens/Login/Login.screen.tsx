@@ -29,9 +29,9 @@ const Login = () => {
 
   // Google login
   const config = {
-    IOS_CLIENT_ID,
-    ANDROID_CLIENT_ID,
-    EXPO_CLIENT_ID,
+    iosClientId: IOS_CLIENT_ID,
+    androidClientId: ANDROID_CLIENT_ID,
+    expoClientId: EXPO_CLIENT_ID,
     redirectUri,
     scopes: ["profile"],
     responseType: "code",
