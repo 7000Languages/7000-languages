@@ -16,9 +16,8 @@ const AnimatedIcon = Animated.createAnimatedComponent(Ionicons)
 
 const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
 
-  const { name, translated_language, admin_name } = item.details;
+  const { name, translated_language, admin_name, description } = item.details;
 
-  const [first, setFirst] = useState(false);
   const [showingDetails, setShowingDetails] = useState(false);
 
   //   animation
@@ -87,7 +86,7 @@ const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
         <>
           <Text style={styles.unitsAvailable}>xx Units available</Text>
           <Text style={styles.description}>
-            Description: here is a desription from the owner
+            {description}
           </Text>
           <TouchableOpacity style={styles.joinCourseTouch} onPress={onJoinCoursePress}>
             <Text style={styles.joinCourseText}>Join Course</Text>

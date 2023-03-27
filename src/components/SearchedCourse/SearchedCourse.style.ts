@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         height: 36,
         alignSelf: 'center',
         position: 'absolute',
-        bottom: 12,
+        bottom: 10,
     },
     joinCourseText: {
         color: '#ffffff',

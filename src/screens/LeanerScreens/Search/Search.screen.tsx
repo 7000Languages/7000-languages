@@ -8,15 +8,25 @@ import { CourseStackParamList } from "../../../navigation/types";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { FocusAwareStatusBar, Header, SearchedCourse } from "../../../components";
 import { SECONDARY_COLOR } from "../../../constants/colors";
-import { CourseType } from "../../../@types";
-import { courses } from "../../../../assets/data";
+import { CourseType, UserType } from "../../../@types";
+import { realmContext } from "../../../realm/realm";
+import { useAppSelector } from "../../../redux/store";
+import { convertToArrayOfPlainObject } from "../../../utils/helpers";
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, "Search">;
 
 const Search: React.FC<NavProps> = ({ navigation }) => {
 
-  const [ searchTerm, setSearchTerm ] = useState('')
+
+  const [searchTerm, setSearchTerm] = useState('')
   const [joinCourseModalVisible, setJoinCourseModalVisible] = useState(false)
+
+  const { useQuery } = realmContext
+  const user: UserType = useAppSelector(state => state.auth.user)
+
+  const coursesData: any = useQuery('courses')
+
+  let courses: any = coursesData.filter((course: any) => course.admin_id === user.authID)
 
   const renderItem = ({ item }: { item: CourseType }) => {
     return (
@@ -37,6 +47,12 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
     );
   }
 
+  const search_parameters = Object.keys(Object.assign({}, convertToArrayOfPlainObject(coursesData)[0].details));
+
+  const searchData = (courses: CourseType[]) => {
+    return courses.filter((course: any) => search_parameters.some(param => course.details[param].toString().toLowerCase().includes(searchTerm.toLowerCase())))
+  }
+
   return (
     <View style={styles.container}>
       {/* Joinc oourse modal */}
@@ -53,7 +69,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
             <View style={styles.modalTouchContainer}>
               <TouchableOpacity
                 style={[styles.cancelOrJoinBtn, { backgroundColor: "#DEE5E9" }]}
-                onPress={()=>setJoinCourseModalVisible(false)}
+                onPress={() => setJoinCourseModalVisible(false)}
               >
                 <Text style={styles.modalCancelText}>Cancel</Text>
               </TouchableOpacity>
@@ -107,7 +123,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
         )}
       </View>
       <FlatList
-        data={courses}
+        data={searchData(convertToArrayOfPlainObject(coursesData))}
         keyExtractor={(item: CourseType) => item._id}
         renderItem={renderItem}
         ListEmptyComponent={ListEmptyComponent}
