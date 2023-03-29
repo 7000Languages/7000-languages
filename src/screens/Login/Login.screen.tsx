@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import { Button, Image, SafeAreaView, Text, View } from 'react-native'
+import { Image, SafeAreaView, StatusBar, Text, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import * as WebBrowser from 'expo-web-browser'
 import * as Google from 'expo-auth-session/providers/google'
-import { useApp, useUser } from '@realm/react'
+import { useApp } from '@realm/react'
 
 import styles from './Login.style'
 
@@ -77,6 +77,7 @@ const Login = () => {
   
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar hidden />
       <Image
         style={styles.wordLogo}
         source={require("../../../assets/images/wordLogo.png")}

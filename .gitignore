@@ -74,6 +74,7 @@ yarn-error.log
 .expo/
 web-build/
 dist/
+eas.json
 *.env
 
 # @end expo-cli

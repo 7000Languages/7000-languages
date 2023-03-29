@@ -6,18 +6,20 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { AppProvider, UserProvider } from "@realm/react";
-import { REALM_APP_ID } from "@env";
+import { REALM_APP_IOS_ID, REALM_APP_ANDROID_ID } from "@env";
 import { Login } from "./src/screens";
+import { Platform } from "react-native";
 
-const App = () => {   
+const App = () => {
+  const appId = Platform.OS == 'ios' ? REALM_APP_IOS_ID : REALM_APP_ANDROID_ID
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <AppProvider id={REALM_APP_ID}>
-          <UserProvider fallback={()=><Login/>}>
-              <NavigationContainer>
-                <MainNavigator />
-              </NavigationContainer>
+        <AppProvider id={appId}>
+          <UserProvider fallback={() => <Login />}>
+            <NavigationContainer>
+              <MainNavigator />
+            </NavigationContainer>
           </UserProvider>
         </AppProvider>
       </GestureHandlerRootView>

@@ -1,0 +1,46 @@
+{
+  "cli": {
+    "version": ">= 3.4.0"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleDebug"
+      },
+      "ios": {
+        "buildConfiguration": "Debug",
+        "resourceClass": "m1-medium",
+        "simulator": true
+      }
+    },
+    "preview": {
+      "developmentClient": true,
+      "autoIncrement": true,
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m1-medium",
+        "simulator": true
+      },
+      "android": {
+        "buildType": "apk",
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "production": {
+      "ios": {
+        "resourceClass": "m1-medium"
+      }
+    }
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "companyName": "7000 Languages",
+        "appName": "7000 Languages"
+      },
+      "android": {}
+    }
+  }
+}
