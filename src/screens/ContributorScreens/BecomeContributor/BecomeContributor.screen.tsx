@@ -93,7 +93,7 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
     let newCourse!: CourseType & Realm.Object 
 
     realm.write(async() => {
-      newCourse = await realm.create('courses', {
+      newCourse = realm.create('courses', {
         approved: false,
         admin_id: userData.authID,
         details: {

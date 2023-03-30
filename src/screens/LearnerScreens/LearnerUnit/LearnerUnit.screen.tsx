@@ -40,6 +40,7 @@ const LearnerUnit: React.FC<NavProps> = ({ navigation, route }) => {
         index={index + 1}
         onPress={() => goToLessonScreen(_id)}
         section='learner'
+        showIndex={false}
       />
     );
   };

@@ -4,7 +4,7 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/sizes";
 const styles = StyleSheet.create({
     container: {
         width: DEVICE_WIDTH * 0.68,
-        height: DEVICE_HEIGHT * 0.45,
+        height: DEVICE_HEIGHT * 0.46,
         borderRadius: 8,
         borderColor: '#DEE5E9',
         borderWidth: 1.5,
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 10
     },
     textsContainer: {
-        marginBottom: 50
+        marginBottom: 30
     },
     original: {
         color: '#1C1C1C',
@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        width: '100%'
+        width: '100%',
+        height: DEVICE_HEIGHT * 0.18,
     },
     notes: {
         textAlign: 'center',
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     },
     notesContainer: {
         width: '10%',
-        height: 150,
+        height: '90%',
     }
 })
 

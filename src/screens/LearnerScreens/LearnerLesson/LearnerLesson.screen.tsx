@@ -1,5 +1,5 @@
 import React, { } from 'react'
-import { View } from 'react-native'
+import { Text, View } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import styles from './LearnerLesson.style'
@@ -66,6 +66,9 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
         section='learner'
         horizontalFlatList={true}
       />
+      <TouchableOpacity style={styles.startActivityBtn}>
+        <Text style={styles.startActivityText}>Start Activity</Text>
+      </TouchableOpacity>
     </View>
   );
 }

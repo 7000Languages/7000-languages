@@ -108,7 +108,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
         realm.write(() => {
             realm.create('lessons', {
                 _course_id: course?._id,
-                _unit_id: unit?._id,
+                _unit_id: unit?._id.toString(),
                 name: name + " " + emoji,
                 _order: 0,
                 selected: false,

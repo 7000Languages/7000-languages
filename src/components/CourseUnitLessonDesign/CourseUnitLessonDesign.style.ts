@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         right: 20
     },
     units: {
-        fontWeight: 'bold',
+        fontWeight: '500',
         fontSize: 18,
     },
     manageUnitsContainer: {

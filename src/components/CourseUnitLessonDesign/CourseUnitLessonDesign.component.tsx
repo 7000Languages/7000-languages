@@ -77,6 +77,7 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
       <FlatList
         data={data}
         horizontal={horizontalFlatList}
+        showsHorizontalScrollIndicator={false}
         renderItem={renderItem}
         getItemLayout={(_, index) => ({
           length: itemHeight,

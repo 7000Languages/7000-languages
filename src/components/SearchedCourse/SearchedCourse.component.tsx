@@ -66,7 +66,7 @@ const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
         <View style={styles.textsContainer}>
           <View style={styles.nameTranslation}>
             <Text numberOfLines={1} style={styles.name}>
-              {name.split(" ")[0]}{" "}
+              {name}{" "}
             </Text>
             <Text
               numberOfLines={1}
