@@ -57,12 +57,12 @@ const styels = StyleSheet.create({
     height: 41,
     borderWidth: 1,
     borderColor: '#7A8288',
-    marginVertical: 15,
+    marginTop: 15,
     borderRadius: 8,
     paddingHorizontal: 15,
   },
   modalContainer: {
-    height: 182,
+    paddingVertical: 15,
     width: DEVICE_WIDTH * 0.85,
     backgroundColor: '#ffffff',
     padding: 20,
@@ -95,6 +95,12 @@ const styels = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ffffff',
     fontSize: 12
+  },
+  codeError: {
+    color: '#ff5252',
+    fontSize: 12,
+    marginBottom: 10,
+    textAlign: 'center',
   }
 });
 

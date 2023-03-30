@@ -30,21 +30,25 @@ const MainNavigator = () => {
       setIsOnline(state.isConnected)
       dispatch(toggleConnection(state.isConnected))
     });
-
   })
 
   const { Screen, Navigator } = Stack;
 
-  const openRealmBehaviorConfig = {
-    type: "openImmediately"
+  const existingRealmFileBehaviorConfig = {
+    type: "openImmediately",
   };
+
+  const newRealmFileBehaviorConfig = {
+    type: 'openImmediately',
+  }
 
   return (
       <RealmProvider
         sync={{
           user: app.currentUser,
           flexible: true,
-          existingRealmFileBehavior: openRealmBehaviorConfig,
+          newRealmFileBehavior: newRealmFileBehaviorConfig,
+          existingRealmFileBehavior: existingRealmFileBehaviorConfig,
           initialSubscriptions: {
             update: (subs, realm) => {
               subs.add(realm.objects('courses'), {

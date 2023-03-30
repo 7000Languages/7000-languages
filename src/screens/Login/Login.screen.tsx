@@ -14,7 +14,6 @@ import { PrimaryBtn } from '../../components'
 import {  getUserInfo, redirectUri } from '../../utils/auth'
 import {  save } from '../../utils/storage'
 import { useErrorWrap } from '../../hooks'
-import { useAppDispatch } from '../../redux/store'
 
 WebBrowser.maybeCompleteAuthSession()
 
@@ -25,7 +24,6 @@ const Login = () => {
   const realmApp = useApp()
 
   const errorWrap = useErrorWrap();
-  const dispatch = useAppDispatch();
 
   // Google login
   const config = {

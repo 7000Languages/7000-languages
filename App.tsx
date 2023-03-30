@@ -2,6 +2,7 @@ import React from "react";
 import MainNavigator from "./src/navigation/MainNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Toast from 'react-native-toast-message';
 
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
@@ -19,6 +20,7 @@ const App = () => {
           <UserProvider fallback={() => <Login />}>
             <NavigationContainer>
               <MainNavigator />
+              <Toast />
             </NavigationContainer>
           </UserProvider>
         </AppProvider>

@@ -16,8 +16,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { CourseStackParamList, DrawerStackParamList } from "../../navigation/types";
 import { realmContext } from "../../realm/realm";
 import { useAppSelector } from "../../redux/store";
-import { convertToArrayOfPlainObject } from "../../utils/helpers";
+import { convertToArrayOfPlainObject, convertToPlainObject } from "../../utils/helpers";
 import { UnitType, UserType } from "../../@types";
+import { BSON } from "realm";
 
 
 const DrawerContent: React.FC = () => {
@@ -25,12 +26,14 @@ const DrawerContent: React.FC = () => {
   const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
   const coursesNavigation = useNavigation<NativeStackNavigationProp<CourseStackParamList>>()
 
-  const { useQuery } = realmContext
+  const { useQuery, useObject } = realmContext
   const user: UserType = useAppSelector(state=>state.auth.user)
   const coursesData: any = useQuery('courses')
+  const userToFromRealm: any = useObject('users', new BSON.ObjectId(user._id))!
   const allUnits: any = useQuery('units')
   
   let adminCourses: any = coursesData.filter((course:any) => course.admin_id === user.authID)
+  let learnerCourses: any = coursesData.filter((course:any) => convertToPlainObject(userToFromRealm).learnerLanguages.includes((course._id.toString())))
   
   const goToContributorCourse = (course_id: string) => coursesNavigation.navigate('ContributorCourse', { course_id })
   
@@ -50,22 +53,22 @@ const DrawerContent: React.FC = () => {
         <TouchableOpacity style={styles.learnerContainer}>
           <Text style={styles.learnerText}>LEARNER</Text>
         </TouchableOpacity>
-        <CourseUnitItem
-          title="French"
-          numOfSubItems={8}
-          type="course"
-          index={1}
-          indexBackground="#E5F7F7"
-          backgroundColor="transparent"
-        />
-        <CourseUnitItem
-          title="Chinese"
-          numOfSubItems={10}
-          type="course"
-          index={2}
-          indexBackground="#E5F7F7"
-          backgroundColor="transparent"
-        />
+        {
+          convertToArrayOfPlainObject(learnerCourses).map((course: any)=>{
+            const units = convertToArrayOfPlainObject(allUnits).filter((unit:UnitType) => unit._course_id == course._id)
+            return (
+              <CourseUnitItem
+                title={course.details.name}
+                numOfSubItems={units.length}
+                type="course"
+                index={1}
+                indexBackground="#E5F7F7"
+                backgroundColor="transparent"
+                key={course._id}
+              />
+            )
+          })
+        }
         <View style={styles.questionContainer}>
           <Text style={styles.learnerQuestion}>
             Do you want to learn about an indigenous language?

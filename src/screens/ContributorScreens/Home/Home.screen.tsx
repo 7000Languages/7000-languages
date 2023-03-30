@@ -11,9 +11,24 @@ import { PRIMARY_COLOR } from '../../../constants/colors'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { DrawerActions } from '@react-navigation/native'
 
+import { realmContext } from '../../../realm/realm'
+import { UserType } from '../../../@types'
+import { useAppSelector } from '../../../redux/store'
+const {useRealm} = realmContext
+
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'Home'>
 
 const Home:React.FC<NavProps> = ({ navigation }) => {
+
+  const realm = useRealm()
+  const user: UserType = useAppSelector(state => state.auth.user)
+
+  // 
+  realm.subscriptions.update(subs=>{
+    subs.add(realm.objects('users').filtered('authID = $0', user.authID ), {
+      name: 'userSubscription',
+    }) 
+  })
 
   return (
     <View style={styles.container}>

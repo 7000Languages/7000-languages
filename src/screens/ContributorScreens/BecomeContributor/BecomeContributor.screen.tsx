@@ -107,7 +107,7 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
           population: numOfSpeakers,
           location,
           link,
-          is_private: followUp,
+          is_private: false,
           code: isoCode,
         }
       })
