@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   ScrollView,
+  Platform,
 } from "react-native";
 
 import styles from "./DrawerContent.style";
@@ -19,6 +20,7 @@ import { useAppSelector } from "../../redux/store";
 import { convertToArrayOfPlainObject, convertToPlainObject } from "../../utils/helpers";
 import { UnitType, UserType } from "../../@types";
 import { BSON } from "realm";
+import { DEVICE_HEIGHT } from "../../constants/sizes";
 
 
 const DrawerContent: React.FC = () => {
@@ -49,7 +51,9 @@ const DrawerContent: React.FC = () => {
           alignSelf: "center",
           width: "100%",
           marginTop: 25,
+          paddingBottom: Platform.OS == 'ios' ? DEVICE_HEIGHT * 0.08 : DEVICE_HEIGHT * 0.12
         }}
+        showsVerticalScrollIndicator={false}
       >
         <TouchableOpacity style={styles.learnerContainer}>
           <Text style={styles.learnerText}>LEARNER</Text>

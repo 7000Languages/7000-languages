@@ -9,10 +9,10 @@ import Settings from "./ContributorScreens/Settings/Settings.screen";
 import ContributorCourse from "./ContributorScreens/ContributorCourse/ContributorCourse.screen";
 import ContributorUnit from "./ContributorScreens/ContributorUnit/ContributorUnit.screen";
 import ContributorLesson from "./ContributorScreens/ContributorLesson/ContributorLesson.screen";
-import Search from "./LeanerScreens/Search/Search.screen";
-import LearnerCourse from "./LeanerScreens/LearnerCourse/LearnerCourse.screen";
-import LearnerUnit from "./LeanerScreens/LearnerUnit/LearnerUnit.screen";
-import LearnerLesson from "./LeanerScreens/LearnerLesson/LearnerLesson.screen";
+import Search from "./LearnerScreens/Search/Search.screen";
+import LearnerCourse from "./LearnerScreens/LearnerCourse/LearnerCourse.screen";
+import LearnerUnit from "./LearnerScreens/LearnerUnit/LearnerUnit.screen";
+import LearnerLesson from "./LearnerScreens/LearnerLesson/LearnerLesson.screen";
 
 export {
   Splash,

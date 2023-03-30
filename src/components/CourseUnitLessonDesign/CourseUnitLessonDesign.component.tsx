@@ -19,9 +19,10 @@ interface IProps {
   renderItem: ListRenderItem<never> | null | undefined;
   type: "course" | "lesson" | "unit";
   section?: 'contributor' | 'learner'
-  onAddPress?: ()=>void
-  onEditPress?: ()=>void
-  onManagePress?: ()=>void
+  horizontalFlatList?: boolean
+  onAddPress?: () => void
+  onEditPress?: () => void
+  onManagePress?: () => void
 }
 
 const CourseUnitLessonDesign: React.FC<IProps> = ({
@@ -34,17 +35,18 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
   onAddPress,
   onEditPress,
   onManagePress,
-  section
+  section,
+  horizontalFlatList
 }) => {
 
-  const itemTypeManage = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 1 ? 's' : ''}`: `Vocab${data.length > 1 ? 's' : ''}`
-  const itemTypeLabel = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 1 ? 's' : ''}`: `Vocabulary item${data.length > 1 ? 's' : ''}`
-  const addItemType = type == 'course' ? `Unit` : type == 'unit' ? `Lesson`: `Vocab`
-  const itemHeight = type !== 'lesson' ? 68 : 88  
+  const itemTypeManage = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 1 ? 's' : ''}` : `Vocab${data.length > 1 ? 's' : ''}`
+  const itemTypeLabel = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 1 ? 's' : ''}` : `Vocabulary item${data.length > 1 ? 's' : ''}`
+  const addItemType = type == 'course' ? `Unit` : type == 'unit' ? `Lesson` : `Vocab`
+  const itemHeight = type !== 'lesson' ? 68 : 88
 
   return (
     <View style={styles.container}>
-      <View style={[styles.header, {backgroundColor: section == 'learner' ? SECONDARY_COLOR : PRIMARY_COLOR }]}>
+      <View style={[styles.header, { backgroundColor: section == 'learner' ? SECONDARY_COLOR : PRIMARY_COLOR }]}>
         <Text style={styles.language}>{item}</Text>
         <Text style={styles.languageDescription}>{itemDescription}</Text>
         {
@@ -74,6 +76,7 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
       </View>
       <FlatList
         data={data}
+        horizontal={horizontalFlatList}
         renderItem={renderItem}
         getItemLayout={(_, index) => ({
           length: itemHeight,

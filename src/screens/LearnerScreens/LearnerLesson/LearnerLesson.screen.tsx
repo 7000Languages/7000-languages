@@ -12,6 +12,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { VocabType } from '../../../@types'
 import { realmContext } from '../../../realm/realm'
 import { convertToArrayOfPlainObject } from '../../../utils/helpers'
+import LearnerVocabItem from '../../../components/LearnerVocabItem/LearnerVocabItem.component'
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'LearnerLesson'>
 
@@ -25,15 +26,15 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
 
   const renderItem = ({item, index}:{item: VocabType, index:number}) => {
-    const { original, translation, image, audio, _id } = item
+    const { original, translation, image, audio, _id, notes } = item
     return (
-      <LessonItem
+      <LearnerVocabItem
         original={original}
         translation={translation}
         image={image}
         audio={audio}
         key={index}
-       
+        notes={notes}
        />
     )
   };
@@ -63,6 +64,7 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
         renderItem={renderItem}
         type='lesson'
         section='learner'
+        horizontalFlatList={true}
       />
     </View>
   );
