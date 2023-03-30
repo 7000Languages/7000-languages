@@ -36,6 +36,7 @@ const DrawerContent: React.FC = () => {
   let learnerCourses: any = coursesData.filter((course:any) => convertToPlainObject(userToFromRealm).learnerLanguages.includes((course._id.toString())))
   
   const goToContributorCourse = (course_id: string) => coursesNavigation.navigate('ContributorCourse', { course_id })
+  const goToLearnerCourse = (course_id: string) => coursesNavigation.navigate('LearnerCourse', { course_id })
   
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -54,17 +55,18 @@ const DrawerContent: React.FC = () => {
           <Text style={styles.learnerText}>LEARNER</Text>
         </TouchableOpacity>
         {
-          convertToArrayOfPlainObject(learnerCourses).map((course: any)=>{
+          convertToArrayOfPlainObject(learnerCourses).map((course: any, index: number)=>{
             const units = convertToArrayOfPlainObject(allUnits).filter((unit:UnitType) => unit._course_id == course._id)
             return (
               <CourseUnitItem
                 title={course.details.name}
                 numOfSubItems={units.length}
                 type="course"
-                index={1}
-                indexBackground="#E5F7F7"
+                index={index + 1}
                 backgroundColor="transparent"
                 key={course._id}
+                onPress={()=>goToLearnerCourse(course._id)}
+                section='learner'
               />
             )
           })
@@ -74,7 +76,7 @@ const DrawerContent: React.FC = () => {
             Do you want to learn about an indigenous language?
             <Text style={{ fontWeight: "bold" }}>Start Learning!</Text>
           </Text>
-          <TouchableOpacity style={styles.searchCourseBtn}>
+          <TouchableOpacity style={styles.searchCourseBtn} onPress={()=>coursesNavigation.navigate('Search')}>
             <Text style={styles.searchCourseText}>Search Courses</Text>
           </TouchableOpacity>
         </View>
@@ -90,10 +92,10 @@ const DrawerContent: React.FC = () => {
                 numOfSubItems={units.length}
                 type="course"
                 index={<Ionicons name="ios-earth" size={22} color={PRIMARY_COLOR} />}
-                indexBackground="#FBEAE9"
                 backgroundColor="#F9F9F9"
                 key={course._id}
                 onPress={()=>goToContributorCourse(course._id)}
+                section='contributor'
               />
             )
           })
@@ -104,7 +106,7 @@ const DrawerContent: React.FC = () => {
             the world?
             <Text style={{ fontWeight: "bold" }}> Become a contributor.</Text>
           </Text>
-          <TouchableOpacity style={styles.applyNowBtn}>
+          <TouchableOpacity style={styles.applyNowBtn} onPress={()=>coursesNavigation.navigate('BecomeContributor')}>
             <Text style={styles.searchCourseText}>Apply Now</Text>
           </TouchableOpacity>
         </View>

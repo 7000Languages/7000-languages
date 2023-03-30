@@ -5,9 +5,9 @@ import { DEVICE_WIDTH } from '../../constants/sizes';
 const styles = StyleSheet.create({
     container: {
         width: DEVICE_WIDTH,
-        height: 40,
+        height: 50,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     leftIconContainer: {
         position: 'absolute',

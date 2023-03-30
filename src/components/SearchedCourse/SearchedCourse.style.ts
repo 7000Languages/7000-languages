@@ -7,12 +7,10 @@ const styles = StyleSheet.create({
         width: DEVICE_WIDTH * 0.9,
         alignSelf: 'center',
         marginVertical: 6,
-        backgroundColor: '#F9F9F9',
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#DEE5E9',
         paddingLeft: 16,
-        paddingTop:10,
     },
     name: {
         fontSize: 20,
@@ -60,7 +58,7 @@ const styles = StyleSheet.create({
         height: 36,
         alignSelf: 'center',
         position: 'absolute',
-        bottom: 10,
+        bottom: 5,
     },
     joinCourseText: {
         color: '#ffffff',

@@ -21,6 +21,16 @@ export type CourseStackParamList = {
         lesson_id: string
     }
     Search: undefined
+    LearnerCourse: {
+        course_id: string
+    }
+    LearnerUnit: {
+        unit_id: string
+    }
+    LearnerLesson: {
+        lesson_id: string
+    }
+
 }
 
 export type DrawerStackParamList = {

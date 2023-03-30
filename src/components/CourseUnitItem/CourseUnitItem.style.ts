@@ -13,7 +13,6 @@ const styles = StyleSheet.create({
         borderRadius: 8
     },
     numberContainer: {
-        backgroundColor: '#FBEAE9',
         borderRadius: 8,
         justifyContent: 'center',
         alignItems: 'center',
@@ -22,8 +21,12 @@ const styles = StyleSheet.create({
         height: 40,
         alignContent: 'center'
     },
+    image: {
+        width: 24,
+        height: 24,
+        alignContent: 'center'
+    },
     number: {
-        color: PRIMARY_COLOR,
         fontWeight: 'bold',
         fontSize: 16
     },

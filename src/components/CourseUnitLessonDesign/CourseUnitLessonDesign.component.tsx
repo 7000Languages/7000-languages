@@ -9,6 +9,7 @@ import React from "react";
 
 import styles from "./CourseUnitLessonDesign.style";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { PRIMARY_COLOR, SECONDARY_COLOR } from "../../constants/colors";
 
 interface IProps {
   item: string;
@@ -17,9 +18,10 @@ interface IProps {
   data: any;
   renderItem: ListRenderItem<never> | null | undefined;
   type: "course" | "lesson" | "unit";
-  onAddPress: ()=>void
-  onEditPress: ()=>void
-  onManagePress: ()=>void
+  section?: 'contributor' | 'learner'
+  onAddPress?: ()=>void
+  onEditPress?: ()=>void
+  onManagePress?: ()=>void
 }
 
 const CourseUnitLessonDesign: React.FC<IProps> = ({
@@ -31,7 +33,8 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
   type,
   onAddPress,
   onEditPress,
-  onManagePress
+  onManagePress,
+  section
 }) => {
 
   const itemTypeManage = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 1 ? 's' : ''}`: `Vocab${data.length > 1 ? 's' : ''}`
@@ -41,25 +44,33 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View style={[styles.header, {backgroundColor: section == 'learner' ? SECONDARY_COLOR : PRIMARY_COLOR }]}>
         <Text style={styles.language}>{item}</Text>
         <Text style={styles.languageDescription}>{itemDescription}</Text>
-        <MaterialIcons
-          name="edit"
-          size={24}
-          color="#ffffff"
-          style={styles.editIcon}
-          onPress={onEditPress}
-        />
+        {
+          section !== 'learner'
+          &&
+          <MaterialIcons
+            name="edit"
+            size={24}
+            color="#ffffff"
+            style={styles.editIcon}
+            onPress={onEditPress}
+          />
+        }
       </View>
       <View style={styles.unitsContainer}>
         <Text style={styles.units}>
           {numOfSubItems} {itemTypeLabel}
         </Text>
-        <TouchableOpacity style={styles.manageUnitsContainer} onPress={onManagePress}>
-          <Text style={styles.manageUnits}>Manage {itemTypeManage}</Text>
-          <Ionicons name="settings" size={13} color="#DF4E47" />
-        </TouchableOpacity>
+        {
+          section !== 'learner'
+          &&
+          <TouchableOpacity style={styles.manageUnitsContainer} onPress={onManagePress}>
+            <Text style={styles.manageUnits}>Manage {itemTypeManage}</Text>
+            <Ionicons name="settings" size={13} color="#DF4E47" />
+          </TouchableOpacity>
+        }
       </View>
       <FlatList
         data={data}
@@ -70,10 +81,14 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
           index,
         })}
       />
-      <TouchableOpacity style={styles.addUnitContainer} onPress={onAddPress}>
-        <Ionicons name="add-circle" size={24} color="#DF4E47" />
-        <Text style={styles.addUnitText}>Add {addItemType}</Text>
-      </TouchableOpacity>
+      {
+        section !== 'learner'
+        &&
+        <TouchableOpacity style={styles.addUnitContainer} onPress={onAddPress}>
+          <Ionicons name="add-circle" size={24} color="#DF4E47" />
+          <Text style={styles.addUnitText}>Add {addItemType}</Text>
+        </TouchableOpacity>
+      }
     </View>
   );
 };

@@ -10,22 +10,28 @@ import ContributorCourse from "./ContributorScreens/ContributorCourse/Contributo
 import ContributorUnit from "./ContributorScreens/ContributorUnit/ContributorUnit.screen";
 import ContributorLesson from "./ContributorScreens/ContributorLesson/ContributorLesson.screen";
 import Search from "./LeanerScreens/Search/Search.screen";
+import LearnerCourse from "./LeanerScreens/LearnerCourse/LearnerCourse.screen";
+import LearnerUnit from "./LeanerScreens/LearnerUnit/LearnerUnit.screen";
+import LearnerLesson from "./LeanerScreens/LearnerLesson/LearnerLesson.screen";
 
 export {
-    Splash,
-    Onboarding,
-    Login,
-    AccountInfo,
-    Languages,
-    Settings,
-    ContributorCourse,
-    ContributorUnit,
-    ContributorLesson,
-    
-    // contributor screens
-    Home,
-    BecomeContributor,
+  Splash,
+  Onboarding,
+  Login,
+  AccountInfo,
+  Languages,
+  Settings,
+  ContributorCourse,
+  ContributorUnit,
+  ContributorLesson,
 
-    // Learner screens
-    Search,
-}
+  // contributor screens
+  Home,
+  BecomeContributor,
+
+  // Learner screens
+  Search,
+  LearnerCourse,
+  LearnerUnit,
+  LearnerLesson,
+};

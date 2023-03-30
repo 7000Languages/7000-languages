@@ -1,6 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { BecomeContributor, ContributorCourse, ContributorLesson, ContributorUnit, Home, Search } from "../../screens";
+import { BecomeContributor, ContributorCourse, ContributorLesson, ContributorUnit, Home, LearnerCourse, Search, LearnerUnit, LearnerLesson } from "../../screens";
 import { CourseStackParamList } from "../types";
 
 const Stack = createNativeStackNavigator<CourseStackParamList>();
@@ -21,6 +21,9 @@ const CourseStack = () => {
 
         {/* Learner screens */}
         <Screen name="Search" component={Search} />
+        <Screen name="LearnerCourse" component={LearnerCourse} />
+        <Screen name="LearnerUnit" component={LearnerUnit} />
+        <Screen name="LearnerLesson" component={LearnerLesson} />
 
     </Navigator>
   );

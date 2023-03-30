@@ -35,7 +35,7 @@ const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
       backgroundColor: interpolateColor(
         animatedBackgroundColor.value,
         [0, 1],
-        ["#C4E3E3", "#F9F9F9"]
+        [ "#DEE5E9", "#F9F9F9" ]
       ),
     };
   });

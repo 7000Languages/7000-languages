@@ -15,7 +15,6 @@ import { CourseType, UserType } from "../../../@types";
 import { realmContext } from "../../../realm/realm";
 import { useAppSelector } from "../../../redux/store";
 import { convertToArrayOfPlainObject, convertToPlainObject } from "../../../utils/helpers";
-import { users } from "../../../realm/schemas";
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, "Search">;
 
@@ -169,12 +168,12 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
         }
       />
       <View style={styles.textInputContainer}>
-        <Ionicons name="search" size={24} color="#006F7B" />
+        <Ionicons name="search" size={24} color={SECONDARY_COLOR} />
         <TextInput
           style={styles.input}
           placeholder="Search Courses"
-          placeholderTextColor={"#006F7B"}
-          cursorColor={"#006F7B"}
+          placeholderTextColor={SECONDARY_COLOR}
+          cursorColor={SECONDARY_COLOR}
           value={searchTerm}
           onChangeText={(text) => setSearchTerm(text)}
         />
@@ -182,7 +181,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
           <Ionicons
             name="close"
             size={20}
-            color="#006F7B"
+            color={SECONDARY_COLOR}
             onPress={() => setSearchTerm("")}
           />
         )}

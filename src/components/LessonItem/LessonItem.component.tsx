@@ -9,7 +9,7 @@ interface IProps {
   audio: string;
   original: string;
   translation: string;
-  onEditPress: () => void;
+  onEditPress?: () => void;
 }
 
 const LessonItem: React.FC<IProps> = ({ image, original, translation, audio, onEditPress }) => {
