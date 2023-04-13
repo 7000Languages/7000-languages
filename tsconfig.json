@@ -1,0 +1,12 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+	  "esModuleInterop": true,
+	  "strict": true,
+	  "jsx": "react",
+	  "typeRoots": [
+		"src/index.d.ts",
+		"node_modules/@types",
+	  ]
+	}
+}
