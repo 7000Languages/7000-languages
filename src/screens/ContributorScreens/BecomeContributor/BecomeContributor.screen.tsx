@@ -14,6 +14,7 @@ import { realmContext } from "../../../realm/realm";
 import { RootState, useAppSelector } from "../../../redux/store";
 import course_confirmation from '../../../emailTemplates/course_confirmation'
 import { CourseType } from "../../../@types";
+import { convertToPlainObject } from "../../../utils/helpers";
 
 const { useRealm } = realmContext
 
@@ -111,6 +112,10 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
         }
       })
     })
+
+    // console.log("Here",newCourse);
+    
+    
     
     // send email about new course to be approved or rejected
     user?.functions.sendEmail(

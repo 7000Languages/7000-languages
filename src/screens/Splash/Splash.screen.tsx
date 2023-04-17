@@ -6,7 +6,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { useUser } from "@realm/react";
 import { getValueFor } from "../../utils/storage";
 import { useAppDispatch } from "../../redux/store";
-import { setUser } from "../../redux/slices/authSlice";
+import { setUser, setUserGoogleInfo } from "../../redux/slices/authSlice";
 
 type NavProps = NativeStackScreenProps<RootStackParamList, "Splash">;
 
@@ -16,11 +16,22 @@ const Splash: React.FC<NavProps> = ({ navigation }) => {
 
   const user = useUser();
 
-  const getUserFromStorage = async () => {
+  const getUserFromStorage = () => {
     try {
-      let userData = await getValueFor("userData")
-      if(userData!){
+      let userData = getValueFor("userData")
+      if(userData){
         dispatch(setUser(userData))
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const getUserGoogleInfoFromStorage = () => {
+    try {
+      let userData = getValueFor("userGoogleInfo")
+      if(userData){
+        dispatch(setUserGoogleInfo(userData))
       }
     } catch (error) {
       console.log(error);
@@ -30,6 +41,7 @@ const Splash: React.FC<NavProps> = ({ navigation }) => {
   useEffect(() => {
 
     getUserFromStorage()
+    getUserGoogleInfoFromStorage()
 
     const whereToNavigate = user?.isLoggedIn ? "Onboarding" : "Login";
     let timer = setTimeout(() => {

@@ -31,7 +31,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
 
   const { useQuery, useRealm, useObject } = realmContext
   const user: UserType = useAppSelector(state => state.auth.user)
-  const userToUpdate: any = useObject('users', new BSON.ObjectId(user._id))!  
+  const userToUpdate: any = useObject('users', new BSON.ObjectId(convertToPlainObject(user)._id))!  
   const coursesData: any = useQuery('courses')
   
   const realm = useRealm()

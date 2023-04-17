@@ -23,7 +23,7 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
-target 'languages' do
+target '7000Languages' do
   config = use_native_modules!
 
   # Flags change depending on the env values.
@@ -45,7 +45,7 @@ target 'languages' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
-  target 'languagesTests' do
+  target '7000LanguagesTests' do
     inherit! :complete
     # Pods for testing
   end

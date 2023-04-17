@@ -16,7 +16,10 @@ export const convertToArrayOfPlainObject = (data: Realm.Object[]) => {
     ];
 }
 
-export const convertToPlainObject = (data: Realm.Object) => {
+export const convertToPlainObject = (data: Realm.Object|object|string) => {
+    if(typeof data === 'string') {
+      return Object.assign({}, JSON.parse(data))
+    }
     return Object.assign({}, JSON.parse(JSON.stringify(data)));
 }
 

@@ -28,7 +28,7 @@ const Onboarding: React.FC<NavProps> = ({ navigation }) => {
       <Image style={styles.backgroundImage} source={require("../../../assets/images/onboardingBackgroundImage.png")} />
       <ScrollView style={styles.scroll}>
         <InitLanguageSelect title={`Hello! \nWelcome to \n7000 Languages`} smallText='Proceed in English' onPress={changeLanguage} />
-        <InitLanguageSelect title={`Bonjour! \nBienvenue sur \n7000 Languages`} smallText='Proceed in English' onPress={changeLanguage} />
+        <InitLanguageSelect title={`Bonjour! \nBienvenue sur \n7000 Languages`} smallText='Proceed in French' onPress={changeLanguage} />
       </ScrollView>
       <Pressable style={styles.nextAndIconContainer} onPress={goToHome}>
         <Text style={styles.nextText}>Next</Text>

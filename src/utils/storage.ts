@@ -1,15 +1,17 @@
-// import * as SecureStore from 'expo-secure-store';
+import { MMKV } from 'react-native-mmkv'
 
-export const save = async (key: string, value: string) => {
+export const storage = new MMKV()
+
+export const save = async (key: string, value: string|object) => {
   let testedValue = typeof value === "string" ? value : JSON.stringify(value);
-  // await SecureStore.setItemAsync(key, testedValue);
+  await storage.set(key, JSON.stringify(testedValue))
 };
 
-export const getValueFor = async (key: string) => {
-  // let result = await SecureStore.getItemAsync(key);
-  // if (result) {
-  //   return JSON.parse(result);
-  // } else {
-  //   console.warn("Error: Failed to get value for key: " + key);
-  // }
+export const getValueFor = (key: string) => {
+  try {
+    const jsonValue = storage.getString(key)
+    return jsonValue != null ? JSON.parse(jsonValue) : null;
+  } catch(e) {
+    // error reading value
+  }
 };

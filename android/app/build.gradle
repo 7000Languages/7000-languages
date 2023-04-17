@@ -93,9 +93,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.languages"
+    namespace "com.languages7000.app"
     defaultConfig {
-        applicationId "com.languages"
+        applicationId "com.languages7000.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

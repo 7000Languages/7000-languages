@@ -22,10 +22,10 @@ const FocusAwareStatusBar: React.FC<IProps> = ({
   return isFocused ? (
     showStatusBackground ? (
       <View style={[styles.StatusBar, { backgroundColor }]}>
-        <StatusBar {...rest} backgroundColor={statusbarBackgroundColor} />
+        <StatusBar {...rest} hidden={false} backgroundColor={statusbarBackgroundColor} />
       </View>
     ) : (
-      <StatusBar {...rest} />
+      <StatusBar hidden={false} {...rest} />
     )
   ) : null;
 };

@@ -1,5 +1,5 @@
 {
-  "name": "languages",
+  "name": "7000languages",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -12,6 +12,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.312.0",
     "@aws-sdk/s3-request-presigner": "^3.312.0",
+    "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-native-community/netinfo": "^9.3.9",
     "@react-native-google-signin/google-signin": "^9.0.2",
     "@react-native-picker/picker": "^2.4.10",
@@ -29,6 +30,7 @@
     "react-native-gesture-handler": "^2.9.0",
     "react-native-get-random-values": "^1.8.0",
     "react-native-image-crop-picker": "^0.39.0",
+    "react-native-mmkv": "^2.8.0",
     "react-native-modal": "^13.0.1",
     "react-native-reanimated": "^3.0.2",
     "react-native-rename": "^3.2.12",

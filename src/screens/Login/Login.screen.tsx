@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, SafeAreaView, StatusBar, Text, View } from 'react-native'
+import { Image, Platform, SafeAreaView, StatusBar, Text, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
@@ -8,20 +8,22 @@ import { useApp } from '@realm/react'
 
 import styles from './Login.style'
 
-import { IOS_CLIENT_ID, ANDROID_CLIENT_ID, EXPO_CLIENT_ID } from '@env'
+import { IOS_CLIENT_ID, EXPO_CLIENT_ID, ANDROID_CLIENT_ID } from '@env'
 import { RootStackParamList } from '../../navigation/types'
 import { PrimaryBtn } from '../../components'
 import { getUserInfo, redirectUri } from '../../utils/auth'
 import { save } from '../../utils/storage'
 import { useErrorWrap } from '../../hooks'
+import { useAppDispatch } from '../../redux/store';
+import { setUser, setUserGoogleInfo } from '../../redux/slices/authSlice';
+import { UserGoogleInfoType } from '../../@types';
 
-type NavProps = NativeStackScreenProps<RootStackParamList, 'Login'>
 
 const Login = () => {
 
-  const [user, setUser] = useState<any>();
-
   const realmApp = useApp()
+
+  const dispatch = useAppDispatch()
 
   // useEffect(() => {
   //   errorWrap(async () => {
@@ -58,18 +60,44 @@ const Login = () => {
 
   useEffect(() => {
     GoogleSignin.configure({
-      scopes: ['profile', 'https://www.googleapis.com/auth/drive.readonly'],
+      scopes: ['profile'],
       iosClientId: IOS_CLIENT_ID,
-      webClientId: EXPO_CLIENT_ID
+      webClientId: Platform.OS == 'ios' ? IOS_CLIENT_ID : ANDROID_CLIENT_ID,
+      offlineAccess: true
     });
-    isSignedIn()
   }, [])
 
   const signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn()
-      setUser(userInfo)
+      // console.log("User", userInfo)
+      const authID = userInfo.user.id;
+      const idToken: any = userInfo.idToken;
+      // Log the user in through realm to app here
+      const credentials = Realm.Credentials.google({ idToken });
+
+      try {
+        await realmApp.logIn(credentials).then(async (user) => {
+          console.log(`Logged in with id: ${user.id}`);
+
+          // check if user exists already in atlas
+          const result = await user.functions.checkIfUserExists(authID);
+          
+          dispatch(setUser(result))
+          dispatch(setUserGoogleInfo(userInfo.user as UserGoogleInfoType))
+
+          try {
+            save('userData', result)
+            save('userGoogleInfo', userInfo.user)
+          } catch (error) {
+            console.log(`Error saving user data: ${error}`)
+          }
+
+        });
+      } catch (error) {
+        console.log("Error: ", error);
+      }
     } catch (error: any) {
       console.log("Message___", error.message);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -80,29 +108,6 @@ const Login = () => {
         console.log("Play store services not available");
       } else {
         console.log("some other error happens");
-      }
-    }
-  }
-
-  const isSignedIn = async () => {
-    const isSignedIn = await GoogleSignin.isSignedIn()
-    if (isSignedIn) {
-      getCurrentUserInfo()
-    } else {
-      console.log("Please Login");
-    }
-  }
-
-  const getCurrentUserInfo = async () => {
-    try {
-      const userInfo = await GoogleSignin.signInSilently()
-      console.log("User", userInfo)
-    } catch (error: any) {
-      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-        console.log("User has not signed in yet");
-        signIn()
-      } else {
-        console.log("Something went wrong. Unable to get user's info");
       }
     }
   }

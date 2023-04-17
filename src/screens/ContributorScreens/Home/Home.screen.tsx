@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, TouchableOpacity, StatusBar } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import Feather from 'react-native-vector-icons/Feather'
 import styles from './Home.style'
@@ -12,28 +12,29 @@ import { DrawerActions } from '@react-navigation/native'
 import { realmContext } from '../../../realm/realm'
 import { UserType } from '../../../@types'
 import { useAppSelector } from '../../../redux/store'
+import { convertToPlainObject } from '../../../utils/helpers'
 
-const {useRealm} = realmContext
+const { useRealm } = realmContext
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'Home'>
 
-const Home:React.FC<NavProps> = ({ navigation }) => {
+const Home: React.FC<NavProps> = ({ navigation }) => {
 
   const realm = useRealm()
   const user: UserType = useAppSelector(state => state.auth.user)
-
+  const userGoogleInfo = useAppSelector(state => state.auth.userGoogleInfo)
   // 
-  realm.subscriptions.update(subs=>{
-    subs.add(realm.objects('users').filtered('authID = $0', user.authID ), {
+  realm.subscriptions.update(subs => {
+    subs.add(realm.objects('users').filtered('authID = $0', convertToPlainObject(user).authID), {
       name: 'userSubscription',
-    }) 
+    })
   })
 
   return (
     <View style={styles.container}>
      <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
-        barStyle={"dark-content"}
+        barStyle={"light-content"}
         showStatusBackground={true}
       />
       <Header
@@ -42,7 +43,7 @@ const Home:React.FC<NavProps> = ({ navigation }) => {
         leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={()=>navigation.dispatch(DrawerActions.openDrawer())} />}
       />
       <View style={styles.content}>
-          <Text style={styles.welcomeText}>Welcome, Yogi</Text>
+          <Text style={styles.welcomeText}>Welcome, {userGoogleInfo.givenName}</Text>
           <Text style={styles.learnerText}>{`Looks like you aren't a learner in\n any course yet`}.</Text>
           <PrimaryBtn
             label='Search Courses'

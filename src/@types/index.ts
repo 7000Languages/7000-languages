@@ -67,3 +67,12 @@ export type CompleteType = {
     _unit_id: string
     _lesson_id: string
 }
+
+export type UserGoogleInfoType = {
+  email: string;
+  familyName: string;
+  givenName: string;
+  id: string;
+  name: string;
+  photo: string
+};

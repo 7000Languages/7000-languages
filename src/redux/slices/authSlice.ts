@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { UserType } from "../../@types";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {UserGoogleInfoType, UserType} from '../../@types';
+import {convertToPlainObject} from '../../utils/helpers';
 
 /**
  * This slice handles all the user information
@@ -8,8 +9,8 @@ import { UserType } from "../../@types";
  */
 
 interface InitialStateType {
-  user: UserType
-  userGoogleInfo: object
+  user: UserType;
+  userGoogleInfo: UserGoogleInfoType;
 }
 
 const initialState: InitialStateType = {
@@ -19,27 +20,34 @@ const initialState: InitialStateType = {
     authID: '',
     adminLanguages: [],
     learnerLanguages: [],
-    collaboratorLanguages: []
+    collaboratorLanguages: [],
   },
-  userGoogleInfo: {},
+  userGoogleInfo: {
+    email: '',
+    familyName: '',
+    givenName: '',
+    id: '',
+    name: '',
+    photo: '',
+  },
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserType>) => {
-      state.user = action.payload;
+      state.user = {...convertToPlainObject(action.payload)};
     },
-    setUserGoogleInfo: (state, action: PayloadAction<{}>) => {
-      state.userGoogleInfo = action.payload;
+    setUserGoogleInfo: (state, action: PayloadAction<UserGoogleInfoType>) => {
+      state.userGoogleInfo = {...action.payload};
     },
-    logout: (state) => {
+    logout: state => {
       state.user = initialState.user;
     },
   },
 });
 
-export const { logout, setUser } = authSlice.actions;
+export const {logout, setUser, setUserGoogleInfo} = authSlice.actions;
 
-export default authSlice.reducer
+export default authSlice.reducer;
