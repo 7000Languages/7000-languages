@@ -1,10 +1,11 @@
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, KeyboardAvoidingView, Platform, Alert, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import isEmail from 'validator/lib/isEmail';
 import { useUser } from '@realm/react'
+import Toast from 'react-native-toast-message';
 
 import styles from "./BecomeContributor.style";
 
@@ -14,14 +15,16 @@ import { realmContext } from "../../../realm/realm";
 import { RootState, useAppSelector } from "../../../redux/store";
 import course_confirmation from '../../../emailTemplates/course_confirmation'
 import { CourseType } from "../../../@types";
-import { convertToPlainObject } from "../../../utils/helpers";
 
 const { useRealm } = realmContext
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'BecomeContributor'>
 
+
 const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
 
+  const userGoogleInfo = useAppSelector(state => state.auth.userGoogleInfo)
+  
   //states
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -50,6 +53,19 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
     setLanguageNameError('')
     setDescriptionError('')
     setTeachingLanguageError('')
+  }
+
+  const resetStates = () => {
+    setName(userGoogleInfo.name);
+    setEmail(userGoogleInfo.email);
+    setLanguageName('')
+    setDescription('')
+    setTeachingLanguage(''),
+    setIsoCode(''),
+    setGlottoCode(''),
+    setLocation(''),
+    setNumOfSpeakers(''),
+    setLink('')
   }
 
   const realm = useRealm()
@@ -86,7 +102,15 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
       hasError = true
     }
 
-    if(hasError) return
+    if(hasError) {
+      Toast.show({
+        type: 'error',
+        text1: '🤔 Hmmm 🤔',
+        visibilityTime: 5000,
+        text2: `Please fill in all the required fields.`
+      });
+      return
+    }
 
     // create new course
 
@@ -113,9 +137,14 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
       })
     })
 
-    // console.log("Here",newCourse);
-    
-    
+    Toast.show({
+      type: 'success',
+      text1: '🌟 Hurray 🌟',
+      visibilityTime: 6000,
+      text2: `Your ${newCourse.details.name} course has been submitted for approval. We will get back to you in less than a week.`
+    });
+
+    resetStates()
     
     // send email about new course to be approved or rejected
     user?.functions.sendEmail(
@@ -140,6 +169,11 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
       },
     )
   }
+
+  useEffect(() => {    
+    setName(userGoogleInfo.name);
+    setEmail(userGoogleInfo.email);
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>

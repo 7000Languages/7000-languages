@@ -4,7 +4,7 @@ export const storage = new MMKV()
 
 export const save = async (key: string, value: string|object) => {
   let testedValue = typeof value === "string" ? value : JSON.stringify(value);
-  await storage.set(key, JSON.stringify(testedValue))
+  await storage.set(key, testedValue)
 };
 
 export const getValueFor = (key: string) => {
