@@ -36,6 +36,7 @@ export type UnitType = {
     _order: number
     selected: boolean
     description: string
+    image: string
 }
 
 export type VocabType = {

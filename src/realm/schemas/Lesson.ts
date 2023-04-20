@@ -10,6 +10,7 @@ export default class Lesson extends Realm.Object {
   selected!: boolean
   vocab!: []
   description!: string
+  image!: string
 
   static schema = {
     name: 'lessons',
@@ -23,6 +24,7 @@ export default class Lesson extends Realm.Object {
       selected: 'bool',
       vocab: { type: 'vocabs[]', default: [] },
       description: { type: 'string?', default: '' },
+      image: { type: 'string?', default: '' },
     },
   }
 }

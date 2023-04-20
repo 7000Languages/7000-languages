@@ -10,7 +10,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.312.0",
+    "@aws-sdk/client-cognito-identity": "3.298.0",
+    "@aws-sdk/client-s3": "3.298.0",
+    "@aws-sdk/credential-provider-cognito-identity": "3.298.0",
     "@aws-sdk/s3-request-presigner": "^3.312.0",
     "@react-native-async-storage/async-storage": "^1.18.1",
     "@react-native-community/netinfo": "^9.3.9",

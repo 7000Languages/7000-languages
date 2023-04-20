@@ -1,17 +1,20 @@
+import React, { useEffect, useState } from 'react'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import React, { useState } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
-import { View, Text, ActivityIndicator } from 'react-native'
+import { KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity, Image, View, Text, ActivityIndicator } from 'react-native'
 import Modal from 'react-native-modal'
+import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+import Entypo from 'react-native-vector-icons/Entypo'
+import Feather from 'react-native-vector-icons/Feather'
+import styles from './AddUnitLessonModal.style'
+
 import { CourseType, UnitType } from '../../@types'
 import { PRIMARY_COLOR } from '../../constants/colors'
 import { realmContext } from '../../realm/realm'
-import { hasEmoji } from '../../utils/helpers'
 import CustomInput from '../CustomInput/CustomInput.component'
 import PrimaryBtn from '../PrimaryBtn/PrimaryBtn.component'
-
-import styles from './AddUnitLessonModal.style'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import { uploadFileToS3 } from '../../utils/s3'
 
 type IProps = {
     isModalVisible: boolean
@@ -26,7 +29,8 @@ const { useRealm } = realmContext
 const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course, unit }) => {
 
     const [name, setName] = useState('');
-    const [emoji, setEmoji] = useState('');
+    const [image, setImage] = useState<ImageOrVideo>();
+    const [selectingImage, setSelectingImage] = useState(false);
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -44,41 +48,66 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
     const resetStates = () => {
         setName('');
         setDescription('');
-        setEmoji('');
+        setImage(undefined);
     }
 
     const realm = useRealm()
 
-    const addUnit = async () => {
-        setLoading(true);
-        resetErrorStates()
-        let hasError = false;
-        if (name.length < 5) {
-            setNameError('Name of the unit is too short');
-            hasError = true;
-        }
-        if (!hasEmoji(emoji)) {
-            setEmojiError('Please select an emoji');
-            hasError = true;
-        }
-        if (description.length < 5) {
-            setDescriptionError('Description of the unit is too short');
-            hasError = true;
-        }
-        if (hasError) {
-            setLoading(false)
-            return
-        }
+    const openPicker = () => {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true,
+            multiple: false
+        }).then(image => {
+            setImage(image);
+            setSelectingImage(prev => !prev);
+        });
+    };
 
-        realm.write(() => {
-            realm.create('units', {
-                _course_id: course?._id,
-                name: name + " " + emoji,
-                _order: 0,
-                selected: false,
-                description
-            })
-        })
+    const openCamera = () => {
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+        }).then(image => {
+            console.log(image);
+        });
+    };
+
+    const addUnit = async () => {
+        // setLoading(true);
+        // resetErrorStates()
+        // let hasError = false;
+        // if (name.length < 5) {
+        //     setNameError('Name of the unit is too short');
+        //     hasError = true;
+        // }
+        // if (description.length < 5) {
+        //     setDescriptionError('Description of the unit is too short');
+        //     hasError = true;
+        // }
+        // if (hasError) {
+        //     setLoading(false)
+        //     return
+        // }
+
+        // realm.write(() => {
+        //     realm.create('units', {
+        //         _course_id: course?._id,
+        //         name,
+        //         _order: 0,
+        //         selected: false,
+        //         description
+        //     })
+        // })
+
+        if(typeof image !== undefined && image){
+            let fileName = `images/${image.sourceURL?.split('/').pop()}`
+            console.log(image);
+            const result = await uploadFileToS3(fileName, image.sourceURL!, image.mime)
+            console.log('result', result);
+        }
 
         resetStates()
         setLoading(false)
@@ -91,10 +120,6 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
         let hasError = false;
         if (name.length < 5) {
             setNameError('Name of the lesson is too short');
-            hasError = true;
-        }
-        if (!hasEmoji(emoji)) {
-            setEmojiError('Please select an emoji');
             hasError = true;
         }
         if (description.length < 5) {
@@ -110,7 +135,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
             realm.create('lessons', {
                 _course_id: course?._id,
                 _unit_id: unit?._id.toString(),
-                name: name + " " + emoji,
+                name,
                 _order: 0,
                 selected: false,
                 description
@@ -122,12 +147,50 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
 
     }
 
+    const toggleImageSelection = () => setSelectingImage(prev => !prev);
+
+     // animations
+     const scale = useSharedValue(0);
+     const right = useSharedValue(-10);
+ 
+     const scaleAnimatedStyles = useAnimatedStyle(() => {
+         return {
+             transform: [{ scale: scale.value }],
+             right: right.value,
+         };
+     });
+ 
+    useEffect(() => {
+      setSelectingImage(false)
+    }, [])
+    
+
+    useEffect(() => {
+        const scaleToValue = !selectingImage ? 0 : 1;
+        const rightToValue = !selectingImage ? -100 : 0;
+        scale.value = withTiming(scaleToValue, { duration: 600 });
+        right.value = withTiming(rightToValue, { duration: 400 });
+    }, [selectingImage])
+
     return (
         <Modal isVisible={isModalVisible} backdropOpacity={0.8}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >
                 <ScrollView style={styles.inputsContianer} keyboardShouldPersistTaps='always'>
+                    {/* Animated view for camera or gallery */}
+                    <Animated.View
+                        style={[styles.textAndIconsContainer, scaleAnimatedStyles]}>
+                        <TouchableOpacity onPress={openCamera} style={styles.cameraTextAndIcon}>
+                            <Feather name="camera" size={22} color="#227093" />
+                            <Text style={styles.iconText}>Camera</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={openPicker} style={styles.cameraTextAndIcon}>
+                            <Feather name="image" size={22} color="#227093" />
+                            <Text style={styles.iconText}>Gallery</Text>
+                        </TouchableOpacity>
+                    </Animated.View>
+
                     <View style={styles.container}>
                         <View style={styles.header}>
                             <Text style={styles.title}>Add Custom {type.charAt(0).toUpperCase() + type.slice(1)}</Text>
@@ -146,12 +209,20 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
                             errorText={nameError}
                             onChangeText={(text: string) => setName(text)}
                         />
-                        <CustomInput
-                            label={`Give your ${type} an emoji`}
-                            value={emoji}
-                            errorText={emojiError}
-                            onChangeText={(text: string) => setEmoji(text)}
-                        />
+
+                        {
+                            image ?
+                                <View style={styles.imageAndIcon}>
+                                    <Image source={{ uri: image.path }} style={styles.image} resizeMode='contain' />
+                                    <AntDesign name="close" size={24} color="black" style={{ position: 'absolute', top: 5, right: 20 }} onPress={() => setImage(undefined)} />
+                                </View>
+                                :
+                                <TouchableOpacity style={styles.addImageView} onPress={toggleImageSelection}>
+                                    <Entypo name="image-inverted" size={26} color="#9F3E1A" />
+                                    <Text style={styles.addImageText}>Add Image</Text>
+                                </TouchableOpacity>
+                        }
+
                         <CustomInput
                             label={`What are the goals of this ${type}`}
                             value={description}

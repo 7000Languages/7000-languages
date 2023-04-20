@@ -14,13 +14,17 @@ import { FocusAwareStatusBar, Header, SearchedCourse } from "../../../components
 import { SECONDARY_COLOR } from "../../../constants/colors";
 import { CourseType, UserType } from "../../../@types";
 import { realmContext } from "../../../realm/realm";
-import { useAppSelector } from "../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { convertToArrayOfPlainObject, convertToPlainObject } from "../../../utils/helpers";
+import { save } from "../../../utils/storage";
+import { setUser } from "../../../redux/slices/authSlice";
+import { DrawerActions } from "@react-navigation/native";
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, "Search">;
 
 const Search: React.FC<NavProps> = ({ navigation }) => {
 
+  const dispatch = useAppDispatch()
 
   const [searchTerm, setSearchTerm] = useState('')
   const [joinCourseModalVisible, setJoinCourseModalVisible] = useState(false)
@@ -36,8 +40,6 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
   
   const realm = useRealm()
   // const user
-
-  let courses: any = coursesData.filter((course: any) => course.admin_id === user.authID)
   
   const joinCourse = () => {
 
@@ -60,21 +62,20 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
         setCodeError('Sorry! incorrect course code. Try again')
         hasError = true
       }
-      if(courseToJoin.admin_id == user.authID){
-        Toast.show({
-          type: 'error',
-          text1: 'Oops!',
-          visibilityTime: 5000,
-          text2: 'You can\'t join your own course'
-        });
-        hasError = true
-      }
       if(hasError) return
     }
 
     realm.write(()=>{
       userToUpdate.learnerLanguages.push(courseToJoin?._id)
     })
+
+    // Update user in storage and redux
+    save('userData', convertToPlainObject(userToUpdate))
+    dispatch(setUser(convertToPlainObject(userToUpdate)))
+
+    // close modal and open drawer
+    setJoinCourseModalVisible(false)
+    navigation.dispatch(DrawerActions.openDrawer())
 
     setCode('')
     setCodeError('')

@@ -8,6 +8,7 @@ export default class Unit extends Realm.Object {
   _order!: number
   selected!: boolean
   description!: string
+  image!: string
 
   static schema = {
     name: 'units',
@@ -19,6 +20,7 @@ export default class Unit extends Realm.Object {
       _order: "int",
       selected: "bool",
       description: { type: "string?", default: '' },
+      image: { type: "string?", default: '' },
     },
   }
 }
