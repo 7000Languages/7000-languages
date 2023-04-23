@@ -17,11 +17,12 @@ const styles = StyleSheet.create({
     scroll:{
         marginTop: 150,
         width: DEVICE_WIDTH,
+        height: DEVICE_HEIGHT * 0.4
     },
     wordLogo: {
         position: 'absolute',
         zIndex: 1,
-        top: Platform.OS == 'ios' ? StatusBarHeight + 50 : StatusBarHeight,
+        top: Platform.OS == 'ios' ? StatusBarHeight! + DEVICE_HEIGHT * 0.08 : StatusBarHeight,
         left: 30
     },
     nextAndIconContainer: {
@@ -35,6 +36,9 @@ const styles = StyleSheet.create({
         color: '#ffffff',
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    selectedLocale: {
+        color: 'transparent',
     }
 });
 

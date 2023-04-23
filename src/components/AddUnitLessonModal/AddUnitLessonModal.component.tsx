@@ -6,6 +6,8 @@ import Modal from 'react-native-modal'
 import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
 import Entypo from 'react-native-vector-icons/Entypo'
 import Feather from 'react-native-vector-icons/Feather'
+import RNFetchBlob from "rn-fetch-blob";
+
 import styles from './AddUnitLessonModal.style'
 
 import { CourseType, UnitType } from '../../@types'
@@ -102,11 +104,35 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
         //     })
         // })
 
-        if(typeof image !== undefined && image){
-            let fileName = `images/${image.sourceURL?.split('/').pop()}`
-            console.log(image);
-            const result = await uploadFileToS3(fileName, image.sourceURL!, image.mime)
-            console.log('result', result);
+        if (typeof image !== undefined && image) {
+            let fileName = `images/${image.path?.split('/').pop()}`
+            let fileUri = image.path!
+            let filePath = ''
+            if (Platform.OS === 'ios') {
+                let arr = fileUri.split('/')
+                const dirs = RNFetchBlob.fs.dirs
+                filePath = `${dirs.DocumentDir}/${arr[arr.length - 1]}`
+            } else {
+                filePath = fileUri
+            }
+
+            // RNFetchBlob.fs.readFile(fileUri, 'base64')
+            //     .then(async (data) => {
+            //         await uploadFileToS3(fileName, data, image.mime)
+            //     })
+
+            RNFetchBlob.fs.readStream(fileUri, 'base64')
+                .then((stream) => {
+                    let data = ''
+                    stream.open()
+                    stream.onData((chunk) => {
+                        data += chunk
+                    })
+                    stream.onEnd(async() => {
+                        await uploadFileToS3(fileName, data, image.mime)
+                    })
+                })
+
         }
 
         resetStates()

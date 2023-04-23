@@ -35,6 +35,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
 
   const { useQuery, useRealm, useObject } = realmContext
   const user: UserType = useAppSelector(state => state.auth.user)
+  const userGoogleInfo = useAppSelector(state => state.auth.userGoogleInfo)
   const userToUpdate: any = useObject('users', new BSON.ObjectId(convertToPlainObject(user)._id))!  
   const coursesData: any = useQuery('courses')
   
@@ -93,7 +94,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
     return (
       <SearchedCourse
         onJoinCoursePress={() => {
-          setCourseToJoin(item)
+          setCourseToJoin( convertToPlainObject(item))
           setJoinCourseModalVisible(true)
         }}
         item={item}
@@ -105,13 +106,13 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
     return (
       <View style={styles.listItemContainer}>
         <Image source={require('../../../../assets/images/darkLogo.png')} style={styles.darkLogo} />
-        <Text style={styles.listEmptyComponentTitle}>Welcome, Yogi</Text>
+        <Text style={styles.listEmptyComponentTitle}>Welcome, {userGoogleInfo.givenName}</Text>
         <Text style={styles.subText}>{`Start searching for courses and\n new language to learn!`}</Text>
       </View>
     );
   }
 
-  const search_parameters = Object.keys(Object.assign({}, coursesData.length > 0 ? convertToArrayOfPlainObject(coursesData)[0].details : {}));
+  const search_parameters = Object.keys(Object.assign({},  convertToArrayOfPlainObject(coursesData).length > 0 ? convertToArrayOfPlainObject(coursesData)[0].details : {}));
 
   const searchData = (courses: CourseType[]) => {
     return courses.filter((course: any) => search_parameters.some(param => course.details[param].toString().toLowerCase().includes(searchTerm.toLowerCase()))).sort((a, b) => a.details.name.localeCompare(b.details.name))

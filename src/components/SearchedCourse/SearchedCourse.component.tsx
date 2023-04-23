@@ -52,6 +52,7 @@ const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
   });
 
   useEffect(() => {
+    'worklet'
     animatedHeight.value = withTiming(showingDetails ? 164 : 66)
     animatedChevronRotation.value = withTiming(showingDetails? '180deg' : '0deg', { duration: 500 })
     animatedBackgroundColor.value = withTiming(1 - animatedBackgroundColor.value, { duration: 1000 });

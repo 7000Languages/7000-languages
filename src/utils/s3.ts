@@ -18,16 +18,11 @@ const s3 = new S3Client({
     region: bucketRegion,
 });
 
-export const uploadFileToS3 = async (fileName: string, file: string, ContentType: string) => {
+export const uploadFileToS3 = async (fileName: string, contents: string, ContentType: string) => {
     const params = {
       Bucket: bucketName,
       Key: fileName,
-      Body: {
-        size: 33334,
-        sourceURL:
-          'file:///Users/macbook/Library/Developer/CoreSimulator/Devices/D78F8E9C-F36D-4820-81C6-176D9E314D7B/data/Media/DCIM/100APPLE/IMG_0008.JPG',
-        width: 300,
-      },
+      Body: contents,
       ContentType,
     };
     const command = new PutObjectCommand(params)

@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: 55,
     alignItems: "center",
-    marginTop: StatusBarHeight + 20,
+    marginTop: StatusBarHeight! + 20,
     alignSelf: "center",
   },
   progressItem: {

@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import {
   DEVICE_HEIGHT,
   DEVICE_WIDTH,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   wordLogo: {
     position: "absolute",
     zIndex: 1,
-    top: StatusBarHeight + 20,
+    top: Platform.OS == 'ios' ? StatusBarHeight! + DEVICE_HEIGHT * 0.08 : StatusBarHeight,
     left: 30,
   },
   nextAndIconContainer: {
