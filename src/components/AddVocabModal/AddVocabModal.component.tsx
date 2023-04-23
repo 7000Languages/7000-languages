@@ -5,6 +5,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import Toast from 'react-native-toast-message';
 
 import Modal from 'react-native-modal'
 import CustomInput from '../CustomInput/CustomInput.component'
@@ -87,8 +88,9 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
     const toggleImageSelection = () => setSelectingImage(prev => !prev);
 
     useEffect(() => {
-        const scaleToValue = selectingImage ? 0 : 1;
-        const rightToValue = selectingImage ? -100 : 0;
+        'worklet'
+        const scaleToValue = !selectingImage ? 0 : 1;
+        const rightToValue = !selectingImage ? -100 : 0;
         scale.value = withTiming(scaleToValue, { duration: 600 });
         right.value = withTiming(rightToValue, { duration: 400 });
     }, [selectingImage])
@@ -139,7 +141,15 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
             }
             lesson.vocab.push(newVocab)
 
-        })
+        });
+
+        Toast.show({
+            type: 'success',
+            text1: 'Hurray 🌟',
+            visibilityTime: 5000,
+            text2: 'Unit added successfully',
+        });
+
 
         // if(typeof image !== undefined && image){
         //     let fileName = image.filename! + "_" + Date.now()

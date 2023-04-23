@@ -7,6 +7,7 @@ import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
 import Entypo from 'react-native-vector-icons/Entypo'
 import Feather from 'react-native-vector-icons/Feather'
 import RNFetchBlob from "rn-fetch-blob";
+import Toast from 'react-native-toast-message';
 
 import styles from './AddUnitLessonModal.style'
 
@@ -78,31 +79,38 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
     };
 
     const addUnit = async () => {
-        // setLoading(true);
-        // resetErrorStates()
-        // let hasError = false;
-        // if (name.length < 5) {
-        //     setNameError('Name of the unit is too short');
-        //     hasError = true;
-        // }
-        // if (description.length < 5) {
-        //     setDescriptionError('Description of the unit is too short');
-        //     hasError = true;
-        // }
-        // if (hasError) {
-        //     setLoading(false)
-        //     return
-        // }
+        setLoading(true);
+        resetErrorStates()
+        let hasError = false;
+        if (name.length < 5) {
+            setNameError('Name of the unit is too short');
+            hasError = true;
+        }
+        if (description.length < 5) {
+            setDescriptionError('Description of the unit is too short');
+            hasError = true;
+        }
+        if (hasError) {
+            setLoading(false)
+            return
+        }
 
-        // realm.write(() => {
-        //     realm.create('units', {
-        //         _course_id: course?._id,
-        //         name,
-        //         _order: 0,
-        //         selected: false,
-        //         description
-        //     })
-        // })
+        realm.write(() => {
+            realm.create('units', {
+                _course_id: course?._id,
+                name,
+                _order: 0,
+                selected: false,
+                description
+            })
+        })
+
+        Toast.show({
+            type: 'success',
+            text1: 'Hurray 🌟',
+            visibilityTime: 5000,
+            text2: 'Unit added successfully',
+        });
 
         if (typeof image !== undefined && image) {
             let fileName = `images/${image.path?.split('/').pop()}`
@@ -192,6 +200,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
     
 
     useEffect(() => {
+        'worklet'
         const scaleToValue = !selectingImage ? 0 : 1;
         const rightToValue = !selectingImage ? -100 : 0;
         scale.value = withTiming(scaleToValue, { duration: 600 });

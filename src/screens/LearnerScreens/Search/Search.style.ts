@@ -22,7 +22,7 @@ const styels = StyleSheet.create({
     width: "85%",
     height: "80%",
     paddingHorizontal: 10,
-    color: "#DEE5E9",
+    color: "#7A8288",
   },
   listItemContainer: {
     width: DEVICE_WIDTH * 0.85,
