@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        marginLeft: 12
+        marginLeft: 12,
+        marginBottom: 10
     },
     learnerText: {
         color: '#006F7B',

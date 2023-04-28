@@ -85,6 +85,9 @@ const Login = () => {
           const result = await user.functions.checkIfUserExists(authID);
           
           dispatch(setUser(result))
+
+          console.log("results", result);
+
           dispatch(setUserGoogleInfo(userInfo.user as UserGoogleInfoType))
 
           try {

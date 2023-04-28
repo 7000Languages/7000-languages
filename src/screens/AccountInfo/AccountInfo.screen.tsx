@@ -5,14 +5,18 @@ import Entypo from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
 import styles from "./AccountInfo.style";
-import { StatusBarHeight } from "../../constants/sizes";
+
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { DrawerStackParamList } from "../../navigation/types";
+import { useAppSelector } from "../../redux/store";
+import { DEVICE_HEIGHT } from "../../constants/sizes";
 
 type NavProps = NativeStackScreenProps<DrawerStackParamList, "AccountInfo">;
 
 const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
 
+  const userGoogleInfo = useAppSelector(state=>state.auth.userGoogleInfo)
+  
   const logout = () => {
 
   };
@@ -35,36 +39,31 @@ const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
             onPress={() => navigation.navigate("BottomNavigator")}
           />
         }
-        headerStyle={{
-          backgroundColor: "#ffffff",
-          borderBottomWidth: 2,
-          borderBottomColor: "#F9F9F9",
-          position: "absolute",
-          top: Platform.OS == 'ios' ? StatusBarHeight : 0,
-        }}
       />
-      <Text style={styles.userInfo}>User Info</Text>
-      <Text style={styles.settingText}>
-        Here is the settings for you to manage your app.
-      </Text>
-      <TouchableOpacity style={styles.languageTouch} onPress={()=>navigation.navigate('Language')}>
-        <Text style={styles.languageText}>Language</Text>
-        <Entypo name="chevron-thin-right" size={20} color="black" />
-      </TouchableOpacity>
-      <View style={styles.accountInfoTouch}>
-        <Image
-          source={require("../../../assets/images/splashBackgroundImage.png")}
-          style={styles.avatarImage}
-        />
-        <View style={styles.textsContainer}>
-          <Text style={styles.languageText}>Oben Tabiayuk</Text>
-          <Text style={styles.email}>obentabiayuk1@gmail.com</Text>
+      <View style={styles.content}>
+        <Text style={styles.userInfo}>User Info</Text>
+        <Text style={styles.settingText}>
+          Here is the settings for you to manage your app.
+        </Text>
+        <TouchableOpacity style={styles.languageTouch} onPress={()=>navigation.navigate('Languages')}>
+          <Text style={styles.languageText}>Language</Text>
+          <Entypo name="chevron-thin-right" size={20} color="black" />
+        </TouchableOpacity>
+        <View style={styles.accountInfoTouch}>
+          <Image
+            source={{ uri: userGoogleInfo.photo }}
+            style={styles.avatarImage}
+          />
+          <View style={styles.textsContainer}>
+            <Text style={styles.languageText}>{userGoogleInfo.name}</Text>
+            <Text style={styles.email}>{userGoogleInfo.email}</Text>
+          </View>
         </View>
+        <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
+          <Image source={require("../../../assets/images/logoutIcon.png")} />
+          <Text style={styles.logoutText}>Log out</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
-        <Image source={require("../../../assets/images/logoutIcon.png")} />
-        <Text style={styles.logoutText}>Log out</Text>
-      </TouchableOpacity>
     </View>
   );
 };

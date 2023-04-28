@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, TextInput, Text, FlatList, Image, TouchableOpacity } from "react-native";
-import { BSON } from "realm";
+// import { BSON } from "realm";
 import Modal from "react-native-modal";
 import Toast from 'react-native-toast-message';
 import Feather from 'react-native-vector-icons/Feather'
@@ -19,6 +19,7 @@ import { convertToArrayOfPlainObject, convertToPlainObject } from "../../../util
 import { save } from "../../../utils/storage";
 import { setUser } from "../../../redux/slices/authSlice";
 import { DrawerActions } from "@react-navigation/native";
+import { BSON } from "realm";
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, "Search">;
 
@@ -40,7 +41,6 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
   const coursesData: any = useQuery('courses')
   
   const realm = useRealm()
-  // const user
   
   const joinCourse = () => {
 
@@ -94,7 +94,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
     return (
       <SearchedCourse
         onJoinCoursePress={() => {
-          setCourseToJoin( convertToPlainObject(item))
+          setCourseToJoin(convertToPlainObject(item))
           setJoinCourseModalVisible(true)
         }}
         item={item}
@@ -112,7 +112,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
     );
   }
 
-  const search_parameters = Object.keys(Object.assign({},  convertToArrayOfPlainObject(coursesData).length > 0 ? convertToArrayOfPlainObject(coursesData)[0].details : {}));
+  const search_parameters = Object.keys(Object.assign({},  coursesData.length > 0 ? convertToArrayOfPlainObject(coursesData)[0].details : {}));
 
   const searchData = (courses: CourseType[]) => {
     return courses.filter((course: any) => search_parameters.some(param => course.details[param].toString().toLowerCase().includes(searchTerm.toLowerCase()))).sort((a, b) => a.details.name.localeCompare(b.details.name))
@@ -155,7 +155,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
       <FocusAwareStatusBar
         backgroundColor={SECONDARY_COLOR}
         barStyle="light-content"
-        showStatusBackground
+        showStatusBackground 
         statusbarBackgroundColor={SECONDARY_COLOR}
       />
       <Header

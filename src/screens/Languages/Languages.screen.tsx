@@ -7,7 +7,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { DrawerStackParamList } from '../../navigation/types'
 import styles from './Languages.style'
 
-type NavProps = NativeStackScreenProps<DrawerStackParamList, "Language">;
+type NavProps = NativeStackScreenProps<DrawerStackParamList, "Languages">;
 
 const languages = [
   {
@@ -50,14 +50,6 @@ const Languages:React.FC<NavProps> = ({ navigation }) => {
             onPress={() => navigation.navigate("AccountInfo")}
           />
         }
-        headerStyle={{
-          backgroundColor: "#ffffff",
-          borderBottomWidth: 2,
-          borderBottomColor: "#F9F9F9",
-          marginBottom: 20,
-          position: "absolute",
-          top: StatusBarHeight,
-        }}
       />
       <Text style={styles.availableLanguages}>Available Languages</Text>
       <ScrollView>

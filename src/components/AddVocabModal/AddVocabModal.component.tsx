@@ -87,12 +87,15 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
 
     const toggleImageSelection = () => setSelectingImage(prev => !prev);
 
-    useEffect(() => {
-        'worklet'
+    const animationChanges = () => {
         const scaleToValue = !selectingImage ? 0 : 1;
         const rightToValue = !selectingImage ? -100 : 0;
         scale.value = withTiming(scaleToValue, { duration: 600 });
         right.value = withTiming(rightToValue, { duration: 400 });
+    }
+
+    useEffect(() => {
+        animationChanges();
     }, [selectingImage])
     
 
@@ -147,7 +150,7 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
             type: 'success',
             text1: 'Hurray 🌟',
             visibilityTime: 5000,
-            text2: 'Unit added successfully',
+            text2: 'Vocab added successfully',
         });
 
 

@@ -21,12 +21,12 @@ export type CourseDetailsType = {
     alternative_name: string
     description: string
     translated_language: string
-    population: number
-    location: number
+    population: string
+    location: string
     link: string
     glotto: string
     is_private: boolean
-    code: number
+    code: string
 }
 
 export type UnitType = {

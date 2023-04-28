@@ -95,18 +95,10 @@ const Settings: React.FC<NavProps> = ({ navigation }) => {
       <Header
         title="Settings"
         headerTitleStyle={{ color: "#000000" }}
-        headerStyle={{
-          backgroundColor: "#ffffff",
-          borderBottomWidth: 2,
-          borderBottomColor: "#F9F9F9",
-          marginBottom: 20,
-          position: "absolute",
-          top: Platform.OS == 'ios' ? StatusBarHeight : 0,
-        }}
       />
       <View style={{ paddingHorizontal: 16, alignSelf: 'center', width: DEVICE_WIDTH }}>
         <Text style={styles.topText}>
-          Here is the Settings for you to manage your own course
+          Here are the Settings for you to manage your own course
         </Text>
         <Text style={styles.privacy}>Privacy</Text>
         <TouchableOpacity

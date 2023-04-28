@@ -16,7 +16,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <AppProvider id={appId}>
+        <AppProvider id={`${appId}`}>
           <UserProvider fallback={() => <Login />}>
             <NavigationContainer>
               <MainNavigator />

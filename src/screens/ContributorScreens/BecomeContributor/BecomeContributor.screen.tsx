@@ -15,6 +15,7 @@ import { realmContext } from "../../../realm/realm";
 import { RootState, useAppSelector } from "../../../redux/store";
 import course_confirmation from '../../../emailTemplates/course_confirmation'
 import { CourseType } from "../../../@types";
+import Course from "../../../realm/schemas/Course";
 
 const { useRealm } = realmContext
 

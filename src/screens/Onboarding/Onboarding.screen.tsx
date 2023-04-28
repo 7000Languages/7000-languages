@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Pressable, SafeAreaView, Text, ScrollView } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import Entypo from 'react-native-vector-icons/Entypo'
@@ -28,7 +28,7 @@ const Onboarding: React.FC<NavProps> = ({ navigation }) => {
 
   const goToHome = () => {
     navigation.navigate('DrawerNavigator')
-  }
+  }  
 
   return (
     <SafeAreaView style={styles.container}>

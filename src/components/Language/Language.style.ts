@@ -8,7 +8,9 @@ const styles = StyleSheet.create({
         height: 80,
         paddingHorizontal: 15,
         justifyContent: 'space-between',
-        borderRadius: 4
+        borderRadius: 4,
+        width: '92%',
+        alignSelf: 'center'
     },
     language: {
         fontWeight: 'bold',

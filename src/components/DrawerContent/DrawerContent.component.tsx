@@ -21,25 +21,22 @@ import { useAppSelector } from "../../redux/store";
 import { convertToArrayOfPlainObject, convertToPlainObject } from "../../utils/helpers";
 import { UnitType, UserType } from "../../@types";
 import { DEVICE_HEIGHT } from "../../constants/sizes";
-import { BSON } from "realm";
-
 
 const DrawerContent: React.FC = () => {
 
   const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
   const coursesNavigation = useNavigation<NativeStackNavigationProp<CourseStackParamList>>()
 
-  const { useQuery, useObject } = realmContext
+  const { useQuery } = realmContext
   const user: UserType = useAppSelector(state=>state.auth.user)
-  const userFromRealm: any = useObject('users', new BSON.ObjectId(convertToPlainObject(user)._id))!  
+  const userFromRealm: any = useQuery('users')[0]  
 
   const coursesData: any = useQuery('courses') 
   const allUnits: any = useQuery('units')
   
-  let adminCourses: any = coursesData.filter((course:any) => course.admin_id === convertToPlainObject(userFromRealm).authID)
-  let learnerCourses: any = coursesData.filter((course:any) => convertToPlainObject(user).learnerLanguages.includes((course._id.toString())))
+  let adminCourses: any = coursesData.filter((course:any) => course.admin_id === (user).authID)
+  let learnerCourses: any = coursesData.filter((course:any) => user.learnerLanguages.includes((course._id.toString())))
 
-    
   const goToContributorCourse = (course_id: string) => coursesNavigation.navigate('ContributorCourse', { course_id })
   const goToLearnerCourse = (course_id: string) => coursesNavigation.navigate('LearnerCourse', { course_id })
   

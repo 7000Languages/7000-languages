@@ -1,6 +1,7 @@
 import Realm, { BSON } from "realm";
+import { CourseType } from "../../@types";
 
-export default class Course extends Realm.Object {
+export default class Course extends Realm.Object<CourseType> {
 
   _id!: string
   approved!: boolean

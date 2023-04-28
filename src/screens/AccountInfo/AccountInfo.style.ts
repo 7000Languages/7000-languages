@@ -6,8 +6,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#ffffff',
-        paddingHorizontal: 16,
-        paddingTop: StatusBarHeight
+    },
+    content: {
+        flex: 1,
+        backgroundColor: "#fff",
+        paddingHorizontal: 25,
+        marginTop: 15
     },
     userInfo: {
         color: '#5B6165',

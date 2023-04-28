@@ -13,14 +13,14 @@ const styles = StyleSheet.create({
         width: DEVICE_WIDTH,
         height: 140,
         paddingTop: 30,
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         borderBottomEndRadius: 12,
         borderBottomStartRadius: 12
     },
     language: {
         color: '#FFFFFF',
         fontSize: 24,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     languageDescription: {
         color: 'rgba(255, 255, 255, 0.64)',

@@ -12,6 +12,7 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../constants/sizes";
 import { useAppDispatch } from "../redux/store";
 import { toggleConnection } from "../redux/slices/connectionSlice";
 import { RootStackParamList } from "./types";
+import { OpenRealmBehaviorConfiguration, OpenRealmBehaviorType } from "realm";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -35,13 +36,13 @@ const MainNavigator = () => {
 
   const { Screen, Navigator } = Stack;
 
-  const existingRealmFileBehaviorConfig: any = {
-    type: "openImmediately",
+  const existingRealmFileBehaviorConfig: OpenRealmBehaviorConfiguration = {
+    type: OpenRealmBehaviorType.OpenImmediately,
   };
 
-  const newRealmFileBehaviorConfig: any = {
-    type: 'openImmediately',
-  }
+  const newRealmFileBehaviorConfig: OpenRealmBehaviorConfiguration = {
+    type: OpenRealmBehaviorType.OpenImmediately,
+  };
 
   return (
       <RealmProvider

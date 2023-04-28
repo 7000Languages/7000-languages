@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { createDrawerNavigator, DrawerContentComponentProps } from "@react-navigation/drawer";
+import React from "react";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import BottomNavigator from "./BottomNavigator";
 import { DrawerContent } from "../components";
 import { AccountInfo, Languages } from "../screens";
@@ -19,7 +19,7 @@ const DrawerNavigator = () => {
     >
       <Screen name="BottomNavigator" component={BottomNavigator} />
       <Screen name="AccountInfo" component={AccountInfo} />
-      <Screen name="Language" component={Languages} />
+      <Screen name="Languages" component={Languages} />
     </Navigator>
   );
 };
