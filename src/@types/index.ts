@@ -37,6 +37,7 @@ export type UnitType = {
     selected: boolean
     description: string
     image: string
+    hidden: boolean
 }
 
 export type VocabType = {
@@ -47,7 +48,8 @@ export type VocabType = {
     image: string,
     audio: string,
     selected: boolean,
-    notes: string
+    notes: string,
+    hidden: boolean
 }
 
 export type LessonType = {
@@ -58,7 +60,8 @@ export type LessonType = {
     _order: number,
     selected: boolean,
     vocab: VocabType[],
-    description: string
+    description: string,
+    hidden: boolean
 }
 
 export type CompleteType = {

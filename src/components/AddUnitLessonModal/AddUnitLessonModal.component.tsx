@@ -19,6 +19,7 @@ import CustomInput from '../CustomInput/CustomInput.component'
 import PrimaryBtn from '../PrimaryBtn/PrimaryBtn.component'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import { uploadFileToS3 } from '../../utils/s3'
+import Unit from '../../realm/schemas/Unit'
 
 type IProps = {
     isModalVisible: boolean
@@ -28,7 +29,7 @@ type IProps = {
     unit?: UnitType
 }
 
-const { useRealm } = realmContext
+const { useRealm, useQuery } = realmContext
 
 const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course, unit }) => {
 
@@ -42,6 +43,9 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
     const [nameError, setNameError] = useState('');
     const [descriptionError, setDescriptionError] = useState('');
     const [emojiError, setEmojiError] = useState('');
+
+    const units = useQuery('units');
+    const lessons = useQuery('lessons');
 
     const resetErrorStates = () => {
         setNameError('');
@@ -97,10 +101,11 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
         }
 
         realm.write(() => {
+            let numberOfUnits  = units.filtered('_course_id = $0', course?._id).length
             realm.create('units', {
                 _course_id: course?._id,
                 name,
-                _order: 0,
+                _order: numberOfUnits + 1,
                 selected: false,
                 description
             })
@@ -126,10 +131,10 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
            
             // await uploadFileToS3(fileName, image, image.mime)
 
-            RNFetchBlob.fs.readFile(fileUri, 'utf8', image.size)
-                .then(async (data) => {
-                    await uploadFileToS3(fileName, data, image.mime)
-                })
+            // RNFetchBlob.fs.readFile(fileUri, 'utf8', image.size)
+            //     .then(async (data) => {
+            //         await uploadFileToS3(fileName, data, image.mime)
+            //     })
 
             // RNFetchBlob.fs.readStream(fileUri, 'base64')
             //     .then((stream) => {
@@ -168,11 +173,12 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
         }
 
         realm.write(() => {
+            let numberOfLessons = lessons.filtered('_unit_id = $0', unit?._id.toString()).length
             realm.create('lessons', {
                 _course_id: course?._id,
                 _unit_id: unit?._id.toString(),
                 name,
-                _order: 0,
+                _order: numberOfLessons + 1,
                 selected: false,
                 description
             })
@@ -180,6 +186,13 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
 
         resetStates()
         setLoading(false)
+
+        Toast.show({
+            type: 'success',
+            text1: 'Hurray 🌟',
+            visibilityTime: 5000,
+            text2: 'Lesson added successfully',
+        });
 
     }
 

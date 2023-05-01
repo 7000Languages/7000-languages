@@ -139,6 +139,7 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
                 translation,
                 image: '',
                 audio: '',
+                hidden: false,
                 selected: false,
                 notes: context
             }
@@ -152,7 +153,6 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
             visibilityTime: 5000,
             text2: 'Vocab added successfully',
         });
-
 
         // if(typeof image !== undefined && image){
         //     let fileName = image.filename! + "_" + Date.now()
