@@ -228,5 +228,10 @@ export default {
       helloWelcome: '¡Hola! \nBienvenido a \n7000 Idiomas',
       proceedIn: 'Proceder en Español',
     },
+    locales: {
+      en: 'Inglais',
+      fr: 'Francais',
+      es: 'Español'
+    }
   }
   

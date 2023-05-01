@@ -27,6 +27,7 @@ const Onboarding: React.FC<NavProps> = ({ navigation }) => {
   }
 
   const goToHome = () => {
+    navigation.pop()
     navigation.navigate('DrawerNavigator')
   }  
 

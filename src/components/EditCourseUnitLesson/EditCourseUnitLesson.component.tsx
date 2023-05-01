@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import { KeyboardAvoidingView, View, Text, ActivityIndicator, Platform, ScrollView, TouchableOpacity, Image } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
-import { View, Text, ActivityIndicator } from 'react-native'
 import Modal from 'react-native-modal'
-import { PRIMARY_COLOR } from '../../constants/colors'
-import { realmContext } from '../../realm/realm'
-import { hasEmoji } from '../../utils/helpers'
-import CustomInput from '../CustomInput/CustomInput.component'
-import PrimaryBtn from '../PrimaryBtn/PrimaryBtn.component'
+import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker'
+import ImageCropPicker from 'react-native-image-crop-picker'
+
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import Entypo from 'react-native-vector-icons/Entypo'
+import Feather from 'react-native-vector-icons/Feather'
 
 import styles from './EditCourseUnitLesson.style'
+
+import { PRIMARY_COLOR } from '../../constants/colors'
+import { realmContext } from '../../realm/realm'
+import CustomInput from '../CustomInput/CustomInput.component'
+import PrimaryBtn from '../PrimaryBtn/PrimaryBtn.component'
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 
 type IProps = {
     isModalVisible: boolean
@@ -26,7 +31,7 @@ const { useRealm, useQuery } = realmContext
 const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course_id, unit_id, lesson_id }) => {
 
     const [name, setName] = useState('');
-    const [emoji, setEmoji] = useState('');
+    const [image, setImage] = useState<ImageOrVideo>();
     const [alternativeName, setAlternativeName] = useState('');
     const [teachingLanguage, setTeachingLanguage] = useState('');
     const [description, setDescription] = useState('');
@@ -38,11 +43,12 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
     const [emojiError, setEmojiError] = useState('');
     const [alternativeNameError, setAlternativeNameError] = useState('');
     const [teachingLanguageError, setTeachingLanguageError] = useState('');
+    const [selectingImage, setSelectingImage] = useState(false);
 
-    const course: any = useQuery('courses').find((item:any) => item._id == course_id)
-    const unit: any = useQuery('units').find((item:any) => item._id == unit_id)
-    const lesson: any = useQuery('lessons').find((item:any) => item._id == lesson_id)
-    
+    const course: any = useQuery('courses').find((item: any) => item._id == course_id)
+    const unit: any = useQuery('units').find((item: any) => item._id == unit_id)
+    const lesson: any = useQuery('lessons').find((item: any) => item._id == lesson_id)
+
     const resetErrorStates = () => {
         setNameError('');
         setDescriptionError('');
@@ -54,7 +60,6 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
     const resetStates = () => {
         setName('');
         setDescription('');
-        setEmoji('');
         setAlternativeName('');
         setTeachingLanguage('');
     }
@@ -65,27 +70,23 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
         resetErrorStates()
         setLoading(true);
         let hasError = false;
-        if(name.length < 2) {
+        if (name.length < 2) {
             setNameError('Name is too short')
             hasError = true;
         }
-        if(emoji.length > 0 && !hasEmoji(emoji)){
-            setEmojiError('Must contain an emoji')
+        if (description.length < 15) {
+            setDescriptionError('Description should contain at least 15 characters')
             hasError = true;
         }
-        if(description.length < 15) {
-            setDescriptionError('Description should contain at least 15 characters')
-            hasError=true;
-        }
-        if(type == 'course' && teachingLanguage.length < 2) {
+        if (type == 'course' && teachingLanguage.length < 2) {
             setTeachingLanguageError('Teaching language too short')
             hasError = true;
         }
-        if(type == 'course' && alternativeName.length > 0 && alternativeName.length < 2) {
+        if (type == 'course' && alternativeName.length > 0 && alternativeName.length < 2) {
             setAlternativeNameError('Alternative name too short')
             hasError = true;
         }
-        if(hasError) {
+        if (hasError) {
             setLoading(false);
             return false
         }
@@ -94,8 +95,8 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
     }
 
     const editUnit = async () => {
-        if(checkForError()){
-            realm.write(()=>{
+        if (checkForError()) {
+            realm.write(() => {
                 unit!.name = name
                 unit!.description = description
             })
@@ -105,7 +106,7 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
 
     const editLesson = () => {
         if (checkForError()) {
-            realm.write(()=> {
+            realm.write(() => {
                 lesson!.name = name
                 lesson!.description = description
             })
@@ -116,7 +117,7 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
     const editCourse = () => {
         if (checkForError()) {
             realm.write(() => {
-                course.details.name = name 
+                course.details.name = name
                 course.details.alternative_name = alternativeName
                 course.details.description = description
                 course.details.translated_language = teachingLanguage
@@ -126,26 +127,72 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
     }
 
     const settingStatesForInputs = () => {
-        if(course){
+        if (course) {
             setName(course.details.name)
             setAlternativeName(course.details.alternative_name)
             setTeachingLanguage(course.details.translated_language)
             setDescription(course.details.description)
         }
-        if(unit){
+        if (unit) {
             setName(unit.name)
             setDescription(unit.description)
         }
-        if(lesson){
+        if (lesson) {
             setName(lesson.name)
             setDescription(lesson.description)
         }
     }
 
+    const openPicker = () => {
+        ImageCropPicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true,
+            multiple: false
+        }).then(image => {
+            setImage(image);
+            setSelectingImage(prev => !prev);
+        });
+    };
+
+    const openCamera = () => {
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+        }).then(image => {
+            console.log(image);
+        });
+    };
+
+    const toggleImageSelection = () => setSelectingImage(prev => !prev);
+
+     // animations
+     const scale = useSharedValue(0);
+     const right = useSharedValue(-10);
+ 
+     const scaleAnimatedStyles = useAnimatedStyle(() => {
+         return {
+             transform: [{ scale: scale.value }],
+             right: right.value,
+         };
+     });
+
+    const animationChanges = () => {
+        const scaleToValue = !selectingImage ? 0 : 1;
+        const rightToValue = !selectingImage ? -100 : 0;
+        scale.value = withTiming(scaleToValue, { duration: 600 });
+        right.value = withTiming(rightToValue, { duration: 400 });
+    }
+
     useEffect(() => {
-      settingStatesForInputs()
+        animationChanges()
+    }, [selectingImage])
+
+    useEffect(() => {
+        settingStatesForInputs()
     }, []);
-    
+
     return (
         <Modal isVisible={isModalVisible} backdropOpacity={0.8}>
             <KeyboardAvoidingView
@@ -156,6 +203,19 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
                     keyboardShouldPersistTaps='always'
                     showsVerticalScrollIndicator={false}
                 >
+                    {/* Animated view for camera or gallery */}
+                    <Animated.View
+                        style={[styles.textAndIconsContainer, scaleAnimatedStyles]}>
+                        <TouchableOpacity onPress={openCamera} style={styles.cameraTextAndIcon}>
+                            <Feather name="camera" size={22} color="#227093" />
+                            <Text style={styles.iconText}>Camera</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={openPicker} style={styles.cameraTextAndIcon}>
+                            <Feather name="image" size={22} color="#227093" />
+                            <Text style={styles.iconText}>Gallery</Text>
+                        </TouchableOpacity>
+                    </Animated.View>
+
                     <View style={styles.container}>
                         <View style={styles.header}>
                             <Text style={styles.title}>Edit {type.charAt(0).toUpperCase() + type.slice(1)}</Text>
@@ -196,12 +256,18 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
                         }
                         {
                             type !== 'course' &&
-                            <CustomInput
-                                label={`Change your ${type} emoji`}
-                                value={emoji}
-                                errorText={emojiError}
-                                onChangeText={(text: string) => setEmoji(text)}
-                            />
+                            (
+                                image ?
+                                <View style={styles.imageAndIcon}>
+                                    <Image source={{ uri: image.path }} style={styles.image} resizeMode='contain' />
+                                    <AntDesign name="close" size={24} color="black" style={{ position: 'absolute', top: 5, right: 20 }} onPress={() => setImage(undefined)} />
+                                </View>
+                                :
+                                <TouchableOpacity style={styles.addImageView} onPress={toggleImageSelection}>
+                                    <Entypo name="image-inverted" size={26} color="#9F3E1A" />
+                                    <Text style={styles.addImageText}>Add Image</Text>
+                                </TouchableOpacity>
+                            )
                         }
                         <CustomInput
                             label={`Edit the ${type} description`}

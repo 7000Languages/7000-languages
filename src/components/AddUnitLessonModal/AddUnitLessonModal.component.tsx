@@ -8,7 +8,6 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import Feather from 'react-native-vector-icons/Feather'
 import RNFetchBlob from "rn-fetch-blob";
 import Toast from 'react-native-toast-message';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 
 
 import styles from './AddUnitLessonModal.style'
@@ -34,7 +33,7 @@ const { useRealm } = realmContext
 const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course, unit }) => {
 
     const [name, setName] = useState('');
-    const [image, setImage] = useState<any>();
+    const [image, setImage] = useState<ImageOrVideo>();
     const [selectingImage, setSelectingImage] = useState(false);
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
@@ -80,45 +79,39 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
         });
     };
 
-    const openNewPicker = async () => {
-        const result = await launchImageLibrary({ mediaType: 'photo', includeBase64: true });
-        console.log(result);
-        setImage((result.assets)![0]);
-    }
-
     const addUnit = async () => {
-        // setLoading(true);
-        // resetErrorStates()
-        // let hasError = false;
-        // if (name.length < 5) {
-        //     setNameError('Name of the unit is too short');
-        //     hasError = true;
-        // }
-        // if (description.length < 5) {
-        //     setDescriptionError('Description of the unit is too short');
-        //     hasError = true;
-        // }
-        // if (hasError) {
-        //     setLoading(false)
-        //     return
-        // }
+        setLoading(true);
+        resetErrorStates()
+        let hasError = false;
+        if (name.length < 5) {
+            setNameError('Name of the unit is too short');
+            hasError = true;
+        }
+        if (description.length < 5) {
+            setDescriptionError('Description of the unit is too short');
+            hasError = true;
+        }
+        if (hasError) {
+            setLoading(false)
+            return
+        }
 
-        // realm.write(() => {
-        //     realm.create('units', {
-        //         _course_id: course?._id,
-        //         name,
-        //         _order: 0,
-        //         selected: false,
-        //         description
-        //     })
-        // })
+        realm.write(() => {
+            realm.create('units', {
+                _course_id: course?._id,
+                name,
+                _order: 0,
+                selected: false,
+                description
+            })
+        })
 
-        // Toast.show({
-        //     type: 'success',
-        //     text1: 'Hurray 🌟',
-        //     visibilityTime: 5000,
-        //     text2: 'Unit added successfully',
-        // });
+        Toast.show({
+            type: 'success',
+            text1: 'Hurray 🌟',
+            visibilityTime: 5000,
+            text2: 'Unit added successfully',
+        });
 
         if (typeof image !== undefined && image) {
             let fileName = `images/${image.path?.split('/').pop()}`

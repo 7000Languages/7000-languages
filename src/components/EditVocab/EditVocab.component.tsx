@@ -88,8 +88,8 @@ const EditVocab: React.FC<IProps> = ({ isModalVisible, onCloseModal, course, les
     const toggleImageSelection = () => setSelectingImage(prev => !prev);
 
     useEffect(() => {
-        const scaleToValue = selectingImage ? 0 : 1;
-        const rightToValue = selectingImage ? -100 : 0;
+        const scaleToValue = !selectingImage ? 0 : 1;
+        const rightToValue = !selectingImage ? -100 : 0;
         scale.value = withTiming(scaleToValue, { duration: 600 });
         right.value = withTiming(rightToValue, { duration: 400 });
     }, [selectingImage])
@@ -167,7 +167,7 @@ const EditVocab: React.FC<IProps> = ({ isModalVisible, onCloseModal, course, les
                     </Animated.View>
                     <View style={styles.container}>
                         <View style={styles.header}>
-                            <Text style={styles.title}>Add a Vocab Item</Text>
+                            <Text style={styles.title}>Edit {course.details.name}</Text>
                             <AntDesign name='close' size={24} color="#111827" onPress={onCloseModal} />
                             <Text style={styles.subTitle}>A vocab item can be a word or a phrase</Text>
                         </View>

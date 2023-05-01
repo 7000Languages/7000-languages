@@ -16,7 +16,7 @@ const localeSlice = createSlice({
   name: 'locale',
   initialState,
   reducers: {
-    changeAppLocale: (state, { payload }) => {    
+    changeAppLocale: (state, { payload }) => {
       const newI18n = new I18n()
       newI18n.locale = payload
       newI18n.enableFallback = true
