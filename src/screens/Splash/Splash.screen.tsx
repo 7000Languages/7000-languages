@@ -22,26 +22,13 @@ const Splash: React.FC<NavProps> = ({ navigation }) => {
 
   const user = useUser();
 
-  const getUserFromStorage = () => {
-    try {
-      let userData = getValueFor("userData")
-      if(userData){
-        dispatch(setUser(userData))
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  const geuserDataFromStorage = async ()  => {
+    let user = await getValueFor('user')
+    let userFromGoogle = await getValueFor('userGoogleInfo')
 
-  const getUserGoogleInfoFromStorage = () => {
-    try {
-      let userData = getValueFor("userGoogleInfo")
-      if(userData){
-        dispatch(setUserGoogleInfo(userData))
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(setUser(user)) 
+    dispatch(setUserGoogleInfo(userFromGoogle))
+
   }
 
   // setLocale to Device Locale
@@ -68,8 +55,7 @@ const Splash: React.FC<NavProps> = ({ navigation }) => {
   useEffect(() => {
 
     determineLocale()
-    getUserFromStorage()
-    getUserGoogleInfoFromStorage()
+   geuserDataFromStorage()
 
     const whereToNavigate = user?.isLoggedIn ? "Onboarding" : "Login";
     let timer = setTimeout(() => {

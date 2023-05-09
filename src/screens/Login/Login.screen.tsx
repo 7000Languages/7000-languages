@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Image, SafeAreaView, StatusBar, Text, View } from 'react-native'
+import { Image, Platform, SafeAreaView, StatusBar, Text, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
 import { useApp } from '@realm/react'
@@ -21,46 +21,19 @@ const Login = () => {
 
   const dispatch = useAppDispatch()
 
-  // useEffect(() => {
-  //   errorWrap(async () => {
-  //     if (response?.type === "success") {
-  //       const userData = await getUserInfo(
-  //         response.authentication!.accessToken
-  //       );
-  //       const authID = userData.id;
-  //       const idToken = response.params.id_token;
-
-  //       // Log the user in through realm to app here
-  //       const credentials = Realm.Credentials.google({ idToken });
-
-  //       try {
-  //         await realmApp.logIn(credentials).then(async (user) => {
-  //           console.log(`Logged in with id: ${user.id}`);
-
-  //           // check if user exists already in atlas
-  //           const result = await user!.functions.checkIfUserExists(authID);
-
-  //           try {
-  //             save('userData', result)
-  //           } catch (error) {
-  //             console.log(`Error saving user data: ${error}`)
-  //           }
-
-  //         });
-  //       } catch (error) {
-  //         console.log("Error: ", error);
-  //       }
-  //     }
-  //   });
-  // }, [response]);
-
   useEffect(() => {
-    GoogleSignin.configure({
-      scopes: ['profile'],
-      iosClientId: IOS_CLIENT_ID,
-      // webClientId: '204433763712-k0eiup21itvda8saa469ocvd7liubchm.apps.googleusercontent.com',
-      // offlineAccess: true,
-    });
+    GoogleSignin.configure(Platform.OS == 'ios' ?
+      {
+        scopes: ['profile'],
+        iosClientId: IOS_CLIENT_ID,
+      }
+      :
+      {
+        scopes: ['profile'],
+        webClientId: '204433763712-k0eiup21itvda8saa469ocvd7liubchm.apps.googleusercontent.com',
+        offlineAccess: true,
+      }
+    );
   }, [])
 
   const CheckIfUserExistsInMongo = async (userFromRealm: Realm.User, userFromGoogle: UserGoogleInfoType) => {
@@ -68,8 +41,10 @@ const Login = () => {
     //  check if user exists already in atlas
     const result: any = await userFromRealm!.functions.checkIfUserExists(userFromGoogle.id, userFromGoogle);
 
+    console.log(result);
+
     // store user in redux
-    dispatch(setUser(result)) 
+    dispatch(setUser(result))
     dispatch(setUserGoogleInfo(userFromGoogle))
 
     try {
@@ -88,27 +63,27 @@ const Login = () => {
       const idToken: any = userInfo.idToken;
       const email = userInfo.user.email;
 
-        const loginCredentials = Credentials.emailPassword(email, authID);
+      const loginCredentials = Credentials.emailPassword(email, authID);
 
-        try {
-          // sign in
-          await realmApp.logIn(loginCredentials).then(async (user) => {
-            CheckIfUserExistsInMongo(user, userInfo.user as UserGoogleInfoType)
-          })
-        } catch (error) {
-          // sign up instead
-          const password = authID
-          await realmApp.emailPasswordAuth.registerUser({ email, password })
-          // sign in agian
-          await realmApp.logIn(loginCredentials).then(async (user) => {
-            CheckIfUserExistsInMongo(user, userInfo.user as UserGoogleInfoType)
-          })
-        }
+      try {
+        // sign in
+        await realmApp.logIn(loginCredentials).then(async (user) => {
+          CheckIfUserExistsInMongo(user, userInfo.user as UserGoogleInfoType)
+        })
+      } catch (error) {
+        // sign up instead
+        const password = authID
+        await realmApp.emailPasswordAuth.registerUser({ email, password })
+        // sign in agian
+        await realmApp.logIn(loginCredentials).then(async (user) => {
+          CheckIfUserExistsInMongo(user, userInfo.user as UserGoogleInfoType)
+        })
+      }
 
-        try {
-        } catch (error) {
-          console.log("Error: ", error);
-        }
+      try {
+      } catch (error) {
+        console.log("Error: ", error);
+      }
 
 
       // Log the user in through realm to app here
@@ -120,7 +95,7 @@ const Login = () => {
 
           // check if user exists already in atlas
           const result = await user.functions.checkIfUserExists(authID);
-          
+
           dispatch(setUser(result))
 
           console.log("results", result);
