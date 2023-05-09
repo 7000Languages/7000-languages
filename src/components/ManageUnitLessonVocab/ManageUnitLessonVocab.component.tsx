@@ -23,25 +23,92 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
 
     const [sentData, setSentData] = useState(data);
 
-    const { useQuery } = realmContext
+    const { useQuery, useRealm } = realmContext
+    const realm = useRealm()
 
     const lessons = useQuery('lessons')
+    const vocabs = useQuery('vocabs')
+    const units = useQuery('units')
 
-    const presentingUnits = sentData.filter((u:any)=> !u.hidden)
-    const hiddenUnits = sentData.filter((u:any)=> u.hidden)
+    const presentingData = data.filter((d: any) => !d.hidden)
+    const hiddenData = data.filter((d: any) => d.hidden)
 
 
     const typeToShow = type.charAt(0).toUpperCase() + type.slice(1)
-    const subTypeToShow = type == 'unit' ? 'lesson' : type == 'lesson' ? 'vocab' : '' 
+    const subTypeToShow = type == 'unit' ? 'lesson' : type == 'lesson' ? 'vocab' : ''
 
-    const changeElementPosition = (data: any, from: number, to:number) => {
-        console.log(JSON.stringify(data[0]), from, to);
+    console.log(sentData);
+    
+    const changeElementPosition = (data: any, from: number, to: number) => {
+        // console.log(from, to);
+        let elementToUpdate = sentData[from]
         setSentData(data)
+        if(type == 'unit'){
+            let unit: any = units.filter((u: any) => u._id == elementToUpdate._id)[0]
+            realm.write(() => {
+                unit._order = to + 1
+            });
+        }
+        if(type == 'lesson'){
+            let lesson: any = lessons.filter((u: any) => u._id == elementToUpdate._id)[0]
+            realm.write(() => {
+                lesson._order = to + 1
+            });
+        }
+        if(type == 'vocab'){
+            let vocab: any = vocabs.filter((u: any) => u._id == elementToUpdate._id)[0]
+            realm.write(() => {
+                vocab._order = to + 1
+            });
+        }
+    }
+
+    const hide = (item:any) => {
+        if(type == 'unit'){
+            let unit: any = units.filter((u: any) => u._id == item._id)[0]
+            realm.write(()=>{
+                unit.hidden = !unit.hidden
+            })
+        }
+        if(type == 'lesson'){
+            let lesson: any = lessons.filter((u: any) => u._id == item._id)[0]
+            realm.write(()=>{
+                lesson.hidden = !lesson.hidden
+            })
+        }
+        if(type == 'vocab'){
+            let vocab: any = vocabs.filter((u: any) => u._id == item._id)[0]
+            realm.write(()=>{
+                vocab.hidden = !vocab.hidden
+            })
+        }
+    }
+
+    const deleteItem = (item: any) => {
+        if(type == 'unit'){
+            let unit: any = units.filter((u: any) => u._id == item._id)[0]
+            realm.write(()=>{
+                realm.delete(unit);
+            })
+        }
+        if(type == 'lesson'){
+            let lesson: any = lessons.filter((u: any) => u._id == item._id)[0]
+            realm.write(()=>{
+                realm.delete(lesson);
+            })
+        }
+        if(type == 'vocab'){
+            let vocab: any = vocabs.filter((u: any) => u._id == item._id)[0]
+            realm.write(()=>{
+                realm.delete(vocab);
+            })
+        }
     }
 
     const renderItem = ({ item, drag, isActive }: RenderItemParams<any>) => {
-        const { _id, name, hidden } = item
-        let unitLessons = lessons.filtered('_unit_id = $0', _id).length
+        const { _id, name, hidden, original, translation } = item
+        let unitLessons = type == 'unit' ? lessons.filtered('_unit_id = $0', _id).length : 0
+        let lessonVocabs = type == 'lesson' ? item.vocab.length : 0
         return (
             <ScaleDecorator>
                 <Pressable
@@ -52,17 +119,28 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
                     {
                         hidden
                             ?
-                            <Ionicons name="add-circle-sharp" size={24} color="#91B38B" />
+                            <Ionicons name="add-circle-sharp" size={24} color="#91B38B" onPress={()=>hide(item)} />
                             :
-                            <MaterialCommunityIcons name="minus-circle" size={24} color="#9F3E1A" />
+                            <MaterialCommunityIcons name="minus-circle" size={24} color="#9F3E1A" onPress={()=>hide(item)} />
                     }
                     <View style={styles.textsContainer}>
-                        <Text>{name}</Text>
-                        <Text>{unitLessons + ' ' + subTypeToShow + (unitLessons > 1 ? 's' : '')}</Text>
+                        {
+                            type !== 'vocab'
+                                ?
+                                <>
+                                    <Text style={styles.original}>{name}</Text>
+                                    <Text style={styles.subText}>{(type == 'unit' ? unitLessons : lessonVocabs) + ' ' + subTypeToShow + ((type == 'unit' ? unitLessons : lessonVocabs) > 1 ? 's' : '')}</Text>
+                                </>
+                                :
+                                <>
+                                    <Text style={styles.original}>{original}</Text>
+                                    <Text style={styles.subText}>{translation}</Text>
+                                </>
+                        }
                     </View>
                     {
                         hidden ?
-                            <Ionicons name="md-trash" size={24} color="#A4A4A4" style={styles.rightIcon} />
+                            <Ionicons name="md-trash" size={24} color="#A4A4A4" style={styles.rightIcon} onPress={()=>deleteItem(item)} />
                             :
                             <Ionicons name="menu" size={24} color="#A4A4A4" style={styles.rightIcon} />
                     }
@@ -72,9 +150,14 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
     }
 
     useEffect(() => {
-      setSentData(data)
+        setSentData(data)
     }, [isModalVisible])
+
+    useEffect(() => {
+      
+    }, [sentData])
     
+
 
     return (
         <Modal isVisible={isModalVisible} backdropOpacity={0.9}>
@@ -89,11 +172,9 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
                 <View style={[styles.scroll, { borderStyle: 'dashed', borderWidth: 1 }]}>
                     <DraggableFlatList
                         keyExtractor={(item) => item._id.toString()}
-                        data={presentingUnits}
+                        data={presentingData}
                         renderItem={renderItem}
                         onDragEnd={({ data, from, to }) => changeElementPosition(data, from, to)}
-                        // onDragBegin={(index) => changeElementPosition(index)}
-                        // onRelease={(index) => changeElementPosition(index)}
                     />
                 </View>
                 <View style={styles.divider} />
@@ -104,9 +185,8 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
                     <DraggableFlatList
                         keyExtractor={(item) => item._id.toString()}
                         style={styles.scroll}
-                        data={hiddenUnits}
+                        data={hiddenData}
                         renderItem={renderItem}
-                        // onDragEnd={({ data }) => changeElementPosition(data)}
                     />
                 </View>
                 <View style={styles.btnContainer}>

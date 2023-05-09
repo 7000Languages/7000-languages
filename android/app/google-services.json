@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "204433763712",
+    "project_id": "languages-4ccd1",
+    "storage_bucket": "languages-4ccd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204433763712:android:c6c2a1e1e55c590a452565",
+        "android_client_info": {
+          "package_name": "com.languages7000.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204433763712-a94gv4vkm7288qoqpct9m3bqes04vc0c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.languages7000.app",
+            "certificate_hash": "bc790315543f7e39dfcb1f55cb12e5d192cf833f"
+          }
+        },
+        {
+          "client_id": "204433763712-k0eiup21itvda8saa469ocvd7liubchm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnlcEIK3sX6Cp2L__GUh3X7IF7tykgM-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204433763712-k0eiup21itvda8saa469ocvd7liubchm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

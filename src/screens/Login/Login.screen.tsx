@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react'
-import { Image, Platform, SafeAreaView, StatusBar, Text, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { Image, SafeAreaView, StatusBar, Text, View } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-
 import { useApp } from '@realm/react'
+import { Credentials } from 'realm'
 
 import styles from './Login.style'
 
-import { IOS_CLIENT_ID, EXPO_CLIENT_ID, ANDROID_CLIENT_ID } from '@env'
-import { RootStackParamList } from '../../navigation/types'
+import { IOS_CLIENT_ID, CRYP_SECRET_KEY } from '@env'
 import { PrimaryBtn } from '../../components'
-import { getUserInfo, redirectUri } from '../../utils/auth'
 import { save } from '../../utils/storage'
-import { useErrorWrap } from '../../hooks'
 import { useAppDispatch } from '../../redux/store';
 import { setUser, setUserGoogleInfo } from '../../redux/slices/authSlice';
 import { UserGoogleInfoType } from '../../@types';
@@ -62,18 +58,59 @@ const Login = () => {
     GoogleSignin.configure({
       scopes: ['profile'],
       iosClientId: IOS_CLIENT_ID,
-      webClientId: Platform.OS == 'ios' ? IOS_CLIENT_ID : ANDROID_CLIENT_ID,
-      offlineAccess: true
+      // webClientId: '204433763712-k0eiup21itvda8saa469ocvd7liubchm.apps.googleusercontent.com',
+      // offlineAccess: true,
     });
   }, [])
+
+  const CheckIfUserExistsInMongo = async (userFromRealm: Realm.User, userFromGoogle: UserGoogleInfoType) => {
+    console.log(`Logged in with id: ${userFromRealm.id}`);
+    //  check if user exists already in atlas
+    const result: any = await userFromRealm!.functions.checkIfUserExists(userFromGoogle.id, userFromGoogle);
+
+    // store user in redux
+    dispatch(setUser(result)) 
+    dispatch(setUserGoogleInfo(userFromGoogle))
+
+    try {
+      save('user', result)
+      save('userGoogleInfo', userFromGoogle)
+    } catch (error) {
+      console.log(`Error saving user data: ${error}`)
+    }
+  }
 
   const signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices()
       const userInfo = await GoogleSignin.signIn()
-      // console.log("User", userInfo)
       const authID = userInfo.user.id;
       const idToken: any = userInfo.idToken;
+      const email = userInfo.user.email;
+
+        const loginCredentials = Credentials.emailPassword(email, authID);
+
+        try {
+          // sign in
+          await realmApp.logIn(loginCredentials).then(async (user) => {
+            CheckIfUserExistsInMongo(user, userInfo.user as UserGoogleInfoType)
+          })
+        } catch (error) {
+          // sign up instead
+          const password = authID
+          await realmApp.emailPasswordAuth.registerUser({ email, password })
+          // sign in agian
+          await realmApp.logIn(loginCredentials).then(async (user) => {
+            CheckIfUserExistsInMongo(user, userInfo.user as UserGoogleInfoType)
+          })
+        }
+
+        try {
+        } catch (error) {
+          console.log("Error: ", error);
+        }
+
+
       // Log the user in through realm to app here
       const credentials = Realm.Credentials.google({ idToken });
 

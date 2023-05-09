@@ -1,0 +1,53 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/GT-Haptik-Bold-2.ttf",
+      "sha1": "4b7dfce67244c44ce5e65afc4d9863efe5a352aa"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Bold-Oblique-2.ttf",
+      "sha1": "30f5c919157c6a0c6f3c0a9d6f7db00b9ec54a8e"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Bold-Oblique.ttf",
+      "sha1": "2a51ca9ae22cf3553e90853fb224011562d7dadb"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Bold-Rotalic-2.ttf",
+      "sha1": "319ad6ca6eae10bec55cd0f33de49cafd2918936"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Bold-Rotalic.ttf",
+      "sha1": "d5344be25085a0c27725a16750d8fcb5795e643c"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Bold.ttf",
+      "sha1": "d68c7ffb4d79b9ef0f29866c29eb7489fc3d111b"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Regular-2.ttf",
+      "sha1": "c5eb8a7a35b269ee17b8688ff93e293ba2020dc1"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Regular-Oblique-2.ttf",
+      "sha1": "0608d92b4adda858a9118b4824f3b069dcca0450"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Regular-Oblique.ttf",
+      "sha1": "b6926aed2ff7383c5a6c40675df0aa3fd18e686c"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Regular-Rotalic-2.ttf",
+      "sha1": "0031dc54e760bb1fddf7e810d81722358076cca4"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Regular-Rotalic.ttf",
+      "sha1": "b0aa9eb6fe09c0834266ff3fe7a5dbe39a16f9c9"
+    },
+    {
+      "path": "assets/fonts/GT-Haptik-Regular.ttf",
+      "sha1": "ec07cd03442c1c93d20a308e45b9067045ee5429"
+    }
+  ]
+}

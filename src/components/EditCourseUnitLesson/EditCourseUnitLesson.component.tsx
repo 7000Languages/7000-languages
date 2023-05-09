@@ -16,6 +16,7 @@ import { realmContext } from '../../realm/realm'
 import CustomInput from '../CustomInput/CustomInput.component'
 import PrimaryBtn from '../PrimaryBtn/PrimaryBtn.component'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import Toast from 'react-native-toast-message';
 
 type IProps = {
     isModalVisible: boolean
@@ -49,6 +50,8 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
     const unit: any = useQuery('units').find((item: any) => item._id == unit_id)
     const lesson: any = useQuery('lessons').find((item: any) => item._id == lesson_id)
 
+    console.log(course_id);
+    
     const resetErrorStates = () => {
         setNameError('');
         setDescriptionError('');
@@ -101,6 +104,12 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
                 unit!.description = description
             })
         }
+        Toast.show({
+            type: 'success',
+            text1: 'Hurray 🌟',
+            visibilityTime: 5000,
+            text2: 'Unit Edited successfully',
+        });
         setLoading(false)
     }
 
@@ -111,6 +120,12 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
                 lesson!.description = description
             })
         }
+        Toast.show({
+            type: 'success',
+            text1: 'Hurray 🌟',
+            visibilityTime: 5000,
+            text2: 'Lesson Edited successfully',
+        });
         setLoading(false)
     }
 
@@ -123,6 +138,12 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
                 course.details.translated_language = teachingLanguage
             })
         }
+        Toast.show({
+            type: 'success',
+            text1: 'Hurray 🌟',
+            visibilityTime: 5000,
+            text2: 'Course edited successfully',
+        });
         setLoading(false)
     }
 
@@ -191,10 +212,15 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
 
     useEffect(() => {
         settingStatesForInputs()
+    }, [isModalVisible])
+    
+
+    useEffect(() => {
+        settingStatesForInputs()
     }, []);
 
     return (
-        <Modal isVisible={isModalVisible} backdropOpacity={0.8}>
+        <Modal isVisible={isModalVisible} backdropOpacity={0.5}>
             <KeyboardAvoidingView
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             >

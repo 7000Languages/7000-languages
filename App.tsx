@@ -7,12 +7,11 @@ import Toast from 'react-native-toast-message';
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import { AppProvider, UserProvider } from "@realm/react";
-import { REALM_APP_IOS_ID, REALM_APP_ANDROID_ID } from "@env";
+import { REALM_APP_IOS_ID } from "@env";
 import { Login } from "./src/screens";
-import { Platform } from "react-native";
 
 const App = () => {
-  const appId = Platform.OS == 'ios' ? REALM_APP_IOS_ID : REALM_APP_ANDROID_ID
+  const appId = REALM_APP_IOS_ID
   return (
     <Provider store={store}>
       <GestureHandlerRootView style={{ flex: 1 }}>
@@ -20,7 +19,7 @@ const App = () => {
           <UserProvider fallback={() => <Login />}>
             <NavigationContainer>
               <MainNavigator />
-              <Toast />
+              <Toast  />
             </NavigationContainer>
           </UserProvider>
         </AppProvider>

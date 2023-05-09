@@ -3,10 +3,10 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/sizes";
 
 const styles = StyleSheet.create({
   container: {
-    width: 216,
-    height: 150,
+    width: DEVICE_WIDTH * 0.5,
+    height: DEVICE_HEIGHT * 0.18,
     backgroundColor: "#F9F9F9",
-    marginVertical: 18,
+    marginVertical: 15,
     borderRadius: 8,
     justifyContent: 'space-around',
     alignSelf: 'center'

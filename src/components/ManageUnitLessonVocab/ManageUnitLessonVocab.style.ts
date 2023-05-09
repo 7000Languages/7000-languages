@@ -89,6 +89,14 @@ const styles = StyleSheet.create({
   },
   description: {
     marginBottom: 10
+  },
+  original: {
+    fontSize: 14,
+    color: '#1C1C1C',
+  },
+  subText: {
+    fontSize: 14,
+    color: '#A4A4A4'
   }
 });
 

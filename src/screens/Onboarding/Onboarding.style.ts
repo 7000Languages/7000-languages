@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     scroll:{
         marginTop: 150,
         width: DEVICE_WIDTH,
-        height: DEVICE_HEIGHT * 0.4
     },
     wordLogo: {
         position: 'absolute',
@@ -29,8 +28,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         position: 'absolute',
-        bottom: 55,
-        right: 30
+        bottom: 40,
+        right: 10
     },
     nextText: {
         color: '#ffffff',

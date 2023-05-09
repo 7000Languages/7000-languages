@@ -11,4 +11,6 @@ declare module '@env' {
     export const EXPO_CLIENT_SECRET: string;
     export const REALM_APP_IOS_ID: string;
     export const REALM_APP_ANDROID_ID: string;
+    export const CRYP_SECRET_KEY: string;
+
 }

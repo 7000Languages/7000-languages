@@ -1,4 +1,3 @@
-// import * as DocumentPicker from 'expo-document-picker';
 
 /**
  * This function is responsible for taking in an array 
@@ -29,9 +28,11 @@ export const hasEmoji = (text: string): boolean => {
   return regex_emoji.test(text);
 };
 
-export const pickAudioFikle = async () => {
-  // const result =  await DocumentPicker.getDocumentAsync({
-  //   type: 'audio/*',
-  // })
-  // return result
-}
+
+export const formatAudioDuration = (seconds: number): string => {
+  let calMinutes = Math.floor(seconds / 60);
+  let calSeconds = Math.round(seconds - calMinutes * 60);
+  return `${calMinutes > 9 ? calMinutes : `0${calMinutes}`} : ${
+    calSeconds > 9 ? calSeconds : `0${calSeconds}`
+  }`;
+};
