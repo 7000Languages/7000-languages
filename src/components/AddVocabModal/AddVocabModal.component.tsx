@@ -24,7 +24,7 @@ import { PRIMARY_COLOR } from '../../constants/colors'
 import { realmContext } from '../../realm/realm'
 import { BSON } from 'realm'
 import { uploadFileToS3 } from '../../utils/s3'
-import { formatAudioDuration } from '../../utils/helpers'
+import { formatAudioDuration, requestCameraPermission } from '../../utils/helpers'
 
 type IProps = {
     isModalVisible: boolean
@@ -44,7 +44,7 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
     const [translation, setTranslation] = useState('');
     const [context, setContext] = useState('');
     const [image, setImage] = useState<any>();
-    const [audio, setAudio] = useState<any>();
+    const [audio, setAudio] = useState<any>({ uri: '' });
     const [imageToUpload, setImageToUpload] = useState(null);
     const [audioToUpload, setAudioToUpload] = useState(null);
     const [audioDuration, setAudioDuration] = useState(0);
@@ -73,22 +73,24 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
     const openPicker = () => {
         ImagePicker.launchImageLibrary({
             // maxWidth: 500,
-            mediaType: 'mixed'
+            mediaType: 'photo'
         }, (response) =>{
             setImage(response.assets![0]);
+            console.log(response.assets![0]);
             setSelectingImage(prev => !prev);
         });
     };
 
-    // const openCamera = () => {
-    //     ImagePicker.openCamera({
-    //         width: 300,
-    //         height: 400,
-    //         cropping: true,
-    //     }).then(image => {
-    //         console.log(image);
-    //     });
-    // };
+    const openCamera = () => {
+        requestCameraPermission()
+        ImagePicker.launchCamera({
+            cameraType: 'back',
+            mediaType: 'photo'
+        }).then(response => {
+            setImage(response.assets![0]);
+            console.log(response.assets![0]);
+        });
+    };
 
     const pickAudioFile = () => {
         DocumentPicker.pickSingle({
@@ -104,7 +106,7 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
     }
 
     const currentAudio = useMemo(() =>
-        new Sound(audio?.uri,
+        new Sound(audio.uri,
             undefined,
             error => {
                 if (error) {
@@ -210,30 +212,16 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
         //     text2: 'Vocab added successfully',
         // });
 
-        if(typeof audio !== undefined && audio){
-            let fileName = audio.name
+        if(typeof image !== undefined && image){
+            let fileName = image.fileName
 
-            // console.log("image: " + image.uri);
-            let uri = 'file:///' + (audio.uri.replace('file://', '')); // Must do that for RNFS   
-            
-            // get a list of files and directories in the main bundle
-            RNFS.readFile(uri, 'base64')
-                .then(async(result) => {
-                    console.log('GOT RESULT', result);
-                    const res = await fetch(result);
-                    const blob = await res.blob();
-                    const file = new File([blob], fileName, { type: 'image/png' });
-                    const resultToUpload = await uploadFileToS3(fileName, result, audio.type)
-                    console.log('resultToUpload', resultToUpload);
-                })
-                .catch((err) => {
-                    console.log(err.message, err.code);
-                });
-
+                const resultToUpload = await uploadFileToS3(fileName, image, image.type)
+                console.log(resultToUpload);
+                
         }
 
         setLoading(false);
-        resetStates()
+        // resetStates()
     }
 
     return (
@@ -249,10 +237,10 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
 
                     <Animated.View
                         style={[styles.textAndIconsContainer, scaleAnimatedStyles]}>
-                        {/* <TouchableOpacity onPress={openCamera} style={styles.cameraTextAndIcon}>
+                        <TouchableOpacity onPress={openCamera} style={styles.cameraTextAndIcon}>
                             <Feather name="camera" size={22} color="#227093" />
                             <Text style={styles.iconText}>Camera</Text>
-                        </TouchableOpacity> */}
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={openPicker} style={styles.cameraTextAndIcon}>
                             <Feather name="image" size={22} color="#227093" />
                             <Text style={styles.iconText}>Gallery</Text>
@@ -271,9 +259,9 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
                             onChangeText={(text: string) => setOriginal(text)}
                         />
                         {
-                            audio ?
+                            audio.uri.length > 0 ?
                                 <View style={styles.textAndIcon}>
-                                    <AntDesign name="close" size={20} color="black" style={{ position: 'absolute', bottom: -25, right: 14 }} onPress={() => setAudio(undefined)} />
+                                    <AntDesign name="close" size={20} color="black" style={{ position: 'absolute', bottom: -25, right: 14 }} onPress={() => setAudio({uri:''})} />
                                     <Text>{formatAudioDuration(duration)}</Text>
                                     <Ionicons
                                         name={!playing ? 'play-circle-sharp' : 'pause-circle-sharp'}
