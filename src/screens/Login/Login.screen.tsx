@@ -7,7 +7,7 @@ import { Credentials } from 'realm'
 
 import styles from './Login.style'
 
-import { IOS_CLIENT_ID, CRYP_SECRET_KEY } from '@env'
+import { GOOGLE_SERVICES_CLIENT_ID, IOS_CLIENT_ID } from '@env'
 import { PrimaryBtn } from '../../components'
 import { save } from '../../utils/storage'
 import { useAppDispatch } from '../../redux/store';
@@ -30,7 +30,7 @@ const Login = () => {
       :
       {
         scopes: ['profile'],
-        webClientId: '204433763712-k0eiup21itvda8saa469ocvd7liubchm.apps.googleusercontent.com',
+        webClientId: GOOGLE_SERVICES_CLIENT_ID,
         offlineAccess: true,
       }
     );
