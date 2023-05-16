@@ -15,6 +15,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1E45BAE7E6F5448ABF3C1443 /* GT-Haptik-Bold-Rotalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B2833E386D943A3B9A020A4 /* GT-Haptik-Bold-Rotalic.ttf */; };
 		2845B5151B834AB7B9FC344D /* GT-Haptik-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E927D7AA274D44E190139CF2 /* GT-Haptik-Regular.ttf */; };
+		4E184F832A0F16F400BA2378 /* Lovelace-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4E184F822A0F16F400BA2378 /* Lovelace-Regular.otf */; };
+		4E184F862A0F171400BA2378 /* Lovelace-Bold-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4E184F852A0F171400BA2378 /* Lovelace-Bold-Italic.otf */; };
 		662769765A362CAB9BFD43F4 /* libPods-7000Languages.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 82A9C040D1CEA26736EBBAF1 /* libPods-7000Languages.a */; };
 		6C626CE3631F40AAABB1D933 /* GT-Haptik-Bold-2.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9FDAE8D525C47C597F20FD3 /* GT-Haptik-Bold-2.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -50,24 +52,27 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = 7000Languages/main.m; sourceTree = "<group>"; };
 		1527784242513A206C6C341D /* Pods-7000Languages.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-7000Languages.debug.xcconfig"; path = "Target Support Files/Pods-7000Languages/Pods-7000Languages.debug.xcconfig"; sourceTree = "<group>"; };
 		2A38CD3F86FA7AC3CB8D9C82 /* Pods-7000Languages-7000LanguagesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-7000Languages-7000LanguagesTests.debug.xcconfig"; path = "Target Support Files/Pods-7000Languages-7000LanguagesTests/Pods-7000Languages-7000LanguagesTests.debug.xcconfig"; sourceTree = "<group>"; };
-		2E27E42C3D974C2FA208114A /* GT-Haptik-Bold-Oblique-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold-Oblique-2.ttf"; path = "../assets/fonts/GT-Haptik-Bold-Oblique-2.ttf"; sourceTree = "<group>"; };
-		3833D22AEB7B4DCC90114B71 /* GT-Haptik-Regular-Oblique.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular-Oblique.ttf"; path = "../assets/fonts/GT-Haptik-Regular-Oblique.ttf"; sourceTree = "<group>"; };
+		2E27E42C3D974C2FA208114A /* GT-Haptik-Bold-Oblique-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold-Oblique-2.ttf"; path = "../assets/fonts/GT-Haptik-Bold-Oblique-2.ttf"; sourceTree = "<group>"; };
+		3833D22AEB7B4DCC90114B71 /* GT-Haptik-Regular-Oblique.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular-Oblique.ttf"; path = "../assets/fonts/GT-Haptik-Regular-Oblique.ttf"; sourceTree = "<group>"; };
+		4E184F822A0F16F400BA2378 /* Lovelace-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lovelace-Regular.otf"; path = "../assets/fonts/Lovelace-Regular.otf"; sourceTree = "<group>"; };
+		4E184F842A0F170300BA2378 /* Lovelace-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lovelace-Regular.otf"; path = "../assets/fonts/Lovelace-Regular.otf"; sourceTree = "<group>"; };
+		4E184F852A0F171400BA2378 /* Lovelace-Bold-Italic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lovelace-Bold-Italic.otf"; path = "../assets/fonts/Lovelace-Bold-Italic.otf"; sourceTree = "<group>"; };
 		51E7048F0B302D143E910046 /* Pods-7000Languages.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-7000Languages.release.xcconfig"; path = "Target Support Files/Pods-7000Languages/Pods-7000Languages.release.xcconfig"; sourceTree = "<group>"; };
-		59872F90B473446E84F02D76 /* GT-Haptik-Bold-Oblique.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold-Oblique.ttf"; path = "../assets/fonts/GT-Haptik-Bold-Oblique.ttf"; sourceTree = "<group>"; };
-		6595B495CBFF41B389024990 /* GT-Haptik-Regular-Oblique-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular-Oblique-2.ttf"; path = "../assets/fonts/GT-Haptik-Regular-Oblique-2.ttf"; sourceTree = "<group>"; };
-		6A5FCCBF53014C65AC25E5B4 /* GT-Haptik-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold.ttf"; path = "../assets/fonts/GT-Haptik-Bold.ttf"; sourceTree = "<group>"; };
+		59872F90B473446E84F02D76 /* GT-Haptik-Bold-Oblique.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold-Oblique.ttf"; path = "../assets/fonts/GT-Haptik-Bold-Oblique.ttf"; sourceTree = "<group>"; };
+		6595B495CBFF41B389024990 /* GT-Haptik-Regular-Oblique-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular-Oblique-2.ttf"; path = "../assets/fonts/GT-Haptik-Regular-Oblique-2.ttf"; sourceTree = "<group>"; };
+		6A5FCCBF53014C65AC25E5B4 /* GT-Haptik-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold.ttf"; path = "../assets/fonts/GT-Haptik-Bold.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = 7000Languages/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		82A9C040D1CEA26736EBBAF1 /* libPods-7000Languages.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7000Languages.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		893DEF1E431D8D9694055F3D /* Pods-7000Languages-7000LanguagesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-7000Languages-7000LanguagesTests.release.xcconfig"; path = "Target Support Files/Pods-7000Languages-7000LanguagesTests/Pods-7000Languages-7000LanguagesTests.release.xcconfig"; sourceTree = "<group>"; };
-		8B2833E386D943A3B9A020A4 /* GT-Haptik-Bold-Rotalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold-Rotalic.ttf"; path = "../assets/fonts/GT-Haptik-Bold-Rotalic.ttf"; sourceTree = "<group>"; };
-		909FC1A4BD5B4A998B2E4F4E /* GT-Haptik-Regular-Rotalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular-Rotalic.ttf"; path = "../assets/fonts/GT-Haptik-Regular-Rotalic.ttf"; sourceTree = "<group>"; };
+		8B2833E386D943A3B9A020A4 /* GT-Haptik-Bold-Rotalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold-Rotalic.ttf"; path = "../assets/fonts/GT-Haptik-Bold-Rotalic.ttf"; sourceTree = "<group>"; };
+		909FC1A4BD5B4A998B2E4F4E /* GT-Haptik-Regular-Rotalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular-Rotalic.ttf"; path = "../assets/fonts/GT-Haptik-Regular-Rotalic.ttf"; sourceTree = "<group>"; };
 		B2F2AD4C1C1924E1033D4365 /* libPods-7000Languages-7000LanguagesTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-7000Languages-7000LanguagesTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D9FDAE8D525C47C597F20FD3 /* GT-Haptik-Bold-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold-2.ttf"; path = "../assets/fonts/GT-Haptik-Bold-2.ttf"; sourceTree = "<group>"; };
-		DE46DB90430F4DB896CBBED8 /* GT-Haptik-Regular-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular-2.ttf"; path = "../assets/fonts/GT-Haptik-Regular-2.ttf"; sourceTree = "<group>"; };
-		E30242328D964FA4A767030C /* GT-Haptik-Regular-Rotalic-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular-Rotalic-2.ttf"; path = "../assets/fonts/GT-Haptik-Regular-Rotalic-2.ttf"; sourceTree = "<group>"; };
-		E927D7AA274D44E190139CF2 /* GT-Haptik-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular.ttf"; path = "../assets/fonts/GT-Haptik-Regular.ttf"; sourceTree = "<group>"; };
+		D9FDAE8D525C47C597F20FD3 /* GT-Haptik-Bold-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold-2.ttf"; path = "../assets/fonts/GT-Haptik-Bold-2.ttf"; sourceTree = "<group>"; };
+		DE46DB90430F4DB896CBBED8 /* GT-Haptik-Regular-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular-2.ttf"; path = "../assets/fonts/GT-Haptik-Regular-2.ttf"; sourceTree = "<group>"; };
+		E30242328D964FA4A767030C /* GT-Haptik-Regular-Rotalic-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular-Rotalic-2.ttf"; path = "../assets/fonts/GT-Haptik-Regular-Rotalic-2.ttf"; sourceTree = "<group>"; };
+		E927D7AA274D44E190139CF2 /* GT-Haptik-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Regular.ttf"; path = "../assets/fonts/GT-Haptik-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F8E7620355244BF0BE36D683 /* GT-Haptik-Bold-Rotalic-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold-Rotalic-2.ttf"; path = "../assets/fonts/GT-Haptik-Bold-Rotalic-2.ttf"; sourceTree = "<group>"; };
+		F8E7620355244BF0BE36D683 /* GT-Haptik-Bold-Rotalic-2.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "GT-Haptik-Bold-Rotalic-2.ttf"; path = "../assets/fonts/GT-Haptik-Bold-Rotalic-2.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +145,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				4E184F852A0F171400BA2378 /* Lovelace-Bold-Italic.otf */,
+				4E184F822A0F16F400BA2378 /* Lovelace-Regular.otf */,
+				4E184F842A0F170300BA2378 /* Lovelace-Regular.otf */,
 				13B07FAE1A68108700A75B9A /* 7000Languages */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* 7000LanguagesTests */,
@@ -190,7 +198,6 @@
 				E927D7AA274D44E190139CF2 /* GT-Haptik-Regular.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,6 +294,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E184F862A0F171400BA2378 /* Lovelace-Bold-Italic.otf in Resources */,
+				4E184F832A0F16F400BA2378 /* Lovelace-Regular.otf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				6C626CE3631F40AAABB1D933 /* GT-Haptik-Bold-2.ttf in Resources */,

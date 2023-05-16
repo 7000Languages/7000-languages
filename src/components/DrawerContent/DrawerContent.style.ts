@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     learnerContainer: {
         width: 107,
         height: 28,
-        backgroundColor: '#E5F7F7',
+        backgroundColor: '#DEE5E9',
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     learnerText: {
-        color: '#006F7B',
+        color: '#496277',
         fontWeight: 'bold',
         fontSize: 12,
     },
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     searchCourseBtn: {
         width: '95%',
         height: 33,
-        backgroundColor: '#04AFB2',
+        backgroundColor: '#496277',
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,

@@ -12,13 +12,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   title: {
-    fontWeight: "800",
-    fontSize: 16,
+    fontWeight: "bold",
+    fontSize: 18,
     color: "#000000",
     position: 'absolute',
     top: 18,
     left: 18,
-    lineHeight: 20
+    lineHeight: 20,
+    fontFamily: 'Lovelace Text',
   },
   smallText: {
     fontWeight: "700",

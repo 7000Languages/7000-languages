@@ -70,7 +70,7 @@ const Splash: React.FC<NavProps> = ({ navigation }) => {
 
   }, []);
 
-  return (
+return (
     <View style={styles.container}>
       <StatusBar hidden />
       <Image

@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         zIndex: 1,
         top: Platform.OS == 'ios' ? StatusBarHeight! + DEVICE_HEIGHT * 0.08 : StatusBarHeight,
-        left: 30
+        left: 30,
+        
     },
     nextAndIconContainer: {
         flexDirection: 'row',
@@ -34,7 +35,8 @@ const styles = StyleSheet.create({
     nextText: {
         color: '#ffffff',
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        
     },
     selectedLocale: {
         color: 'transparent',

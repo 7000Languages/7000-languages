@@ -41,14 +41,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   quote: {
+    fontFamily: 'Lovelace Text',
     color: "#ffffff",
-    fontWeight: "bold",
-    fontSize: 24,
-  },
+    fontSize: 25,
+    maxWidth: DEVICE_WIDTH - 60, 
+    },
   author: {
     color: "#ffffff",
     fontSize: 20,
     marginTop: 25,
+    fontFamily: 'Lovelace Text',
+    maxWidth: DEVICE_WIDTH - 60, 
   },
   qouteAndAuthor: {
     position: "absolute",

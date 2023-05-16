@@ -11,7 +11,7 @@ const styels = StyleSheet.create({
     height: 46,
     width: DEVICE_WIDTH * 0.85,
     borderRadius: 8,
-    backgroundColor: "#E5F7F7",
+    backgroundColor: "#DEE5E9",
     alignSelf: "center",
     marginTop: 20,
     flexDirection: "row",

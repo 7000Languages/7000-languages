@@ -138,12 +138,15 @@ const Login = () => {
         style={styles.backgroundImage}
         source={require("../../../assets/images/loginBackgroundImage.png")}
       />
-      <View style={styles.qouteAndAuthor}>
+       <View style={styles.qouteAndAuthor}>
+        
         <Text
           style={styles.quote}
-        >{`“To speak a language is\n to take on a world, a\n culture.”`}</Text>
-        <Text style={styles.author}>Frantz Fanon</Text>
+        >{`“Language is about restoring relationships between ourselves\n to the land and to the more-than-human-beings that we are a part of here.”`}</Text>
+        <Text style={styles.author}>Mary Fong Hermes - Ojibwe Course Instructor</Text>
       </View>
+
+
       <PrimaryBtn
         label="Continue with Google"
         onPress={() => signIn()}

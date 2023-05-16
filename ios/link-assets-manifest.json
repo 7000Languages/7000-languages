@@ -48,6 +48,14 @@
     {
       "path": "assets/fonts/GT-Haptik-Regular.ttf",
       "sha1": "ec07cd03442c1c93d20a308e45b9067045ee5429"
+    },
+    {
+      "path": "assets/fonts/Lovelace-Bold-Italic.otf",
+      "sha1": "f3c39df90160cc3b2b84ee42f3c4bab70cede175"
+    },
+    {
+      "path": "assets/fonts/Lovelace-Regular.otf",
+      "sha1": "b991d12a5ecb67e9fe28f76dfc872a7fe20c229a"
     }
   ]
 }
