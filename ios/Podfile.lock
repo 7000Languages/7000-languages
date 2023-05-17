@@ -462,15 +462,6 @@ PODS:
   - RNGoogleSignin (9.0.2):
     - GoogleSignIn (~> 6.2)
     - React-Core
-  - RNImageCropPicker (0.39.0):
-    - React-Core
-    - React-RCTImage
-    - RNImageCropPicker/QBImagePickerController (= 0.39.0)
-    - TOCropViewController
-  - RNImageCropPicker/QBImagePickerController (0.39.0):
-    - React-Core
-    - React-RCTImage
-    - TOCropViewController
   - RNLocalize (2.2.6):
     - React-Core
   - RNReanimated (3.0.2):
@@ -511,7 +502,6 @@ PODS:
   - RNVectorIcons (9.2.0):
     - React-Core
   - SocketRocket (0.6.0)
-  - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -589,7 +579,6 @@ DEPENDENCIES:
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
-  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -619,7 +608,6 @@ SPEC REPOS:
     - MMKVCore
     - OpenSSL-Universal
     - SocketRocket
-    - TOCropViewController
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -715,8 +703,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
-  RNImageCropPicker:
-    :path: "../node_modules/react-native-image-crop-picker"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
   RNReanimated:
@@ -796,17 +782,15 @@ SPEC CHECKSUMS:
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNGoogleSignin: 22e468a9474dbcb8618d8847205ad4f0b2575d13
-  RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
   RNLocalize: d4b8af4e442d4bcca54e68fc687a2129b4d71a81
   RNReanimated: f0dd6b881808e635ef0673f89642937d6c141314
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
-  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Yoga: ba09b6b11e6139e3df8229238aa794205ca6a02a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 1e95745a14f2b40129d34b57c5de49fbfa8baee0
+PODFILE CHECKSUM: fe6c9ddd1de0438e596336a1bd906ad9155177b7
 
 COCOAPODS: 1.12.0
