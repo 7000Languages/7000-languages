@@ -7,14 +7,12 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Toast from 'react-native-toast-message'
 import  * as ImagePicker from 'react-native-image-picker';
-
 import Sound from 'react-native-sound'
 import * as RNFS from 'react-native-fs'
 
 import Modal from 'react-native-modal'
 import CustomInput from '../CustomInput/CustomInput.component'
 import PrimaryBtn from '../PrimaryBtn/PrimaryBtn.component'
-import _, { ImageOrVideo } from 'react-native-image-crop-picker';
 import DocumentPicker, { DocumentPickerResponse } from 'react-native-document-picker'
 
 import styles from './AddVocabModal.style'
@@ -25,6 +23,7 @@ import { realmContext } from '../../realm/realm'
 import { BSON } from 'realm'
 import { uploadFileToS3 } from '../../utils/s3'
 import { formatAudioDuration, requestCameraPermission } from '../../utils/helpers'
+import { XhrHttpHandler } from '@aws-sdk/xhr-http-handler'
 
 type IProps = {
     isModalVisible: boolean
@@ -212,12 +211,13 @@ const AddVocabModal: React.FC<IProps> = ({ isModalVisible, onCloseModal, course,
         //     text2: 'Vocab added successfully',
         // });
 
+        
         if(typeof image !== undefined && image){
             let fileName = image.fileName
-
-                const resultToUpload = await uploadFileToS3(fileName, image, image.type)
-                console.log(resultToUpload);
+            
+            const resultToUpload = await uploadFileToS3(fileName, image, image.type)
                 
+            console.log(resultToUpload);  
         }
 
         setLoading(false);

@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { KeyboardAvoidingView, View, Text, ActivityIndicator, Platform, ScrollView, TouchableOpacity, Image } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Modal from 'react-native-modal'
-import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker'
-import ImageCropPicker from 'react-native-image-crop-picker'
 
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Entypo from 'react-native-vector-icons/Entypo'
@@ -32,7 +30,7 @@ const { useRealm, useQuery } = realmContext
 const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course_id, unit_id, lesson_id }) => {
 
     const [name, setName] = useState('');
-    const [image, setImage] = useState<ImageOrVideo>();
+    const [image, setImage] = useState();
     const [alternativeName, setAlternativeName] = useState('');
     const [teachingLanguage, setTeachingLanguage] = useState('');
     const [description, setDescription] = useState('');
@@ -165,25 +163,25 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
     }
 
     const openPicker = () => {
-        ImageCropPicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true,
-            multiple: false
-        }).then(image => {
-            setImage(image);
-            setSelectingImage(prev => !prev);
-        });
+        // ImageCropPicker.openPicker({
+        //     width: 300,
+        //     height: 400,
+        //     cropping: true,
+        //     multiple: false
+        // }).then(image => {
+        //     setImage(image);
+        //     setSelectingImage(prev => !prev);
+        // });
     };
 
     const openCamera = () => {
-        ImagePicker.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true,
-        }).then(image => {
-            console.log(image);
-        });
+        // ImagePicker.openCamera({
+        //     width: 300,
+        //     height: 400,
+        //     cropping: true,
+        // }).then(image => {
+        //     console.log(image);
+        // });
     };
 
     const toggleImageSelection = () => setSelectingImage(prev => !prev);
@@ -285,7 +283,7 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
                             (
                                 image ?
                                 <View style={styles.imageAndIcon}>
-                                    <Image source={{ uri: image.path }} style={styles.image} resizeMode='contain' />
+                                    {/* <Image source={{ uri: image.path }} style={styles.image} resizeMode='contain' /> */}
                                     <AntDesign name="close" size={24} color="black" style={{ position: 'absolute', top: 5, right: 20 }} onPress={() => setImage(undefined)} />
                                 </View>
                                 :

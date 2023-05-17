@@ -3,10 +3,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import { KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity, Image, View, Text, ActivityIndicator } from 'react-native'
 import Modal from 'react-native-modal'
-import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
 import Entypo from 'react-native-vector-icons/Entypo'
 import Feather from 'react-native-vector-icons/Feather'
-import RNFetchBlob from "rn-fetch-blob";
 import Toast from 'react-native-toast-message';
 
 
@@ -34,7 +32,7 @@ const { useRealm, useQuery } = realmContext
 const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseModal, course, unit }) => {
 
     const [name, setName] = useState('');
-    const [image, setImage] = useState<ImageOrVideo>();
+    const [image, setImage] = useState();
     const [selectingImage, setSelectingImage] = useState(false);
     const [description, setDescription] = useState('');
     const [loading, setLoading] = useState(false);
@@ -62,25 +60,25 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
     const realm = useRealm()
 
     const openPicker = () => {
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true,
-            multiple: false
-        }).then(image => {
-            setImage(image);
-            setSelectingImage(prev => !prev);
-        });
+        // ImagePicker.openPicker({
+        //     width: 300,
+        //     height: 400,
+        //     cropping: true,
+        //     multiple: false
+        // }).then(image => {
+        //     setImage(image);
+        //     setSelectingImage(prev => !prev);
+        // });
     };
 
     const openCamera = () => {
-        ImagePicker.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true,
-        }).then(image => {
-            console.log(image);
-        });
+        // ImagePicker.openCamera({
+        //     width: 300,
+        //     height: 400,
+        //     cropping: true,
+        // }).then(image => {
+        //     console.log(image);
+        // });
     };
 
     const addUnit = async () => {
@@ -119,8 +117,8 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
         });
 
         if (typeof image !== undefined && image) {
-            let fileName = `images/${image.path?.split('/').pop()}`
-            let fileUri = image.path!
+            // let fileName = `images/${image.path?.split('/').pop()}`
+            // let fileUri = image.path!
 
             // const data = {
             //     uri: fileUri,
@@ -265,7 +263,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
                         {
                             image ?
                                 <View style={styles.imageAndIcon}>
-                                    <Image source={{ uri: image.path }} style={styles.image} resizeMode='contain' />
+                                    {/* <Image source={{ uri: image.path }} style={styles.image} resizeMode='contain' /> */}
                                     <AntDesign name="close" size={24} color="black" style={{ position: 'absolute', top: 5, right: 20 }} onPress={() => setImage(undefined)} />
                                 </View>
                                 :

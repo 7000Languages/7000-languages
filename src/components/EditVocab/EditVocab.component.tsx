@@ -8,12 +8,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modal'
 import CustomInput from '../CustomInput/CustomInput.component'
 import PrimaryBtn from '../PrimaryBtn/PrimaryBtn.component'
-import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
+// import ImagePicker, { ImageOrVideo } from 'react-native-image-crop-picker';
 
 import styles from './EditVocab.style'
 import { CourseType, LessonType, VocabType } from '../../@types'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
-import { pickAudioFikle } from '../../utils/helpers'
+// import { pickAudioFikle } from '../../utils/helpers'
 import { PRIMARY_COLOR } from '../../constants/colors'
 import { realmContext } from '../../realm/realm'
 
@@ -30,7 +30,7 @@ const EditVocab: React.FC<IProps> = ({ isModalVisible, onCloseModal, course, les
     const [original, setOriginal] = useState('');
     const [translation, setTranslation] = useState('');
     const [context, setContext] = useState('');
-    const [image, setImage] = useState<ImageOrVideo>();
+    const [image, setImage] = useState();
     const [audio, setAudio] = useState();
     const [audioDuration, setAudioDuration] = useState(0)
     const [playing, setPlaying] = useState(false);
@@ -64,25 +64,25 @@ const EditVocab: React.FC<IProps> = ({ isModalVisible, onCloseModal, course, les
     const realm = useRealm()
 
     const openPicker = () => {
-        ImagePicker.openPicker({
-            width: 300,
-            height: 400,
-            cropping: true,
-            multiple: false
-        }).then(image => {
-            setImage(image);
-            setSelectingImage(prev => !prev);
-        });
+        // ImagePicker.openPicker({
+        //     width: 300,
+        //     height: 400,
+        //     cropping: true,
+        //     multiple: false
+        // }).then(image => {
+        //     setImage(image);
+        //     setSelectingImage(prev => !prev);
+        // });
     };
 
     const openCamera = () => {
-        ImagePicker.openCamera({
-            width: 300,
-            height: 400,
-            cropping: true,
-        }).then(image => {
-            console.log(image);
-        });
+        // ImagePicker.openCamera({
+        //     width: 300,
+        //     height: 400,
+        //     cropping: true,
+        // }).then(image => {
+        //     console.log(image);
+        // });
     };
 
     const toggleImageSelection = () => setSelectingImage(prev => !prev);
@@ -207,7 +207,7 @@ const EditVocab: React.FC<IProps> = ({ isModalVisible, onCloseModal, course, les
                                                 />
                                             </View>
                                             :
-                                            <TouchableOpacity style={styles.audioContainer} onPress={pickAudioFikle}>
+                                            <TouchableOpacity style={styles.audioContainer} onPress={()=>{}}>
                                                 <FontAwesome5 name="file-audio" size={18} color="#9F3E1A" />
                                                 <Text style={styles.addAudio}>Add audio</Text>
                                             </TouchableOpacity>
@@ -230,7 +230,7 @@ const EditVocab: React.FC<IProps> = ({ isModalVisible, onCloseModal, course, les
                         {
                             image ?
                                 <View style={styles.imageAndIcon}>
-                                    <Image source={{ uri: (image as ImageOrVideo).path }} style={styles.image} resizeMode='contain' />
+                                    {/* <Image source={{ uri: (image as ImageOrVideo).path }} style={styles.image} resizeMode='contain' /> */}
                                     <AntDesign name="close" size={24} color="black" style={{ position: 'absolute', top: 5, right: 20 }} onPress={() => setImage(undefined)} />
                                 </View>
                                 :
