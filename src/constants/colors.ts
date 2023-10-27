@@ -1,0 +1,30 @@
+export const themes = {
+  light: {
+    backgroundColor: '#2B2A2A',
+    buttonColor: 'rgb(39,98,196)',
+    screenBackgroundColor: '#ffffff',
+    bottomSheetBackgroundColor: '#F0F0F0',
+    hymnCardBackgroundColor: '#ffffff',
+    chorusCardBackgroundColor: '#ffffff',
+  },
+  dark: {
+    backgroundColor: '#2B2A2A',
+    buttonColor: 'rgb(39,98,196)',
+    screenBackgroundColor: '#ffffff',
+    bottomSheetBackgroundColor: '#ffffff',
+    hymnCardBackgroundColor: '#ffffff',
+    chorusCardBackgroundColor: '#ffffff',
+  },
+}
+
+const PRIMARY_COLOR = '#9F3E1A'
+const SECONDARY_COLOR = '#496277'
+const PRIMARY_ORANGE_COLOR = '#E7900F'
+const PRIMARY_GREEN_COLOR = '#91B38B'
+
+export {
+  PRIMARY_COLOR,
+  SECONDARY_COLOR,
+  PRIMARY_ORANGE_COLOR,
+  PRIMARY_GREEN_COLOR
+}
