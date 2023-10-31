@@ -2,37 +2,39 @@ import {
   View,
   Text,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import styles from './Activity.style';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {CourseStackParamList} from '../../../navigation/types';
-import {AudioToTextActivity, FocusAwareStatusBar, Header, TextToImageActivity, TextToTextActivity} from '../../../components';
-import {SECONDARY_COLOR} from '../../../constants/colors';
-import { ActivityType,  } from '../../../@types';
-import {TextToAudioActivity} from '../../../components';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { CourseStackParamList } from '../../../navigation/types';
+import { AudioToTextActivity, FocusAwareStatusBar, Header, TextToImageActivity, TextToTextActivity } from '../../../components';
+import { SECONDARY_COLOR } from '../../../constants/colors';
+import { ActivityType, } from '../../../@types';
+import { TextToAudioActivity } from '../../../components';
 import { realmContext } from '../../../realm/realm';
 import { convertToArrayOfPlainObject } from '../../../utils/helpers';
+import { Activity as ActivityFromRealm } from '../../../realm/schemas';
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'Activity'>;
 
 const { useQuery } = realmContext
 
-const Activity: React.FC<NavProps> = ({navigation, route}) => {
-  
+const Activity: React.FC<NavProps> = ({ navigation, route }) => {
+
   const { lesson, activityType } = route.params
 
   const [curtentActivityType, setCurentActivityType] = useState<ActivityType | string>('audio-to-text')
 
   const activityLevels = useQuery('activityLevels').filtered("_lesson_id = $0", lesson._id.toString())
-  const activities = useQuery('activities');
+  const activities = useQuery(ActivityFromRealm);
+  const currentActivity = activities.find(activity => activity.type == activityType)  
 
-  const audioToTextActivities = activityLevels.filter((activityLevel:any) => (activities.find((activity:any)=>activity!.type == 'audio-to-text') as any)?._id.toString() === activityLevel._activity_id );
-  const TextToAudioActivities = activityLevels.filter((activityLevel:any) => (activities.find((activity:any)=>activity!.type == 'text-to-audio') as any)?._id.toString() === activityLevel._activity_id);
-  const TextToImageActivities = activityLevels.filter((activityLevel:any) => (activities.find((activity:any)=>activity!.type == 'text-to-image') as any)?._id.toString() === activityLevel._activity_id);
-  const TextToTextActivities = activityLevels.filter((activityLevel:any) =>(activities.find((activity:any)=>activity!.type == 'text-to-text') as any)?._id.toString() === activityLevel._activity_id);
+  const audioToTextActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'audio-to-text') as any)?._id.toString() === activityLevel._activity_id);
+  const TextToAudioActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-audio') as any)?._id.toString() === activityLevel._activity_id);
+  const TextToImageActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-image') as any)?._id.toString() === activityLevel._activity_id);
+  const TextToTextActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-text') as any)?._id.toString() === activityLevel._activity_id);
 
   const goToNextActivity = (type: ActivityType | 'completed') => {
     setCurentActivityType(type);
@@ -42,7 +44,7 @@ const Activity: React.FC<NavProps> = ({navigation, route}) => {
   useEffect(() => {
     activityType && setCurentActivityType(activityType!)
   }, []);
-  
+
   return (
     <View style={styles.container}>
       <FocusAwareStatusBar
@@ -51,8 +53,8 @@ const Activity: React.FC<NavProps> = ({navigation, route}) => {
         showStatusBackground
       />
       <Header
-        title="Activity 1"
-        headerStyle={{backgroundColor: SECONDARY_COLOR}}
+        title={currentActivity!.title}
+        headerStyle={{ backgroundColor: SECONDARY_COLOR }}
         leftIcon={
           <Feather
             name="arrow-left"
@@ -68,7 +70,7 @@ const Activity: React.FC<NavProps> = ({navigation, route}) => {
         }
       />
       {curtentActivityType == 'audio-to-text' &&
-      audioToTextActivities.length > 0 ? (
+        audioToTextActivities.length > 0 ? (
         <AudioToTextActivity
           activityLevels={convertToArrayOfPlainObject(audioToTextActivities)}
           goToNextActivity={type => goToNextActivity(type)}
@@ -85,12 +87,19 @@ const Activity: React.FC<NavProps> = ({navigation, route}) => {
           activityLevels={convertToArrayOfPlainObject(TextToImageActivities)}
           goToNextActivity={type => goToNextActivity(type)}
         />
-      ) : (
-        <TextToTextActivity
-          activityLevels={convertToArrayOfPlainObject(TextToTextActivities)}
-          goToNextActivity={type => goToNextActivity(type)}
-        />
-      )}
+      ) :
+        curtentActivityType == 'text-to-text' &&
+          TextToImageActivities.length > 0 ?
+          (
+            <TextToTextActivity
+              activityLevels={convertToArrayOfPlainObject(TextToTextActivities)}
+              goToNextActivity={type => goToNextActivity(type)}
+            />
+          ) :
+          <View style={styles.noActivityContainer}>
+            <Text>No activities for this lesson</Text>
+          </View>
+      }
     </View>
   );
 };

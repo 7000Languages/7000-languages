@@ -19,6 +19,8 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
 
   const { lesson, activityType } = route.params
 
+  console.log(activityType);
+
   const activities: Activity[] = convertToArrayOfPlainObject(useQuery('activities') as any)
   const activityTypes = activities.sort((a,b)=> (a.order - b.order) ).map((activity:any) => activity.type);
 

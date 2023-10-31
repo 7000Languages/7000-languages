@@ -45,6 +45,14 @@ const styles = StyleSheet.create({
     },
     options: {
 
+    },
+    noActivityContainer: {
+        width: '90%',
+        height: '70%',
+        alignSelf: 'center',
+        marginTop: '15%',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 

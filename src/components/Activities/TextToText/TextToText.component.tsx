@@ -185,7 +185,7 @@ import { setUser } from '../../../redux/slices/authSlice';
       activityLevels.length == 0 ? goToNextActivity('completed') : null
     }, []);
     
-    let matchingCompleted = matches.length === currentActivityLevel.words_to_match.length
+    let matchingCompleted = currentActivityLevel ? (matches.length === currentActivityLevel.words_to_match.length) : false
     
     return (
       <View style={styles.container}>

@@ -13,6 +13,7 @@ import { VocabType } from '../../../@types'
 import { realmContext } from '../../../realm/realm'
 import { convertToArrayOfPlainObject } from '../../../utils/helpers'
 import LearnerVocabItem from '../../../components/LearnerVocabItem/LearnerVocabItem.component'
+import Lesson from '../../../realm/schemas/Lesson'
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'LearnerLesson'>
 
@@ -21,7 +22,7 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
   const { lesson_id } = route.params
   const { useQuery } = realmContext
 
-  const lesson: any = useQuery('lessons').find((lesson: any) => lesson._id == lesson_id) // We get the lesson again so that the list updates automatically when we add a new vocab item
+  const lesson: any = useQuery(Lesson).find((lesson) => lesson._id.toString() == lesson_id) // We get the lesson again so that the list updates automatically when we add a new vocab item
 
   const renderItem = ({item, index}:{item: VocabType, index:number}) => {
     const { original, translation, image, audio, _id, notes, local_image_path, local_audio_path } = item
