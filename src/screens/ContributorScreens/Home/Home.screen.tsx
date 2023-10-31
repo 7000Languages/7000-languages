@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Text, View, TouchableOpacity, Platform} from 'react-native';
+import {Text, View, TouchableOpacity, Platform, Image, ScrollView} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Feather from 'react-native-vector-icons/Feather';
 import RNFS from 'react-native-fs';
@@ -21,9 +21,13 @@ import { save } from '../../../utils/storage';
 import { setDownloadedUnits } from '../../../redux/slices/unitsSlice';
 import { setDownloadedLessons } from '../../../redux/slices/lessonsSlice';
 import { setDownloadedVocabs } from '../../../redux/slices/vocabsSlice';
-import Unit from '../../../realm/schemas/Unit';
-import Lesson from '../../../realm/schemas/Lesson';
-import Vocab from '../../../realm/schemas/Vocab';
+import CourseUnitItem from "../../../components/CourseUnitLessonItem/CourseUnitLessonItem.component";
+import Course from "../../../realm/schemas/Course";
+import Unit from "../../../realm/schemas/Unit";
+import User from "../../../realm/schemas/User";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const {useRealm, useQuery} = realmContext;
 
@@ -40,6 +44,18 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const downloadedLessons = useAppSelector(state => state.lessons.downloadedLessons);
   const downloadedVocabs = useAppSelector(state => state.vocabs.downloadedVocabs);
 
+  const { useQuery, useObject } = realmContext
+
+  const coursesNavigation = useNavigation<NativeStackNavigationProp<CourseStackParamList>>()
+
+  const userFromRealm = useObject(User, new BSON.ObjectId(user._id))!  
+  const coursesData = useQuery(Course) 
+  const allUnits = useQuery(Unit)
+  let adminCourses = coursesData.filter((course: Course & Realm.Object) => course.admin_id == (user).authID)
+  let learnerCourses = coursesData.filter((course: Course & Realm.Object) => (user).learnerLanguages.includes((course._id.toString())))
+  
+  const goToContributorCourse = (course_id: string) => coursesNavigation.navigate('ContributorCourse', { course_id })
+  const goToLearnerCourse = (course_id: string) => coursesNavigation.navigate('LearnerCourse', { course_id })
   const dispatch = useAppDispatch()
   
   realm.subscriptions.update(subs => {
@@ -425,12 +441,16 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   }, []);
 
   return (
+    
     <View style={styles.container}>
+
+
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
         barStyle={'light-content'}
         showStatusBackground={true}
       />
+      
       <Header
         title="Home"
         headerStyle={{backgroundColor: PRIMARY_COLOR}}
@@ -443,13 +463,35 @@ const Home: React.FC<NavProps> = ({navigation}) => {
           />
         }
       />
+
+
       <View style={styles.content}>
+      <Image style={styles.backgroundImage} source={require("../../../../assets/images/homeBackgroundImage.png")} />
+
         <Text style={styles.welcomeText}>
-          {i18n.t('dict.welcome')}, {userGoogleInfo.givenName}
+          {i18n.t('dict.welcome')}, {userGoogleInfo.givenName}!
         </Text>
         <Text style={styles.learnerText}>
-          {i18n.t('dialogue.notLearnerPrompt')}.
+          {i18n.t('dialogue.notLearnerPrompt')}
         </Text>
+        {
+          learnerCourses.map((course: Course & Realm.Object, index: number)=>{
+            const units = (allUnits).filter((unit:Unit & Realm.Object) => unit._course_id == course._id)
+            return (
+              <CourseUnitItem
+                title={course.details.name}
+                numOfSubItems={units.length}
+                type="course"
+                index={index + 1}
+                backgroundColor="transparent"
+                key={course._id}
+                onPress={()=>goToLearnerCourse(course._id)}
+                section='learner'
+              />
+            )
+          })
+        }
+         
         <PrimaryBtn
           label={i18n.t('actions.searchCourses')}
           onPress={() => navigation.navigate('Search')}
@@ -459,12 +501,32 @@ const Home: React.FC<NavProps> = ({navigation}) => {
         />
         <View style={styles.divider} />
         <Text style={styles.missionStatement}>
-          {i18n.t('dialogue.ourMission')}{' '}
+          {i18n.t('dialogue.thankYou')}{' '}
           <Text
             style={{
               fontWeight: 'bold',
-            }}>{`We’d love to\n support your revitalization efforts.`}</Text>
+            }}>{`\n View and continue editing your course here: `}</Text>
         </Text>
+        {
+          adminCourses.map((course: Course & Realm.Object, index: number)=>{
+            const units = (allUnits).filter((unit: Unit & Realm.Object) => unit._course_id == course._id)
+            console.log(adminCourses);
+            
+            return (
+              <CourseUnitItem
+                title={course.details.name}
+                numOfSubItems={units.length}
+                type="course"
+                index={index + 1}
+                backgroundColor="#F9F9F9"
+                key={course._id}
+                onPress={()=>goToContributorCourse(course._id)}
+                section='contributor'
+              />
+            )
+          })
+        }
+       
         <TouchableOpacity
           onPress={() => navigation.navigate('BecomeContributor')}>
           <Text style={styles.becomeText}>
@@ -472,6 +534,8 @@ const Home: React.FC<NavProps> = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
+
+
     </View>
   );
 };

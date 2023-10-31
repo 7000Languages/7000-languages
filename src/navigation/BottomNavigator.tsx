@@ -16,9 +16,9 @@ const BottomNavigator = () => {
         name="CourseStack"
         component={CourseStack}
         options={{
-          tabBarLabel: "Course",
+          tabBarLabel: "Home",
           tabBarIcon: ({ focused }) => (
-            <Ionicons name="ios-grid" size={24} color={focused ? "black": '#A4A4A4'} />
+            <Ionicons name="home-outline" size={24} color={focused ? "black": '#A4A4A4'} />
           ),
         }}
       />

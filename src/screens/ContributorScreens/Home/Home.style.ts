@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { PRIMARY_COLOR } from "../../../constants/colors";
-import { StatusBarHeight } from "../../../constants/sizes";
+import { DEVICE_HEIGHT, DEVICE_WIDTH,StatusBarHeight } from "../../../constants/sizes";
 
 const styles = StyleSheet.create({
   container: {
@@ -13,19 +13,20 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   welcomeText: {
-    color: "#A4A4A4",
+    color: "#8f8c8c",
     fontWeight: "bold",
     fontSize: 18,
     textAlign: "center",
     alignSelf: "center",
   },
   learnerText: {
-    color: "#A4A4A4",
+    color: "#8f8c8c",
     fontSize: 14,
     textAlign: "center",
     alignSelf: "center",
     marginTop: 5,
   },
+  
   searchBtn: {
     width: 250,
     marginTop: 20,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
   missionStatement: {
     textAlign: 'center',
     alignSelf: 'center',
-    color: '#A4A4A4'
+    color: '#8f8c8c'
   },
   becomeText: {
     color: PRIMARY_COLOR,
@@ -53,7 +54,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 16,
     fontWeight: 'bold'
-  }
+  },
+  backgroundImage: {
+    width: DEVICE_WIDTH,
+    height: DEVICE_HEIGHT,
+    position: 'absolute',
+    top:0,
+    left: 0,
+},
+
+
 });
 
 export default styles;

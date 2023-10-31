@@ -15,7 +15,7 @@ export default {
       confirm: 'Confirm',
       audio: 'Audio',
       activity: 'Activity',
-      welcome: 'Welcome!',
+      welcome: 'Welcome Back',
       searchWelcome: 'Welcome',
       vocabItems: 'Vocabulary Items',
       discard: 'Discard',
@@ -122,6 +122,7 @@ export default {
       next: 'Next'
     },
     dialogue: {
+      thankYou: "Thanks for contributing your language!",
       joinOrStartCourse: 'Join or start a course!',
       invalidCode: 'Invalid code provided for private course',
       activityInstructions:
@@ -148,7 +149,7 @@ export default {
       updateCourse: 'When updating a course, think about how it will be used.',
       updateUnit: 'When updating a unit, think about how it will be used.',
       updateLesson: 'When updating a lesson, think about how it will be used.',
-      notLearnerPrompt: `Looks like you aren't a learner in\n any courses yet.`,
+      notLearnerPrompt: `Looks like you aren't a learner in\n any courses yet!`,
       ourMission:
         `Our mission is to help communities\n teach, learn, and sustain their\n endangered languages.`,
       supportRevitalization: "We'd love to support your revitalization efforts.",

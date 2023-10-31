@@ -5,6 +5,8 @@ import Feather from "react-native-vector-icons/Feather";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Picker } from "@react-native-picker/picker";
 import Modal from "react-native-modal";
+import AntDesign from "react-native-vector-icons/AntDesign";
+
 
 import styles from "./Settings.style";
 
@@ -93,8 +95,16 @@ const Settings: React.FC<NavProps> = ({ navigation }) => {
         statusbarBackgroundColor='#ffffff'
       />
       <Header
-        title="Settings"
+        title="Course Settings" //Renamed Settings to Course Settings 
         headerTitleStyle={{ color: "#000000" }}
+        leftIcon={
+          <AntDesign
+            name="arrowleft"
+            size={24}
+            color="black"
+            onPress={() => navigation.navigate("Home")}
+          />
+        }
       />
       <View style={{ paddingHorizontal: 16, alignSelf: 'center', width: DEVICE_WIDTH }}>
         <Text style={styles.topText}>
