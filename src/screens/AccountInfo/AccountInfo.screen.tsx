@@ -29,13 +29,13 @@ const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
         showStatusBackground={true}
       />
       <Header
-        title="Account Info"
+        title="Settings" //Renamed AccountInfo screen to Settings 
         headerTitleStyle={{ color: "#000000" }}
         leftIcon={
           <AntDesign
             name="arrowleft"
             size={24}
-            color="black"
+            color="white"
             onPress={() => navigation.navigate("BottomNavigator")}
           />
         }
@@ -43,7 +43,7 @@ const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
       <View style={styles.content}>
         <Text style={styles.userInfo}>User Info</Text>
         <Text style={styles.settingText}>
-          Here is the settings for you to manage your app.
+          Manage your profile settings here.
         </Text>
         <TouchableOpacity style={styles.languageTouch} onPress={()=>navigation.navigate('Languages')}>
           <Text style={styles.languageText}>Language</Text>

@@ -11,6 +11,16 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+
+    settingsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        paddingRight: 20,
+        paddingTop: 10
+
+
     }
 });
 

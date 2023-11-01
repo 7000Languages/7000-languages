@@ -15,7 +15,7 @@ export default {
       confirm: 'Confirmer',
       audio: 'Audio',
       activity: 'Activité',
-      welcome: 'Bienvenue !',
+      welcome: 'Bienvenue De Retour',
       searchWelcome: 'Bienvenue',
       vocabItems: 'Éléments de vocabulaire',
       discard: 'Jeter',
@@ -120,6 +120,7 @@ export default {
       next: 'Suivant'
     },
     dialogue: {
+      thankYou: "Merci d'avoir contribué à votre langue !",
       joinOrStartCourse: 'Rejoignez ou commencez un cours!',
       invalidCode: 'Code invalide fourni pour le cours privé',
       activityInstructions:

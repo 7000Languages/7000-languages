@@ -32,7 +32,7 @@ export default class CourseDetails extends Realm.Object {
       location: 'string?',
       link: 'string?',
       is_private: 'bool?',
-      code: { type: 'string?', default: getRandomCode },
+      code: { type: 'string?', default: getRandomCode }
     },
   };
 }

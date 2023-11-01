@@ -15,7 +15,7 @@ export default {
       confirm: 'Confirme',
       audio: 'Audio',
       activity: 'Actividad',
-      welcome: 'Bienvenido!',
+      welcome: 'Bienvenido De Nuevo',
       searchWelcome: 'Bienvenido',
       vocabItems: 'Temas de vocabulario',
       discard: 'Descarte',
@@ -124,6 +124,7 @@ export default {
       next: 'Próximo'
     },
     dialogue: {
+      thankYou: "¡Gracias por contribuir con tu idioma!",
       joinOrStartCourse: 'Inscríbase o inicie un curso',
       invalidCode: 'Código no válido para curso privado',
       activityInstructions:

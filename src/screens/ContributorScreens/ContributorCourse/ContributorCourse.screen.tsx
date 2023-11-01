@@ -3,13 +3,14 @@ import { View, TouchableOpacity } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import styles from './ContributorCourse.style'
-
-import { CourseStackParamList } from '../../../navigation/types'
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { CourseStackParamList,DrawerStackParamList } from '../../../navigation/types'
 import { CourseUnitLessonDesign, CourseUnitLessonItem, FocusAwareStatusBar, Header, AddUnitLessonModal, EditCourseUnitLesson, ManageUnitLessonVocab } from '../../../components'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import { PRIMARY_COLOR } from '../../../constants/colors'
-import { DrawerActions } from '@react-navigation/native'
+import { DrawerActions, useNavigation } from '@react-navigation/native'
 import { realmContext } from '../../../realm/realm'
 import Unit from '../../../realm/schemas/Unit'
 import Lesson from '../../../realm/schemas/Lesson'
@@ -31,10 +32,11 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const { useQuery, useRealm } = realmContext
   const realm = useRealm()
 
-  const units = useQuery(Unit).filter((unit) => unit._course_id == course_id)!
-  const lessons = useQuery(Lesson).filter((lesson) => lesson._course_id == course_id)!
-  const course = useQuery(Course).find((course) => course._id.toString() == course_id)!
-  
+  const units = useQuery(Unit).filter((unit) => unit._course_id == course_id)
+  const lessons = useQuery(Lesson).filter((lesson) => lesson._course_id == course_id)
+  const course = useQuery(Course).find((course) => course._id.toString() == course_id)
+  const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
+
   const goToUnitScreen = (unit_id: string) => {
     navigation.navigate('ContributorUnit', { unit_id })
   }
@@ -77,12 +79,14 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
         course_id={course_id} 
         onCloseModal={() => setEditModal(false)} 
       />
+
       <ManageUnitLessonVocab
         type='unit'
         isModalVisible={manageModal}
         data={units}
         onCloseModal={() => setManageModal(false)}
       />
+      
       <AddUnitLessonModal
         course={course}
         isModalVisible={addUnitModal}
@@ -94,6 +98,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
         barStyle="light-content"
         showStatusBackground
       />
+      
       <Header
         title="Course"
         headerStyle={{ backgroundColor: PRIMARY_COLOR }}
@@ -103,7 +108,12 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
             <Ionicons name="help" size={20} color={PRIMARY_COLOR} />
           </TouchableOpacity>
         }
+        
       />
+      <TouchableOpacity style={[styles.settingsContainer, { backgroundColor: PRIMARY_COLOR }]} onPress={() => drawerNavigation.navigate('Settings', { course})}>
+        <Ionicons name="settings" size={24} color="white" />
+       </TouchableOpacity>
+
       <CourseUnitLessonDesign
         item={course!.details!.name}
         itemDescription={course!.details.description}

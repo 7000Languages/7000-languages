@@ -26,6 +26,7 @@ import Course from "../../realm/schemas/Course";
 import Unit from "../../realm/schemas/Unit";
 import User from "../../realm/schemas/User";
 
+
 const DrawerContent: React.FC = () => {
 
   const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
@@ -59,9 +60,10 @@ const DrawerContent: React.FC = () => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <TouchableOpacity style={styles.learnerContainer}>
+
+        <View style={styles.learnerContainer}>
           <Text style={styles.learnerText}>LEARNER</Text>
-        </TouchableOpacity>
+        </View>
         {
           learnerCourses.map((course: Course & Realm.Object, index: number)=>{
             const units = (allUnits).filter((unit:Unit & Realm.Object) => unit._course_id == course._id)
@@ -81,16 +83,16 @@ const DrawerContent: React.FC = () => {
         }
         <View style={styles.questionContainer}>
           <Text style={styles.learnerQuestion}>
-            Do you want to learn about an indigenous language?
-            <Text style={{ fontWeight: "bold" }}>Start Learning!</Text>
+          Discover Indigenous Languages Today! 
+            <Text style={{ fontWeight: "bold" }}> Let's Start Learning!</Text>
           </Text>
           <TouchableOpacity style={styles.searchCourseBtn} onPress={()=>coursesNavigation.navigate('Search')}>
             <Text style={styles.searchCourseText}>Search Courses</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.contrubutorContainer}>
+        <View style={styles.contrubutorContainer}>
           <Text style={styles.contributorText}>CONTRIBUTOR</Text>
-        </TouchableOpacity>
+        </View>
         {
           adminCourses.map((course) =>{
             const units = (allUnits).filter((unit: Unit & Realm.Object) => unit._course_id == course._id)
@@ -121,10 +123,10 @@ const DrawerContent: React.FC = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.accountInfBtn} onPress={()=>drawerNavigation.navigate('AccountInfo')}>
+      <TouchableOpacity style={styles.accountInfBtn} onPress={()=>drawerNavigation.navigate('AccountInfo')}> 
         <MaterialCommunityIcons name="account" size={24} color="#5B6165" />
-        <Text style={styles.accountInfText}>Account Info</Text>
-      </TouchableOpacity>
+        <Text style={styles.accountInfText}>Account Settings</Text>  
+      </TouchableOpacity> 
     </SafeAreaView>
   );
 };
