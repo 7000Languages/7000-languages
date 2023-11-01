@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
     topText: {
         fontSize: 12,
         marginTop: 18,
-        color: '#A4A4A4'
+        color: '#000000',
+        textAlign: "center"
     },
     privacy: {
         fontSize: 14,
@@ -56,7 +57,7 @@ const styles = StyleSheet.create({
         bottom: 10,
         right: 10,
         fontSize: 20,
-        color: '#A4A4A4'
+        color: '#000000'
     },
     courseModalContainer: {
         width: DEVICE_WIDTH * 0.8,

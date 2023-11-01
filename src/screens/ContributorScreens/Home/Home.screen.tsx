@@ -28,6 +28,8 @@ import User from "../../../realm/schemas/User";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Lesson from '../../../realm/schemas/Lesson';
+import Vocab from '../../../realm/schemas/Vocab';
 
 const {useRealm, useQuery} = realmContext;
 
@@ -38,6 +40,9 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   
   // redux states
   const user: UserType = useAppSelector(state => state.auth.user);
+ 
+  
+  console.log("admin languages", user.adminLanguages);
   const userGoogleInfo = useAppSelector(state => state.auth.userGoogleInfo);
   const {i18n} = useAppSelector(state => state.locale);
   const downloadedUnits = useAppSelector(state => state.units.downloadedUnits);
@@ -443,7 +448,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   return (
     
     <View style={styles.container}>
-
+            <Image style={styles.backgroundImage} source={require("../../../../assets/images/homeBackgroundImage.png")} />
 
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
@@ -451,7 +456,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
         showStatusBackground={true}
       />
       
-      <Header
+         <Header
         title="Home"
         headerStyle={{backgroundColor: PRIMARY_COLOR}}
         leftIcon={
@@ -463,17 +468,30 @@ const Home: React.FC<NavProps> = ({navigation}) => {
           />
         }
       />
+    
+<ScrollView>
+
+    
+
 
 
       <View style={styles.content}>
-      <Image style={styles.backgroundImage} source={require("../../../../assets/images/homeBackgroundImage.png")} />
 
         <Text style={styles.welcomeText}>
           {i18n.t('dict.welcome')}, {userGoogleInfo.givenName}!
         </Text>
+
+        {user.learnerLanguages.length == 0 &&
         <Text style={styles.learnerText}>
           {i18n.t('dialogue.notLearnerPrompt')}
         </Text>
+      }
+        {user.learnerLanguages.length > 0 &&
+        <Text style={styles.learnerText}>
+          {i18n.t('dialogue.yesLearnerPrompt')}
+        </Text>
+      }
+
         {
           learnerCourses.map((course: Course & Realm.Object, index: number)=>{
             const units = (allUnits).filter((unit:Unit & Realm.Object) => unit._course_id == course._id)
@@ -500,13 +518,22 @@ const Home: React.FC<NavProps> = ({navigation}) => {
           leftIcon={<Feather name="search" size={24} color="#ffffff" />}
         />
         <View style={styles.divider} />
-        <Text style={styles.missionStatement}>
-          {i18n.t('dialogue.thankYou')}{' '}
-          <Text
-            style={{
-              fontWeight: 'bold',
-            }}>{`\n View and continue editing your course here: `}</Text>
-        </Text>
+      
+        {adminCourses.length > 0 &&
+       <Text style={styles.missionStatement}>
+       {i18n.t('dialogue.thankYou')}{' '}
+       <Text
+         style={{
+           fontWeight: 'bold',
+         }}>{`\n View and continue editing your course here: `}</Text>
+     </Text>
+      }
+       {adminCourses.length == 0 &&
+       <Text style={styles.missionStatement}>
+       {i18n.t('dialogue.noAdminCourse')}{' '}
+     </Text>
+      }
+
         {
           adminCourses.map((course: Course & Realm.Object, index: number)=>{
             const units = (allUnits).filter((unit: Unit & Realm.Object) => unit._course_id == course._id)
@@ -535,7 +562,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
         </TouchableOpacity>
       </View>
 
-
+      </ScrollView>
     </View>
   );
 };

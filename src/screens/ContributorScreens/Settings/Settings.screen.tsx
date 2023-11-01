@@ -9,6 +9,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 
 
 import styles from "./Settings.style";
+import {realmContext} from '../../../realm/realm';
 
 import { FocusAwareStatusBar, Header } from "../../../components";
 import { DEVICE_WIDTH, StatusBarHeight } from "../../../constants/sizes";
@@ -16,9 +17,14 @@ import { SettingsStackParamList } from "../../../navigation/types";
 
 type NavProps = NativeStackScreenProps<SettingsStackParamList, "Settings">;
 
-const Settings: React.FC<NavProps> = ({ navigation }) => {
+const Settings: React.FC<NavProps> = ({ navigation , route }) => {
+  const {useRealm, useQuery} = realmContext;
 
-  const [privacyStatus, setPrivacyStatus] = useState("public");
+  const realm = useRealm();
+
+  const course = route.params.course;
+  console.log(JSON.stringify(course));
+   const [privacyStatus, setPrivacyStatus] = useState("public");
   const [privacyStatusToSet, setPrivacyStatusToSet] = useState('');
   const [pickerOpen, setPickerOpen] = useState(false);
   const [coursePrivacyModal, setCoursePrivacyModal] = useState(false);
@@ -35,8 +41,13 @@ const Settings: React.FC<NavProps> = ({ navigation }) => {
     }
   }
 
+  
   const changePrivacyStatus = () => {
     // TODO: change privacy statusi in the backend here
+    realm.write(() => {
+      course.details.is_private = !course.details.is_private
+    });
+    
     setPrivacyStatus(privacyStatusToSet);
     setPickerOpen(false);
     setCoursePrivacyModal(false);
@@ -95,20 +106,20 @@ const Settings: React.FC<NavProps> = ({ navigation }) => {
         statusbarBackgroundColor='#ffffff'
       />
       <Header
-        title="Course Settings" //Renamed Settings to Course Settings 
+        title={course.details.name} //Renamed Settings to Course Settings 
         headerTitleStyle={{ color: "#000000" }}
         leftIcon={
           <AntDesign
             name="arrowleft"
             size={24}
             color="black"
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => navigation.goBack()}
           />
         }
       />
       <View style={{ paddingHorizontal: 16, alignSelf: 'center', width: DEVICE_WIDTH }}>
         <Text style={styles.topText}>
-          Here are the Settings for you to manage your own course
+          Edit your course settings here.
         </Text>
         <Text style={styles.privacy}>Privacy</Text>
         <TouchableOpacity
@@ -118,13 +129,13 @@ const Settings: React.FC<NavProps> = ({ navigation }) => {
         >
           <View style={styles.iconAndText}>
             <Feather
-              name={privacyStatus == "private" ? "eye-off" : "eye"}
+              name={course.details.is_private ? "eye-off" : "eye"}
               size={24}
               color="black"
               style={styles.eyeIcon}
             />
             <Text>
-              {privacyStatus.charAt(0).toUpperCase() + privacyStatus.slice(1)}
+              {course.details.is_private ? "Private" : "Public"}
             </Text>
           </View>
           {!pickerOpen ? (
@@ -135,20 +146,21 @@ const Settings: React.FC<NavProps> = ({ navigation }) => {
         </TouchableOpacity>
         {pickerOpen && (
           <Picker
-            selectedValue={privacyStatus}
+            selectedValue={course.details.is_private}
             onValueChange={openPricacyModal}
             itemStyle={{ height: 115 }}
           >
+          
+            <Picker.Item label="Public" value= {false} />
             <Picker.Item
               label="Private"
-              value="private"
+              value= {true}
             />
-            <Picker.Item label="Public" value="public" />
           </Picker>
         )}
         <View style={styles.codeContainer}>
           <Text style={styles.securityCode}>Security Code</Text>
-          <Text style={styles.codeText}>47643</Text>
+          <Text style={styles.codeText}>{course.details.code}</Text>
         </View>
       </View>
       <TouchableOpacity style={styles.deleteTouch} onPress={()=>setDeleteCourseModal(true)}>
@@ -160,3 +172,5 @@ const Settings: React.FC<NavProps> = ({ navigation }) => {
 };
 
 export default Settings;
+
+

@@ -70,7 +70,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
     // }
    
     realm.write(()=>{
-      userToUpdate.learnerLanguages.push(courseToJoin!._id)
+      userToUpdate.learnerLanguages.push(courseToJoin!._id.toString())
     })
 
     // Update user in storage and redux

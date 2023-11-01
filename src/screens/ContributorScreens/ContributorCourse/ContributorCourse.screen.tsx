@@ -110,7 +110,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
         }
         
       />
-      <TouchableOpacity style={[styles.settingsContainer, { backgroundColor: PRIMARY_COLOR }]} onPress={() => drawerNavigation.navigate('Settings')}>
+      <TouchableOpacity style={[styles.settingsContainer, { backgroundColor: PRIMARY_COLOR }]} onPress={() => drawerNavigation.navigate('Settings', { course})}>
         <Ionicons name="settings" size={24} color="white" />
        </TouchableOpacity>
 

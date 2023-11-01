@@ -123,6 +123,7 @@ export default {
     },
     dialogue: {
       thankYou: "Thanks for contributing your language!",
+      noAdminCourse: "Contribute your language today!",
       joinOrStartCourse: 'Join or start a course!',
       invalidCode: 'Invalid code provided for private course',
       activityInstructions:
@@ -150,6 +151,7 @@ export default {
       updateUnit: 'When updating a unit, think about how it will be used.',
       updateLesson: 'When updating a lesson, think about how it will be used.',
       notLearnerPrompt: `Looks like you aren't a learner in\n any courses yet!`,
+      yesLearnerPrompt: 'Continue learning your courses here:',
       ourMission:
         `Our mission is to help communities\n teach, learn, and sustain their\n endangered languages.`,
       supportRevitalization: "We'd love to support your revitalization efforts.",

@@ -8,9 +8,10 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+    
   },
   welcomeText: {
     color: "#8f8c8c",
@@ -18,6 +19,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     alignSelf: "center",
+    marginTop: "20%",
   },
   learnerText: {
     color: "#8f8c8c",
