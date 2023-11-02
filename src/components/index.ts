@@ -22,6 +22,7 @@ import TextToAudioActivity from "./Activities/TextToAudioActivity/TextToAudioAct
 import TextToImageActivity from './Activities/TextToImageActivity/TextToImageActivity.component';
 import TextToTextActivity from './Activities/TextToText/TextToText.component';
 import Help from "./Help/Help.component";
+import AudioToImageActivity from './Activities/AudioToImageActivity/AudioToImageActivity.component';
 
 export {
     PrimaryBtn,
@@ -50,4 +51,5 @@ export {
     TextToAudioActivity,
     TextToImageActivity,
     TextToTextActivity,
+    AudioToImageActivity
 }

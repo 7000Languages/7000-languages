@@ -9,7 +9,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { CourseStackParamList } from '../../../navigation/types';
-import { AudioToTextActivity, FocusAwareStatusBar, Header, TextToImageActivity, TextToTextActivity } from '../../../components';
+import { AudioToImageActivity, AudioToTextActivity, FocusAwareStatusBar, Header, TextToImageActivity, TextToTextActivity } from '../../../components';
 import { SECONDARY_COLOR } from '../../../constants/colors';
 import { ActivityType, } from '../../../@types';
 import { TextToAudioActivity } from '../../../components';
@@ -25,24 +25,22 @@ const Activity: React.FC<NavProps> = ({ navigation, route }) => {
 
   const { lesson, activityType } = route.params
 
-  const [curtentActivityType, setCurentActivityType] = useState<ActivityType | string>('audio-to-text')
+  const [currentActivityType, setCurentActivityType] = useState<ActivityType | string>('audio-to-text')
 
   const activityLevels = useQuery('activityLevels').filtered("_lesson_id = $0", lesson._id.toString())
   const activities = useQuery(ActivityFromRealm);
-  const currentActivity = activities.find(activity => activity.type == activityType)  
+  const currentActivity = activities.find(activity => activity.type == activityType)
 
   const audioToTextActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'audio-to-text') as any)?._id.toString() === activityLevel._activity_id);
-  const TextToAudioActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-audio') as any)?._id.toString() === activityLevel._activity_id);
-  const TextToImageActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-image') as any)?._id.toString() === activityLevel._activity_id);
-  const TextToTextActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-text') as any)?._id.toString() === activityLevel._activity_id);
+  const textToAudioActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-audio') as any)?._id.toString() === activityLevel._activity_id);
+  const textToImageActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-image') as any)?._id.toString() === activityLevel._activity_id);
+  const textToTextActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-text') as any)?._id.toString() === activityLevel._activity_id);
+  const audioToImageActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'audio-to-image') as any)?._id.toString() === activityLevel._activity_id);
 
   const goToNextActivity = (type: ActivityType | 'completed') => {
     setCurentActivityType(type);
     navigation.navigate('StartActivity', { lesson, activityType: type })
   }
-
-  console.log("TextToImageActivities", TextToTextActivities);
-  
 
   useEffect(() => {
     activityType && setCurentActivityType(activityType!)
@@ -66,43 +64,52 @@ const Activity: React.FC<NavProps> = ({ navigation, route }) => {
             onPress={() =>
               navigation.navigate('StartActivity', {
                 lesson,
-                activityType: curtentActivityType,
+                activityType: currentActivityType,
               })
             }
           />
         }
       />
-      
-      {curtentActivityType == 'audio-to-text' &&
+      {currentActivityType == 'audio-to-text' &&
         audioToTextActivities.length > 0 ? (
         <AudioToTextActivity
           activityLevels={convertToArrayOfPlainObject(audioToTextActivities)}
           goToNextActivity={type => goToNextActivity(type)}
         />
-      ) : curtentActivityType == 'text-to-audio' &&
-        TextToAudioActivities.length > 0 ? (
+      ) : currentActivityType == 'text-to-audio' &&
+        textToAudioActivities.length > 0 ? (
         <TextToAudioActivity
-          activityLevels={convertToArrayOfPlainObject(TextToAudioActivities)}
+          activityLevels={convertToArrayOfPlainObject(textToAudioActivities)}
           goToNextActivity={type => goToNextActivity(type)}
         />
-      ) : curtentActivityType == 'text-to-image' &&
-        TextToImageActivities.length > 0 ? (
+      ) : currentActivityType == 'text-to-image' &&
+        textToImageActivities.length > 0 ? (
         <TextToImageActivity
-          activityLevels={convertToArrayOfPlainObject(TextToImageActivities)}
+          activityLevels={convertToArrayOfPlainObject(textToImageActivities)}
           goToNextActivity={type => goToNextActivity(type)}
         />
       ) :
-        curtentActivityType == 'text-to-text' &&
-          TextToImageActivities.length > 0 ?
+        currentActivityType == 'text-to-text' &&
+          textToTextActivities.length > 0 ?
           (
             <TextToTextActivity
-              activityLevels={convertToArrayOfPlainObject(TextToTextActivities)}
+              activityLevels={convertToArrayOfPlainObject(textToTextActivities)}
               goToNextActivity={type => goToNextActivity(type)}
             />
-          ) :
-          <View style={styles.noActivityContainer}>
-            <Text>No activities for this lesson</Text>
-          </View>
+          )
+          :
+          currentActivityType == 'audio-to-image' &&
+            audioToImageActivities.length > 0 ?
+            (
+              <AudioToImageActivity
+                activityLevels={convertToArrayOfPlainObject(audioToImageActivities)}
+                goToNextActivity={type => goToNextActivity(type)}
+              />
+            )
+            :
+            <View style={styles.noActivityContainer}>
+              <Text>No activities for this lesson</Text>
+            </View>
       }
       
     </View>

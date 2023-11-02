@@ -110,7 +110,7 @@ export type UserGoogleInfoType = {
   photo: string;
 };
 
-export type ActivityType = 'audio-to-text' | 'text-to-audio' | 'text-to-image' | 'text-to-text';
+export type ActivityType = 'audio-to-text' | 'text-to-audio' | 'text-to-image' | 'text-to-text' | 'audio-to-image';
 
 export type Activity = {
     _id: string
@@ -137,7 +137,7 @@ export type ActivityLevelType = {
   text_for_images: {text: string, correct_image_option: string};
   image_options: string[];
 
-  audio_for_images: {text: string, correct_image_option: string};
+  audio_for_images: {audio: string, correct_image_option: string};
   image_options_for_audio: string[];
 
   words_to_match: {original: string; translation: string}[];
