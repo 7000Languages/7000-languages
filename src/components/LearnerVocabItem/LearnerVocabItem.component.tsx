@@ -1,9 +1,10 @@
-import {View, Text, Image, TouchableOpacity, ScrollView, Platform, Alert} from 'react-native';
-import React, {useEffect, useMemo, useState} from 'react';
+import { View, Text, Image, TouchableOpacity, ScrollView, Platform, Alert } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
 import RNFS from 'react-native-fs';
 import Sound from 'react-native-sound';
 import styles from './LearnerVocabItem.style';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ZoomImageModal from '../ZoomImageModal/ZoomImageModal.component';
 
 type IProps = {
   audio: string;
@@ -24,6 +25,8 @@ const LearnerVocabItem: React.FC<IProps> = ({
   const [image, setImage] = useState('');
   const [audio, setAudio] = useState('');
   const [playing, setPlaying] = useState(false);
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [imagesToShow, setImagesToShow] = useState<{ url: string }[]>([]);
 
   let baseDirectory = RNFS.DocumentDirectoryPath;
 
@@ -77,6 +80,17 @@ const LearnerVocabItem: React.FC<IProps> = ({
     }
   };
 
+  const onImagePress = () => {
+    let imagesToShow = [{ url: Platform.OS === 'ios' ? image : `file://${image}` }]
+    setImagesToShow(imagesToShow)
+    setShowImageModal(true)
+  }
+
+  const closeImageModal = () => {
+    setShowImageModal(false)
+  }
+
+
   useEffect(() => {
     localImagePath ? getImage() : null;
     localAudioPath.length > 0 ? getAudio() : null;
@@ -84,6 +98,7 @@ const LearnerVocabItem: React.FC<IProps> = ({
 
   return (
     <View style={styles.container}>
+      <ZoomImageModal onCloseImageModal={closeImageModal} images={imagesToShow} showImageModal={showImageModal} />
       <View style={styles.textsContainer}>
         <Text style={styles.original}>{original}</Text>
         <Text style={styles.translation}>{translation}</Text>
@@ -94,12 +109,18 @@ const LearnerVocabItem: React.FC<IProps> = ({
           style={styles.notesContainer}>
           <Text style={styles.notes}>{notes}</Text>
         </ScrollView>
-        <Image
-          source={{
-            uri: Platform.OS === 'ios' ? image : `file://${image}`,
-          }}
-          style={styles.image}
-        />
+        {
+          image.length > 0
+          &&
+          <TouchableOpacity onPress={onImagePress} style={styles.imageContainer}>
+            <Image
+              source={{
+                uri: Platform.OS === 'ios' ? image : `file://${image}`,
+              }}
+              style={styles.image}
+            />
+          </TouchableOpacity>
+        }
       </View>
       <TouchableOpacity onPress={playPause} style={styles.playAudioBtn}>
         <Text style={styles.playAudioText}>Play audio</Text>

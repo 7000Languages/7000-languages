@@ -23,6 +23,7 @@ import TextToImageActivity from './Activities/TextToImageActivity/TextToImageAct
 import TextToTextActivity from './Activities/TextToText/TextToText.component';
 import Help from "./Help/Help.component";
 import AudioToImageActivity from './Activities/AudioToImageActivity/AudioToImageActivity.component';
+import ZoomImageModal from "./ZoomImageModal/ZoomImageModal.component";
 
 export {
     PrimaryBtn,
@@ -45,6 +46,7 @@ export {
     AudioRecordBox,
     CustomSlider,
     Help,
+    ZoomImageModal,
 
     // activities
     AudioToTextActivity,
