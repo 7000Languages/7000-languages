@@ -21,6 +21,12 @@ const initialState: InitialStateType = {
     adminLanguages: [],
     learnerLanguages: [],
     collaboratorLanguages: [],
+    name: '',
+    email: '',
+    phone: '',
+    avatar: '',
+    created_at: new Date,
+    updated_at: new Date
   },
   userGoogleInfo: {
     email: '',

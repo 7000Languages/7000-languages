@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: StatusBarHeight! + 20,
     alignSelf: "center",
+    width: '92%',
+    overflow: 'hidden',
+
   },
   progressItem: {
     flexDirection: "row",
@@ -25,7 +28,7 @@ const styles = StyleSheet.create({
     borderColor: '#496277'
   },
   rectangular: {
-    width: 33,
+    width: 23,
     height: 6,
   },
   number: {

@@ -137,6 +137,9 @@ export type ActivityLevelType = {
   text_for_images: {text: string, correct_image_option: string};
   image_options: string[];
 
+  audio_for_images: {text: string, correct_image_option: string};
+  image_options_for_audio: string[];
+
   words_to_match: {original: string; translation: string}[];
 };
 
