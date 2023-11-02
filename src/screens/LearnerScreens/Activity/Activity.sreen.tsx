@@ -41,6 +41,9 @@ const Activity: React.FC<NavProps> = ({ navigation, route }) => {
     navigation.navigate('StartActivity', { lesson, activityType: type })
   }
 
+  console.log("TextToImageActivities", TextToTextActivities);
+  
+
   useEffect(() => {
     activityType && setCurentActivityType(activityType!)
   }, []);
