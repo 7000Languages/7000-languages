@@ -22,6 +22,7 @@ import TextToAudioActivity from "./Activities/TextToAudioActivity/TextToAudioAct
 import TextToImageActivity from './Activities/TextToImageActivity/TextToImageActivity.component';
 import TextToTextActivity from './Activities/TextToText/TextToText.component';
 import AudioToImageActivity from './Activities/AudioToImageActivity/AudioToImageActivity.component';
+import ZoomImageModal from "./ZoomImageModal/ZoomImageModal.component";
 
 export {
     PrimaryBtn,
@@ -43,6 +44,7 @@ export {
     ActivityProgressIndicator,
     AudioRecordBox,
     CustomSlider,
+    ZoomImageModal,
 
     // activities
     AudioToTextActivity,

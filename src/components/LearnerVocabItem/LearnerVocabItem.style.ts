@@ -24,10 +24,16 @@ const styles = StyleSheet.create({
         fontSize: 20
     },
     image: {
-        width: '50%',
+        width: '100%',
+        height: '100%', 
+    },
+    imageContainer: {
+        // width: '50%',
         height: '100%',
         borderRadius: 4,
-        marginLeft: 5
+        marginLeft: 5,
+        overflow: 'hidden',
+        flex: 1
     },
     textAndImage: {
         flexDirection: 'row',
@@ -61,8 +67,9 @@ const styles = StyleSheet.create({
         marginTop: -3
     },
     notesContainer: {
-        width: '10%',
         height: '90%',
+        flex: 1,
+        alignSelf: 'center',
     }
 })
 

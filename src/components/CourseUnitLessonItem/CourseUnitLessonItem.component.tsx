@@ -1,5 +1,5 @@
-import {View, Text, TouchableOpacity, Image, Platform} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import { View, Text, TouchableOpacity, Image, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from "react-native-gesture-handler";
 import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring, withTiming } from "react-native-reanimated";
 import Entypo from 'react-native-vector-icons/Entypo';
@@ -7,9 +7,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styles from './CourseUnitLessonItem.style';
-import {PRIMARY_COLOR, SECONDARY_COLOR} from '../../constants/colors';
+import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../constants/colors';
 import RNFS from 'react-native-fs';
 import { DEVICE_WIDTH } from '../../constants/sizes';
+import ZoomImageModal from '../ZoomImageModal/ZoomImageModal.component';
 
 interface IProps {
   title: string;
@@ -49,6 +50,8 @@ const CourseUnitLessonItem: React.FC<IProps> = ({
   const progressBorderWidth = progress == 'in_progress' ? 2 : 0;
 
   const [image, setImage] = useState('');
+  const [showImageModal, setShowImageModal] = useState(false);
+  const [imagesToShow, setImagesToShow] = useState<{ url: string }[]>([]);
 
   let baseDirectory = RNFS.DocumentDirectoryPath
 
@@ -102,34 +105,46 @@ const CourseUnitLessonItem: React.FC<IProps> = ({
     ]
   }))
 
+  const onImagePress = () => {
+    let imagesToShow = [{ url:  Platform.OS === 'ios' ? image : `file://${image}`}]
+    setImagesToShow(imagesToShow)
+    setShowImageModal(true)
+  }
+
+  const closeImageModal = () => {
+    setShowImageModal(false)
+  }
+
   useEffect(() => {
     localImagePath ? getImage() : null;
   }, []);
 
   return (
     <>
-       <PanGestureHandler
-        onGestureEvent={ section == 'contributor' ? panGesture : undefined}
+      <ZoomImageModal onCloseImageModal={closeImageModal} images={imagesToShow} showImageModal={showImageModal} />
+      <PanGestureHandler
+        onGestureEvent={section == 'contributor' ? panGesture : undefined}
         failOffsetY={[-5, 5]}
         activeOffsetX={[-5, 5]}
       >
         <Animated.View style={[styles.container, rStyle]}>
-          <TouchableOpacity
-            style={[styles.container, {backgroundColor}]}
-            onPress={onPress}
-            activeOpacity={onPress !== undefined ? 0.5 : 0.7}
-            >
-            <View
+          <View
+            style={[styles.container, { backgroundColor }]}
+
+          >
+            <TouchableOpacity
               style={[
                 styles.numberContainer,
-                {backgroundColor: section == 'learner' ? '#DEE5E9' : '#FBEAE9'},
-              ]}>
+                { backgroundColor: section == 'learner' ? '#DEE5E9' : '#FBEAE9' },
+              ]}
+              onPress={onImagePress}
+              >
               {image && image.length > 0 ? (
                 <Image
                   source={{
                     uri: Platform.OS === 'ios' ? image : `file://${image}`,
                   }}
-                  style={{height: '100%', width: '100%'}}
+                  style={{ height: '100%', width: '100%' }}
                 />
               ) : (
                 <>
@@ -153,9 +168,13 @@ const CourseUnitLessonItem: React.FC<IProps> = ({
                   )}
                 </>
               )}
-            </View>
+            </TouchableOpacity>
 
-            <View style={styles.textsContainer}>
+            <TouchableOpacity
+              style={styles.textsContainer}
+              onPress={onPress}
+              activeOpacity={onPress !== undefined ? 0.5 : 0.7}
+            >
               <Text numberOfLines={1} style={styles.title}>
                 {title}
               </Text>
@@ -174,24 +193,24 @@ const CourseUnitLessonItem: React.FC<IProps> = ({
                 />
                 <Text style={styles.progressText}>{courseProgress}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
             <Entypo
               name="chevron-thin-right"
               size={21}
               color="black"
               style={styles.icon}
             />
-          </TouchableOpacity>
+          </View>
         </Animated.View>
       </PanGestureHandler>
       <Animated.View style={[styles.iconsContainer, rIconsContainerStyle]}>
         <TouchableOpacity style={styles.iconView}>
           {
             !hidden
-            ?
-            <Ionicons name="md-archive" size={30} color="#778ca3" onPress={onArchivePress} />
-            :
-            <MaterialCommunityIcons name="archive-cancel" size={30} color="#778ca3" onPress={onArchivePress} />
+              ?
+              <Ionicons name="md-archive" size={30} color="#778ca3" onPress={onArchivePress} />
+              :
+              <MaterialCommunityIcons name="archive-cancel" size={30} color="#778ca3" onPress={onArchivePress} />
           }
         </TouchableOpacity>
       </Animated.View>
