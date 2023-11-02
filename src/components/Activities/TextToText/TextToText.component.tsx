@@ -23,7 +23,7 @@ import { setUser } from '../../../redux/slices/authSlice';
   
   type IProps = {
     activityLevels: ActivityLevelType[];
-    goToNextActivity: (type: ActivityType| 'completed') => void;
+    goToNextActivity: (type: ActivityType) => void;
   };
   
   const colors = [
@@ -110,7 +110,7 @@ import { setUser } from '../../../redux/slices/authSlice';
             resetStates()
           } else {
             //go to the next activity
-            goToNextActivity('completed')
+            goToNextActivity('audio-to-image')
             return;
           }
         }, 1000);
@@ -182,7 +182,6 @@ import { setUser } from '../../../redux/slices/authSlice';
 
     useEffect(() => {
       setCurrentActivityLevelIndex(0)
-      activityLevels.length == 0 ? goToNextActivity('completed') : null
     }, []);
     
     let matchingCompleted = currentActivityLevel ? (matches.length === currentActivityLevel.words_to_match.length) : false

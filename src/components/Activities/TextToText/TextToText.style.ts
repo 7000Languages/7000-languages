@@ -87,7 +87,9 @@ const styles = StyleSheet.create({
   },
   word: {
     color: '#1C1C1C',
-    fontSize: 16
+    fontSize: 16,
+    textAlign: 'center',
+    width: '80%'
   }
 });
 

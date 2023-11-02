@@ -22,7 +22,7 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
   console.log(activityType);
 
   const activities: Activity[] = convertToArrayOfPlainObject(useQuery('activities') as any)
-  const activityTypes = activities.sort((a,b)=> (a.order - b.order) ).map((activity:any) => activity.type);
+  const activityTypes = activities.sort((a, b) => (a.order - b.order)).map((activity: any) => activity.type);
 
   const [currentActivityType, setCurrentActivityType] = useState(
     activityType ?? activityTypes[0],
@@ -38,7 +38,7 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
   useEffect(() => {
     activityType && setCurrentActivityType(activityType)
   }, [activityType]);
-  
+
   const currentActivityTypeIndex = activityTypes.indexOf(currentActivityType);
 
   return (
@@ -50,8 +50,8 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
       />
       <Header
         title={lesson.name}
-        headerTitleStyle={{color: '#FFFFFF', fontSize: 18}}
-        headerStyle={{backgroundColor: SECONDARY_COLOR}}
+        headerTitleStyle={{ color: '#FFFFFF', fontSize: 18 }}
+        headerStyle={{ backgroundColor: SECONDARY_COLOR }}
         leftIcon={
           <AntDesign
             name="arrowleft"
@@ -68,22 +68,22 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
       <ActivityProgressIndicator activities={activities} currentActivityType={currentActivityType} />
       {
         currentActivityType == 'completed' ?
-        <View style={styles.starsAndCongratulation}>
-          <Image source={require('../../../../assets/images/stars.png')} style={styles.image} />
-          <Text style={styles.congratulationsText}>Congratulations</Text>
-          <Text style={styles.youHaveAcedText}>You have aced this lesson!</Text>
-        </View>
-        :
-      <View style={styles.activityCard}>
-        <Text style={styles.activityTitle}>{activities[currentActivityTypeIndex].title}</Text>
-        <View style={styles.numberContainer}>
-          <Text style={styles.number}>{currentActivityTypeIndex + 1}</Text>
-        </View>
-        <Text style={styles.activity}>Matching {activities[currentActivityTypeIndex].type.split('-').join(' ')}</Text>
-        <Text style={styles.activityDescription}>
-          Instructions: {activities[currentActivityTypeIndex].instructions}
-        </Text>
-      </View>
+          <View style={styles.starsAndCongratulation}>
+            <Image source={require('../../../../assets/images/stars.png')} style={styles.image} />
+            <Text style={styles.congratulationsText}>Congratulations</Text>
+            <Text style={styles.youHaveAcedText}>You have aced this lesson!</Text>
+          </View>
+          :
+          <View style={styles.activityCard}>
+            <Text style={styles.activityTitle}>{activities[currentActivityTypeIndex].title}</Text>
+            <View style={styles.numberContainer}>
+              <Text style={styles.number}>{currentActivityTypeIndex + 1}</Text>
+            </View>
+            <Text style={styles.activity}>Matching {activities[currentActivityTypeIndex].type.split('-').join(' ')}</Text>
+            <Text style={styles.activityDescription}>
+              Instructions: {activities[currentActivityTypeIndex].instructions}
+            </Text>
+          </View>
       }
       {
         currentActivityType !== 'completed'

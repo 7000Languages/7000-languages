@@ -13,9 +13,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F9F9",
     alignSelf: "center",
     marginTop: 20,
-    height: DEVICE_HEIGHT * (Platform.OS == 'android' ? 0.5 : 0.45),
+    maxHeight: DEVICE_HEIGHT * 0.5,
+    
     paddingHorizontal: 10,
-    paddingBottom: 10
+    paddingBottom: 30
   },
   activityTitle: {
     alignSelf: "center",
