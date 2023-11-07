@@ -114,7 +114,7 @@ const DrawerContent: React.FC = () => {
         }
         <View style={styles.applyContainer}>
           <Text style={styles.learnerQuestion}>
-            Do you know an indigenous language that you would like to share with
+            Do you know an Indigenous language that you would like to share with
             the world?
             <Text style={{ fontWeight: "bold" }}> Become a contributor.</Text>
           </Text>

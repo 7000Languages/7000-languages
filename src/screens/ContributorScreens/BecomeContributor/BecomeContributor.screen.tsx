@@ -194,7 +194,7 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
             <Text style={styles.contributorText}>Become a Contributor</Text>
           </View>
           <Text style={styles.thanksText}>
-            Thanks for your interest in becoming a contributor
+            Thanks for your interest in becoming a contributor.
           </Text>
           <Text
             style={styles.hopeText}
@@ -213,7 +213,7 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
             autoCapitalize='none'
           />
           <CustomInput
-            label="Name of language*"
+            label="Name of Language*"
             value={languageName}
             errorText={languageNameError}
             onChangeText={(text: string) => setLanguageName(text)}
@@ -239,19 +239,19 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
             textArea
           />
           <CustomInput
-            label="ISO code"
+            label="ISO Code"
             subLabel="You can find the ISO code here."
             value={isoCode}
             onChangeText={(text: string) => setIsoCode(text)}
           />
           <CustomInput
-            label="Glotto code"
-            subLabel="Find your Glotto code here."
+            label="Glotto Code"
+            subLabel="You can find the Glotto code here."
             value={glottoCode}
             onChangeText={(text: string) => setGlottoCode(text)}
           />
           <CustomInput
-            label="Where is this language spoken ?"
+            label="Where is this language spoken?"
             value={location}
             onChangeText={(text: string) => setLocation(text)}
             textArea

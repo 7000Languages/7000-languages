@@ -49,7 +49,7 @@ const Languages:React.FC<NavProps> = ({ navigation }) => {
       <ScrollView>
         {locales.map((locale, index) => (
           <Language
-            language={i18n.t(`locales.${locale}`)}
+            language={i18n.t(`localesTranslated.${locale}`)}
             translation={i18n.t(`locales.${locale}`)}
             key={index}
             onPress={()=>selectLanguage(locale)}

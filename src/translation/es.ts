@@ -125,6 +125,8 @@ export default {
     },
     dialogue: {
       thankYou: "¡Gracias por contribuir con tu idioma!",
+      noAdminCourse: "¡Contribuye con tu idioma hoy!",
+      continueEditing: 'Vea y continúe editando su curso aquí:',
       joinOrStartCourse: 'Inscríbase o inicie un curso',
       invalidCode: 'Código no válido para curso privado',
       activityInstructions:
@@ -151,6 +153,7 @@ export default {
       updateUnit: 'Al actualizar una unidad, piense en cómo se va a utilizar.',
       updateLesson: 'Al actualizar una lección, piense en cómo se utilizará.',
       notLearnerPrompt: 'Parece que aún no eres alumno de ningún curso.',
+      yesLearnerPrompt: '¿Listo para aprender? Vuelva a uno de sus cursos:',
       ourMission:
         'Nuestra misión es ayudar a las comunidades a enseñar, aprender y mantener sus lenguas en peligro.',
       supportRevitalization:
@@ -171,7 +174,7 @@ export default {
       applicationSuccess: 'Ha enviado correctamente su solicitud!',
       contributorThanks: 'Gracias por su interés en contribuir con una lengua.',
       applicationFeedback:
-        'Esperamos que esta aplicación apoye sus esfuerzos de revitalización lingüística. Tenemos algunas preguntas que hacerle antes de aprobar y crear su curso. Si se aprueba, su curso aparecerá en su página de inicio.',
+        'Esperamos que esta aplicación apoye sus esfuerzos de revitalización lingüística. Tenemos algunas preguntas que hacerle antes de aprobar y crear su curso. Cuando se apruebe, su curso aparecerá en su página de inicio.',
       languageDescriptionPrompt:
         'Proporcione una descripción de 1-2 frases de su lengua y/o cultura. Esto se mostrará a los alumnos en este curso.',
       teachingLanguagePrompt: 'Usted imparte su curso en esta lengua elegida.',
@@ -232,6 +235,11 @@ export default {
     locales: {
       en: 'Inglais',
       fr: 'Francais',
+      es: 'Español'
+    },
+    localesTranslated: {
+      en: 'English',
+      fr: 'Français',
       es: 'Español'
     }
   }

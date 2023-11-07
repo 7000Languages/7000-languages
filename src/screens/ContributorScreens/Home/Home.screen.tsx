@@ -519,15 +519,15 @@ const Home: React.FC<NavProps> = ({navigation}) => {
         />
         <View style={styles.divider} />
       
-        {adminCourses.length > 0 &&
-       <Text style={styles.missionStatement}>
-       {i18n.t('dialogue.thankYou')}{' '}
-       <Text
-         style={{
-           fontWeight: 'bold',
-         }}>{`\n View and continue editing your course here: `}</Text>
-     </Text>
-      }
+        {adminCourses.length > 0 && (
+  <Text style={styles.missionStatement}>
+    {i18n.t('dialogue.thankYou')}{' '}
+    {'\n'} 
+    <Text style={{ fontWeight: 'bold' }}>
+      {i18n.t('dialogue.continueEditing')}
+    </Text>
+  </Text>
+)}
        {adminCourses.length == 0 &&
        <Text style={styles.missionStatement}>
        {i18n.t('dialogue.noAdminCourse')}{' '}
