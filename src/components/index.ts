@@ -21,6 +21,7 @@ import AudioToTextActivity from "./Activities/AudioToTextActivity/AudioToTextAct
 import TextToAudioActivity from "./Activities/TextToAudioActivity/TextToAudioActivity.component";
 import TextToImageActivity from './Activities/TextToImageActivity/TextToImageActivity.component';
 import TextToTextActivity from './Activities/TextToText/TextToText.component';
+import Help from "./Help/Help.component";
 
 export {
     PrimaryBtn,
@@ -42,6 +43,7 @@ export {
     ActivityProgressIndicator,
     AudioRecordBox,
     CustomSlider,
+    Help,
 
     // activities
     AudioToTextActivity,
