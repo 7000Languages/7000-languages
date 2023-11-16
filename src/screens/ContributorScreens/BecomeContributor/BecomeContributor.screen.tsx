@@ -13,7 +13,6 @@ import { CheckBoxText, CustomInput, FocusAwareStatusBar, PrimaryBtn } from "../.
 import { CourseStackParamList } from "../../../navigation/types";
 import { realmContext } from "../../../realm/realm";
 import { RootState, useAppSelector } from "../../../redux/store";
-import course_confirmation from '../../../emailTemplates/course_confirmation'
 import { CourseType } from "../../../@types";
 import Course from "../../../realm/schemas/Course";
 
@@ -132,7 +131,7 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
           population: numOfSpeakers,
           location,
           link,
-          is_private: false,
+          is_private: true,
           code: isoCode,
         }
       })
@@ -147,28 +146,6 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
 
     resetStates()
     
-    // send email about new course to be approved or rejected
-    user?.functions.sendEmail(
-      `"${name}" <${email}>`,
-      'app@7000.org',
-      "7000Languages: Pending Course Approval",
-      course_confirmation,
-      {
-        id: newCourse._id,
-        admin_name: name,
-        admin_email: email,
-        name: languageName,
-        alternative_name: alternativeNames,
-        description: description,
-        translated_language: teachingLanguage,
-        iso: isoCode,
-        glotto: glottoCode,
-        location: location,
-        population: numOfSpeakers,
-        link: link,
-        base_url: 'https://us-east-1.aws.data.mongodb-api.com/app/7000languagesrealm-xfsrn/endpoint'
-      },
-    )
   }
 
   useEffect(() => {    

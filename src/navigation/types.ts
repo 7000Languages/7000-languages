@@ -1,4 +1,5 @@
 import { ActivityType, CourseType, LessonType, UnitType } from "../@types"
+import Course from "../realm/schemas/Course"
 
 export type RootStackParamList = {
     Splash: undefined
@@ -44,9 +45,11 @@ export type CourseStackParamList = {
 export type DrawerStackParamList = {
     BottomNavigator: undefined
     AccountInfo: undefined
-    Settings: undefined
+    Settings: {
+        course: Course
+    }
     Languages: undefined
-}
+}   
 
 export type SettingsStackParamList = {
     Settings: undefined
