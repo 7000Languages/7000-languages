@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, Pressable } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import styles from './ContributorCourse.style'
@@ -34,7 +34,8 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
   const units = useQuery(Unit).filter((unit) => unit._course_id == course_id)
   const lessons = useQuery(Lesson).filter((lesson) => lesson._course_id == course_id)
-  const course = useQuery(Course).find((course) => course._id.toString() == course_id)
+  const course = useQuery(Course).find((course) => course._id.toString() == course_id)!
+  
   const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
 
   const [helpModalVisible, setHelpModalVisible] = useState(false);
@@ -128,10 +129,9 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
         }
         
       />
-      <TouchableOpacity style={[styles.settingsContainer, { backgroundColor: PRIMARY_COLOR }]} onPress={() => drawerNavigation.navigate('Settings', { course})}>
+      <Pressable style={[styles.settingsContainer, { backgroundColor: PRIMARY_COLOR }]} onPress={() => drawerNavigation.navigate('Settings', { course})}>
         <Ionicons name="settings" size={24} color="white" />
-       </TouchableOpacity>
-
+       </Pressable>
       <CourseUnitLessonDesign
         item={course!.details!.name}
         itemDescription={course!.details.description}
