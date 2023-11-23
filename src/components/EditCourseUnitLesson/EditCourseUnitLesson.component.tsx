@@ -178,7 +178,7 @@ const EditCourseUnitLesson: React.FC<IProps> = ({ isModalVisible, type, onCloseM
         //     height: 400,
         //     cropping: true,
         // }).then(image => {
-        //     console.log(image);
+        //     //console.log(image);
         // });
     };
 

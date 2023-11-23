@@ -53,9 +53,9 @@ export const requestCameraPermission = async () => {
       }
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log("Camera permission given");
+      //console.log("Camera permission given");
     } else {
-      console.log("Camera permission denied");
+      //console.log("Camera permission denied");
     }
   } catch (err) {
     console.warn(err);
@@ -78,9 +78,9 @@ export const requestAudioRecordPermission = async () => {
         grants['android.permission.RECORD_AUDIO'] ===
           PermissionsAndroid.RESULTS.GRANTED
       ) {
-        console.log('Permissions granted');
+        //console.log('Permissions granted');
       } else {
-        console.log('All required permissions not granted');
+        //console.log('All required permissions not granted');
         return;
       }
     } catch (err) {
@@ -93,11 +93,11 @@ export const requestAudioRecordPermission = async () => {
 export const deleteLocalFile = async (path: string) => {
   RNFS.unlink(path)
   .then(() => {
-    console.log('FILE DELETED');
+    //console.log('FILE DELETED');
   })
   // `unlink` will throw an error, if the item to unlink does not exist
   .catch((err) => {
-    console.log(err.message);
+    //console.log(err.message);
   });
 }
 

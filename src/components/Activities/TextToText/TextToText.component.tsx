@@ -128,7 +128,7 @@ import { setUser } from '../../../redux/slices/authSlice';
     const addToMatches = (originalOrTranslation: string, section: string) => {
       let newMatch = currentMatch
       let selectedColor = colorsToSelect.filter(col => colorsToSelect.indexOf(col) == 0)[0] //Get the first color
-      console.log(originalOrTranslation);
+      //console.log(originalOrTranslation);
       // return
       setSelectedOptions([...selectedOptions, originalOrTranslation]);
       newMatch[section] = originalOrTranslation;
@@ -144,7 +144,7 @@ import { setUser } from '../../../redux/slices/authSlice';
       if(Object.keys(newMatch).length === 3 ){
         let newMatches: any = []
         newMatches = [...matches, newMatch ]
-        // console.log(newMatches);
+        // //console.log(newMatches);
         setMatches(newMatches)
         setCurrentMatch({});
         let remainingColors = colorsToSelect.filter(col => colorsToSelect.indexOf(col) !== 0)

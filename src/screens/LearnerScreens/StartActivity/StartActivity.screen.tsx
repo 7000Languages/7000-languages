@@ -19,7 +19,7 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
 
   const { lesson, activityType } = route.params
 
-  console.log(activityType);
+  //console.log(activityType);
 
   const activities: Activity[] = convertToArrayOfPlainObject(useQuery('activities') as any)
   const activityTypes = activities.sort((a, b) => (a.order - b.order)).map((activity: any) => activity.type);
@@ -40,6 +40,12 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
   }, [activityType]);
 
   const currentActivityTypeIndex = activityTypes.indexOf(currentActivityType);
+
+  const changeActivityType = (activity: Activity) => {
+    //console.log(activity);
+    // return
+    setCurrentActivityType(activity.type)
+  }
 
   return (
     <View style={styles.container}>
@@ -65,7 +71,7 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
           />
         }
       />
-      <ActivityProgressIndicator activities={activities} currentActivityType={currentActivityType} />
+      <ActivityProgressIndicator onCirclePress={(item)=>changeActivityType(item)} activities={activities} currentActivityType={currentActivityType} />
       {
         currentActivityType == 'completed' ?
           <View style={styles.starsAndCongratulation}>

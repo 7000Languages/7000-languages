@@ -32,7 +32,7 @@ const DrawerContent: React.FC = () => {
   const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
   const coursesNavigation = useNavigation<NativeStackNavigationProp<CourseStackParamList>>()
 
-  const { useQuery, useObject } = realmContext
+  const { useQuery } = realmContext
 
   const user: UserType = useAppSelector(state=>state.auth.user)
 
@@ -96,7 +96,7 @@ const DrawerContent: React.FC = () => {
         {
           adminCourses.map((course) =>{
             const units = (allUnits).filter((unit: Unit & Realm.Object) => unit._course_id == course._id)
-            // console.log(adminCourses);
+            // //console.log(adminCourses);
             
             return (
               <CourseUnitItem

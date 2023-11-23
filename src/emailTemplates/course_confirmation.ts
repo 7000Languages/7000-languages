@@ -237,7 +237,7 @@ background-color: #f6f6f6;
                 }
             })
             .then((response) => response.json())
-            .then((json) => console.log(json));
+            .then((json) => //console.log(json));
         })
 
         reject_form.addEventListener("submit", async (e) => {
@@ -254,7 +254,7 @@ background-color: #f6f6f6;
                 }
             })
             .then((response) => response.json())
-            .then((json) => console.log(json));
+            .then((json) => //console.log(json));
         })
 
     </script>
