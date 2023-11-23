@@ -54,9 +54,9 @@ import { setUser } from '../../../redux/slices/authSlice';
 
     const getImages = async () => {
       let images:{i:number, imagePath: string, imageOption:string}[] = []
-      currentActivityLevel.image_options.forEach(async(audio, i) => {
-        const response = await RNFS.readDir(`${baseDirectory}/${audio}`);
-        images = [...images, { i, imagePath: response[0].path, imageOption: audio }]
+      currentActivityLevel.image_options.forEach(async(image, i) => {
+        const response = await RNFS.readDir(`${baseDirectory}/${image}`);
+        images = [...images, { i, imagePath: response[0].path, imageOption: image }]
         setImages(images);
       })
     };

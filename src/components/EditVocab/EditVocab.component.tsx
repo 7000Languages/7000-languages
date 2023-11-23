@@ -213,7 +213,7 @@ const EditVocab: React.FC<IProps> = ({
                 setPickedAudio({uri: content.originalFilepath});
               })
               .catch(err => {
-                console.log(err.message);
+                //console.log(err.message);
               });
         RNFS.readFile(result.uri, 'base64')
           .then(content => {
@@ -226,11 +226,11 @@ const EditVocab: React.FC<IProps> = ({
             setAudio(audio);
           })
           .catch(err => {
-            console.log(err.message);
+            //console.log(err.message);
           });
       })
       .catch(err => {
-        console.log('Audio file error: ' + err);
+        //console.log('Audio file error: ' + err);
       });
   };
 
@@ -238,7 +238,7 @@ const EditVocab: React.FC<IProps> = ({
     () =>
       new Sound(pickedAudio.uri, undefined, error => {
         if (error) {
-          console.log('failed to load the sound', error);
+          //console.log('failed to load the sound', error);
           return;
         }
         // if loaded successfully
@@ -306,9 +306,9 @@ const EditVocab: React.FC<IProps> = ({
     try {
       setStatesToRecordingPaused();
       const r = await audioRecorderPlayer.pauseRecorder();
-      console.log(r);
+      //console.log(r);
     } catch (err) {
-      console.log('pauseRecord', err);
+      //console.log('pauseRecord', err);
     }
   };
 
@@ -337,11 +337,11 @@ const EditVocab: React.FC<IProps> = ({
             setSelectingAudio(true);
           })
           .catch(err => {
-            console.log(err.message);
+            //console.log(err.message);
           });
       })
       .catch(err => {
-        console.log(err.message);
+        //console.log(err.message);
       });
   }, []);
 
@@ -514,17 +514,17 @@ const EditVocab: React.FC<IProps> = ({
 
       await deleteLocalFile(`${baseDirectory}/${vocab!.local_audio_path}`)
         .then(async() => {
-          console.log('OLD FILE DELETED');
+          //console.log('OLD FILE DELETED');
           await RNFS.mkdir( baseDirectory + '/' + newAudioFolderPath).then(async() => {
             // COPY the file
-            console.log('Created File');
+            //console.log('Created File');
             await RNFS.writeFile(
               baseDirectory + '/' + newAudioActualPath,
               audio.data!,
               'base64',
             )
               .then(() => {
-                console.log("Audio saved!!!");
+                //console.log("Audio saved!!!");
                 // Add unit with downloaded image to the "downloadedUnits" in storage
                 realm.write(()=>{
                   realm.create('deletedFiles', {
@@ -547,13 +547,13 @@ const EditVocab: React.FC<IProps> = ({
                 setSelectingAudio(false)
               })
               .catch(err => {
-                console.log(err.message);
+                //console.log(err.message);
               });
           });
         })
         // `unlink` will throw an error, if the item to unlink does not exist
         .catch(err => {
-          console.log(err.message);
+          //console.log(err.message);
         });
     }
 
@@ -566,7 +566,7 @@ const EditVocab: React.FC<IProps> = ({
     let imageType = '';
 
     if (typeof newImage !== undefined && newImage) {
-      console.log("Here");
+      //console.log("Here");
       imageName =
         Platform.OS == 'android'
           ? newImage.path.split('/').pop()
@@ -583,24 +583,24 @@ const EditVocab: React.FC<IProps> = ({
 
       await RNFS.mkdir(`${baseDirectory}/${newImageFolderPath}`).then(async() => {
         // COPY the file
-        console.log('create folder');
+        //console.log('create folder');
         await RNFS.writeFile(
           `${baseDirectory}/${newImageActualPath}`,
           newImage.data,
           'base64',
         )
           .then(() => {
-            console.log('Image saved!!!');
+            //console.log('Image saved!!!');
             realm.write(() => {
 
-              console.log(
-                newImageFolderPath,
-                newImageActualPath,
-                imageSize,
-                imageHeight,
-                imageType,
-                imageWidth
-              )
+              //console.log(
+              //   newImageFolderPath,
+              //   newImageActualPath,
+              //   imageSize,
+              //   imageHeight,
+              //   imageType,
+              //   imageWidth
+              // )
               getVocab.image = ''
               getVocab.local_image_path = newImageFolderPath;
               getVocab.image_metadata = {
@@ -614,7 +614,7 @@ const EditVocab: React.FC<IProps> = ({
             });
           })
           .catch(err => {
-            console.log(err.message);
+            //console.log(err.message);
           });
       });      
     }
@@ -635,7 +635,7 @@ const EditVocab: React.FC<IProps> = ({
       getVocab.updated_at = new Date()
     });
 
-    console.log("Reach here...");
+    //console.log("Reach here...");
   };
 
   return (

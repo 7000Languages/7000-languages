@@ -111,12 +111,12 @@ import Sound from 'react-native-sound';
           undefined,
           error => {
             if (error) {
-              console.log('failed to load the sound', error);
+              //console.log('failed to load the sound', error);
               return;
             }
             // if loaded successfully
             let duration = currentAudio.getDuration();
-            console.log(duration);
+            //console.log(duration);
           },
         ),
       [audio],
@@ -198,6 +198,10 @@ import Sound from 'react-native-sound';
                     style={[styles.image, {opacity: wrongOption ? 0.5 : 1}]}
                     source={{
                       uri: image.imagePath ,
+                    }}
+                    onError={(e)=>{
+                      //console.log("Error: ", e);
+                      
                     }}
                   />
                 </TouchableOpacity>

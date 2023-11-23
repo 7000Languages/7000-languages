@@ -45,6 +45,7 @@ import { setUser } from '../../../redux/slices/authSlice';
     const [selectedIndex, setselectedIndex] = useState(-1);
     const [audios, setAudios] = useState<{i:number, audioPath: string, audioOption:string}[]>([]);
     const [currentPlayingAudio, setCurrentPlayingAudio] = useState('');
+    const [previousAudio, setPreviousAudio] = useState<Sound>();
 
     const dispatch = useAppDispatch()
 
@@ -72,19 +73,21 @@ import { setUser } from '../../../redux/slices/authSlice';
           undefined,
           error => {
             if (error) {
-              console.log('failed to load the sound', error);
+              //console.log('failed to load the sound', error);
               return;
             }
             // if loaded successfully
+            setPreviousAudio(prev=>currentAudio)
             let duration = currentAudio.getDuration();
             playPause()
-            console.log(duration);
+            //console.log(duration);
           },
         ),
       [currentPlayingAudio],
     );
     
     const playPause = () => {
+      previousAudio?.stop()
       if (currentPlayingAudio.length == 0) {
         Alert.alert(
           'No audio available',
@@ -115,10 +118,10 @@ import { setUser } from '../../../redux/slices/authSlice';
     
     const determineMatch = (option: string) => {
       setSelectedOptions(prev => [...prev, option]);
+      previousAudio?.stop()
       if (option == currentActivityLevel.text_for_audios.correct_audio_option) {
         setCorrectNess('Correct');
         setCorrectNessColor(PRIMARY_GREEN_COLOR);
-
         // Add this activityLevel to completedActivityLevels and go to the next activity Level
       realm.write(()=>{
         userToUpdate.completedActivityLevels.push(currentActivityLevel._id.toString())

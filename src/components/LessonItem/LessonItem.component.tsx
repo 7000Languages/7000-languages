@@ -48,13 +48,13 @@ const LessonItem: React.FC<IProps> = ({
   const getImage = async () => {
     const response = await RNFS.readDir(`${baseDirectory}/${localImagePath}`);
     setImage(response[0].path);
-    console.log(response);
+    //console.log(response);
   };
 
   const getAudio = async () => {
     const response = await RNFS.readDir(`${baseDirectory}/${localAudioPath}`);
     setAudio(response[0].path);
-    console.log('Audio', response[0].path);
+    //console.log('Audio', response[0].path);
   };
 
   const currentAudio = useMemo(
@@ -64,12 +64,12 @@ const LessonItem: React.FC<IProps> = ({
         undefined,
         error => {
           if (error) {
-            console.log('failed to load the sound', error);
+            //console.log('failed to load the sound', error);
             return;
           }
           // if loaded successfully
           let duration = currentAudio.getDuration();
-          console.log(duration);
+          //console.log(duration);
         },
       ),
     [audio],

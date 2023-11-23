@@ -72,7 +72,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
           cropping: false,
           includeBase64: true
         }).then(image => {
-          // console.log(image);
+          // //console.log(image);
           setImage(image);
           setSelectingImage(prev => !prev);
         });
@@ -86,7 +86,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
             cropping: false,
             includeBase64: true
           }).then(image => {
-            // console.log(image);
+            // //console.log(image);
             setImage(image);
             setSelectingImage(prev => !prev);
           });
@@ -143,10 +143,10 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
             'base64',
           )
             .then(() => {
-              console.log('Image saved!!!');
+              //console.log('Image saved!!!');
             })
             .catch(err => {
-              console.log(err.message);
+              //console.log(err.message);
             });
         });
       }
@@ -235,10 +235,10 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
               'base64',
             )
               .then(() => {
-                console.log('Image saved!!!');
+                //console.log('Image saved!!!');
               })
               .catch(err => {
-                console.log(err.message);
+                //console.log(err.message);
               });
           });
         }

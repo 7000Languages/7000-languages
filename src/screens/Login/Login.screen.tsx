@@ -40,7 +40,7 @@ const Login = () => {
 
   const CheckIfUserExistsInMongo = async (userFromRealm: Realm.User, userFromGoogle: UserGoogleInfoType) => {
 
-    // console.log(`Logged in with id: ${userFromRealm.id}`);
+    // //console.log(`Logged in with id: ${userFromRealm.id}`);
     //  check if user exists already in atlas
     const result: any = await userFromRealm!.functions.checkIfUserExists(userFromGoogle.id, userFromGoogle);
 
@@ -53,7 +53,7 @@ const Login = () => {
       save('userGoogleInfo', userFromGoogle)
       setLoading(false);
     } catch (error) {
-      // console.log(`Error saving user data: ${error}`)
+      // //console.log(`Error saving user data: ${error}`)
     }
   }
 
@@ -85,7 +85,7 @@ const Login = () => {
 
       try {
       } catch (error) {
-        // console.log("Error: ", error);
+        // //console.log("Error: ", error);
       }
 
       // Log the user in through realm to app here
@@ -100,24 +100,24 @@ const Login = () => {
             save('user', result)
             save('userGoogleInfo', userInfo.user)
           } catch (error) {
-            // console.log(`Error saving user data: ${error}`)
+            // //console.log(`Error saving user data: ${error}`)
           }
         });
       } catch (error) {
-        // console.log("Error: ", error);
+        // //console.log("Error: ", error);
       }
     } catch (error: any) {
-      console.log("Message___", error.message);
+      //console.log("Message___", error.message);
       setLoading(false);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // console.log("User cancelled Login Flow");
+        // //console.log("User cancelled Login Flow");
         setLoading(false);
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        // console.log("Sign In");
+        // //console.log("Sign In");
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // console.log("Play store services not available");
+        // //console.log("Play store services not available");
       } else {
-        // console.log("some other error happens");
+        // //console.log("some other error happens");
       }
     }
   }

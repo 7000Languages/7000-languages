@@ -13,7 +13,7 @@ const connectionSlice = createSlice({
     reducers: {
         toggleConnection: (state, action:PayloadAction<boolean>) => {
             state.isOnline = action.payload;
-            console.log(action.payload);
+            //console.log(action.payload);
         }
     }
 });

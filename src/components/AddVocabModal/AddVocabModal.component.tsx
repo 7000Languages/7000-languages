@@ -163,7 +163,7 @@ const AddVocabModal: React.FC<IProps> = ({
                 setPickedAudio({uri: content.originalFilepath});
               })
               .catch(err => {
-                console.log(err.message);
+                //console.log(err.message);
               });
         RNFS.readFile(result.uri, 'base64')
           .then(content => {
@@ -176,12 +176,12 @@ const AddVocabModal: React.FC<IProps> = ({
             setAudio(audio);
           })
           .catch(err => {
-            console.log(err.message);
+            //console.log(err.message);
           });
           setSelectingAudio(true)
       })
       .catch(err => {
-        console.log('Audio file error: ' + err);
+        //console.log('Audio file error: ' + err);
       });
   };
 
@@ -189,7 +189,7 @@ const AddVocabModal: React.FC<IProps> = ({
     () =>
       new Sound(pickedAudio.uri, undefined, error => {
         if (error) {
-          console.log('failed to load the sound', error);
+          //console.log('failed to load the sound', error);
           return;
         }
         // if loaded successfully
@@ -275,9 +275,9 @@ const AddVocabModal: React.FC<IProps> = ({
     try {
       setStatesToRecordingPaused();
       const r = await audioRecorderPlayer.pauseRecorder();
-      console.log(r);
+      //console.log(r);
     } catch (err) {
-      console.log('pauseRecord', err);
+      //console.log('pauseRecord', err);
     }
   };
 
@@ -305,11 +305,11 @@ const AddVocabModal: React.FC<IProps> = ({
             setSelectingAudio(true)
           })
           .catch(err => {
-            console.log(err.message);
+            //console.log(err.message);
           });
       })
       .catch(err => {
-        console.log(err.message);
+        //console.log(err.message);
       });
   }, []);
 
@@ -423,10 +423,10 @@ const AddVocabModal: React.FC<IProps> = ({
         // COPY the file
         RNFS.writeFile(`${baseDirectory}/${newAudioActualPath}`, audio.data, 'base64')
           .then(() => {
-            console.log('Audio copied!!!');
+            //console.log('Audio copied!!!');
           })
           .catch(err => {
-            console.log(err.message);
+            //console.log(err.message);
           });
       });
     }
@@ -462,10 +462,10 @@ const AddVocabModal: React.FC<IProps> = ({
           'base64',
         )
           .then(() => {
-            console.log('Image saved!!!');
+            //console.log('Image saved!!!');
           })
           .catch(err => {
-            console.log(err.message);
+            //console.log(err.message);
           });
       });
     }

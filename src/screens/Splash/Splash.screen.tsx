@@ -8,7 +8,7 @@ import NetInfo from '@react-native-community/netinfo';
 import styles from './Splash.style';
 
 import {RootStackParamList} from '../../navigation/types';
-import {getValueFor} from '../../utils/storage';
+import {deleteValueFor, getValueFor} from '../../utils/storage';
 import {useAppDispatch} from '../../redux/store';
 import {setUser, setUserGoogleInfo} from '../../redux/slices/authSlice';
 import {locales} from '../../../assets/data';
@@ -32,31 +32,6 @@ const Splash: React.FC<NavProps> = ({navigation}) => {
     dispatch(setUserGoogleInfo(userFromGoogle));
   };
 
-  const getDownloadedUnits = async () => {
-    try {
-      const downloadedUnits = await getValueFor('downloadedUnits');
-      if (!downloadedUnits) {
-        dispatch(setDownloadedUnits([]));
-      } else {
-        dispatch(setDownloadedUnits(downloadedUnits));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getDownloadedLessons = async () => {
-    try {
-      const downloadedLessons = await getValueFor('downloadedLessons');
-      if (!downloadedLessons) {
-        dispatch(setDownloadedLessons([]));
-      } else {
-        dispatch(setDownloadedLessons(downloadedLessons));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const getDownloadedVocabs = async () => {
     try {
@@ -67,7 +42,7 @@ const Splash: React.FC<NavProps> = ({navigation}) => {
         dispatch(setDownloadedVocabs(downloadedVocabs));
       }
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -94,10 +69,11 @@ const Splash: React.FC<NavProps> = ({navigation}) => {
 
   useEffect(() => {
     
+    // deleteValueFor('downloadedUnits')
+    // deleteValueFor('downloadedLessons')
+
     determineLocale();
     getuserDataFromStorage();
-    getDownloadedUnits();
-    getDownloadedLessons();
     getDownloadedVocabs();
 
     const whereToNavigate = user?.isLoggedIn ? 'Onboarding' : 'Login';
