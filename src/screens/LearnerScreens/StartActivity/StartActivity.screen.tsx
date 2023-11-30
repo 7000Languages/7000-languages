@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import styles from './StartActivity.style'
@@ -10,6 +10,8 @@ import { SECONDARY_COLOR } from '../../../constants/colors'
 import { realmContext } from '../../../realm/realm'
 import { convertToArrayOfPlainObject } from '../../../utils/helpers'
 import { Activity, ActivityType } from '../../../@types'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'StartActivity'>
 
@@ -66,6 +68,20 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
         }
       />
       <ActivityProgressIndicator activities={activities} currentActivityType={currentActivityType} />
+      <View style={styles.arrowContainer}>
+      <Pressable style={styles.arrowButton} >
+          <Ionicons
+          name="arrow-back-outline"
+          size = {30}
+          />
+        </Pressable>
+        <Pressable style={styles.arrowButton2}>
+          <Ionicons
+          name="arrow-forward-outline"
+          size = {30}
+          />
+        </Pressable>
+        </View>
       {
         currentActivityType == 'completed' ?
         <View style={styles.starsAndCongratulation}>

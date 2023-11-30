@@ -131,6 +131,18 @@ const AudioToTextActivity: React.FC<IProps> = ({
     }, 1000);
   };
 
+  const onPressBack = () => {
+    if (currentActivityLevelIndex > 0) {
+      setCurrentActivityLevelIndex(prev => prev - 1);
+    }
+  };
+
+  const onPressForward = () => {
+    if (currentActivityLevelIndex < activityLevels.length - 1) {
+      setCurrentActivityLevelIndex(prev => prev + 1);
+    }
+  };
+
   useEffect(() => {
     getAudio()
   }, [currentActivityLevelIndex]);
@@ -141,6 +153,14 @@ const AudioToTextActivity: React.FC<IProps> = ({
         <Text style={styles.activityNumber}>
           {currentActivityLevelIndex + 1}/{activityLevels.length}
         </Text>
+        <View style={styles.arrowContainer}>
+          <Pressable onPress={onPressBack} style={styles.arrowButton}>
+            <Ionicons name="arrow-back-outline" size={30} />
+          </Pressable>
+          <Pressable onPress={onPressForward} style={styles.arrowButton2}>
+            <Ionicons name="arrow-forward-outline" size={30} />
+          </Pressable>
+        </View>
         <Pressable style={styles.soundContainer} onPress={playPause}>
           <Ionicons
             name={!playing ? 'md-volume-medium' : 'pause-circle-sharp'}

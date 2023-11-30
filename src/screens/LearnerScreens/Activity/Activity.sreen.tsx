@@ -69,6 +69,7 @@ const Activity: React.FC<NavProps> = ({ navigation, route }) => {
           />
         }
       />
+      
       {curtentActivityType == 'audio-to-text' &&
         audioToTextActivities.length > 0 ? (
         <AudioToTextActivity
@@ -100,6 +101,7 @@ const Activity: React.FC<NavProps> = ({ navigation, route }) => {
             <Text>No activities for this lesson</Text>
           </View>
       }
+      
     </View>
   );
 };
