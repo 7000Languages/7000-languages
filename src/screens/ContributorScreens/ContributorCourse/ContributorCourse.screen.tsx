@@ -32,8 +32,8 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const { useQuery, useRealm } = realmContext
   const realm = useRealm()
 
-  const units = useQuery(Unit).filter((unit) => unit._course_id == course_id)
-  const lessons = useQuery(Lesson).filter((lesson) => lesson._course_id == course_id)
+  const units = useQuery(Unit).sorted("_order").filter((unit) => unit._course_id == course_id)
+  const lessons = useQuery(Lesson).sorted("_order").filter((lesson) => lesson._course_id == course_id)
   const course = useQuery(Course).find((course) => course._id.toString() == course_id)!
   
   const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()

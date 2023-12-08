@@ -15,6 +15,8 @@ type NavProps = NativeStackScreenProps<DrawerStackParamList, "AccountInfo">;
 
 const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
 
+  const { i18n } = useAppSelector(state=>state.locale)
+
   const userGoogleInfo = useAppSelector(state=>state.auth.userGoogleInfo)
   
   const logout = () => {
@@ -29,7 +31,7 @@ const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
         showStatusBackground={true}
       />
       <Header
-        title="Settings" //Renamed AccountInfo screen to Settings 
+        title={i18n.t('dict.settings')} //Renamed AccountInfo screen to Settings 
         headerTitleStyle={{ color: "#000000" }}
         leftIcon={
           <AntDesign
@@ -41,12 +43,12 @@ const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
         }
       />
       <View style={styles.content}>
-        <Text style={styles.userInfo}>User Info</Text>
+        <Text style={styles.userInfo}>{i18n.t('dict.userInfo')}</Text>
         <Text style={styles.settingText}>
-          Manage your profile settings here.
+          {i18n.t('dialogue.manageYourProfileSettingsHere')}
         </Text>
         <TouchableOpacity style={styles.languageTouch} onPress={()=>navigation.navigate('Languages')}>
-          <Text style={styles.languageText}>Language</Text>
+          <Text style={styles.languageText}>{i18n.t('dict.language')}</Text>
           <Entypo name="chevron-thin-right" size={20} color="black" />
         </TouchableOpacity>
         <View style={styles.accountInfoTouch}>
@@ -61,7 +63,7 @@ const AccountInfo: React.FC<NavProps> = ({ navigation }) => {
         </View>
         <TouchableOpacity style={styles.logoutBtn} onPress={logout}>
           <Image source={require("../../../assets/images/logoutIcon.png")} />
-          <Text style={styles.logoutText}>Log out</Text>
+          <Text style={styles.logoutText}>{i18n.t('actions.logOut')}</Text>
         </TouchableOpacity>
       </View>
     </View>

@@ -25,7 +25,10 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
   const lesson: any = useQuery('lessons').find((lesson: any) => lesson._id == lesson_id) // We get the lesson again so that the list updates automatically when we add a new vocab item
   const course: any = useQuery('courses').find((course: any) => course._id == lesson._course_id)
   const unit: any = useQuery('units').find((unit: any) => unit._id == lesson._unit_id)
-  const vocabs: any = useQuery('vocabs')
+  const vocabs: any = useQuery('vocabs').sorted("_order").filter((vocab: any) => vocab._lesson_id == lesson_id)
+
+  console.log("vocabs", vocabs);
+  
 
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [editModal, setEditModal] = useState(false);
@@ -67,7 +70,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
       <ManageUnitLessonVocab
         type='vocab'
         isModalVisible={manageModal}
-        data={convertToArrayOfPlainObject(lesson.vocab)}
+        data={(vocabs)}
         onCloseModal={() => setManageModal(false)}
       />
       <EditVocab isModalVisible={editVocabModal} course={course} lesson={lesson} unit={unit} vocab={vocab} onCloseModal={()=>setEditVocabModal(false)} />

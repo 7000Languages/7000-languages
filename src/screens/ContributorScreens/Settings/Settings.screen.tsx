@@ -19,6 +19,7 @@ import Course from "../../../realm/schemas/Course";
 import { useUser } from "@realm/react";
 import { useAppSelector } from "../../../redux/store";
 import Toast from "react-native-toast-message";
+import { i18n } from "../../../redux/slices/localeSlice";
 
 type NavProps = NativeStackScreenProps<SettingsStackParamList, "Settings">;
 
@@ -185,9 +186,9 @@ const Settings: React.FC<NavProps> = ({ navigation, route }) => {
       />
       <View style={{ paddingHorizontal: 16, alignSelf: 'center', width: DEVICE_WIDTH }}>
         <Text style={styles.topText}>
-          Edit your course settings here.
+          {i18n.t('dialogue.editYourCourseHere')}
         </Text>
-        <Text style={styles.privacy}>Privacy</Text>
+        <Text style={styles.privacy}>{i18n.t('dict.privacy')}</Text>
         <TouchableOpacity
           style={styles.pickerTouch}
           activeOpacity={0.6}
@@ -216,18 +217,18 @@ const Settings: React.FC<NavProps> = ({ navigation, route }) => {
             onValueChange={openPricacyModal}
             itemStyle={{ height: 115 }}
           >
-            <Picker.Item label="Public" value="Public" />
-            <Picker.Item label="Private" value="Private" />
+            <Picker.Item label={i18n.t('dict.public')} value="Public" />
+            <Picker.Item label={i18n.t('dict.private')} value="Private" />
           </Picker>
         )}
         <View style={styles.codeContainer}>
-          <Text style={styles.securityCode}>Security Code</Text>
+          <Text style={styles.securityCode}>{i18n.t('dict.securityCode')}</Text>
           <Text style={styles.codeText}>{course.details.code}</Text>
         </View>
       </View>
       <TouchableOpacity style={styles.deleteTouch} onPress={() => setDeleteCourseModal(true)}>
         <MaterialCommunityIcons name="trash-can" size={20} color="#5B6165" />
-        <Text style={styles.deleteText}>Delete Course</Text>
+        <Text style={styles.deleteText}>{i18n.t('dict.deleteCourse')}</Text>
       </TouchableOpacity>
     </View>
   );

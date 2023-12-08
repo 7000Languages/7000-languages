@@ -23,7 +23,11 @@ const bucketRegion = S3_REGION;
 const accessKeyId = S3_ACCESS_KEY_ID;
 const secretAccessKey = S3_SECRET_ACCESS_KEY;
 
-AWS.config.update({ correctClockSkew: true });
+AWS.config.update({
+  accessKeyId,
+  secretAccessKey,
+  correctClockSkew: true
+ });
 
 const s3 = new S3Client({
   credentials: {

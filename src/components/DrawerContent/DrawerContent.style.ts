@@ -23,14 +23,14 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     learnerContainer: {
-        width: 107,
-        height: 28,
+        maxWidth: 120,
         backgroundColor: '#DEE5E9',
         borderRadius: 50,
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: 12,
-        marginBottom: 10
+        marginBottom: 10,
+        padding: 8
     },
     learnerText: {
         color: '#496277',

@@ -10,7 +10,7 @@ export default {
       none: 'Aucun',
       instructions: 'Instructions',
       availableLanguages: 'Langues disponibles',
-      userInfo: 'Info utilisateur',
+      userInfo: 'Informations sur l\'utilisateur',
       language: 'Langue',
       confirm: 'Confirmer',
       audio: 'Audio',
@@ -232,6 +232,10 @@ export default {
         'Le code est fourni par le créateur. Il est sensible à la casse.',
       helloWelcome: 'Bonjour! \nBienvenue dans \n7000 Langues',
       proceedIn: 'Procéder en Français',
+      manageYourProfileSettingsHere: 'Gestione aquí la configuración de su perfil',
+      discoverIndigenousLangagues: 'Découvrez les langues indigènes dès aujourd\'hui !',
+      letsStartLearning: "Commençons à apprendre!",
+      editYourCourseHere: "Modifiez les paramètres de votre cours ici."
     },
     locales: {
       en: 'Englais',

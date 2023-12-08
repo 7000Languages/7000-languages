@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Modal from 'react-native-modal'
@@ -14,6 +14,7 @@ import { Pressable } from 'react-native'
 import Lesson from '../../realm/schemas/Lesson'
 import Vocab from '../../realm/schemas/Vocab'
 import Unit from '../../realm/schemas/Unit'
+import Course from '../../realm/schemas/Course'
 
 type IProps = {
     type: 'unit' | 'lesson' | 'vocab',
@@ -31,121 +32,107 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
 
     const lessons = useQuery(Lesson)
     const vocabs = useQuery(Vocab)
-    const units = useQuery(Unit)
+    const units = useQuery(Unit).sorted('_order')
 
     const presentingData = data.filter((d: any) => !d.hidden)
+    
+    console.log("presentingData", presentingData);
+    
     const hiddenData = data.filter((d: any) => d.hidden)
-
 
     const typeToShow = type.charAt(0).toUpperCase() + type.slice(1)
     const subTypeToShow = type == 'unit' ? 'lesson' : type == 'lesson' ? 'vocab' : ''
-    
-    const changeElementPosition = (data: any, from: number, to: number) => {
-        let elementToUpdate = sentData[from]
-        setSentData(data)
-        if(type == 'unit'){
-            let unit = units.filter((u) => u._id.toString() == elementToUpdate._id.toString())[0]
+
+    const changeElementPosition = (from: number, to: number) => {
+                
+        let difference = to - from
+
+        let copied = {...data}
+
+        if(difference > 0){
             realm.write(() => {
-                unit._order = to + 1
+                for (let i = to; i >= from; i--) {
+                    let unitToUpdate = copied[i]
+                    console.log(unitToUpdate);
+                    if(i==from){
+                        unitToUpdate._order = to    
+                    }else{
+                        unitToUpdate._order = i - 1
+                    }
+                }
             });
+            
         }
-        if(type == 'lesson'){
-            let lesson = lessons.filter((u) => u._id.toString() == elementToUpdate._id.toString())[0]
+        if(difference < 0){
             realm.write(() => {
-                lesson._order = to + 1
-            });
-        }
-        if(type == 'vocab'){
-            let vocab = vocabs.filter((u) => u._id.toString() == elementToUpdate._id.toString())[0]
-            realm.write(() => {
-                vocab._order = to + 1
+                for (let i = to; i <= from; i++) {
+                    let unitToUpdate = copied[i]
+                    if(i==from){
+                        unitToUpdate._order = to
+                    }else{
+                        unitToUpdate._order = i + 1
+                    }
+                }
             });
         }
     }
 
-    const hide = (item: { _id: any }) => {
-        if(type == 'unit'){
-            let unit: any = units.filter((u) => u._id.toString() == item._id.toString())[0]
-            realm.write(()=>{
-                unit.hidden = !unit.hidden
-            })
-        }
-        if(type == 'lesson'){
-            let lesson: any = lessons.filter((u) => u._id.toString() == item._id.toString())[0]
-            realm.write(()=>{
-                lesson.hidden = !lesson.hidden
-            })
-        }
-        if(type == 'vocab'){
-            let vocab: any = vocabs.filter((u) => u._id.toString() == item._id.toString())[0]
-            realm.write(()=>{
-                vocab.hidden = !vocab.hidden
-            })
-        }
+    const hide = (item: any) => {
+        realm.write(() => {
+            item.hidden = !item.hidden
+        })
     }
 
     const deleteItem = (item: any) => {
-        if(type == 'unit'){
-            let unit: any = units.filter((u: any) => u._id.toString() == item._id.toString())[0]
-            realm.write(()=>{
-                realm.delete(unit);
-            })
-        }
-        if(type == 'lesson'){
-            let lesson: any = lessons.filter((u: any) => u._id.toString() == item._id.toString())[0]
-            realm.write(()=>{
-                realm.delete(lesson);
-            })
-        }
-        if(type == 'vocab'){
-            let vocab: any = vocabs.filter((u: any) => u._id.toString() == item._id.toString())[0]
-            realm.write(()=>{
-                realm.delete(vocab);
-            })
-        }
+        let copied = {...data}
+        let orderOfItemToDelete = item._order
+        realm.write(() => {
+            for (let i = orderOfItemToDelete + 1; i < data.length; i++) {
+               copied[i]._order = i-1 ;
+            }
+            realm.delete(item);
+        })
     }
 
-    const renderItem = ({ item, drag, isActive }: RenderItemParams<any>) => {
+    const RenderItem = ({ item, drag, isActive }: RenderItemParams<any>) => {
         const { _id, name, hidden, original, translation } = item
         let unitLessons = type == 'unit' ? lessons.filtered('_unit_id = $0', _id.toString()).length : 0
         let lessonVocabs = type == 'lesson' ? item.vocab.length : 0
         return (
-            <ScaleDecorator>
-                <Pressable
-                    style={styles.unit}
-                    onLongPress={drag}
-                    disabled={isActive}
-                >
+            <Pressable
+                style={styles.unit}
+                onLongPress={drag}
+                disabled={isActive}
+            >
+                {
+                    hidden
+                        ?
+                        <Ionicons name="add-circle-sharp" size={24} color="#91B38B" onPress={() => hide(item)} />
+                        :
+                        <MaterialCommunityIcons name="minus-circle" size={24} color="#9F3E1A" onPress={() => hide(item)} />
+                }
+                <View style={styles.textsContainer}>
                     {
-                        hidden
+                        type !== 'vocab'
                             ?
-                            <Ionicons name="add-circle-sharp" size={24} color="#91B38B" onPress={()=>hide(item)} />
+                            <>
+                                <Text style={styles.original}>{name}</Text>
+                                <Text style={styles.subText}>{(type == 'unit' ? unitLessons : lessonVocabs) + ' ' + subTypeToShow + ((type == 'unit' ? unitLessons : lessonVocabs) > 1 ? 's' : '')}</Text>
+                            </>
                             :
-                            <MaterialCommunityIcons name="minus-circle" size={24} color="#9F3E1A" onPress={()=>hide(item)} />
+                            <>
+                                <Text style={styles.original}>{original}</Text>
+                                <Text style={styles.subText}>{translation}</Text>
+                            </>
                     }
-                    <View style={styles.textsContainer}>
-                        {
-                            type !== 'vocab'
-                                ?
-                                <>
-                                    <Text style={styles.original}>{name}</Text>
-                                    <Text style={styles.subText}>{(type == 'unit' ? unitLessons : lessonVocabs) + ' ' + subTypeToShow + ((type == 'unit' ? unitLessons : lessonVocabs) > 1 ? 's' : '')}</Text>
-                                </>
-                                :
-                                <>
-                                    <Text style={styles.original}>{original}</Text>
-                                    <Text style={styles.subText}>{translation}</Text>
-                                </>
-                        }
-                    </View>
-                    {
-                        hidden ?
-                            <Ionicons name="md-trash" size={24} color="#A4A4A4" style={styles.rightIcon} onPress={()=>deleteItem(item)} />
-                            :
-                            <Ionicons name="menu" size={24} color="#A4A4A4" style={styles.rightIcon} />
-                    }
-                </Pressable>
-            </ScaleDecorator>
+                </View>
+                {
+                    hidden ?
+                        <Ionicons name="md-trash" size={24} color="#A4A4A4" style={styles.rightIcon} onPress={() => deleteItem(item)} />
+                        :
+                        <Ionicons name="menu" size={24} color="#A4A4A4" style={styles.rightIcon} />
+                }
+            </Pressable>
         )
     }
 
@@ -154,10 +141,8 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
     }, [isModalVisible])
 
     useEffect(() => {
-      
-    }, [sentData])
-    
 
+    }, [sentData])
 
     return (
         <Modal isVisible={isModalVisible} backdropOpacity={0.9}>
@@ -173,8 +158,16 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
                     <DraggableFlatList
                         keyExtractor={(item) => item._id.toString()}
                         data={presentingData}
-                        renderItem={renderItem}
-                        onDragEnd={({ data, from, to }) => changeElementPosition(data, from, to)}
+                        renderItem={
+                            ({ item, drag, isActive }) => {
+                                return (
+                                    <ScaleDecorator>
+                                        <RenderItem item={item} drag={drag} isActive={isActive} getIndex={() => undefined} />
+                                    </ScaleDecorator>
+                                )
+                            }
+                        }
+                        onDragEnd={({ data, from, to }) => changeElementPosition(from, to)}
                     />
                 </View>
                 <View style={styles.divider} />
@@ -182,11 +175,11 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
                 <Text style={styles.description} >These {typeToShow}s are not included in your course. You can still continue to edit them.</Text>
                 <Text>{typeToShow.toUpperCase()} NAME</Text>
                 <View style={[styles.scroll, { borderStyle: 'dashed', borderWidth: 1, }]}>
-                    <DraggableFlatList
+                    <FlatList
                         keyExtractor={(item) => item._id.toString()}
                         style={styles.scroll}
                         data={hiddenData}
-                        renderItem={renderItem}
+                        renderItem={RenderItem as any}
                     />
                 </View>
                 <View style={styles.btnContainer}>

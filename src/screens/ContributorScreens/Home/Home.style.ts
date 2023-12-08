@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     alignItems: "center",
     justifyContent: "center",
+    paddingBottom: 20
     
   },
   welcomeText: {

@@ -228,6 +228,10 @@ export default {
         'El código lo proporciona el creador. Distingue entre mayúsculas y minúsculas.',
       helloWelcome: '¡Hola! \nBienvenido a \n7000 Idiomas',
       proceedIn: 'Proceder en Español',
+      manageYourProfileSettingsHere: 'Gérez les paramètres de votre profil ici',
+      discoverIndigenousLangagues: 'Descubra hoy mismo las lenguas indígenas',
+      letsStartLearning: "¡Empecemos a aprender!",
+      editYourCourseHere: "Edite aquí la configuración de su curso."
     },
     locales: {
       en: 'Inglais',
