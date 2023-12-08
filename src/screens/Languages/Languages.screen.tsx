@@ -34,7 +34,7 @@ const Languages:React.FC<NavProps> = ({ navigation }) => {
         showStatusBackground={true}
       />
       <Header
-        title="Language"
+        title={i18n.t('dict.language')}
         headerTitleStyle={{ color: "#000000" }}
         leftIcon={
           <AntDesign

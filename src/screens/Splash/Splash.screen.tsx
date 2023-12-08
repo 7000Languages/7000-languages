@@ -32,20 +32,6 @@ const Splash: React.FC<NavProps> = ({navigation}) => {
     dispatch(setUserGoogleInfo(userFromGoogle));
   };
 
-
-  const getDownloadedVocabs = async () => {
-    try {
-      const downloadedVocabs = await getValueFor('downloadedVocabs');
-      if (!downloadedVocabs) {
-        dispatch(setDownloadedVocabs([]));
-      } else {
-        dispatch(setDownloadedVocabs(downloadedVocabs));
-      }
-    } catch (error) {
-      //console.log(error);
-    }
-  };
-
   // setLocale to Device Locale
   const determineLocale = () => {
     const deviceLocales = RNLocalize.getLocales();
@@ -71,10 +57,11 @@ const Splash: React.FC<NavProps> = ({navigation}) => {
     
     // deleteValueFor('downloadedUnits')
     // deleteValueFor('downloadedLessons')
+    // deleteValueFor('downloadedVocabsWithAudio')
+    // deleteValueFor('downloadedVocabsWithImage')
 
     determineLocale();
     getuserDataFromStorage();
-    getDownloadedVocabs();
 
     const whereToNavigate = user?.isLoggedIn ? 'Onboarding' : 'Login';
     let timer = setTimeout(() => {

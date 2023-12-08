@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, TextInput, Text, FlatList, Image, TouchableOpacity } from "react-native";
 // import { BSON } from "realm";
 import Modal from "react-native-modal";
@@ -33,6 +33,8 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
   const [joinCourseModalVisible, setJoinCourseModalVisible] = useState(false)
   const [courseToJoin, setCourseToJoin] = useState<Course>()
   const [code, setCode] = useState('');
+  const [inputFocused, setInputFocused] = useState(false);
+  const [courses, setCourses] = useState([]);
 
   const [codeError, setCodeError] = useState('');
 
@@ -42,6 +44,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
   const userToUpdate = useObject(User, new BSON.ObjectId(user._id))!  
 
   const coursesData: any = useQuery(Course)
+  const publicCourses: any = useQuery(Course).filter(course=>!(course.details.is_private))
   
   const realm = useRealm()
   
@@ -56,18 +59,20 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
       return false
     }
 
-    // if(courseToJoin?.details.is_private){
-    //   let hasError = false
-    //   if(code.length == 0){
-    //     setCodeError('This course is private and needs a code to join, contact course administrator')
-    //     hasError = true
-    //   }
-    //   if(courseToJoin.details.code.toString() !== code){
-    //     setCodeError('Sorry! incorrect course code. Try again')
-    //     hasError = true
-    //   }
-    //   if(hasError) return
-    // }
+    if(courseToJoin?.details.is_private){
+      let hasError = false
+      if(code.length == 0){
+        setCodeError('This course is private and needs a code to join, contact course administrator')
+        hasError = true
+        if(hasError) return
+      }
+      if(courseToJoin.details.code.toString() !== code){
+        setCodeError('Sorry! incorrect course code. Try again')
+        hasError = true
+        if(hasError) return
+      }
+      if(hasError) return
+    }
    
     realm.write(()=>{
       userToUpdate.learnerLanguages.push(courseToJoin!._id.toString())
@@ -118,8 +123,18 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
   const search_parameters = Object.keys(Object.assign({},  coursesData.length > 0 ? convertToArrayOfPlainObject(coursesData)[0].details : {}));
 
   const searchData = (courses: Course[]) => {
-    return courses.filter((course: any) => search_parameters.some(param => course.details[param].toString().toLowerCase().includes(searchTerm.toLowerCase()))).sort((a, b) => a.details.name.localeCompare(b.details.name))
+    return courses.filter((course: any) => search_parameters.some(param => course.details[param]?.toString().toLowerCase().includes(searchTerm.toLowerCase()))).sort((a, b) => a.details.name.localeCompare(b.details.name))
   }
+
+  useEffect(() => {
+    if((searchTerm.length > 0) && inputFocused){
+      console.log('Typing');
+      setCourses(coursesData)
+    }else{
+      setCourses(publicCourses)
+    }
+  }, [searchTerm])
+  
 
   return (
     <View style={styles.container}>
@@ -137,14 +152,21 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
                 <Text style={styles.providerText}>
                   The code is provided by the creator
                 </Text>
-                <TextInput placeholder={courseToJoin?.details.code.toString()} style={styles.modalInput} onChangeText={setCode} value={code} />
+                <TextInput 
+                  // placeholder={courseToJoin?.details?.code?.toString()} 
+                  style={styles.modalInput} onChangeText={setCode} 
+                  value={code} 
+                  />
               </>
             }
             <Text style={styles.codeError}>{codeError}</Text>
             <View style={styles.modalTouchContainer}>
               <TouchableOpacity
                 style={[styles.cancelOrJoinBtn, { backgroundColor: "#DEE5E9" }]}
-                onPress={() => setJoinCourseModalVisible(false)}
+                onPress={() => {
+                  setCodeError('')
+                  setJoinCourseModalVisible(false)
+                }}
               >
                 <Text style={styles.modalCancelText}>Cancel</Text>
               </TouchableOpacity>
@@ -188,6 +210,11 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
           cursorColor={SECONDARY_COLOR}
           value={searchTerm}
           onChangeText={(text) => setSearchTerm(text)}
+          autoFocus={false}
+          onFocus={()=>{
+            console.log('Focused');
+            setInputFocused(true)
+          }}
         />
         {searchTerm.length > 0 && (
           <Ionicons
@@ -199,7 +226,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
         )}
       </View>
       <FlatList
-        data={searchData((coursesData))}
+        data={searchData((courses))}
         keyExtractor={(item: CourseType) => item._id}
         renderItem={renderItem}
         ListEmptyComponent={ListEmptyComponent}

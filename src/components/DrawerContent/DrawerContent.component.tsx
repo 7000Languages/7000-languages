@@ -32,6 +32,8 @@ const DrawerContent: React.FC = () => {
   const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
   const coursesNavigation = useNavigation<NativeStackNavigationProp<CourseStackParamList>>()
 
+  const { i18n } = useAppSelector(state=>state.locale)
+
   const { useQuery } = realmContext
 
   const user: UserType = useAppSelector(state=>state.auth.user)
@@ -48,7 +50,7 @@ const DrawerContent: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
-        <Text style={styles.myCourses}>My Courses</Text>
+        <Text style={styles.myCourses}>{i18n.t('actions.myCourses')}</Text>
         <Ionicons name="close-outline" size={24} color="black" onPress={()=>drawerNavigation.dispatch(DrawerActions.closeDrawer())} />
       </View>
       <ScrollView
@@ -62,7 +64,7 @@ const DrawerContent: React.FC = () => {
       >
 
         <View style={styles.learnerContainer}>
-          <Text style={styles.learnerText}>LEARNER</Text>
+          <Text style={styles.learnerText}>{i18n.t('dict.learner')}</Text>
         </View>
         {
           learnerCourses.map((course: Course & Realm.Object, index: number)=>{
@@ -83,15 +85,15 @@ const DrawerContent: React.FC = () => {
         }
         <View style={styles.questionContainer}>
           <Text style={styles.learnerQuestion}>
-          Discover Indigenous Languages Today! 
-            <Text style={{ fontWeight: "bold" }}> Let's Start Learning!</Text>
+            {i18n.t('dialogue.discoverIndigenousLangagues')}
+            <Text style={{ fontWeight: "bold" }}> {i18n.t('dialogue.letsStartLearning')}</Text>
           </Text>
           <TouchableOpacity style={styles.searchCourseBtn} onPress={()=>coursesNavigation.navigate('Search')}>
-            <Text style={styles.searchCourseText}>Search Courses</Text>
+            <Text style={styles.searchCourseText}>{i18n.t('actions.searchCourses')}</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.contrubutorContainer}>
-          <Text style={styles.contributorText}>CONTRIBUTOR</Text>
+          <Text style={styles.contributorText}>{i18n.t('dict.contributor')}</Text>
         </View>
         {
           adminCourses.map((course) =>{
@@ -119,7 +121,7 @@ const DrawerContent: React.FC = () => {
             <Text style={{ fontWeight: "bold" }}> Become a contributor.</Text>
           </Text>
           <TouchableOpacity style={styles.applyNowBtn} onPress={()=>coursesNavigation.navigate('BecomeContributor')}>
-            <Text style={styles.searchCourseText}>Apply Now</Text>
+            <Text style={styles.searchCourseText}>{i18n.t('actions.applyNow')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

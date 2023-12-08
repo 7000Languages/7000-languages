@@ -13,31 +13,26 @@ import RNFS from 'react-native-fs';
 
 import styles from './Home.style';
 
-import {CourseStackParamList} from '../../../navigation/types';
-import {FocusAwareStatusBar, Header, PrimaryBtn} from '../../../components';
-import {PRIMARY_COLOR} from '../../../constants/colors';
-import {DrawerActions} from '@react-navigation/native';
-import {realmContext} from '../../../realm/realm';
-import {UnitType, UserType} from '../../../@types';
-import {useAppDispatch, useAppSelector} from '../../../redux/store';
-import {
-  convertToArrayOfPlainObject,
-  convertToPlainObject,
-} from '../../../utils/helpers';
-import {uploadFileToS3} from '../../../utils/s3';
-import {BSON} from 'realm';
-import {getFileFromS3} from '../../../utils/s3';
-import {getValueFor, save} from '../../../utils/storage';
-import {setDownloadedUnits} from '../../../redux/slices/unitsSlice';
-import {setDownloadedLessons} from '../../../redux/slices/lessonsSlice';
-import {setDownloadedVocabs} from '../../../redux/slices/vocabsSlice';
-import CourseUnitItem from '../../../components/CourseUnitLessonItem/CourseUnitLessonItem.component';
-import Course from '../../../realm/schemas/Course';
-import Unit from '../../../realm/schemas/Unit';
-import User from '../../../realm/schemas/User';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import { CourseStackParamList } from '../../../navigation/types';
+import { FocusAwareStatusBar, Header, PrimaryBtn } from '../../../components';
+import { PRIMARY_COLOR } from '../../../constants/colors';
+import { DrawerActions } from '@react-navigation/native';
+import { realmContext } from '../../../realm/realm';
+import { UnitType, UserType } from '../../../@types';
+import { useAppDispatch, useAppSelector } from '../../../redux/store';
+import { convertToArrayOfPlainObject, convertToPlainObject } from '../../../utils/helpers';
+import { uploadFileToS3 } from '../../../utils/s3';
+import { BSON } from 'realm';
+import { getFileFromS3 } from '../../../utils/s3';
+import { getValueFor, save } from '../../../utils/storage';
+import { setDownloadedUnits } from '../../../redux/slices/unitsSlice';
+import { setDownloadedLessons } from '../../../redux/slices/lessonsSlice';
+import { setDownloadedVocabs } from '../../../redux/slices/vocabsSlice';
+import CourseUnitItem from "../../../components/CourseUnitLessonItem/CourseUnitLessonItem.component";
+import Course from "../../../realm/schemas/Course";
+import Unit from "../../../realm/schemas/Unit";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Lesson from '../../../realm/schemas/Lesson';
 import Vocab from '../../../realm/schemas/Vocab';
 
@@ -48,13 +43,10 @@ type NavProps = NativeStackScreenProps<CourseStackParamList, 'Home'>;
 const Home: React.FC<NavProps> = ({navigation}) => {
   const realm = useRealm();
 
-  const [downloadedUnits, setDownloadedUnits] = useState<
-    {downloadedDate: Date; _id: string}[]
-  >([]);
-  const [downloadedLessons, setDownloadedLessons] = useState<
-    {downloadedDate: Date; _id: string}[]
-  >([]);
-
+  const [downloadedUnits, setDownloadedUnits] = useState<{ downloadedDate: Date, _id: string }[]>([]);
+  const [downloadedLessons, setDownloadedLessons] = useState<{ downloadedDate: Date, _id: string }[]>([]);
+  const [downloadedVocabsWithImage, setDownloadedVocabsWithImage] = useState<{ downloadedDate: Date, _id: string }[]>([]);
+  const [downloadedVocabsWithAudio, setDownloadedVocabsWithAudio] = useState<{ downloadedDate: Date, _id: string }[]>([]);
   // redux states
   const user: UserType = useAppSelector(state => state.auth.user);
 
@@ -67,9 +59,11 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const coursesNavigation =
     useNavigation<NativeStackNavigationProp<CourseStackParamList>>();
 
-  const coursesData = useQuery(Course);
-  const allUnits = useQuery(Unit);
-  const allLessons = useQuery(Lesson);
+  const coursesData = useQuery(Course)
+  const allUnits = useQuery(Unit)
+  const allLessons = useQuery(Lesson)
+  const allVocabsWithImage = useQuery(Vocab).filter(v => (v.local_image_uploaded == true) && v.image.length > 0)
+  const allVocabsWithAudio = useQuery(Vocab).filter(v => (v.local_audio_uploaded == true) && v.audio.length > 0)
 
   let adminCourses = coursesData.filter(
     (course: Course & Realm.Object) => course.admin_id == user.authID,
@@ -93,9 +87,6 @@ const Home: React.FC<NavProps> = ({navigation}) => {
     });
   });
 
-  // console.log("downloadedUnits", downloadedUnits);
-  // console.log("downloadedLessons", downloadedLessons);
-
   /**
    * From here we are taking care of uploading and downloading files to and from s3.
    * Here there is just a SINGLE SOURCE OF TRUTH(where files are stored and read from), which is the users
@@ -103,43 +94,6 @@ const Home: React.FC<NavProps> = ({navigation}) => {
    * whether the user is currently having an internet connection that is reachable to the internet
    */
 
-  const getDownloadedUnits = async () => {
-    let unitsDownloaded: any = [];
-    try {
-      const downloadedUnits = await getValueFor('downloadedUnits');
-      if (!downloadedUnits) {
-        console.log("It's null");
-        unitsDownloaded = [];
-      } else {
-        unitsDownloaded = downloadedUnits;
-      }
-      setTimeout(() => {
-        console.log('downloadedUnits', downloadedUnits);
-        getUnitsNotDownloaded(unitsDownloaded);
-      }, 2000);
-    } catch (error) {
-      // console.log(error);
-    }
-  };
-
-  const getDownloadedLessons = async () => {
-    let lessonsDownloaded: any = [];
-    try {
-      const downloadedLessons = await getValueFor('downloadedLessons');
-      if (!downloadedLessons) {
-        console.log("It's null");
-        lessonsDownloaded = [];
-      } else {
-        lessonsDownloaded = downloadedLessons;
-      }
-      setTimeout(() => {
-        console.log('downloadedLessons', downloadedLessons);
-        getLessonsNotDownloaded(lessonsDownloaded);
-      }, 2000);
-    } catch (error) {
-      // console.log(error);
-    }
-  };
 
   // Units, Lessons and Vocabs with Local files
   let unitsWithLocalFiles: any = useQuery(Unit).filter(
@@ -165,9 +119,8 @@ const Home: React.FC<NavProps> = ({navigation}) => {
           vocab.local_audio_uploaded == false)),
   );
 
-  // Units, Lessons and Vocabs that have not been downloaded yet
-
-  const getUnitsNotDownloaded = (unitsDownloaded: any) => {
+  // Units, Lessons and Vocab images and audios that have not been downloaded yet
+  const getUnitsNotDownloaded = (unitsDownloaded: any) => {    
     let unitsNotDownloaded = allUnits.filter(
       unit =>
         (user.adminLanguages.includes(unit._course_id) ||
@@ -190,25 +143,129 @@ const Home: React.FC<NavProps> = ({navigation}) => {
         ) ||
           convertToPlainObject(user).learnerLanguages.includes(
             lesson._course_id,
-          )) &&
-        !lessonsDownloaded
-          .map((l: any) => l._id.toString())
-          .includes(lesson._id.toString()),
-      // &&
-      // lessonsDownloaded.find((l:any)=>l._id.toString() == lesson._id.toString())
+          ))
+        &&
+        !(lessonsDownloaded.map((l:any) => l._id.toString()).includes(lesson._id.toString()))
     );
     setTimeout(() => {
       downloadLessonFilesFromS3(lessonsNotDownloaded);
     }, 2000);
   };
 
-  let vocabsNotDownloaded: any = useQuery('vocabs').filter(
-    (vocab: any) =>
-      (user.adminLanguages.includes(vocab._course_id) ||
-        user.learnerLanguages.includes(vocab._course_id)) &&
-      !downloadedVocabs.includes(vocab._id),
-  );
+  const getVocabImagesNotDownloaded = (vocabImagesNotDownloaded: any) => {
+    let vocabsNotDownloaded: any = allVocabsWithImage.filter(
+      (vocab: any) =>
+        ((user).adminLanguages.includes(
+          vocab._course_id,
+        ) ||
+          (user).learnerLanguages.includes(
+            vocab._course_id,
+          ))
+        &&
+        !(vocabImagesNotDownloaded.map((v:any) => v._id.toString()).includes(vocab._id.toString()))
+    );
+    setTimeout(() => {
+      downloadVocabImageFilesFromS3(vocabsNotDownloaded)
+    }, 2000);
+  }
 
+  const getVocabAudiosNotDownloaded = (vocabAudiosNotDownloaded: any) => {
+    let vocabsNotDownloaded: any = allVocabsWithAudio.filter(
+      (vocab: any) =>
+        ((user).adminLanguages.includes(
+          vocab._course_id,
+        ) ||
+          (user).learnerLanguages.includes(
+            vocab._course_id,
+          ))
+        &&
+        !(vocabAudiosNotDownloaded.map((v:any) => v._id.toString()).includes(vocab._id.toString()))
+    );
+    setTimeout(() => {
+      downloadVocabAudioFilesFromS3(vocabsNotDownloaded)
+    }, 2000); 
+  }
+
+  // Units, Lessons and Vocabs that have been downloaded already
+  const getDownloadedUnits = async () => {
+    let unitsDownloaded: any = []
+    try {
+      const downloadedUnits = await getValueFor('downloadedUnits');
+      if (!downloadedUnits) {
+        console.log("It's null");
+        unitsDownloaded = [];
+      } else {
+        unitsDownloaded = downloadedUnits;
+      }
+      setTimeout(() => {
+        console.log("downloadedUnits", downloadedUnits);
+        getUnitsNotDownloaded(unitsDownloaded)
+      }, 2000);
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const getDownloadedLessons = async () => {
+    let lessonsDownloaded: any = []
+    try {
+      const downloadedLessons = await getValueFor('downloadedLessons');
+      if (!downloadedLessons) {
+        // console.log("It's null");
+        lessonsDownloaded = [];
+      } else {
+        lessonsDownloaded = downloadedLessons;
+      }
+      setTimeout(() => {
+        console.log("downloadedLessons", downloadedLessons);
+        getLessonsNotDownloaded(lessonsDownloaded)
+      }, 2000);
+    } catch (error) {
+      // console.log(error);
+    }
+  };
+
+  const getDownloadedVocabsWithImage = async () => {
+    let vocabsDownloaded: any = []
+    try {
+      const downloadedVocabsWithImage = await getValueFor('downloadedVocabsWithImage');
+      if(!downloadedVocabsWithImage){
+        console.log("downloadedVocabsWithImage is null"); 
+        vocabsDownloaded = []
+      }else{
+        vocabsDownloaded = downloadedVocabsWithImage
+      }
+      setTimeout(() => {
+        console.log("downloadedVocabsWithImage", downloadedVocabsWithImage);
+        getVocabImagesNotDownloaded(vocabsDownloaded)
+      }, 2000);
+
+    } catch (error) {
+      
+    }
+  }
+
+  const getDownloadedVocabsWithAudio = async () => {
+    let vocabsDownloaded: any = []
+    try {
+      const downloadedVocabsWithAudio = await getValueFor('downloadedVocabsWithAudio');
+      if(!downloadedVocabsWithAudio){
+        console.log("downloadedVocabsWithAudio is null"); 
+        vocabsDownloaded = []
+      }else{
+        vocabsDownloaded = downloadedVocabsWithAudio
+      }
+      setTimeout(() => {
+        console.log("downloadedVocabsWithAudio", downloadedVocabsWithAudio);
+        getVocabAudiosNotDownloaded(vocabsDownloaded)
+      }, 2000);
+
+    } catch (error) {
+      
+    }
+  }
+
+  
   let baseDirectory = RNFS.DocumentDirectoryPath;
 
   // Uploading Unit, Lesson, and Vocab files to S3
@@ -370,7 +427,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
     }
   };
 
-  // Download Unit, Lesson and Vocab files from S3
+  // Download Unit, Lesson and Vocab(image and audio) files from S3
   const downloadUnitFilesFromS3 = async (unitsNotDownloaded: any) => {
     for (let unitNotDownloaded of unitsNotDownloaded) {
       if (unitNotDownloaded.image.length > 0) {
@@ -444,11 +501,8 @@ const Home: React.FC<NavProps> = ({navigation}) => {
     }
   };
 
-  const downloadVocabFilesFromS3 = async () => {
+  const downloadVocabImageFilesFromS3 = async (vocabsNotDownloaded: any) => {
     for (let vocabNotDownloaded of vocabsNotDownloaded) {
-      let imageDownloaded = false;
-      let audioDownloaded = false;
-
       if (vocabNotDownloaded.image.length > 0) {
         const imageResultToSave = await getFileFromS3(vocabNotDownloaded.image);
 
@@ -466,14 +520,21 @@ const Home: React.FC<NavProps> = ({navigation}) => {
             'base64',
           )
             .then(() => {
-              //console.log("Image saved!!!");
-              imageDownloaded = true;
+                // Add vocab with downloaded image to the "downloadedVocabsWithImage" in storage
+                let newDownloadedVocabImage = { downloadedDate: new Date(), _id: vocabNotDownloaded._id.toString() };
+                console.log('newDownloadedVocabImage', newDownloadedVocabImage);
+                setDownloadedVocabsWithImage(prev => [...prev, newDownloadedVocabImage])
             })
             .catch(err => {
               //console.log(err.message);
             });
         });
       }
+    }
+  }
+
+  const downloadVocabAudioFilesFromS3 = async (vocabsNotDownloaded: any) => {
+    for (let vocabNotDownloaded of vocabsNotDownloaded){
       if (vocabNotDownloaded.audio.length > 0) {
         const audioResultToSave = await getFileFromS3(vocabNotDownloaded.audio);
 
@@ -491,31 +552,28 @@ const Home: React.FC<NavProps> = ({navigation}) => {
             'base64',
           )
             .then(() => {
-              audioDownloaded = true;
-              //console.log("Audio saved!!!");
+              // Add vocab with downloaded audio to the "downloadedVocabsWithAudio" in storage
+              let newDownloadedVocabAudio = { downloadedDate: new Date(), _id: vocabNotDownloaded._id.toString() };
+              console.log('newDownloadedVocabAudio', newDownloadedVocabAudio);
+              setDownloadedVocabsWithAudio(prev => [...prev, newDownloadedVocabAudio])
             })
             .catch(err => {
               //console.log(err.message);
             });
         });
       }
-
-      if (imageDownloaded && audioDownloaded) {
-        // let newDownloadedVocabs = [...downloadedVocabs, vocabNotDownloaded._id]
-        let newDownloadedVocabs = [
-          ...downloadedLessons,
-          {downloadedDate: new Date(), _id: vocabNotDownloaded._id},
-        ];
-        save('downloadedVocabs', newDownloadedVocabs);
-        dispatch(setDownloadedVocabs(newDownloadedVocabs));
-      }
     }
   };
+
 
   useEffect(() => {
     getDownloadedUnits();
 
     getDownloadedLessons();
+
+    getDownloadedVocabsWithImage()
+
+    getDownloadedVocabsWithAudio()
 
     uploadLocalUnitFilesTos3();
 
@@ -529,9 +587,28 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   }, [downloadedUnits]);
 
   useEffect(() => {
-    if (downloadedLessons.length > 0)
-      save('downloadedLessons', downloadedLessons);
-  }, [downloadedLessons]);
+    if(downloadedUnits.length > 0)
+      save('downloadedUnits', downloadedUnits)
+      console.log('downloadedUnits', downloadedUnits);
+  }, [downloadedUnits])
+
+  useEffect(() => {
+    if(downloadedLessons.length > 0)
+      save('downloadedLessons', downloadedLessons)
+    console.log('downloadedLessons', downloadedLessons);
+  }, [downloadedLessons])
+
+  useEffect(() => {
+    if(downloadedVocabsWithImage.length > 0)
+      save('downloadedVocabsWithImage', downloadedVocabsWithImage)
+    console.log('downloadedVocabsWithImage', downloadedVocabsWithImage);
+  }, [downloadedVocabsWithImage])
+
+  useEffect(() => {
+    if(downloadedVocabsWithAudio.length > 0)
+      save('downloadedVocabsWithAudio', downloadedVocabsWithAudio)
+    console.log('downloadedVocabsWithAudio', downloadedVocabsWithAudio);
+  }, [downloadedVocabsWithAudio])
 
   return (
     <View style={styles.container}>

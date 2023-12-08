@@ -47,7 +47,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   const unit: any = (useQuery('units') as any).find((unit: any)=>unit._id.toString() == unit_id)
   const course: any = useQuery('courses').find((course: any) => course._id == unit!._course_id)
-  const lessons: any = useQuery('lessons').filter((lesson: any) => lesson._unit_id == unit._id)
+  const lessons: any = useQuery('lessons').sorted("_order").filter((lesson: any) => lesson._unit_id == unit._id)
 
   const goToLessonScreen = (lesson_id: string) => navigation.navigate("ContributorLesson", { lesson_id });
 

@@ -228,6 +228,10 @@ export default {
       getJoinCode: 'The code is provided by the creator and is case-sensitive.',
       helloWelcome: 'Hello! \nWelcome to \n7000 Languages',
       proceedIn: 'Proceed in English',
+      manageYourProfileSettingsHere: 'Manage Your Profile Settings here',
+      discoverIndigenousLangagues: 'Discover Indigenous Languages Today!',
+      letsStartLearning: "Let\'s Start Learning!",
+      editYourCourseHere: "Edit your course settings here."
     },
     locales: {
       en: 'English',
