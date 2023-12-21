@@ -37,6 +37,18 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
     });
   }
 
+  const onPressBack = () => {
+    const currentIndex = activityTypes.indexOf(currentActivityType);
+    const newIndex = currentIndex > 0 ? currentIndex - 1 : 0;
+    setCurrentActivityType(activityTypes[newIndex]);
+  };
+
+  const onPressForward = () => {
+    const currentIndex = activityTypes.indexOf(currentActivityType);
+    const newIndex = currentIndex < activityTypes.length - 1 ? currentIndex + 1 : currentIndex;
+    setCurrentActivityType(activityTypes[newIndex]);
+  };
+
   useEffect(() => {
     activityType && setCurrentActivityType(activityType)
   }, [activityType]);
@@ -48,6 +60,7 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
     // return
     setCurrentActivityType(activity.type)
   }
+
 
   return (
     <View style={styles.container}>
@@ -75,19 +88,13 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
       />
       <ActivityProgressIndicator onCirclePress={(item)=>changeActivityType(item)} activities={activities} currentActivityType={currentActivityType} />
       <View style={styles.arrowContainer}>
-      <Pressable style={styles.arrowButton} >
-          <Ionicons
-          name="arrow-back-outline"
-          size = {30}
-          />
+        <Pressable style={styles.arrowButton} onPress={onPressBack}>
+          <Ionicons name="arrow-back-outline" size={30} />
         </Pressable>
-        <Pressable style={styles.arrowButton2}>
-          <Ionicons
-          name="arrow-forward-outline"
-          size = {30}
-          />
+        <Pressable style={styles.arrowButton2} onPress={onPressForward}>
+          <Ionicons name="arrow-forward-outline" size={30} />
         </Pressable>
-        </View>
+      </View>
       {
         currentActivityType == 'completed' ?
           <View style={styles.starsAndCongratulation}>

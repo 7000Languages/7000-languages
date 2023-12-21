@@ -18,7 +18,8 @@ const ActivityProgressIndicator:React.FC<IPops> = ({ activities, currentActivity
     const getCurrentColor = (index:number) => {
         return index == currentActivityTypeIndex 
         // || currentActivityType == 'completed'
-         ? '#496277' : '#A6AFB5'
+         ? '#496277' : '#84ABCB'
+  
     }
 
   return (
@@ -28,7 +29,7 @@ const ActivityProgressIndicator:React.FC<IPops> = ({ activities, currentActivity
                     return (
                       <View style={[styles.progressItem]} key={index}>
                         <TouchableOpacity onPress={()=>onCirclePress(item)} style={[styles.circular, { borderColor: getCurrentColor(index) }]}>
-                          <Text style={[styles.number, { color: getCurrentColor(index) }]}>{index + 1}</Text>
+                          <Text style={[styles.number, { color: '#496277'}]}>{index + 1}</Text>
                         </TouchableOpacity>
                         {index < activities.length - 1 ? (
                           <View style={[styles.rectangular, { backgroundColor: '#A6AFB5' }]} />
@@ -36,7 +37,7 @@ const ActivityProgressIndicator:React.FC<IPops> = ({ activities, currentActivity
                           <>
                             <View style={[styles.rectangular, { backgroundColor: '#A6AFB5' }]} />
                             <View style={[styles.circular, { borderColor: currentActivityType == 'completed' ? '#E7900F' : getCurrentColor(index) }]}>
-                                <AntDesign name='star' size={18} color={currentActivityType == 'completed' ? '#E7900F' : '#A6AFB5'} />
+                                <AntDesign name='star' size={18} color={currentActivityType == 'completed' ? '#E7900F' : '#496277'} />
                             </View>
                           </>
                         )}
@@ -48,4 +49,6 @@ const ActivityProgressIndicator:React.FC<IPops> = ({ activities, currentActivity
     )
 }
 
-export default ActivityProgressIndicator
+export default ActivityProgressIndicator;
+
+//getCurrentColor(index)
