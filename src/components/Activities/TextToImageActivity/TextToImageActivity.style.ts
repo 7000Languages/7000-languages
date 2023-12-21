@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   options: {
-    width: DEVICE_WIDTH * 0.95,
+    width: DEVICE_WIDTH * 0.9,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignSelf: 'center',
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 5,
-    width: '42%',
+    width: 160,
     height: 114,
     borderRadius: 4,
     marginVertical: 10,
@@ -109,6 +109,17 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '90%',
     borderRadius: 4
+  },
+  arrowContainer: {
+    flexDirection: 'row',
+    marginLeft: 70,
+
+  },
+  arrowButton: {
+    marginLeft: 20,
+  },
+  arrowButton2: {
+    marginHorizontal: 149,
   }
 });
 

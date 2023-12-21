@@ -87,10 +87,18 @@ const styles = StyleSheet.create({
   },
   word: {
     color: '#1C1C1C',
-    fontSize: 16,
-    textAlign: 'center',
-    width: '80%'
+    fontSize: 16
+  },
+  arrowContainer: {
+    flexDirection: 'row',
+    marginLeft: 70,
+  },
+  arrowButton: {
+    marginLeft: 20,
+  },
+  arrowButton2: {
+    marginHorizontal: 149,
   }
 });
 
-export default styles
+export default styles;

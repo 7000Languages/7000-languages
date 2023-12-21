@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F9F9",
     alignSelf: "center",
     marginTop: 20,
-    maxHeight: DEVICE_HEIGHT * 0.5,
-    
+    height:"55%",
+    //height: DEVICE_HEIGHT * (Platform.OS == 'android' ? 0.5 : 0.45),
     paddingHorizontal: 10,
-    paddingBottom: 30
+    paddingBottom: 10
   },
   activityTitle: {
     alignSelf: "center",
@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
     marginTop: 28,
     color: "#1C1C1C",
     fontWeight: "bold",
+    textAlign: "center"
   },
   startActivityBtn: {
     width: "80%",
@@ -89,6 +90,18 @@ const styles = StyleSheet.create({
     color: '#496277',
     fontWeight: 'bold',
     fontSize: 16,
+  },
+  arrowContainer: {
+    flexDirection: 'row',
+    marginLeft: 70,
+    marginTop: 10
+
+  },
+  arrowButton: {
+    marginLeft: 20,
+  },
+  arrowButton2: {
+    marginHorizontal: 149,
   }
 });
 
