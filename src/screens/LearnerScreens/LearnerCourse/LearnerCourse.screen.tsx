@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import styles from './LearnerCourse.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { CourseUnitLessonDesign, CourseUnitLessonItem, FocusAwareStatusBar, Header } from '../../../components'
+import { CourseUnitLessonDesign, CourseUnitLessonItem, FocusAwareStatusBar, Header,Help } from '../../../components'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { SECONDARY_COLOR } from '../../../constants/colors'
@@ -23,6 +23,16 @@ const { useRealm } = realmContext
 const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
   const { course_id } = route.params
+
+  const [helpModalVisible, setHelpModalVisible] = useState(false);
+
+  const openHelpModal = () => {
+    setHelpModalVisible(true);
+  }
+
+  const closeHelpModal = () => {
+    setHelpModalVisible(false);
+  }
 
   // unit
   const { useQuery } = realmContext
@@ -72,9 +82,18 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
         headerStyle={{ backgroundColor: SECONDARY_COLOR }}
         leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />}
         rightIcon={
-          <TouchableOpacity style={styles.helpContainer}>
-            <Ionicons name="help" size={20} color={SECONDARY_COLOR} />
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.helpContainer} onPress={openHelpModal}>
+          <Ionicons name="help" size={20} color={SECONDARY_COLOR} />
+          {helpModalVisible && (
+            <Help
+              isVisible={helpModalVisible}
+              onClose={closeHelpModal}
+              headerText="Course Overview Help"
+              midHeaderText="Getting Started"
+              bodyText="Welcome to your course! To explore the lessons and their vocabularies, simply click on a unit below. Each unit contains lessons and vocabulary items to help you learn and improve your skills."
+            />
+          )}
+        </TouchableOpacity>
         }
       />
       <CourseUnitLessonDesign

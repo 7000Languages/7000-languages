@@ -6,7 +6,7 @@ import styles from './ContributorCourse.style'
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { CourseStackParamList,DrawerStackParamList } from '../../../navigation/types'
-import { CourseUnitLessonDesign, CourseUnitLessonItem, FocusAwareStatusBar, Header, AddUnitLessonModal, EditCourseUnitLesson, ManageUnitLessonVocab } from '../../../components'
+import { CourseUnitLessonDesign, CourseUnitLessonItem, FocusAwareStatusBar, Header, AddUnitLessonModal, EditCourseUnitLesson, ManageUnitLessonVocab, Help } from '../../../components'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import { PRIMARY_COLOR } from '../../../constants/colors'
@@ -37,6 +37,16 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const course = useQuery(Course).find((course) => course._id.toString() == course_id)!
   
   const drawerNavigation = useNavigation<NativeStackNavigationProp<DrawerStackParamList>>()
+
+  const [helpModalVisible, setHelpModalVisible] = useState(false);
+
+  const openHelpModal = () => {
+    setHelpModalVisible(true);
+  }
+
+  const closeHelpModal = () => {
+    setHelpModalVisible(false);
+  }
 
   const goToUnitScreen = (unit_id: string) => {
     navigation.navigate('ContributorUnit', { unit_id })
@@ -100,14 +110,23 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
         showStatusBackground
       />
       
-      <Header
+     <Header
         title="Course"
         headerStyle={{ backgroundColor: PRIMARY_COLOR }}
         leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />}
         rightIcon={
-          <TouchableOpacity style={styles.helpContainer}>
-            <Ionicons name="help" size={20} color={PRIMARY_COLOR} />
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.helpContainer} onPress={openHelpModal}>
+          <Ionicons name="help" size={20} color={PRIMARY_COLOR} />
+          {helpModalVisible && (
+            <Help
+              isVisible={helpModalVisible}
+              onClose={closeHelpModal}
+              headerText="Course Creation Help"
+              midHeaderText="Getting Started"
+              bodyText="To start creating your course, tap the 'Add Unit' button located at the bottom right of the screen. Units are the building blocks of your course and can contain lessons and vocabulary. Use the settings button below the help button to adjust course privacy."
+              />
+          )}
+        </TouchableOpacity>
         }
         
       />

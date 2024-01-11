@@ -15,19 +15,20 @@ const styles = StyleSheet.create({
     
   },
   welcomeText: {
-    color: "#8f8c8c",
+    color: "black",
     fontWeight: "bold",
     fontSize: 18,
     textAlign: "center",
     alignSelf: "center",
-    marginTop: "20%",
+    marginTop: "10%",
   },
   learnerText: {
-    color: "#8f8c8c",
+    color: "black",
     fontSize: 14,
     textAlign: "center",
     alignSelf: "center",
     marginTop: 5,
+    paddingBottom: 10,
   },
   
   searchBtn: {
@@ -42,13 +43,14 @@ const styles = StyleSheet.create({
   divider: {
     width: 255,
     borderColor: "#C0C0C0",
-    marginVertical: 40,
+    marginVertical: 30,
     borderWidth: 0.5,
   },
   missionStatement: {
     textAlign: 'center',
     alignSelf: 'center',
-    color: '#8f8c8c'
+    color: "black",
+    marginBottom: 20
   },
   becomeText: {
     color: PRIMARY_COLOR,

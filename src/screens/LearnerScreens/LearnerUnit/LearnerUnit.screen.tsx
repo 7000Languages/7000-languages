@@ -10,6 +10,7 @@ import {
   CourseUnitLessonItem,
   FocusAwareStatusBar,
   Header,
+  Help
 } from "../../../components";
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -23,6 +24,16 @@ import Lesson from "../../../realm/schemas/Lesson";
 type NavProps = NativeStackScreenProps<CourseStackParamList, "LearnerUnit">;
 
 const LearnerUnit: React.FC<NavProps> = ({ navigation, route }) => {
+
+  const [helpModalVisible, setHelpModalVisible] = useState(false);
+
+  const openHelpModal = () => {
+    setHelpModalVisible(true);
+  }
+
+  const closeHelpModal = () => {
+    setHelpModalVisible(false);
+  }
 
   const { unit_id } = route.params
   const { useQuery } = realmContext
@@ -67,9 +78,18 @@ const LearnerUnit: React.FC<NavProps> = ({ navigation, route }) => {
           />
         }
         rightIcon={
-          <TouchableOpacity style={styles.helpContainer}>
-            <Ionicons name="help" size={20} color={SECONDARY_COLOR} />
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.helpContainer} onPress={openHelpModal}>
+          <Ionicons name="help" size={20} color={SECONDARY_COLOR} />
+          {helpModalVisible && (
+            <Help
+              isVisible={helpModalVisible}
+              onClose={closeHelpModal}
+              headerText="Unit Help"
+              midHeaderText="Navigating Units"
+              bodyText= "Explore individual units to find lessons and vocabulary. Click on a unit to access its content and start your learning journey within that topic."
+            />
+          )}
+        </TouchableOpacity>
         }
       />
       <CourseUnitLessonDesign

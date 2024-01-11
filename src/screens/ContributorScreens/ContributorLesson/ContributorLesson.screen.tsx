@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import styles from './ContributorLesson.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { AddVocabModal, CourseUnitLessonDesign, EditCourseUnitLesson, FocusAwareStatusBar, Header, LessonItem, ManageUnitLessonVocab } from '../../../components'
+import { AddVocabModal, CourseUnitLessonDesign, EditCourseUnitLesson, FocusAwareStatusBar, Header, LessonItem, ManageUnitLessonVocab, Help } from '../../../components'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import { PRIMARY_COLOR } from '../../../constants/colors'
@@ -35,6 +35,16 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
   const [editVocabModal, setEditVocabModal] = useState(false);
   const [manageModal, setManageModal] = useState(false);
   const [vocab, setVocab] = useState<any>({});
+  const [helpModalVisible, setHelpModalVisible] = useState(false);
+
+  const openHelpModal = () => {
+    setHelpModalVisible(true);
+  }
+
+  const closeHelpModal = () => {
+    setHelpModalVisible(false);
+  }
+
 
   const renderItem = ({item, index}:{item: VocabType, index:number}) => {
     const { original, translation, image, audio, _id, local_image_path, local_audio_path, hidden } = item
@@ -85,9 +95,19 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
         headerStyle={{ backgroundColor: PRIMARY_COLOR }}
         leftIcon={<Feather name="arrow-left" size={24} color="#ffffff" onPress={()=>navigation.goBack()} />}
         rightIcon={
-          <TouchableOpacity style={styles.helpContainer}>
-            <Ionicons name="help" size={20} color={PRIMARY_COLOR} />
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.helpContainer} onPress={openHelpModal}>
+          <Ionicons name="help" size={20} color={PRIMARY_COLOR} />
+          {helpModalVisible && (
+           <Help
+           isVisible={helpModalVisible}
+           onClose={closeHelpModal}
+           headerText="Lesson Help"
+           midHeaderText="Adding Vocabulary to Lessons"
+           bodyText="To begin filling up a lesson with vocabulary, tap the 'Add Vocab' button on the bottom right. You can add translations, images, and audio to describe your vocabulary and build your course curriculum."
+          />
+          )}
+        </TouchableOpacity>
+          
         }
       />
       <CourseUnitLessonDesign

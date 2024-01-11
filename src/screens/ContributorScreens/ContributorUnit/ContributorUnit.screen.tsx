@@ -13,6 +13,7 @@ import {
   AddUnitLessonModal,
   EditCourseUnitLesson,
   ManageUnitLessonVocab,
+  Help
 } from "../../../components";
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
@@ -28,6 +29,17 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
   const [addLessonModal, setAddLessonModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [manageModal, setManageModal] = useState(false);
+
+  const [helpModalVisible, setHelpModalVisible] = useState(false);
+
+  const openHelpModal = () => {
+    setHelpModalVisible(true);
+  }
+
+  const closeHelpModal = () => {
+    setHelpModalVisible(false);
+  }
+
 
   const { unit_id } = route.params
   const { useQuery, useRealm } = realmContext
@@ -89,7 +101,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
         barStyle="light-content"
         showStatusBackground
       />
-      <Header
+     <Header
         title="Unit"
         headerStyle={{backgroundColor: PRIMARY_COLOR}}
         leftIcon={
@@ -101,9 +113,18 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
           />
         }
         rightIcon={
-          <TouchableOpacity style={styles.helpContainer}>
-            <Ionicons name="help" size={20} color={PRIMARY_COLOR} />
-          </TouchableOpacity>
+            <TouchableOpacity style={styles.helpContainer} onPress={openHelpModal}>
+          <Ionicons name="help" size={20} color={PRIMARY_COLOR} />
+          {helpModalVisible && (
+           <Help
+           isVisible={helpModalVisible}
+           onClose={closeHelpModal}
+           headerText="Unit Help"
+           midHeaderText="Adding Lessons to Units"
+           bodyText="Units are the foundation of your course and serve as containers for organizing lessons and vocabulary items. To create a new lesson, tap the 'Add Lesson' button located at the bottom right of the screen."
+         />
+          )}
+        </TouchableOpacity>
         }
       />
       <CourseUnitLessonDesign
