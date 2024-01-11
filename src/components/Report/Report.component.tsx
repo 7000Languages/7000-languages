@@ -24,7 +24,6 @@ interface CheckBoxProps {
     isChecked: boolean;
     onPress: () => void;
   }
-
   
   const CheckBox: React.FC<CheckBoxProps> = ({ label, isChecked, onPress }) => (
     <TouchableOpacity onPress={onPress} style={styles.checkBoxContainer}>
