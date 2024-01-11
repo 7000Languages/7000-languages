@@ -24,6 +24,7 @@ import TextToTextActivity from './Activities/TextToText/TextToText.component';
 import AudioToImageActivity from './Activities/AudioToImageActivity/AudioToImageActivity.component';
 import ZoomImageModal from "./ZoomImageModal/ZoomImageModal.component";
 import Help from "./Help/Help.component";
+import Report from "./Report/Report.component";
 
 export {
     PrimaryBtn,
@@ -47,6 +48,7 @@ export {
     CustomSlider,
     ZoomImageModal,
     Help,
+    Report,
 
     // activities
     AudioToTextActivity,

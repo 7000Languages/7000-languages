@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, Pressable } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import styles from './LearnerCourse.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { CourseUnitLessonDesign, CourseUnitLessonItem, FocusAwareStatusBar, Header,Help } from '../../../components'
+import { CourseUnitLessonDesign, CourseUnitLessonItem, FocusAwareStatusBar, Header,Help, Report } from '../../../components'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { SECONDARY_COLOR } from '../../../constants/colors'
@@ -25,6 +25,8 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const { course_id } = route.params
 
   const [helpModalVisible, setHelpModalVisible] = useState(false);
+  const [flagModalVisible, setFlagHelpModalVisible] = useState(false);
+
 
   const openHelpModal = () => {
     setHelpModalVisible(true);
@@ -33,6 +35,14 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const closeHelpModal = () => {
     setHelpModalVisible(false);
   }
+  const openFlagModal = () => {
+    setFlagHelpModalVisible(true);
+  }
+
+  const closeFlagModal = () => {
+    setFlagHelpModalVisible(false);
+  }
+
 
   // unit
   const { useQuery } = realmContext
@@ -96,6 +106,20 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
         </TouchableOpacity>
         }
       />
+       <TouchableOpacity style={styles.settingsContainer} onPress={openFlagModal}>
+          <Ionicons name="flag" size={24} color={"white"} />
+          {flagModalVisible && (
+            <Report
+            isVisible={flagModalVisible}
+            onClose={closeFlagModal} 
+            headerText={'Report Course Content'} 
+            option1={'Inaccurate Content'} 
+            option2={'Offensive Content'} 
+            option3={'Poor Quality Content'} 
+            option4={'Technical Issues'}       
+           />
+          )}
+        </TouchableOpacity>
       <CourseUnitLessonDesign
         item={course!.details.name}
         itemDescription={course!.details.description}
