@@ -65,11 +65,13 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const allVocabsWithImage = useQuery(Vocab).filter(v => (v.local_image_uploaded == true) && v.image.length > 0)
   const allVocabsWithAudio = useQuery(Vocab).filter(v => (v.local_audio_uploaded == true) && v.audio.length > 0)
 
+  console.log("User", user);
+
   let adminCourses = coursesData.filter(
     (course: Course & Realm.Object) => course.admin_id == user.authID,
   );
   let learnerCourses = coursesData.filter((course: Course & Realm.Object) =>
-    user.learnerLanguages.includes(course._id.toString()),
+    user?.learnerLanguages?.includes(course._id.toString()),
   );
 
   const goToContributorCourse = (course_id: string) =>

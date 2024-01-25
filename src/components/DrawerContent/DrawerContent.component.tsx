@@ -42,7 +42,7 @@ const DrawerContent: React.FC = () => {
   const allUnits = useQuery(Unit)
   
   let adminCourses = coursesData.filter((course: Course & Realm.Object) => course.admin_id == (user).authID)
-  let learnerCourses = coursesData.filter((course: Course & Realm.Object) => (user).learnerLanguages.includes((course._id.toString())))
+  let learnerCourses = coursesData.filter((course: Course & Realm.Object) => (user)?.learnerLanguages?.includes((course._id.toString())))
   
   const goToContributorCourse = (course_id: string) => coursesNavigation.navigate('ContributorCourse', { course_id })
   const goToLearnerCourse = (course_id: string) => coursesNavigation.navigate('LearnerCourse', { course_id })

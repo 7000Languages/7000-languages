@@ -81,6 +81,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
         isModalVisible={editModal}
         type="unit"
         unit_id={unit_id}
+        course_id={course._id}
         onCloseModal={() => setEditModal(false)}
       />
       <ManageUnitLessonVocab
