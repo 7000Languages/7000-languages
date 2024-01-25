@@ -3,6 +3,8 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet, TextInput } from 'reac
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import PropTypes from 'prop-types';
 import styles from './Report.style';
+import realm from 'realm';
+import { realmContext } from '../../realm/realm';
 
 interface ReportProps {
   isVisible: boolean;
@@ -12,14 +14,17 @@ interface ReportProps {
   option2: string;
   option3: string;
   option4: string;
+  onSubmit: () => void;
 
 }
+
 
 interface CheckBoxProps {
     label: string;
     isChecked: boolean;
     onPress: () => void;
   }
+
   
   const CheckBox: React.FC<CheckBoxProps> = ({ label, isChecked, onPress }) => (
     <TouchableOpacity onPress={onPress} style={styles.checkBoxContainer}>
@@ -33,7 +38,7 @@ interface CheckBoxProps {
     </TouchableOpacity>
   );
 
-  const Report: React.FC<ReportProps> = ({ isVisible, onClose, headerText, option1, option2, option3, option4 }) => {
+  const Report: React.FC<ReportProps> = ({ isVisible, onClose, headerText, option1, option2, option3, option4, onSubmit }) => {
     const [isChecked1, setChecked1] = useState(false);
     const [isChecked2, setChecked2] = useState(false);
     const [isChecked3, setChecked3] = useState(false);
@@ -119,7 +124,7 @@ interface CheckBoxProps {
                 onChangeText={handleTextFieldChange}
               />
             )}
-            <TouchableOpacity style={styles.submitButton}>
+            <TouchableOpacity style={styles.submitButton} onPress={onSubmit}>
             <Text style={styles.submitButtonText}>Submit</Text>
           </TouchableOpacity>
           </View>

@@ -11,7 +11,10 @@ import {
   Activity,
   ActivityLevel,
   WordMatch,
-  DeletedFile
+  DeletedFile,
+  CourseFlag
+
+  
 } from './schemas'
 
 export const realmContext = createRealmContext({
@@ -26,7 +29,8 @@ export const realmContext = createRealmContext({
     Activity,
     ActivityLevel,
     WordMatch,
-    DeletedFile
+    DeletedFile,
+    CourseFlag
   ],
   schemaVersion: 1,
 });

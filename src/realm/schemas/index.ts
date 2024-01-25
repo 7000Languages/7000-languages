@@ -9,7 +9,7 @@ import Activity from "./Activity";
 import ActivityLevel from "./ActivityLevel";
 import WordMatch from "./WordMatch";
 import DeletedFile from "./DeletedFile";
-
+import CourseFlag from "./CourseFlag";
 export {
     User,
     completes,
@@ -21,5 +21,6 @@ export {
     Activity,
     ActivityLevel,
     WordMatch,
-    DeletedFile
+    DeletedFile,
+    CourseFlag
 }
