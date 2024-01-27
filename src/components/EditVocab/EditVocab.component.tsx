@@ -52,7 +52,6 @@ import AudioRecorderPlayer, {
   OutputFormatAndroidType,
 } from 'react-native-audio-recorder-player';
 import {BSON} from 'realm';
-import {deleteFileFromS3} from '../../utils/s3';
 import { useAppSelector } from '../../redux/store';
 
 type IProps = {
@@ -84,6 +83,7 @@ const EditVocab: React.FC<IProps> = ({
   const [selectingImage, setSelectingImage] = useState(false);
   const [selectingAudio, setSelectingAudio] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [audioExistsInStorage, setAudioExistsInStorage] = useState(false);
 
   // Error states
   const [audioError, setAudioError] = useState('');
@@ -119,10 +119,13 @@ const EditVocab: React.FC<IProps> = ({
     const response = await RNFS.readDir(
       `${baseDirectory}/${vocab?.local_audio_path}`,
     );
-    setPickedAudio({
-      uri:
-        Platform.OS == 'ios' ? response[0].path : 'file://' + response[0].path,
-    });
+    if(response){
+      setPickedAudio({
+        uri:
+          Platform.OS == 'ios' ? response[0].path : 'file://' + response[0].path,
+      });
+      setAudioExistsInStorage(true)
+    }
   };
 
   const playPause = () => {
@@ -439,6 +442,33 @@ const EditVocab: React.FC<IProps> = ({
     resetAudioStates();
   }
 
+  const deleteAudio = () => {
+    let baseDirectory = RNFS.DocumentDirectoryPath;
+    deleteLocalFile(baseDirectory + '/' + vocab!.local_audio_path)
+    .then(() =>{
+      realm.write(()=>{
+        // Mark the image as deleted
+        realm.create('deletedFiles', {
+          _item_id:  vocab?._id.toString(),
+          itemType: 'vocab',
+          fileType: 'audio',
+          filePath: vocab?.audio,
+        });
+        // make it reflect in mongoDB that this image no longer exists
+        getVocab.local_audio_uploaded = false;
+        getVocab.local_audio_path = ''
+        getVocab.audio = ''
+        getVocab.audio_metadata = {
+          audioName: '',
+          audioSize: '',
+          audioType: '',
+        };
+        getVocab.update_at = new Date
+      });
+    })
+    setPickedAudio({ uri: '' })
+  }
+
   const deleteImage = () => {
     let baseDirectory = RNFS.DocumentDirectoryPath;
     deleteLocalFile(baseDirectory + '/' + vocab!.local_image_path)
@@ -468,7 +498,7 @@ const EditVocab: React.FC<IProps> = ({
     setImage(undefined)
     setNewImage(undefined)
   }
-
+  
   const editVocab = async () => {    
     resetErrorStates();
     setLoading(true);
@@ -512,60 +542,46 @@ const EditVocab: React.FC<IProps> = ({
       newAudioFolderPath = `${course?._id}/${unit._id}/${lesson._id}/${uniqueId}/audio`;
       newAudioActualPath = `${course?._id}/${unit._id}/${lesson._id}/${uniqueId}/audio/${audioName}`;
 
-      await deleteLocalFile(`${baseDirectory}/${vocab!.local_audio_path}`)
-        .then(async() => {
-          //console.log('OLD FILE DELETED');
-          await RNFS.mkdir( baseDirectory + '/' + newAudioFolderPath).then(async() => {
-            // COPY the file
-            //console.log('Created File');
-            await RNFS.writeFile(
-              baseDirectory + '/' + newAudioActualPath,
-              audio.data!,
-              'base64',
-            )
-              .then(() => {
-                //console.log("Audio saved!!!");
-                // Add unit with downloaded image to the "downloadedUnits" in storage
-                realm.write(()=>{
-                  realm.create('deletedFiles', {
-                    _item_id: vocab?._id.toString(),
-                    itemType: 'vocab',
-                    fileType: 'audio',
-                    filePath: vocab?.audio,
-                  });
+      await RNFS.mkdir( baseDirectory + '/' + newAudioFolderPath).then(async() => {
+        // COPY the file
+        //console.log('Created File');
+        await RNFS.writeFile(
+          baseDirectory + '/' + newAudioActualPath,
+          audio.data!,
+          'base64',
+        )
+          .then(() => {
+            //console.log("Audio saved!!!");
+            // Add unit with downloaded image to the "downloadedUnits" in storage
+            realm.write(()=>{
+              getVocab.local_audio_path = newAudioFolderPath;
+              getVocab.local_audio_uploaded = false;
+              getVocab.audio_metadata = {
+                audioName: newAudioActualPath,
+                audioSize,
+                audioType,
+              };
 
-                  getVocab.audio = ''
-                  getVocab.local_audio_path = newAudioFolderPath;
-                  getVocab.audio_metadata = {
-                    audioName: newAudioActualPath,
-                    audioSize,
-                    audioType,
-                  };
-                  getVocab.local_audio_uploaded = false;
-
-                });
-                setSelectingAudio(false)
-              })
-              .catch(err => {
-                //console.log(err.message);
-              });
+            });
+            setSelectingAudio(false)
+          })
+          .catch(err => {
+            //console.log(err.message);
           });
-        })
-        // `unlink` will throw an error, if the item to unlink does not exist
-        .catch(err => {
-          //console.log(err.message);
-        });
+      });
+      
     }
-
-    let newImageFolderPath = '';
-    let newImageActualPath = '';
-    let imageName = '';
-    let imageSize = '';
-    let imageHeight = '';
-    let imageWidth = '';
-    let imageType = '';
-
+    
     if (typeof newImage !== undefined && newImage) {
+
+      let newImageFolderPath = '';
+      let newImageActualPath = '';
+      let imageName = '';
+      let imageSize = '';
+      let imageHeight = '';
+      let imageWidth = '';
+      let imageType = '';
+      
       //console.log("Here");
       imageName =
         Platform.OS == 'android'
@@ -593,14 +609,6 @@ const EditVocab: React.FC<IProps> = ({
             //console.log('Image saved!!!');
             realm.write(() => {
 
-              //console.log(
-              //   newImageFolderPath,
-              //   newImageActualPath,
-              //   imageSize,
-              //   imageHeight,
-              //   imageType,
-              //   imageWidth
-              // )
               getVocab.image = ''
               getVocab.local_image_path = newImageFolderPath;
               getVocab.image_metadata = {

@@ -42,7 +42,7 @@ const DrawerContent: React.FC = () => {
   const allUnits = useQuery(Unit)
   
   let adminCourses = coursesData.filter((course: Course & Realm.Object) => course.admin_id == (user).authID)
-  let learnerCourses = coursesData.filter((course: Course & Realm.Object) => (user).learnerLanguages.includes((course._id.toString())))
+  let learnerCourses = coursesData.filter((course: Course & Realm.Object) => (user)?.learnerLanguages?.includes((course._id.toString())))
   
   const goToContributorCourse = (course_id: string) => coursesNavigation.navigate('ContributorCourse', { course_id })
   const goToLearnerCourse = (course_id: string) => coursesNavigation.navigate('LearnerCourse', { course_id })
@@ -116,7 +116,7 @@ const DrawerContent: React.FC = () => {
         }
         <View style={styles.applyContainer}>
           <Text style={styles.learnerQuestion}>
-            Do you know an indigenous language that you would like to share with
+            Do you know an Indigenous language that you would like to share with
             the world?
             <Text style={{ fontWeight: "bold" }}> Become a contributor.</Text>
           </Text>
