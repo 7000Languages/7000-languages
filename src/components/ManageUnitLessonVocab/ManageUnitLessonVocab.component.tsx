@@ -36,7 +36,7 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
 
     const presentingData = data.filter((d: any) => !d.hidden)
     
-    console.log("presentingData", presentingData);
+    // console.log("presentingData", presentingData);
     
     const hiddenData = data.filter((d: any) => d.hidden)
 
@@ -47,7 +47,7 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
                 
         let difference = to - from
 
-        let copied = {...data}
+        let copied = [...presentingData]
 
         if(difference > 0){
             realm.write(() => {
@@ -78,16 +78,32 @@ const ManageUnitLessonVocab: React.FC<IProps> = ({ type, data, isModalVisible, o
     }
 
     const hide = (item: any) => {
+      let copied = [...presentingData];
+      let orderOfItemToHide = item._order;
+      let orderOfLastItem = copied[copied.length - 1]._order;
+
+      if (item.hidden) {
         realm.write(() => {
-            item.hidden = !item.hidden
-        })
-    }
+          item._order = orderOfLastItem + 1;
+          item.hidden = !item.hidden;
+        });
+        return;
+      }
+
+      realm.write(() => {
+        for (let i = orderOfItemToHide + 1; i < presentingData.length; i++) {
+          copied[i]._order = i - 1;
+        }
+        item._order = Number.POSITIVE_INFINITY;
+        item.hidden = !item.hidden;
+      });
+    };
 
     const deleteItem = (item: any) => {
-        let copied = {...data}
+        let copied = [...presentingData]
         let orderOfItemToDelete = item._order
         realm.write(() => {
-            for (let i = orderOfItemToDelete + 1; i < data.length; i++) {
+            for (let i = orderOfItemToDelete + 1; i < presentingData.length; i++) {
                copied[i]._order = i-1 ;
             }
             realm.delete(item);

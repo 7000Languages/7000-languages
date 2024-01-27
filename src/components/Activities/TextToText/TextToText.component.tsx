@@ -124,6 +124,17 @@ import { setUser } from '../../../redux/slices/authSlice';
         setCorrectNess('');
       }, 1000);
     };
+    const onPressBack = () => {
+      if (currentActivityLevelIndex > 0) {
+        setCurrentActivityLevelIndex(prev => prev - 1);
+      }
+    };
+  
+    const onPressForward = () => {
+      if (currentActivityLevelIndex < activityLevels.length - 1) {
+        setCurrentActivityLevelIndex(prev => prev + 1);
+      }
+    };
 
     const addToMatches = (originalOrTranslation: string, section: string) => {
       let newMatch = currentMatch
@@ -195,6 +206,14 @@ import { setUser } from '../../../redux/slices/authSlice';
           <Text style={[styles.correctNess, {color: correctNessColor}]}>
           {correctNess}
           </Text>
+          <View style={styles.arrowContainer}>
+          <Pressable onPress={onPressBack} style={styles.arrowButton}>
+            <Ionicons name="arrow-back-outline" size={30} />
+          </Pressable>
+          <Pressable onPress={onPressForward} style={styles.arrowButton2}>
+            <Ionicons name="arrow-forward-outline" size={30} />
+          </Pressable>
+        </View>
           <View style={styles.textsContainer}>
             <View style={styles.left}>
               {randomOriginalWords.map((word, index) => {

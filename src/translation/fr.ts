@@ -121,6 +121,8 @@ export default {
     },
     dialogue: {
       thankYou: "Merci d'avoir contribué à votre langue !",
+      noAdminCourse: "Contribuez votre langue aujourd'hui !",
+      continueEditing: 'Consultez et continuez à modifier votre cours ici:',
       joinOrStartCourse: 'Rejoignez ou commencez un cours!',
       invalidCode: 'Code invalide fourni pour le cours privé',
       activityInstructions:
@@ -152,6 +154,7 @@ export default {
         'Lorsque vous mettez à jour une leçon, pensez à la façon dont elle sera utilisée.',
       notLearnerPrompt:
         'Il semble que vous ne soyez pas encore un apprenant dans aucun cours.',
+      yesLearnerPrompt: 'Prêt à apprendre? Revenez à l`un de vos cours :',
       ourMission:
         "Notre mission est d'aider les communautés à enseigner, apprendre et maintenir leurs langues menacées.",
       supportRevitalization:
@@ -173,7 +176,7 @@ export default {
       contributorThanks:
         "Merci de l'intérêt que vous portez à la contribution d'une langue.",
       applicationFeedback:
-        "Nous espérons que cette application soutiendra vos efforts de revitalisation linguistique de revitalisation linguistique. Nous avons quelques questions à vous poser et nous reviendrons vers vous dans 1 à 2 semaines. dans 1 à 2 semaines. Si elle est approuvée, votre cours apparaîtra sur votre page d'accueil.",
+        "Nous espérons que cette application soutiendra vos efforts de revitalisation linguistique de revitalisation linguistique. Nous avons quelques questions à vous poser et nous reviendrons vers vous dans 1 à 2 semaines. dans 1 à 2 semaines. Une fois approuvé, votre cours apparaîtra sur votre page d'accueil.",
       languageDescriptionPrompt:
         'Décrivez en une ou deux phrases votre langue et/ou votre culture. Cette description sera montrée aux apprenants de ce cours.',
       alternativeNamesPrompt: 'Des noms alternatifs ?',
@@ -240,6 +243,11 @@ export default {
     locales: {
       en: 'Englais',
       fr: 'Francais',
+      es: 'Español'
+    },
+    localesTranslated: {
+      en: 'English',
+      fr: 'Français',
       es: 'Español'
     }
   }

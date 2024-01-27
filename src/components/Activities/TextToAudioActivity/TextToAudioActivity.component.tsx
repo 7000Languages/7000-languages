@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     Platform,
     Alert,
+    Pressable
   } from 'react-native';
   import React, {useEffect, useMemo, useState} from 'react';
   import RNFS from 'react-native-fs';
@@ -153,6 +154,18 @@ import { setUser } from '../../../redux/slices/authSlice';
     useEffect(() => {
       getAudios()
     }, [currentActivityLevelIndex])
+
+    const onPressBack = () => {
+      if (currentActivityLevelIndex > 0) {
+        setCurrentActivityLevelIndex(prev => prev - 1);
+      }
+    };
+  
+    const onPressForward = () => {
+      if (currentActivityLevelIndex < activityLevels.length - 1) {
+        setCurrentActivityLevelIndex(prev => prev + 1);
+      }
+    };
         
     return (
       <View style={styles.container}>
@@ -166,6 +179,15 @@ import { setUser } from '../../../redux/slices/authSlice';
           <Text style={[styles.correctNess, {color: correctNessColor}]}>
             {correctNess}
           </Text>
+          <View style={styles.arrowContainer}>
+          <Pressable onPress={onPressBack} style={styles.arrowButton}>
+            <Ionicons name="arrow-back-outline" size={30} />
+          </Pressable>
+          <Pressable onPress={onPressForward} style={styles.arrowButton2}>
+            <Ionicons name="arrow-forward-outline" size={30} />
+          </Pressable>
+        </View>
+          
           <View style={styles.options}>
             {audios.map((option, index) => {
               let rightOption =

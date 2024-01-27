@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity, Platform, Image, ScrollView } from 'react-native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import React, {useEffect, useState} from 'react';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Platform,
+  Image,
+  ScrollView,
+} from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Feather from 'react-native-vector-icons/Feather';
 import RNFS from 'react-native-fs';
 
@@ -29,11 +36,11 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Lesson from '../../../realm/schemas/Lesson';
 import Vocab from '../../../realm/schemas/Vocab';
 
-const { useRealm, useQuery } = realmContext;
+const {useRealm, useQuery} = realmContext;
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'Home'>;
 
-const Home: React.FC<NavProps> = ({ navigation }) => {
+const Home: React.FC<NavProps> = ({navigation}) => {
   const realm = useRealm();
 
   const [downloadedUnits, setDownloadedUnits] = useState<{ downloadedDate: Date, _id: string }[]>([]);
@@ -44,10 +51,13 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
   const user: UserType = useAppSelector(state => state.auth.user);
 
   const userGoogleInfo = useAppSelector(state => state.auth.userGoogleInfo);
-  const { i18n } = useAppSelector(state => state.locale);
-  const downloadedVocabs = useAppSelector(state => state.vocabs.downloadedVocabs);
+  const {i18n} = useAppSelector(state => state.locale);
+  const downloadedVocabs = useAppSelector(
+    state => state.vocabs.downloadedVocabs,
+  );
 
-  const coursesNavigation = useNavigation<NativeStackNavigationProp<CourseStackParamList>>()
+  const coursesNavigation =
+    useNavigation<NativeStackNavigationProp<CourseStackParamList>>();
 
   const coursesData = useQuery(Course)
   const allUnits = useQuery(Unit)
@@ -55,28 +65,28 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
   const allVocabsWithImage = useQuery(Vocab).filter(v => (v.local_image_uploaded == true) && v.image.length > 0)
   const allVocabsWithAudio = useQuery(Vocab).filter(v => (v.local_audio_uploaded == true) && v.audio.length > 0)
 
-  let adminCourses = coursesData.filter((course: Course & Realm.Object) => course.admin_id == (user).authID)
-  let learnerCourses = coursesData.filter((course: Course & Realm.Object) => (user).learnerLanguages.includes((course._id.toString())))
+  console.log("User", user);
 
-  const goToContributorCourse = (course_id: string) => coursesNavigation.navigate('ContributorCourse', { course_id })
-  const goToLearnerCourse = (course_id: string) => coursesNavigation.navigate('LearnerCourse', { course_id })
-  const dispatch = useAppDispatch()
+  let adminCourses = coursesData.filter(
+    (course: Course & Realm.Object) => course.admin_id == user.authID,
+  );
+  let learnerCourses = coursesData.filter((course: Course & Realm.Object) =>
+    user?.learnerLanguages?.includes(course._id.toString()),
+  );
+
+  const goToContributorCourse = (course_id: string) =>
+    coursesNavigation.navigate('ContributorCourse', {course_id});
+  const goToLearnerCourse = (course_id: string) =>
+    coursesNavigation.navigate('LearnerCourse', {course_id});
+  const dispatch = useAppDispatch();
 
   realm.subscriptions.update(subs => {
-    subs.add(
-      realm
-        .objects('activityLevels'),
-      {
-        name: 'activityLevelSubscription',
-      },
-    );
-    subs.add(
-      realm
-        .objects('activities'),
-      {
-        name: 'activitySubscription',
-      },
-    );
+    subs.add(realm.objects('activityLevels'), {
+      name: 'activityLevelSubscription',
+    });
+    subs.add(realm.objects('activities'), {
+      name: 'activitySubscription',
+    });
   });
 
   /**
@@ -105,28 +115,27 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
   let vocabsWithLocalFiles: any = useQuery(Vocab).filter(
     (vocab: any) =>
       vocab._user_id == user._id &&
-      ((vocab.local_image_path.length > 0 && vocab.local_image_uploaded == false) ||
-        (vocab.local_audio_path.length > 0 && vocab.local_audio_uploaded == false)),
+      ((vocab.local_image_path.length > 0 &&
+        vocab.local_image_uploaded == false) ||
+        (vocab.local_audio_path.length > 0 &&
+          vocab.local_audio_uploaded == false)),
   );
 
   // Units, Lessons and Vocab images and audios that have not been downloaded yet
   const getUnitsNotDownloaded = (unitsDownloaded: any) => {    
     let unitsNotDownloaded = allUnits.filter(
-      (unit) =>
-        ((user).adminLanguages.includes(
-          unit._course_id,
-        ) ||
-          (user).learnerLanguages.includes(
-            unit._course_id,
-          ))
-        &&
-        !(unitsDownloaded.map((u:any) => u._id.toString()).includes(unit._id.toString())),
+      unit =>
+        (user.adminLanguages.includes(unit._course_id) ||
+          user.learnerLanguages.includes(unit._course_id)) &&
+        !unitsDownloaded
+          .map((u: any) => u._id.toString())
+          .includes(unit._id.toString()),
     );
-    
+
     setTimeout(() => {
-      downloadUnitFilesFromS3(unitsNotDownloaded)
+      downloadUnitFilesFromS3(unitsNotDownloaded);
     }, 2000);
-  }
+  };
 
   const getLessonsNotDownloaded = (lessonsDownloaded: any) => {
     let lessonsNotDownloaded: any = allLessons.filter(
@@ -141,9 +150,9 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
         !(lessonsDownloaded.map((l:any) => l._id.toString()).includes(lesson._id.toString()))
     );
     setTimeout(() => {
-      downloadLessonFilesFromS3(lessonsNotDownloaded)
+      downloadLessonFilesFromS3(lessonsNotDownloaded);
     }, 2000);
-  }
+  };
 
   const getVocabImagesNotDownloaded = (vocabImagesNotDownloaded: any) => {
     let vocabsNotDownloaded: any = allVocabsWithImage.filter(
@@ -264,7 +273,7 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
   // Uploading Unit, Lesson, and Vocab files to S3
   const uploadLocalUnitFilesTos3 = async () => {
     for (let unitWithLocalFiles of unitsWithLocalFiles) {
-      const { fileName, fileSize, height, type, width } =
+      const {fileName, fileSize, height, type, width} =
         unitWithLocalFiles.image_metadata;
       const response = await RNFS.readDir(
         `${baseDirectory}/${unitWithLocalFiles.local_image_path}`,
@@ -300,7 +309,7 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
 
   const uploadLocalLessonFilesTos3 = async () => {
     for (let lessonWithLocalFiles of lessonsWithLocalFiles) {
-      const { fileName, fileSize, height, type, width } =
+      const {fileName, fileSize, height, type, width} =
         lessonWithLocalFiles.image_metadata;
       const response = await RNFS.readDir(
         `${baseDirectory}/${lessonWithLocalFiles.local_image_path}`,
@@ -328,7 +337,8 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
       if (resultToUpload) {
         realm.write(() => {
           lessonWithLocalFiles.local_image_uploaded = true;
-          lessonWithLocalFiles.image = lessonWithLocalFiles.image_metadata.fileName;
+          lessonWithLocalFiles.image =
+            lessonWithLocalFiles.image_metadata.fileName;
         });
       }
     }
@@ -336,8 +346,10 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
 
   const uploadLocalVocabFilesTos3 = async () => {
     for (let vocabWithLocalFiles of vocabsWithLocalFiles) {
-      const { imageName, imageSize, imageHeight, imageType, imageWidth } = vocabWithLocalFiles.image_metadata;
-      const { audioName, audioSize, audioType } = vocabWithLocalFiles.audio_metadata;
+      const {imageName, imageSize, imageHeight, imageType, imageWidth} =
+        vocabWithLocalFiles.image_metadata;
+      const {audioName, audioSize, audioType} =
+        vocabWithLocalFiles.audio_metadata;
 
       // For image upload
       if (vocabWithLocalFiles.local_image_path.length > 0) {
@@ -353,7 +365,10 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
           imageHeight,
           imageType,
           imageWidth,
-          uri: Platform.OS == 'android' ? 'file://' + imageFile.path : imageFile.path,
+          uri:
+            Platform.OS == 'android'
+              ? 'file://' + imageFile.path
+              : imageFile.path,
         };
 
         const imageResultToUpload = await uploadFileToS3(
@@ -368,10 +383,10 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
         if (imageResultToUpload) {
           realm.write(() => {
             vocabWithLocalFiles.local_image_uploaded = true;
-            vocabWithLocalFiles.image = vocabWithLocalFiles.image_metadata.imageName;
+            vocabWithLocalFiles.image =
+              vocabWithLocalFiles.image_metadata.imageName;
           });
         }
-
       }
 
       // For audio upload
@@ -386,7 +401,10 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
           audioName,
           audioSize,
           audioType,
-          uri: Platform.OS == 'android' ? 'file://' + audioFile.path : audioFile.path,
+          uri:
+            Platform.OS == 'android'
+              ? 'file://' + audioFile.path
+              : audioFile.path,
         };
 
         //console.log("Audio to upload", audioToUpload);
@@ -403,7 +421,8 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
         if (audioResultToUpload) {
           realm.write(() => {
             vocabWithLocalFiles.local_audio_uploaded = true;
-            vocabWithLocalFiles.audio = vocabWithLocalFiles.audio_metadata.audioName;
+            vocabWithLocalFiles.audio =
+              vocabWithLocalFiles.audio_metadata.audioName;
           });
         }
       }
@@ -418,9 +437,13 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
         const resultToSave = await getFileFromS3(unitNotDownloaded.image);
 
         // Convert to base64 string
-        const streamToString = await resultToSave.Body?.transformToString("base64");
+        const streamToString = await resultToSave.Body?.transformToString(
+          'base64',
+        );
 
-        await RNFS.mkdir(baseDirectory + '/' + unitNotDownloaded.local_image_path).then(() => {
+        await RNFS.mkdir(
+          baseDirectory + '/' + unitNotDownloaded.local_image_path,
+        ).then(() => {
           // COPY the file
           RNFS.writeFile(
             baseDirectory + '/' + unitNotDownloaded.image,
@@ -429,9 +452,12 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
           )
             .then(() => {
               // Add unit with downloaded image to the "downloadedUnits" in storage
-              let newDownloadedUnit = { downloadedDate: new Date(), _id: unitNotDownloaded._id.toString() };
+              let newDownloadedUnit = {
+                downloadedDate: new Date(),
+                _id: unitNotDownloaded._id.toString(),
+              };
               console.log('newDownloadedUnit', newDownloadedUnit);
-              setDownloadedUnits(prev => [...prev, newDownloadedUnit])
+              setDownloadedUnits(prev => [...prev, newDownloadedUnit]);
             })
             .catch(err => {
               //console.log(err.message);
@@ -439,18 +465,21 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
         });
       }
     }
-  }
+  };
 
   const downloadLessonFilesFromS3 = async (lessonsNotDownloaded: any) => {
     for (let lessonNotDownloaded of lessonsNotDownloaded) {
       if (lessonNotDownloaded.image.length > 0) {
-
         const resultToSave = await getFileFromS3(lessonNotDownloaded.image);
 
         // Convert to base64 string
-        const streamToString = await resultToSave.Body?.transformToString("base64");
+        const streamToString = await resultToSave.Body?.transformToString(
+          'base64',
+        );
 
-        await RNFS.mkdir(baseDirectory + '/' + lessonNotDownloaded.local_image_path).then(() => {
+        await RNFS.mkdir(
+          baseDirectory + '/' + lessonNotDownloaded.local_image_path,
+        ).then(() => {
           // COPY the file
           RNFS.writeFile(
             baseDirectory + '/' + lessonNotDownloaded.image,
@@ -458,10 +487,13 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
             'base64',
           )
             .then(() => {
-             // Add lesson with downloaded image to the "downloadedLessons" in storage
-             let newDownloadedLesson = { downloadedDate: new Date(), _id: lessonNotDownloaded._id.toString() };
-             console.log('newDownloadedLesson', newDownloadedLesson);
-             setDownloadedLessons(prev => [...prev, newDownloadedLesson])
+              // Add lesson with downloaded image to the "downloadedLessons" in storage
+              let newDownloadedLesson = {
+                downloadedDate: new Date(),
+                _id: lessonNotDownloaded._id.toString(),
+              };
+              console.log('newDownloadedLesson', newDownloadedLesson);
+              setDownloadedLessons(prev => [...prev, newDownloadedLesson]);
             })
             .catch(err => {
               //console.log(err.message);
@@ -469,7 +501,7 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
         });
       }
     }
-  }
+  };
 
   const downloadVocabImageFilesFromS3 = async (vocabsNotDownloaded: any) => {
     for (let vocabNotDownloaded of vocabsNotDownloaded) {
@@ -477,9 +509,12 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
         const imageResultToSave = await getFileFromS3(vocabNotDownloaded.image);
 
         // Convert to base64 string
-        const imageStreamToString = await imageResultToSave.Body?.transformToString("base64");
+        const imageStreamToString =
+          await imageResultToSave.Body?.transformToString('base64');
 
-        await RNFS.mkdir(baseDirectory + '/' + vocabNotDownloaded.local_image_path).then(() => {
+        await RNFS.mkdir(
+          baseDirectory + '/' + vocabNotDownloaded.local_image_path,
+        ).then(() => {
           // COPY the image file
           RNFS.writeFile(
             baseDirectory + '/' + vocabNotDownloaded.image,
@@ -506,9 +541,12 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
         const audioResultToSave = await getFileFromS3(vocabNotDownloaded.audio);
 
         // Convert to base64 string
-        const audioStreamToString = await audioResultToSave.Body?.transformToString("base64");
+        const audioStreamToString =
+          await audioResultToSave.Body?.transformToString('base64');
 
-        await RNFS.mkdir(baseDirectory + '/' + vocabNotDownloaded.local_audio_path).then(() => {
+        await RNFS.mkdir(
+          baseDirectory + '/' + vocabNotDownloaded.local_audio_path,
+        ).then(() => {
           // COPY the audio file
           RNFS.writeFile(
             baseDirectory + '/' + vocabNotDownloaded.audio,
@@ -527,14 +565,13 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
         });
       }
     }
-  }
+  };
 
 
   useEffect(() => {
+    getDownloadedUnits();
 
-    getDownloadedUnits()
-
-    getDownloadedLessons()
+    getDownloadedLessons();
 
     getDownloadedVocabsWithImage()
 
@@ -545,9 +582,11 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
     uploadLocalLessonFilesTos3();
 
     uploadLocalVocabFilesTos3();
-
   }, []);
 
+  useEffect(() => {
+    if (downloadedUnits.length > 0) save('downloadedUnits', downloadedUnits);
+  }, [downloadedUnits]);
 
   useEffect(() => {
     if(downloadedUnits.length > 0)
@@ -575,7 +614,10 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image style={styles.backgroundImage} source={require("../../../../assets/images/homeBackgroundImage.png")} />
+      <Image
+        style={styles.backgroundImage}
+        source={require('../../../../assets/images/homeBackgroundImage.png')}
+      />
 
       <FocusAwareStatusBar
         backgroundColor={PRIMARY_COLOR}
@@ -585,7 +627,7 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
 
       <Header
         title="Home"
-        headerStyle={{ backgroundColor: PRIMARY_COLOR }}
+        headerStyle={{backgroundColor: PRIMARY_COLOR}}
         leftIcon={
           <Feather
             name="menu"
@@ -598,25 +640,26 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
 
       <ScrollView>
         <View style={styles.content}>
-
           <Text style={styles.welcomeText}>
             {i18n.t('dict.welcome')}, {userGoogleInfo.givenName}!
           </Text>
 
-          {user.learnerLanguages.length == 0 &&
+          {user.learnerLanguages.length == 0 && (
             <Text style={styles.learnerText}>
               {i18n.t('dialogue.notLearnerPrompt')}
             </Text>
-          }
-          {user.learnerLanguages.length > 0 &&
+          )}
+          {user.learnerLanguages.length > 0 && (
             <Text style={styles.learnerText}>
               {i18n.t('dialogue.yesLearnerPrompt')}
             </Text>
-          }
+          )}
 
-          {
-            learnerCourses.map((course: Course & Realm.Object, index: number) => {
-              const units = (allUnits).filter((unit: Unit & Realm.Object) => unit._course_id == course._id)
+          {learnerCourses.map(
+            (course: Course & Realm.Object, index: number) => {
+              const units = allUnits.filter(
+                (unit: Unit & Realm.Object) => unit._course_id == course._id,
+              );
               return (
                 <CourseUnitItem
                   title={course.details.name}
@@ -626,11 +669,11 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
                   backgroundColor="transparent"
                   key={course._id}
                   onPress={() => goToLearnerCourse(course._id)}
-                  section='learner'
+                  section="learner"
                 />
-              )
-            })
-          }
+              );
+            },
+          )}
 
           <PrimaryBtn
             label={i18n.t('actions.searchCourses')}
@@ -641,47 +684,39 @@ const Home: React.FC<NavProps> = ({ navigation }) => {
           />
           <View style={styles.divider} />
 
-          {adminCourses.length > 0 &&
+          {adminCourses.length > 0 && (
             <Text style={styles.missionStatement}>
-              {i18n.t('dialogue.thankYou')}{' '}
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                }}>{`\n View and continue editing your course here: `}</Text>
+              {i18n.t('dialogue.thankYou')} {'\n'}
+              <Text style={{fontWeight: 'bold'}}>
+                {i18n.t('dialogue.continueEditing')}
+              </Text>
             </Text>
-          }
-          {adminCourses.length == 0 &&
+          )}
+          {adminCourses.length == 0 && (
             <Text style={styles.missionStatement}>
               {i18n.t('dialogue.noAdminCourse')}{' '}
             </Text>
-          }
+          )}
 
-          {
-            adminCourses.map((course: Course & Realm.Object, index: number) => {
-              const units = (allUnits).filter((unit: Unit & Realm.Object) => unit._course_id == course._id)
-              //console.log(adminCourses);
+          {adminCourses.map((course: Course & Realm.Object, index: number) => {
+            const units = allUnits.filter(
+              (unit: Unit & Realm.Object) => unit._course_id == course._id,
+            );
+            console.log(adminCourses);
 
-              return (
-                <CourseUnitItem
-                  title={course.details.name}
-                  numOfSubItems={units.length}
-                  type="course"
-                  index={index + 1}
-                  backgroundColor="#F9F9F9"
-                  key={course._id}
-                  onPress={() => goToContributorCourse(course._id)}
-                  section='contributor'
-                />
-              )
-            })
-          }
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate('BecomeContributor')}>
-            <Text style={styles.becomeText}>
-              {i18n.t('actions.becomeContributor')}
-            </Text>
-          </TouchableOpacity>
+            return (
+              <CourseUnitItem
+                title={course.details.name}
+                numOfSubItems={units.length}
+                type="course"
+                index={index + 1}
+                backgroundColor="#F9F9F9"
+                key={course._id}
+                onPress={() => goToContributorCourse(course._id)}
+                section="contributor"
+              />
+            );
+          })}
         </View>
       </ScrollView>
     </View>

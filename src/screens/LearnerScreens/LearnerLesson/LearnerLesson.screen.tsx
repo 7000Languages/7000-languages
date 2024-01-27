@@ -1,11 +1,11 @@
-import React, { } from 'react'
+import React, {useState } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import styles from './LearnerLesson.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { CourseUnitLessonDesign, FocusAwareStatusBar, Header } from '../../../components'
+import { CourseUnitLessonDesign, FocusAwareStatusBar, Header, Help } from '../../../components'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../../constants/colors'
@@ -19,6 +19,15 @@ type NavProps = NativeStackScreenProps<CourseStackParamList, 'LearnerLesson'>
 
 const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
+  const [helpModalVisible, setHelpModalVisible] = useState(false);
+
+  const openHelpModal = () => {
+    setHelpModalVisible(true);
+  }
+
+  const closeHelpModal = () => {
+    setHelpModalVisible(false);
+  }
   const { lesson_id } = route.params
   const { useQuery } = realmContext
 
@@ -55,9 +64,18 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
         headerStyle={{ backgroundColor: SECONDARY_COLOR }}
         leftIcon={<Feather name="arrow-left" size={24} color="#ffffff" onPress={()=>navigation.goBack()} />}
         rightIcon={
-          <TouchableOpacity style={styles.helpContainer}>
-            <Ionicons name="help" size={20} color={SECONDARY_COLOR} />
-          </TouchableOpacity>
+          <TouchableOpacity style={styles.helpContainer} onPress={openHelpModal}>
+          <Ionicons name="help" size={20} color={SECONDARY_COLOR} />
+          {helpModalVisible && (
+          <Help
+          isVisible={helpModalVisible}
+          onClose={closeHelpModal}
+          headerText="Lesson & Vocabulary Help"
+          midHeaderText="Exploring Lessons"
+          bodyText="Lessons are your learning materials. This lesson screen contains the vocabulary items and various activities. Each vocabulary contains audio, images and translated text to help you learn. First, review the vocabulary and their translations, then try an activity!"
+        />
+          )}
+        </TouchableOpacity>
         }
       />
       <CourseUnitLessonDesign

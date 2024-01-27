@@ -124,6 +124,7 @@ export default {
     dialogue: {
       thankYou: "Thanks for contributing your language!",
       noAdminCourse: "Contribute your language today!",
+      continueEditing: 'View and continue editing your course here:',
       joinOrStartCourse: 'Join or start a course!',
       invalidCode: 'Invalid code provided for private course',
       activityInstructions:
@@ -151,7 +152,7 @@ export default {
       updateUnit: 'When updating a unit, think about how it will be used.',
       updateLesson: 'When updating a lesson, think about how it will be used.',
       notLearnerPrompt: `Looks like you aren't a learner in\n any courses yet!`,
-      yesLearnerPrompt: 'Continue learning your courses here:',
+      yesLearnerPrompt: 'Ready to learn? Jump back into one of your course(s):',
       ourMission:
         `Our mission is to help communities\n teach, learn, and sustain their\n endangered languages.`,
       supportRevitalization: "We'd love to support your revitalization efforts.",
@@ -172,7 +173,7 @@ export default {
       applicationSuccess: 'You have succesfully submitted your application!',
       contributorThanks: 'Thanks for your interest in contributing a language.',
       applicationFeedback:
-        'We hope this app will support your language revitalization efforts. We have a few questions for you before your course can be approved and created. If approved, your course will appear on your home page.',
+        'We hope this app will support your language revitalization efforts. We have a few questions for you before your course can be approved and created. When approved, your course will appear on your home page.',
       languageDescriptionPrompt:
         'Provide a 1-2 sentence description of your language and/or culture. This will be shown to learners in this course.',
       teachingLanguagePrompt:
@@ -236,6 +237,11 @@ export default {
       en: 'English',
       fr: 'French',
       es: 'Spanish'
+    },
+    localesTranslated: {
+      en: 'English',
+      fr: 'Français',
+      es: 'Español'
     }
   }
   

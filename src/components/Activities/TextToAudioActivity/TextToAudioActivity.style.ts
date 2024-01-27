@@ -102,6 +102,16 @@ const styles = StyleSheet.create({
   },
   selectAudioText: {
     fontSize: 16
+  },
+  arrowContainer: {
+    flexDirection: 'row',
+    marginLeft: 70,
+  },
+  arrowButton: {
+    marginLeft: 20,
+  },
+  arrowButton2: {
+    marginHorizontal: 149,
   }
 });
 

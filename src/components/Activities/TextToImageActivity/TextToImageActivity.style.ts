@@ -109,6 +109,17 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '90%',
     borderRadius: 4
+  },
+  arrowContainer: {
+    flexDirection: 'row',
+    marginLeft: 70,
+
+  },
+  arrowButton: {
+    marginLeft: 20,
+  },
+  arrowButton2: {
+    marginHorizontal: 149,
   }
 });
 

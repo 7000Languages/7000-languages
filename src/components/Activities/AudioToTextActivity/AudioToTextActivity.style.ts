@@ -48,6 +48,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontSize: 18
   },
+  arrowContainer: {
+    flexDirection: 'row',
+    marginLeft: 70,
+  },
+  arrowButton: {
+    marginLeft: 20,
+  },
+  arrowButton2: {
+    marginHorizontal: 149,
+  }
 });
 
 export default styles

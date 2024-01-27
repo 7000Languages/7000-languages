@@ -111,6 +111,7 @@ const Activity: React.FC<NavProps> = ({ navigation, route }) => {
               <Text>No activities for this lesson</Text>
             </View>
       }
+      
     </View>
   );
 };

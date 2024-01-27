@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, Image, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 import styles from './StartActivity.style'
@@ -10,6 +10,8 @@ import { SECONDARY_COLOR } from '../../../constants/colors'
 import { realmContext } from '../../../realm/realm'
 import { convertToArrayOfPlainObject } from '../../../utils/helpers'
 import { Activity, ActivityType } from '../../../@types'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'StartActivity'>
 

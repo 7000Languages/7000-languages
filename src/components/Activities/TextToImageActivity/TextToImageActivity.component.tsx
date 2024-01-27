@@ -2,7 +2,8 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Image
+    Image,
+    Pressable
   } from 'react-native';
   import React, {useEffect, useState} from 'react';
   import RNFS from 'react-native-fs';
@@ -18,6 +19,7 @@ import { realmContext } from '../../../realm/realm';
 import { BSON } from 'realm';
 import { convertToPlainObject } from '../../../utils/helpers';
 import { save } from '../../../utils/storage';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { setUser } from '../../../redux/slices/authSlice';
   
   type IProps = {
@@ -95,6 +97,18 @@ import { setUser } from '../../../redux/slices/authSlice';
     useEffect(() => {
       getImages()
     }, [currentActivityLevelIndex])
+
+    const onPressBack = () => {
+      if (currentActivityLevelIndex > 0) {
+        setCurrentActivityLevelIndex(prev => prev - 1);
+      }
+    };
+  
+    const onPressForward = () => {
+      if (currentActivityLevelIndex < activityLevels.length - 1) {
+        setCurrentActivityLevelIndex(prev => prev + 1);
+      }
+    };
     
     return (
       <View style={styles.container}>
@@ -108,6 +122,14 @@ import { setUser } from '../../../redux/slices/authSlice';
           <Text style={[styles.correctNess, {color: correctNessColor}]}>
             {correctNess}
           </Text>
+          <View style={styles.arrowContainer}>
+          <Pressable onPress={onPressBack} style={styles.arrowButton}>
+            <Ionicons name="arrow-back-outline" size={30} />
+          </Pressable>
+          <Pressable onPress={onPressForward} style={styles.arrowButton2}>
+            <Ionicons name="arrow-forward-outline" size={30} />
+          </Pressable>
+        </View>
           <View style={styles.options}>
             {images.map((image, index) => {
               let rightOption =
