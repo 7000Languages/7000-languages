@@ -27,18 +27,22 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const [helpModalVisible, setHelpModalVisible] = useState(false);
   const [flagModalVisible, setFlagHelpModalVisible] = useState(false);
 
-  const flagCourse = () => {
+  const flagCourse = (selectedOptions: string[], additionalReason: string) => {
     let courseFlag!: Realm.Object;
   
     realm.write(async () => {
       courseFlag = realm.create('courseFlags', {
-        _course_id: '', 
-        reason: ['','','',''],  
-        additionalReason: ''  
+        _course_id: course_id.toString(),
+        reason: selectedOptions,
+        additionalReason: additionalReason
       });
     });
   };
 
+  const onSubmitFlag = (selectedOptions: string[], additionalReason: string) => {
+    flagCourse(selectedOptions, additionalReason);
+    closeFlagModal();
+  };
   
   const openHelpModal = () => {
     setHelpModalVisible(true);
@@ -75,11 +79,6 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
         item.hidden = hidden ? true : false
     })
     }
-
-
-
-
-   
 
     return (
       <CourseUnitLessonItem
@@ -134,7 +133,7 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
             option2={'Offensive Content'} 
             option3={'Poor Quality Content'} 
             option4={'Technical Issues'}
-            onSubmit={flagCourse}
+            onSubmit={onSubmitFlag}
            />
           )}
         </TouchableOpacity>
