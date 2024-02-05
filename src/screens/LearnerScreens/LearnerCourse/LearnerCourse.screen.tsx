@@ -27,6 +27,8 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const [helpModalVisible, setHelpModalVisible] = useState(false);
   const [flagModalVisible, setFlagHelpModalVisible] = useState(false);
 
+  // Flag Course Function, allows Report Component options to be sent to database
+
   const flagCourse = (selectedOptions: string[], additionalReason: string) => {
     let courseFlag!: Realm.Object;
   
@@ -121,8 +123,9 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
           )}
         </TouchableOpacity>
         }
-      />
-       <TouchableOpacity style={styles.settingsContainer} onPress={openFlagModal}>
+      /> 
+      
+       <TouchableOpacity style={styles.settingsContainer} onPress={openFlagModal}>  
           <Ionicons name="flag" size={24} color={"white"} />
           {flagModalVisible && (
             <Report
