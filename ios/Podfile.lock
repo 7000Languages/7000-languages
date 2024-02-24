@@ -521,7 +521,7 @@ PODS:
     - React-jsi (= 0.72.6)
     - React-logger (= 0.72.6)
     - React-perflogger (= 0.72.6)
-  - RealmJS (11.8.0):
+  - RealmJS (11.10.2):
     - React
   - RNAudioRecorderPlayer (3.5.3):
     - React-Core
@@ -892,7 +892,7 @@ SPEC CHECKSUMS:
   React-runtimescheduler: f23e337008403341177fc52ee4ca94e442c17ede
   React-utils: fa59c9a3375fb6f4aeb66714fd3f7f76b43a9f16
   ReactCommon: dd03c17275c200496f346af93a7b94c53f3093a4
-  RealmJS: 27b8d695fa4bc9606a4a4a378de55511edc2084c
+  RealmJS: 73a36da3cbbe85e1bdcbf55683172b51f35070d3
   RNAudioRecorderPlayer: 6638283925b46808310c9fdf803ebabc3abdbadc
   RNCAsyncStorage: b90b71f45b8b97be43bc4284e71a6af48ac9f547
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
@@ -913,4 +913,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 691e94aeedf3651522f26fdbee7c9506fc30f756
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2
