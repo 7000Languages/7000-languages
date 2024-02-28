@@ -1,7 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Settings } from "../../screens";
-import {AccountInfo} from "../../screens";
+import { Login, AccountInfo } from "../../screens";
 import { SettingsStackParamList } from "../types";
 
 const Stack = createNativeStackNavigator<SettingsStackParamList>();

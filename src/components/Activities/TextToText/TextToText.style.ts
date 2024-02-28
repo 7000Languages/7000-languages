@@ -98,10 +98,7 @@ const styles = StyleSheet.create({
   },
   arrowButton2: {
     marginHorizontal: 149,
-    fontSize: 16,
-    textAlign: 'center',
-    width: '80%'
   }
 });
 
-export default styles
+export default styles;

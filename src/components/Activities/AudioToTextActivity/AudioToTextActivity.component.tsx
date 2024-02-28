@@ -65,12 +65,12 @@ const AudioToTextActivity: React.FC<IProps> = ({
         undefined,
         error => {
           if (error) {
-            //console.log('failed to load the sound', error);
+            console.log('failed to load the sound', error);
             return;
           }
           // if loaded successfully
           let duration = currentAudio.getDuration();
-          //console.log(duration);
+          console.log(duration);
         },
       ),
     [audio],

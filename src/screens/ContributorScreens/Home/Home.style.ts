@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignSelf: "center",
     marginTop: "10%",
-    marginBottom: 5
   },
   learnerText: {
     color: "black",
@@ -29,7 +28,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignSelf: "center",
     marginTop: 5,
-    marginBottom: 5
+    paddingBottom: 10,
   },
   
   searchBtn: {
@@ -44,20 +43,18 @@ const styles = StyleSheet.create({
   divider: {
     width: 255,
     borderColor: "#C0C0C0",
-    marginVertical: 35,
+    marginVertical: 30,
     borderWidth: 0.5,
-
   },
   missionStatement: {
     textAlign: 'center',
     alignSelf: 'center',
     color: "black",
-    marginBottom: '5%',
-    marginTop: 1, 
+    marginBottom: 20
   },
   becomeText: {
     color: PRIMARY_COLOR,
-    marginTop: 10,
+    marginTop: 15,
     textAlign: 'center',
     alignSelf: 'center',
     fontSize: 16,

@@ -102,7 +102,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
         barStyle="light-content"
         showStatusBackground
       />
-      <Header
+     <Header
         title="Unit"
         headerStyle={{backgroundColor: PRIMARY_COLOR}}
         leftIcon={

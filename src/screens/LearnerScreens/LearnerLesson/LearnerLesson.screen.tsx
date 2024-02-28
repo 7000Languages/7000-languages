@@ -28,6 +28,7 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
   const closeHelpModal = () => {
     setHelpModalVisible(false);
   }
+
   const { lesson_id } = route.params
   const { useQuery } = realmContext
 

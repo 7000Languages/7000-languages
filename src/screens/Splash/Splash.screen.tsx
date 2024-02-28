@@ -67,6 +67,9 @@ const Splash: React.FC<NavProps> = ({navigation}) => {
     determineLocale();
     getuserDataFromStorage();
 
+    console.log(user!.isLoggedIn);   
+
+    
     const whereToNavigate = user?.isLoggedIn ? 'Onboarding' : 'Login';
     let timer = setTimeout(() => {
       navigation.navigate(whereToNavigate);
