@@ -10,6 +10,7 @@ interface IProps extends TextInputProps {
   inputStyle?: ViewStyle;
   textArea?: boolean;
   textDecorationLine?: "none" | "underline" | "line-through" | "underline line-through" | undefined
+  style?: ViewStyle
 }
 
 const CustomInput: React.FC<IProps> = ({
@@ -19,10 +20,11 @@ const CustomInput: React.FC<IProps> = ({
   subLabel,
   textArea,
   textDecorationLine,
+  style,
   ...rest
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Text style={styles.label}>{label}</Text>
       {
         subLabel && <Text style={[styles.subLabel, { textDecorationLine  }]}>{subLabel}</Text>
@@ -30,6 +32,8 @@ const CustomInput: React.FC<IProps> = ({
       <TextInput
         style={[styles.input, inputStyle, { height: textArea ? 100 : 45 }]}
         {...rest}
+        multiline={textArea}
+        numberOfLines={textArea ? 10 : 1}
       />
       {errorText && errorText.length > 0 && (
         <Text style={styles.errorText}>{errorText}</Text>
