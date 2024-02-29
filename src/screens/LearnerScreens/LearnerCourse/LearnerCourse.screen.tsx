@@ -108,7 +108,6 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
       <Header
         title="Course"
         headerStyle={{ backgroundColor: SECONDARY_COLOR }}
-        leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />}
         rightIcon={
           <TouchableOpacity style={styles.helpContainer} onPress={openHelpModal}>
           <Ionicons name="help" size={20} color={SECONDARY_COLOR} />
@@ -124,7 +123,6 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
         </TouchableOpacity>
         }
       /> 
-      
        <TouchableOpacity style={styles.settingsContainer} onPress={openFlagModal}>  
           <Ionicons name="flag" size={24} color={"white"} />
           {flagModalVisible && (
