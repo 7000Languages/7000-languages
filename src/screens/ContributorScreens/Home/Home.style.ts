@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { PRIMARY_COLOR } from "../../../constants/colors";
+import { PRIMARY_COLOR, SECONDARY_COLOR } from "../../../constants/colors";
 import { DEVICE_HEIGHT, DEVICE_WIDTH,StatusBarHeight } from "../../../constants/sizes";
 
 const styles = StyleSheet.create({
@@ -34,7 +34,16 @@ const styles = StyleSheet.create({
   searchBtn: {
     width: 250,
     marginTop: 20,
+    backgroundColor: SECONDARY_COLOR
+
+
   },
+  becomeAContributor:{
+    width: 250,
+    marginTop: 20,
+    backgroundColor: PRIMARY_COLOR
+  },
+
   searchCoursesLabel: {
     color: "#ffffff",
     fontWeight: "bold",

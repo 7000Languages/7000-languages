@@ -10,6 +10,9 @@ import ActivityLevel from "./ActivityLevel";
 import WordMatch from "./WordMatch";
 import DeletedFile from "./DeletedFile";
 import CourseFlag from "./CourseFlag";
+import LessonFlag from "./LessonFlag";
+import UnitFlag from "./UnitFlag";
+
 export {
     User,
     completes,
@@ -22,5 +25,7 @@ export {
     ActivityLevel,
     WordMatch,
     DeletedFile,
-    CourseFlag
+    CourseFlag,
+    LessonFlag,
+    UnitFlag
 }

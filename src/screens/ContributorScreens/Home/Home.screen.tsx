@@ -628,14 +628,14 @@ const Home: React.FC<NavProps> = ({navigation}) => {
       <Header
         title="Home"
         headerStyle={{backgroundColor: PRIMARY_COLOR}}
-        leftIcon={
-          <Feather
-            name="menu"
-            size={24}
-            color="#ffffff"
-            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-          />
-        }
+       // leftIcon={ // Removing Menu Icon on top header
+      //    <Feather
+      //     name="menu"
+      //      size={24}
+     //      color="#ffffff"
+      //      onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+      //    />
+    //   }
       />
 
       <ScrollView>
@@ -717,6 +717,13 @@ const Home: React.FC<NavProps> = ({navigation}) => {
               />
             );
           })}
+          <PrimaryBtn
+            label={i18n.t('actions.becomeContributor')}
+            onPress={() => navigation.navigate('BecomeContributor')}
+            style={styles.becomeAContributor}
+            labelStyle={styles.searchCoursesLabel}
+            leftIcon={<Feather name="edit-3" size={24} color="#ffffff" />}
+          />
         </View>
       </ScrollView>
     </View>

@@ -10,7 +10,8 @@ import {
   CourseUnitLessonItem,
   FocusAwareStatusBar,
   Header,
-  Help
+  Help,
+  Report
 } from "../../../components";
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -23,9 +24,15 @@ import Lesson from "../../../realm/schemas/Lesson";
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, "LearnerUnit">;
 
+const { useRealm } = realmContext
+
 const LearnerUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
+  const [flagModalVisible, setFlagHelpModalVisible] = useState(false);
   const [helpModalVisible, setHelpModalVisible] = useState(false);
+
+  const realm = useRealm()
+
 
   const openHelpModal = () => {
     setHelpModalVisible(true);
@@ -33,6 +40,35 @@ const LearnerUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   const closeHelpModal = () => {
     setHelpModalVisible(false);
+  }
+
+  // Flag Course Function, allows Report Component options to be sent to database
+
+  const flagUnit = (selectedOptions: string[], additionalReason: string) => {
+    let unitFlag!: Realm.Object;
+  
+    realm.write(async () => {
+      unitFlag = realm.create('unitFlags', {
+        _unit_id: unit_id.toString(),
+        reason: selectedOptions,
+        additionalReason: additionalReason
+      });
+    });
+  };
+  
+
+  const onSubmitFlag = (selectedOptions: string[], additionalReason: string) => {
+    flagUnit(selectedOptions, additionalReason);
+    closeFlagModal();
+  };
+  
+
+  const openFlagModal = () => {
+    setFlagHelpModalVisible(true);
+  }
+
+  const closeFlagModal = () => {
+    setFlagHelpModalVisible(false);
   }
 
   const { unit_id } = route.params
@@ -43,6 +79,7 @@ const LearnerUnit: React.FC<NavProps> = ({ navigation, route }) => {
 
   const goToLessonScreen = (lesson_id: string) => navigation.navigate('LearnerLesson', { lesson_id });
 
+  
   const renderItem = ({ item, index }: { item: Lesson, index: number }) => {
     const { name, vocab, _id, local_image_path } = item;
     return (
@@ -92,6 +129,21 @@ const LearnerUnit: React.FC<NavProps> = ({ navigation, route }) => {
         </TouchableOpacity>
         }
       />
+    <TouchableOpacity style={styles.settingsContainer} onPress={openFlagModal}>  
+          <Ionicons name="flag" size={24} color={"white"} />
+          {flagModalVisible && (
+            <Report
+            isVisible={flagModalVisible}
+            onClose={closeFlagModal} 
+            headerText={'Report Unit Content'} 
+            option1={'Inaccurate Content'} 
+            option2={'Offensive Content'} 
+            option3={'Poor Quality Content'} 
+            option4={'Technical Issues'}
+            onSubmit={onSubmitFlag}
+           />
+          )}
+        </TouchableOpacity>
       <CourseUnitLessonDesign
         item={unit.name}
         itemDescription={unit.description}
