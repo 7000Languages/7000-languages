@@ -22,7 +22,8 @@ const styles = StyleSheet.create({
         backgroundColor: SECONDARY_COLOR,
 
 
-    }
+    },
+  
 });
 
 export default styles;

@@ -27,18 +27,24 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const [helpModalVisible, setHelpModalVisible] = useState(false);
   const [flagModalVisible, setFlagHelpModalVisible] = useState(false);
 
-  const flagCourse = () => {
+  // Flag Course Function, allows Report Component options to be sent to database
+
+  const flagCourse = (selectedOptions: string[], additionalReason: string) => {
     let courseFlag!: Realm.Object;
   
     realm.write(async () => {
       courseFlag = realm.create('courseFlags', {
-        _course_id: '', 
-        reason: ['','','',''],  
-        additionalReason: ''  
+        _course_id: course_id.toString(),
+        reason: selectedOptions,
+        additionalReason: additionalReason
       });
     });
   };
 
+  const onSubmitFlag = (selectedOptions: string[], additionalReason: string) => {
+    flagCourse(selectedOptions, additionalReason);
+    closeFlagModal();
+  };
   
   const openHelpModal = () => {
     setHelpModalVisible(true);
@@ -76,11 +82,6 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
     })
     }
 
-
-
-
-   
-
     return (
       <CourseUnitLessonItem
         title={name}
@@ -107,7 +108,6 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
       <Header
         title="Course"
         headerStyle={{ backgroundColor: SECONDARY_COLOR }}
-        leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />}
         rightIcon={
           <TouchableOpacity style={styles.helpContainer} onPress={openHelpModal}>
           <Ionicons name="help" size={20} color={SECONDARY_COLOR} />
@@ -122,8 +122,8 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
           )}
         </TouchableOpacity>
         }
-      />
-       <TouchableOpacity style={styles.settingsContainer} onPress={openFlagModal}>
+      /> 
+       <TouchableOpacity style={styles.settingsContainer} onPress={openFlagModal}>  
           <Ionicons name="flag" size={24} color={"white"} />
           {flagModalVisible && (
             <Report
@@ -134,7 +134,7 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
             option2={'Offensive Content'} 
             option3={'Poor Quality Content'} 
             option4={'Technical Issues'}
-            onSubmit={flagCourse}
+            onSubmit={onSubmitFlag}
            />
           )}
         </TouchableOpacity>

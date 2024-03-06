@@ -1,6 +1,6 @@
 import { BSON } from "realm";
 
-export default class UnitFlag extends Realm.Object{
+export default class LessonFlag extends Realm.Object{
     
     _id!: BSON.ObjectId
     _unit_id!: string
@@ -10,7 +10,7 @@ export default class UnitFlag extends Realm.Object{
     updated_at!: Date
 
     static schema = {
-        name: 'unitFlags',
+        name: 'lessonFlags',
         primaryKey: '_id',
         properties: {
             _id: { type: 'objectId', default: () => new BSON.ObjectId() },

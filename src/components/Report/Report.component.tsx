@@ -14,7 +14,7 @@ interface ReportProps {
   option2: string;
   option3: string;
   option4: string;
-  onSubmit: () => void;
+  onSubmit: (selectedOptions: string[], additionalReason: string) => void;
 
 }
 
@@ -71,7 +71,19 @@ interface CheckBoxProps {
     const handleTextFieldChange = (text: string) => {
       setTextFieldValue(text);
     };
-  
+
+
+    const handleSubmit = () => {
+      const selectedOptions: string[] = [];
+    
+      if (isChecked1) selectedOptions.push(option1);
+      if (isChecked2) selectedOptions.push(option2);
+      if (isChecked3) selectedOptions.push(option3);
+      if (isChecked4) selectedOptions.push(option4);
+    
+      onSubmit(selectedOptions, textFieldValue);
+    };
+    
     return (
       <Modal
         animationType="fade"
@@ -124,7 +136,7 @@ interface CheckBoxProps {
                 onChangeText={handleTextFieldChange}
               />
             )}
-            <TouchableOpacity style={styles.submitButton} onPress={onSubmit}>
+          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
             <Text style={styles.submitButtonText}>Submit</Text>
           </TouchableOpacity>
           </View>

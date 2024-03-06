@@ -21,7 +21,6 @@ import AudioToTextActivity from "./Activities/AudioToTextActivity/AudioToTextAct
 import TextToAudioActivity from "./Activities/TextToAudioActivity/TextToAudioActivity.component";
 import TextToImageActivity from './Activities/TextToImageActivity/TextToImageActivity.component';
 import TextToTextActivity from './Activities/TextToText/TextToText.component';
-import Help from "./Help/Help.component";
 import AudioToImageActivity from './Activities/AudioToImageActivity/AudioToImageActivity.component';
 import ZoomImageModal from "./ZoomImageModal/ZoomImageModal.component";
 import Report from "./Report/Report.component";
@@ -46,7 +45,6 @@ export {
     ActivityProgressIndicator,
     AudioRecordBox,
     CustomSlider,
-    Help,
     ZoomImageModal,
     Report,
 

@@ -12,7 +12,9 @@ import {
   ActivityLevel,
   WordMatch,
   DeletedFile,
-  CourseFlag
+  CourseFlag,
+  UnitFlag,
+  LessonFlag
 
   
 } from './schemas'
@@ -30,7 +32,9 @@ export const realmContext = createRealmContext({
     ActivityLevel,
     WordMatch,
     DeletedFile,
-    CourseFlag
+    CourseFlag,
+    UnitFlag,
+    LessonFlag
   ],
   schemaVersion: 1,
 });
