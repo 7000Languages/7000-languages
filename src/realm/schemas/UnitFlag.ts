@@ -15,7 +15,7 @@ export default class UnitFlag extends Realm.Object{
         properties: {
             _id: { type: 'objectId', default: () => new BSON.ObjectId() },
             _lesson_id: {type: 'string', default: ''},
-            reason: {type: 'string?', default: ''},
+            reason: {type: 'string[]', default: [] },
             additionalReason: {type: 'string?', default: ''},
             created_at: { type: "date?", default: new Date },
             updated_at: { type: "date?", default: new Date }

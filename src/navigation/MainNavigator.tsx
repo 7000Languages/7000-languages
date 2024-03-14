@@ -78,6 +78,12 @@ const MainNavigator = () => {
               subs.add(realm.objects('courseFlags'), {
                 name: 'allCourseFlagsSubscription',
               })
+              subs.add(realm.objects('unitFlags'), {
+                name: 'allUnitFlagsSubscription',
+              })
+              subs.add(realm.objects('lessonFlags'), {
+                name: 'allLessonFlagsSubscription',
+              })
             },
             rerunOnOpen: true,
           },
