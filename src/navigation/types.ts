@@ -55,4 +55,7 @@ export type SettingsStackParamList = {
     Settings: undefined
     AccountInfo : undefined
     Home : undefined
+    Login: undefined
+    BottomNavigator: undefined
+    Languages: undefined
 }

@@ -82,6 +82,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         color: PRIMARY_COLOR,
         fontWeight: 'bold'
+    },
+    activityIndicator: {
+        position: 'absolute',
+        bottom: 70,
+        left: 32,
     }
 });
 

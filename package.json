@@ -26,7 +26,7 @@
     "@react-navigation/drawer": "^6.6.2",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
-    "@realm/react": "^0.4.3",
+    "@realm/react": "^0.6.2",
     "@reduxjs/toolkit": "^1.9.3",
     "aws-sdk": "^2.1364.0",
     "axios": "^1.3.5",
