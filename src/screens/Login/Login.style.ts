@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   qouteAndAuthor: {
     position: "absolute",
-    bottom: DEVICE_HEIGHT * 0.3,
+    bottom: DEVICE_HEIGHT * 0.4,
     left: 30,
   },
   labelStyle: {

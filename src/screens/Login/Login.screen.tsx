@@ -15,13 +15,38 @@ import { UserGoogleInfoType } from '../../@types';
 import { GOOGLE_SERVICES_CLIENT_ID, IOS_CLIENT_ID } from '@env';
 
 
+
 const Login = () => {
+
+  const quotes = [
+    {
+      quote: '“Language is about restoring relationships between ourselves to the land and to the more-than-human-beings that we are a part of here.”',
+      author: '- Mary Fong Hermes: Ojibwe Course Instructor',
+    },
+    {
+    quote: '"Hearing everyone speak our languages is the most beautiful music... like all birds singing together to make an amazing song."',
+    author: "- Sarah Silas"
+    },
+    {
+      quote: '“Each language is a window through which to see the world."',
+      author: "- Roger Bacon"
+    }
+
+
+  ];
+  
+  const getRandomQuote = () => {
+    return quotes[Math.floor(Math.random() * quotes.length)];
+  };
 
   const realmApp = useApp()
 
   const [loading, setLoading] = useState(false);
 
   const dispatch = useAppDispatch()
+
+  const [quote, setQuote] = useState(getRandomQuote());
+
 
   useEffect(() => {
     GoogleSignin.configure(Platform.OS == 'ios' ?
@@ -88,6 +113,8 @@ const Login = () => {
         // //console.log("Error: ", error);
       }
 
+      setQuote(getRandomQuote());
+
       // Log the user in through realm to app here
       const credentials = Realm.Credentials.google({ idToken });
 
@@ -134,13 +161,8 @@ const Login = () => {
         source={require('../../../assets/images/loginBackgroundImage.png')}
       />
       <View style={styles.qouteAndAuthor}>
-        <Text
-          style={
-            styles.quote
-          }>{`“Language is about restoring relationships between ourselves\n to the land and to the more-than-human-beings that we are a part of here.”`}</Text>
-        <Text style={styles.author}>
-          Mary Fong Hermes - Ojibwe Course Instructor
-        </Text>
+        <Text style={styles.quote}>{quote.quote}</Text>
+        <Text style={styles.author}>{quote.author}</Text>
       </View>
 
       {loading ? (
