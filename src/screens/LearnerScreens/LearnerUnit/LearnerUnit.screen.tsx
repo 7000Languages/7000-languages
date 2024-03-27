@@ -34,15 +34,13 @@ const LearnerUnit: React.FC<NavProps> = ({ navigation, route }) => {
   const realm = useRealm()
 
 
-  const openHelpModal = () => {
-    setHelpModalVisible(true);
-  }
-
-  const closeHelpModal = () => {
-    setHelpModalVisible(false);
-  }
 
   // Flag Course Function, allows Report Component options to be sent to database
+
+  const { unit_id } = route.params
+  const { useQuery } = realmContext
+
+
 
   const flagUnit = (selectedOptions: string[], additionalReason: string) => {
     let unitFlag!: Realm.Object;
@@ -71,8 +69,13 @@ const LearnerUnit: React.FC<NavProps> = ({ navigation, route }) => {
     setFlagHelpModalVisible(false);
   }
 
-  const { unit_id } = route.params
-  const { useQuery } = realmContext
+  const openHelpModal = () => {
+    setHelpModalVisible(true);
+  }
+
+  const closeHelpModal = () => {
+    setHelpModalVisible(false);
+  }
 
   const unit: any = useQuery(Unit).find((unit: any)=>unit._id.toString() == unit_id)
   const lessons: any = useQuery(Lesson).filter((lesson: any) => lesson._unit_id.toString() == unit._id)
@@ -129,21 +132,23 @@ const LearnerUnit: React.FC<NavProps> = ({ navigation, route }) => {
         </TouchableOpacity>
         }
       />
-    <TouchableOpacity style={styles.settingsContainer} onPress={openFlagModal}>  
-          <Ionicons name="flag" size={24} color={"white"} />
-          {flagModalVisible && (
-            <Report
-            isVisible={flagModalVisible}
-            onClose={closeFlagModal} 
-            headerText={'Report Unit Content'} 
-            option1={'Inaccurate Content'} 
-            option2={'Offensive Content'} 
-            option3={'Poor Quality Content'} 
-            option4={'Technical Issues'}
-            onSubmit={onSubmitFlag}
-           />
-          )}
+      <View style={styles.settingsContainer}>
+        <TouchableOpacity onPress={openFlagModal}>  
+        <Ionicons name="flag" size={24} color={"white"} />
         </TouchableOpacity>
+        {flagModalVisible && (
+           <Report
+           isVisible={flagModalVisible}
+           onClose={closeFlagModal} 
+           headerText={'Report Unit Content'} 
+           option1={'Inaccurate Content'} 
+           option2={'Offensive Content'} 
+           option3={'Poor Quality Content'} 
+           option4={'Technical Issues'}
+           onSubmit={onSubmitFlag}
+           />
+           )}
+        </View>
       <CourseUnitLessonDesign
         item={unit.name}
         itemDescription={unit.description}

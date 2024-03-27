@@ -29,6 +29,16 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
   },
+  settingsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingRight: 20,
+    paddingTop: 10,
+    backgroundColor: SECONDARY_COLOR,
+
+
+},
 });
 
 export default styles;

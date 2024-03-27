@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import styles from './LearnerLesson.style'
 
 import { CourseStackParamList } from '../../../navigation/types'
-import { CourseUnitLessonDesign, FocusAwareStatusBar, Header, Help } from '../../../components'
+import { CourseUnitLessonDesign, FocusAwareStatusBar, Header, Help, Report} from '../../../components'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../../constants/colors'
@@ -17,9 +17,14 @@ import Lesson from '../../../realm/schemas/Lesson'
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'LearnerLesson'>
 
+const { useRealm } = realmContext
+
 const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
   const [helpModalVisible, setHelpModalVisible] = useState(false);
+  const [flagModalVisible, setFlagHelpModalVisible] = useState(false);
+
+  const realm = useRealm()
 
   const openHelpModal = () => {
     setHelpModalVisible(true);
@@ -31,6 +36,34 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
   const { lesson_id } = route.params
   const { useQuery } = realmContext
+
+  const flagUnit = (selectedOptions: string[], additionalReason: string) => {
+    let lessonFlag!: Realm.Object;
+  
+    realm.write(async () => {
+      lessonFlag = realm.create('lessonFlags', {
+        _lesson_id: lesson_id.toString(),
+        reason: selectedOptions,
+        additionalReason: additionalReason
+      });
+    });
+  };
+  
+
+  const onSubmitFlag = (selectedOptions: string[], additionalReason: string) => {
+    flagUnit(selectedOptions, additionalReason);
+    closeFlagModal();
+  };
+  
+
+  const openFlagModal = () => {
+    setFlagHelpModalVisible(true);
+  }
+
+  const closeFlagModal = () => {
+    setFlagHelpModalVisible(false);
+  }
+
 
   const lesson: any = useQuery(Lesson).find((lesson) => lesson._id.toString() == lesson_id) // We get the lesson again so that the list updates automatically when we add a new vocab item
 
@@ -79,6 +112,23 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
         </TouchableOpacity>
         }
       />
+       <View style={styles.settingsContainer}>
+    <TouchableOpacity onPress={openFlagModal}>  
+      <Ionicons name="flag" size={24} color={"white"} />
+    </TouchableOpacity>
+    {flagModalVisible && (
+      <Report
+        isVisible={flagModalVisible}
+        onClose={closeFlagModal} 
+        headerText={'Report Lesson Content'} 
+        option1={'Inaccurate Content'} 
+        option2={'Offensive Content'} 
+        option3={'Poor Quality Content'} 
+        option4={'Technical Issues'}
+        onSubmit={onSubmitFlag}
+      />
+    )}
+  </View>
       <CourseUnitLessonDesign
         item={lesson.name}
         itemDescription={lesson.description}

@@ -123,21 +123,23 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
         </TouchableOpacity>
         }
       /> 
-       <TouchableOpacity style={styles.settingsContainer} onPress={openFlagModal}>  
-          <Ionicons name="flag" size={24} color={"white"} />
-          {flagModalVisible && (
-            <Report
-            isVisible={flagModalVisible}
-            onClose={closeFlagModal} 
-            headerText={'Report Course Content'} 
-            option1={'Inaccurate Content'} 
-            option2={'Offensive Content'} 
-            option3={'Poor Quality Content'} 
-            option4={'Technical Issues'}
-            onSubmit={onSubmitFlag}
-           />
-          )}
-        </TouchableOpacity>
+      <View style={styles.settingsContainer}>
+    <TouchableOpacity onPress={openFlagModal}>  
+      <Ionicons name="flag" size={24} color={"white"} />
+    </TouchableOpacity>
+    {flagModalVisible && (
+      <Report
+        isVisible={flagModalVisible}
+        onClose={closeFlagModal} 
+        headerText={'Report Course Content'} 
+        option1={'Inaccurate Content'} 
+        option2={'Offensive Content'} 
+        option3={'Poor Quality Content'} 
+        option4={'Technical Issues'}
+        onSubmit={onSubmitFlag}
+      />
+    )}
+  </View>
       <CourseUnitLessonDesign
         item={course!.details.name}
         itemDescription={course!.details.description}
