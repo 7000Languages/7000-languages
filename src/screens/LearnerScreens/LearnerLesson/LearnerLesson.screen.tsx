@@ -9,23 +9,42 @@ import { CourseUnitLessonDesign, FocusAwareStatusBar, Header, Help, Report} from
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { PRIMARY_COLOR, SECONDARY_COLOR } from '../../../constants/colors'
-import { VocabType } from '../../../@types'
+import { LessonType, UserType, VocabType } from '../../../@types'
 import { realmContext } from '../../../realm/realm'
 import { convertToArrayOfPlainObject } from '../../../utils/helpers'
 import LearnerVocabItem from '../../../components/LearnerVocabItem/LearnerVocabItem.component'
 import Lesson from '../../../realm/schemas/Lesson'
+import { BSON } from 'realm'
+import { JoinedCourse } from '../../../realm/schemas'
+import Unit from '../../../realm/schemas/Unit'
+import { useAppSelector } from '../../../redux/store'
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'LearnerLesson'>
 
-const { useRealm } = realmContext
+const { useRealm, useObject, useQuery } = realmContext
 
 const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
+
+  const { lesson_id } = route.params
+
+  const user: UserType = useAppSelector(state => state.auth.user)
 
   const [helpModalVisible, setHelpModalVisible] = useState(false);
   const [flagModalVisible, setFlagHelpModalVisible] = useState(false);
 
   const realm = useRealm()
 
+  const lesson = useQuery(Lesson).find((lesson) => lesson._id.toString() == lesson_id)! // We get the lesson again so that the list updates automatically when we add a new vocab item
+  const lessonsInThatUnit = useQuery(Lesson).filter((l) => l._unit_id.toString() == lesson._unit_id.toString())! // We get the lessons in that unit
+
+  const units = useQuery(Unit).filter((u) => u._id.toString() == lesson._unit_id.toString())
+
+  const joinedCourse = useQuery(JoinedCourse, (jc)=>jc.filtered('_course_id == $0 && _user_id == $1', lesson._course_id, user._id))[0]
+
+  const LessonCompleted = joinedCourse.completedLessons.some(completedLesson=>completedLesson.lesson == lesson_id && completedLesson.numberOfVocabsCompleted == lesson.vocab.length)
+
+  console.log("LessonCompleted", LessonCompleted);
+  
   const openHelpModal = () => {
     setHelpModalVisible(true);
   }
@@ -33,9 +52,6 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
   const closeHelpModal = () => {
     setHelpModalVisible(false);
   }
-
-  const { lesson_id } = route.params
-  const { useQuery } = realmContext
 
   const flagUnit = (selectedOptions: string[], additionalReason: string) => {
     let lessonFlag!: Realm.Object;
@@ -49,13 +65,11 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
     });
   };
   
-
   const onSubmitFlag = (selectedOptions: string[], additionalReason: string) => {
     flagUnit(selectedOptions, additionalReason);
     closeFlagModal();
   };
   
-
   const openFlagModal = () => {
     setFlagHelpModalVisible(true);
   }
@@ -63,9 +77,6 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
   const closeFlagModal = () => {
     setFlagHelpModalVisible(false);
   }
-
-
-  const lesson: any = useQuery(Lesson).find((lesson) => lesson._id.toString() == lesson_id) // We get the lesson again so that the list updates automatically when we add a new vocab item
 
   const renderItem = ({item, index}:{item: VocabType, index:number}) => {
     const { original, translation, image, audio, _id, notes, local_image_path, local_audio_path } = item
@@ -84,6 +95,35 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
   const startActivity = () => {
     navigation.navigate('StartActivity', {lesson});
+  }
+  
+  const markAsCompleted = () => {
+    realm.write(()=>{
+      joinedCourse?.completedLessons.push({
+        lesson: lesson_id.toString(),
+        numberOfVocabsCompleted: lesson.vocab.length,
+      });
+    })
+
+    /* This may be important later */
+
+    // let numberOfCompletedLessons = joinedCourse?.completedLessons.length
+    // let numberOfLessons = lessonsInThatUnit.length
+
+    // if(numberOfCompletedLessons == numberOfLessons){
+    //   realm.write(()=>{
+    //     joinedCourse?.completedUnits.push(lesson._unit_id)
+    //   })
+    // }
+
+    // let numberOfCompletedUnits = joinedCourse?.completedUnits.length
+    // let numberOfUnits = units.length
+
+    // if(numberOfCompletedUnits == numberOfUnits){
+    //   realm.write(()=>{
+    //     joinedCourse!.courseCompleted = true
+    //   })
+    // }
   }
 
   return (
@@ -138,6 +178,8 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
         type='lesson'
         section='learner'
         horizontalFlatList={true}
+        onMarkAsComplete={markAsCompleted}
+        lessonCompleted={LessonCompleted}
       />
       <TouchableOpacity style={styles.startActivityBtn} onPress={startActivity}>
         <Text style={styles.startActivityText}>Start Activity</Text>

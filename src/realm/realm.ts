@@ -14,10 +14,11 @@ import {
   DeletedFile,
   CourseFlag,
   UnitFlag,
-  LessonFlag
-
-  
+  LessonFlag,
+  JoinedCourse
 } from './schemas'
+import { CompletedLesson } from './schemas/JoinedCourse';
+CompletedLesson
 
 export const realmContext = createRealmContext({
   schema: [
@@ -34,7 +35,9 @@ export const realmContext = createRealmContext({
     DeletedFile,
     CourseFlag,
     UnitFlag,
-    LessonFlag
+    LessonFlag,
+    JoinedCourse,
+    CompletedLesson
   ],
   schemaVersion: 1,
 });

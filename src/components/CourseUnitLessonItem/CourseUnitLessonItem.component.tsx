@@ -181,18 +181,22 @@ const CourseUnitLessonItem: React.FC<IProps> = ({
               <Text style={styles.numOfSubItems}>
                 {numOfSubItems} {subItemType}
               </Text>
-              <View style={styles.progressContainer}>
-                <View
-                  style={[
-                    styles.progressIndicator,
-                    {
-                      backgroundColor: progressBackgroundColor,
-                      borderWidth: progressBorderWidth,
-                    },
-                  ]}
-                />
-                <Text style={styles.progressText}>{courseProgress}</Text>
-              </View>
+              {
+                section == 'learner' && numOfSubItems > 0
+                &&
+                <View style={styles.progressContainer}>
+                  <View
+                    style={[
+                      styles.progressIndicator,
+                      {
+                        backgroundColor: progressBackgroundColor,
+                        borderWidth: progressBorderWidth,
+                      },
+                    ]}
+                  />
+                  <Text style={styles.progressText}>{courseProgress}</Text>
+                </View>
+              }
             </TouchableOpacity>
             <Entypo
               name="chevron-thin-right"

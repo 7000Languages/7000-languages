@@ -15,14 +15,26 @@ import { convertToArrayOfPlainObject, convertToPlainObject } from '../../../util
 import Unit from '../../../realm/schemas/Unit'
 import Lesson from '../../../realm/schemas/Lesson'
 import Course from '../../../realm/schemas/Course'
+import { JoinedCourse } from '../../../realm/schemas'
+import { useAppSelector } from '../../../redux/store'
+import { UserType } from '../../../@types'
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'LearnerCourse'>
 
-const { useRealm } = realmContext
+const { useRealm, useQuery } = realmContext
 
 const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
   const { course_id } = route.params
+  const user: UserType = useAppSelector(state => state.auth.user);
+
+  const joinedCourse = useQuery(JoinedCourse, jc =>
+    jc.filtered(
+      '_course_id == $0 && _user_id == $1',
+      course_id?.toString(),
+      user._id,
+    ),
+  )[0];
 
   const [helpModalVisible, setHelpModalVisible] = useState(false);
   const [flagModalVisible, setFlagHelpModalVisible] = useState(false);
@@ -63,19 +75,42 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
 
   // unit
-  const { useQuery } = realmContext
   const units = useQuery(Unit).filter((unit: any) => unit._course_id.toString() == course_id)
   const lessons = useQuery(Lesson).filter((lesson: any) => lesson._course_id.toString() == course_id)
   const course = useQuery(Course).find((course: any) => course._id.toString() == course_id)
 
   const realm = useRealm()
   
-  const goToUnitScreen = (unit_id: string) => navigation.navigate('LearnerUnit', { unit_id })
+  const goToUnitScreen = (unit_id: string) => navigation.navigate('LearnerUnit', { unit_id, course_id })
 
   const renderItem = ({ item, index }: {item: Unit | Lesson, index: number}) => {
     const { name, _id, local_image_path, hidden } = item
     const unitLessons = lessons.filter((lesson) => lesson._unit_id == _id)
 
+    /* Here we are checking which unit is completed or not.
+    If a unit is not completed, it is neccessary to check whether there is a lesson where it is not found 
+    in the 'completedLessons' of the JoinedCourse, or it is found but the 'numberOfVocabsCompleted' is not 
+    same as the number of vocabs in that lesson course
+    */
+    const unitNotCompleted =
+      unitLessons.length <= 0
+        ? false
+        : unitLessons.some(
+            unitLesson =>
+              !joinedCourse.completedLessons.some(
+                completedLesson =>
+                  completedLesson.lesson == unitLesson._id.toString(),
+              ) ||
+              joinedCourse.completedLessons.some(
+                completedLesson =>
+                  completedLesson.lesson == unitLesson._id.toString() &&
+                  completedLesson.numberOfVocabsCompleted !==
+                    unitLesson.vocab.length,
+              ),
+          );
+
+    console.log("unitNotCompleted", unitNotCompleted);
+    
     const archive = () => {
       realm.write(() => {
         item.hidden = hidden ? true : false
@@ -94,6 +129,7 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
         localImagePath={local_image_path}
         hidden={hidden}
         onArchivePress={archive}
+        progress={unitNotCompleted ? 'in_progress' : 'completed'}
       />
     )
   };

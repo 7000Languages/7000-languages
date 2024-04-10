@@ -12,6 +12,7 @@ import DeletedFile from "./DeletedFile";
 import CourseFlag from "./CourseFlag";
 import LessonFlag from "./LessonFlag";
 import UnitFlag from "./UnitFlag";
+import JoinedCourse from "./JoinedCourse";
 
 export {
     User,
@@ -27,5 +28,6 @@ export {
     DeletedFile,
     CourseFlag,
     LessonFlag,
-    UnitFlag
+    UnitFlag,
+    JoinedCourse
 }

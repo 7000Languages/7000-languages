@@ -41,7 +41,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
   const { useQuery, useRealm, useObject } = realmContext
   const user: UserType = useAppSelector(state => state.auth.user)
   const userGoogleInfo = useAppSelector(state => state.auth.userGoogleInfo)
-  const userToUpdate = useObject(User, new BSON.ObjectId(user._id))!  
+  const userToUpdate: any = useObject('users', new BSON.ObjectId(user._id))!  
 
   const coursesData: any = useQuery(Course)
   const publicCourses: any = useQuery(Course).filter(course=>!(course.details.is_private))
@@ -76,6 +76,11 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
    
     realm.write(()=>{
       userToUpdate.learnerLanguages.push(courseToJoin!._id.toString())
+      realm.create('joinedCourses', {
+        _course_id: courseToJoin!._id.toString(),
+        _user_id: user._id.toString(),
+        currentCodeUsed: courseToJoin!.details.code.toString()
+      })
     })
 
     // Update user in storage and redux

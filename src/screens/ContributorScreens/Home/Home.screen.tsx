@@ -35,8 +35,9 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Lesson from '../../../realm/schemas/Lesson';
 import Vocab from '../../../realm/schemas/Vocab';
+import { JoinedCourse } from '../../../realm/schemas';
 
-const {useRealm, useQuery} = realmContext;
+const {useRealm, useQuery, useObject} = realmContext;
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'Home'>;
 
@@ -62,23 +63,23 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const coursesData = useQuery(Course)
   const allUnits = useQuery(Unit)
   const allLessons = useQuery(Lesson)
+  const allJoinedCourses = useQuery(JoinedCourse)
   const allVocabsWithImage = useQuery(Vocab).filter(v => (v.local_image_uploaded == true) && v.image.length > 0)
   const allVocabsWithAudio = useQuery(Vocab).filter(v => (v.local_audio_uploaded == true) && v.audio.length > 0)
-
-  console.log("User", user);
+  const userToUpdate: any = useObject('users', new BSON.ObjectId(user._id))!  
 
   let adminCourses = coursesData.filter(
     (course: Course & Realm.Object) => course.admin_id == user.authID,
   );
-  let learnerCourses = coursesData.filter((course: Course & Realm.Object) =>
-    user?.learnerLanguages?.includes(course._id.toString()),
+
+  let learnerCourses = coursesData.filter((course: Course) =>
+  convertToPlainObject(userToUpdate)?.learnerLanguages?.includes(course._id.toString()),
   );
 
   const goToContributorCourse = (course_id: string) =>
     coursesNavigation.navigate('ContributorCourse', {course_id});
   const goToLearnerCourse = (course_id: string) =>
     coursesNavigation.navigate('LearnerCourse', {course_id});
-  const dispatch = useAppDispatch();
 
   realm.subscriptions.update(subs => {
     subs.add(realm.objects('activityLevels'), {
@@ -567,7 +568,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
     }
   };
 
-
+  
   useEffect(() => {
     getDownloadedUnits();
 
@@ -656,10 +657,37 @@ const Home: React.FC<NavProps> = ({navigation}) => {
           )}
 
           {learnerCourses.map(
-            (course: Course & Realm.Object, index: number) => {
+            (course: Course, index: number) => {
+
               const units = allUnits.filter(
                 (unit: Unit & Realm.Object) => unit._course_id == course._id,
               );
+
+               const joinedCourse = allJoinedCourses.filtered(
+                '_course_id == $0 && _user_id == $1',
+                course._id?.toString(),
+                user._id,
+              )[0]
+
+                const courseNotCompleted = units.length <=0 
+                ? false
+                : units.some(unit=>{
+                  const unitLessons = allLessons.filter((lesson) => lesson._unit_id == unit._id.toString())
+                  return unitLessons.some(
+                    unitLesson =>
+                      !joinedCourse.completedLessons.some(
+                        completedLesson =>
+                          completedLesson.lesson == unitLesson._id.toString(),
+                      ) ||
+                      joinedCourse.completedLessons.some(
+                        completedLesson =>
+                          completedLesson.lesson == unitLesson._id.toString() &&
+                          completedLesson.numberOfVocabsCompleted !==
+                            unitLesson.vocab.length,
+                      ),
+                  );
+                })
+
               return (
                 <CourseUnitItem
                   title={course.details.name}
@@ -670,6 +698,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
                   key={course._id}
                   onPress={() => goToLearnerCourse(course._id)}
                   section="learner"
+                  progress={courseNotCompleted ? 'in_progress' : 'completed'}
                 />
               );
             },
@@ -698,7 +727,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
             </Text>
           )}
 
-          {adminCourses.map((course: Course & Realm.Object, index: number) => {
+          {adminCourses.map((course: Course, index: number) => {
             const units = allUnits.filter(
               (unit: Unit & Realm.Object) => unit._course_id == course._id,
             );
