@@ -27,7 +27,7 @@ const Splash: React.FC<NavProps> = ({navigation}) => {
   const getuserDataFromStorage = async () => {
     let user = await getValueFor('user');
 
-    console.log("User splash", user);
+    // console.log("User splash", user);
     
 
     let userFromGoogle = await getValueFor('userGoogleInfo');
@@ -67,7 +67,7 @@ const Splash: React.FC<NavProps> = ({navigation}) => {
     determineLocale();
     getuserDataFromStorage();
 
-    console.log(user!.isLoggedIn);   
+    // console.log(user!.isLoggedIn);   
 
     
     const whereToNavigate = user?.isLoggedIn ? 'Onboarding' : 'Login';

@@ -41,8 +41,8 @@ const DrawerContent: React.FC = () => {
   const coursesData = useQuery(Course)
   const allUnits = useQuery(Unit)
   
-  let adminCourses = coursesData.filter((course: Course & Realm.Object) => course.admin_id == (user).authID)
-  let learnerCourses = coursesData.filter((course: Course & Realm.Object) => (user)?.learnerLanguages?.includes((course._id.toString())))
+  // let adminCourses = coursesData.filter((course: Course & Realm.Object) => course.admin_id == (user).authID)
+  // let learnerCourses = coursesData.filter((course: Course & Realm.Object) => (user)?.learnerLanguages?.includes((course._id.toString())))
   
   const goToContributorCourse = (course_id: string) => coursesNavigation.navigate('ContributorCourse', { course_id })
   const goToLearnerCourse = (course_id: string) => coursesNavigation.navigate('LearnerCourse', { course_id })
@@ -50,10 +50,10 @@ const DrawerContent: React.FC = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.header}>
-        <Text style={styles.myCourses}>{i18n.t('actions.myCourses')}</Text>
-        <Ionicons name="close-outline" size={24} color="black" onPress={()=>drawerNavigation.dispatch(DrawerActions.closeDrawer())} />
+        {/* <Text style={styles.myCourses}>{i18n.t('actions.myCourses')}</Text>
+        <Ionicons name="close-outline" size={24} color="black" onPress={()=>drawerNavigation.dispatch(DrawerActions.closeDrawer())} /> */}
       </View>
-      <ScrollView
+      {/* <ScrollView
         contentContainerStyle={{
           alignSelf: "center",
           width: "100%",
@@ -124,7 +124,7 @@ const DrawerContent: React.FC = () => {
             <Text style={styles.searchCourseText}>{i18n.t('actions.applyNow')}</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </ScrollView> */}
       <TouchableOpacity style={styles.accountInfBtn} onPress={()=>drawerNavigation.navigate('AccountInfo')}> 
         <MaterialCommunityIcons name="account" size={24} color="#5B6165" />
         <Text style={styles.accountInfText}>Account Settings</Text>  

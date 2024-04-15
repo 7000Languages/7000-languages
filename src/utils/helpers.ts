@@ -93,7 +93,7 @@ export const requestAudioRecordPermission = async () => {
 export const deleteLocalFile = async (path: string) => {
   RNFS.unlink(path)
   .then(() => {
-    // console.log('FILE DELETED');
+    console.log('FILE DELETED');
   })
   // `unlink` will throw an error, if the item to unlink does not exist
   .catch((err) => {

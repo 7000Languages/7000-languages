@@ -15,6 +15,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "../../constants/colors";
 import { DEVICE_WIDTH } from "../../constants/sizes";
+import { ScrollView } from "react-native";
 
 interface IProps {
   item: string;
@@ -76,7 +77,9 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
           },
         ]}>
         <Text style={styles.language}>{item}</Text>
-        <Text style={styles.languageDescription}>{itemDescription}</Text>
+        <ScrollView>
+          <Text style={styles.languageDescription}>{itemDescription}</Text>
+        </ScrollView>
         {section !== 'learner' && (
           <MaterialIcons
             name="edit"

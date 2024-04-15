@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { View, TouchableOpacity, Pressable } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
@@ -11,13 +11,15 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import { SECONDARY_COLOR } from '../../../constants/colors'
 import { DrawerActions } from '@react-navigation/native'
 import { realmContext } from '../../../realm/realm'
-import { convertToArrayOfPlainObject, convertToPlainObject } from '../../../utils/helpers'
+import { convertToArrayOfPlainObject, convertToPlainObject, deleteLocalFile } from '../../../utils/helpers'
 import Unit from '../../../realm/schemas/Unit'
 import Lesson from '../../../realm/schemas/Lesson'
 import Course from '../../../realm/schemas/Course'
 import { JoinedCourse } from '../../../realm/schemas'
 import { useAppSelector } from '../../../redux/store'
 import { UserType } from '../../../@types'
+import Vocab from '../../../realm/schemas/Vocab'
+import RNFS from 'react-native-fs';
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'LearnerCourse'>
 
@@ -27,6 +29,11 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
 
   const { course_id } = route.params
   const user: UserType = useAppSelector(state => state.auth.user);
+  const allLessons = useQuery(Lesson)
+  const allVocabs = useQuery(Vocab)
+
+  let baseDirectory = RNFS.DocumentDirectoryPath;
+
 
   const joinedCourse = useQuery(JoinedCourse, jc =>
     jc.filtered(
@@ -109,13 +116,81 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
               ),
           );
 
-    console.log("unitNotCompleted", unitNotCompleted);
     
     const archive = () => {
       realm.write(() => {
         item.hidden = hidden ? true : false
     })
     }
+
+    // const deleteUnit = () => {
+
+    //   // setCourseDeletionLoader(true)
+
+    //   // delete all vocabs of that course
+    //   allVocabs
+    //     .filter(v => v._unit_id == item._user_id)
+    //     .forEach(v => {
+    //       realm.write(() => {
+    //         // delete the vocab image file locally and marked as deleted
+    //         deleteLocalFile(
+    //           baseDirectory + '/' + v.local_image_path,
+    //         ).then(() => {
+    //           realm.create('deletedFiles', {
+    //             _item_id: v?._id.toString(),
+    //             itemType: 'unit',
+    //             fileType: 'image',
+    //             filePath: v?.image,
+    //           });
+    //         });
+
+    //         // delete the vocab audio file locally and marked as deleted
+    //         deleteLocalFile(
+    //           baseDirectory + '/' + v.local_audio_path,
+    //         ).then(() => {
+    //           realm.create('deletedFiles', {
+    //             _item_id: v?._id.toString(),
+    //             itemType: 'vocab',
+    //             fileType: 'audio',
+    //             filePath: v?.audio,
+    //           });
+    //         });
+    //         // delete the vocab audio file from AWS
+    //         // delete a vocab
+
+    //         realm.delete(v);
+    //       });
+    //     });
+
+    //   // delete all lessons of that course
+    //   allLessons
+    //     .filter(l => l._course_id == item._id)
+    //     .forEach(l => {
+    //       realm.write(() => {
+    //         // delete the lesson image file locally and marked as deleted
+    //         deleteLocalFile(
+    //           baseDirectory + '/' + l.local_image_path,
+    //         ).then(() => {
+    //           realm.create('deletedFiles', {
+    //             _item_id: l?._id.toString(),
+    //             itemType: 'lesson',
+    //             fileType: 'image',
+    //             filePath: l?.image,
+    //           });
+    //         });
+
+    //         // delete a lesson
+    //         realm.delete(l);
+    //       });
+    //     });
+
+    //     // Finally delete the course
+    //     realm.write(()=>{
+    //       realm.delete(item)
+    //     })
+
+    //     // setCourseDeletionLoader(true)
+    // }
 
     return (
       <CourseUnitLessonItem

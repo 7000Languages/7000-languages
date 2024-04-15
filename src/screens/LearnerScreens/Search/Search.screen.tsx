@@ -66,7 +66,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
         hasError = true
         if(hasError) return
       }
-      if(courseToJoin.details.code.toString() !== code){
+      if((courseToJoin.details.code.toString() !== code) || courseToJoin.details.code.length == 0 ){
         setCodeError('Sorry! incorrect course code. Try again')
         hasError = true
         if(hasError) return
@@ -129,11 +129,11 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
 
   const searchData = (courses: Course[]) => {
     return courses.filter((course: any) => search_parameters.some(param => course.details[param]?.toString().toLowerCase().includes(searchTerm.toLowerCase()))).sort((a, b) => a.details.name.localeCompare(b.details.name))
+    // return courses.filter((course: any) => search_parameters.some(param => course.details[param]?.toString().toLowerCase().includes(searchTerm.toLowerCase())) && course.approved).sort((a, b) => a.details.name.localeCompare(b.details.name))
   }
 
   useEffect(() => {
     if((searchTerm.length > 0) && inputFocused){
-      console.log('Typing');
       setCourses(coursesData)
     }else{
       setCourses(publicCourses)
