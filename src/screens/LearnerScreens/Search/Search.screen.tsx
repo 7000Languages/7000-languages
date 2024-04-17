@@ -50,7 +50,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
   
   const joinCourse = () => {
 
-    if(convertToArrayOfPlainObject(userToUpdate.learnerLanguages).includes(courseToJoin!._id.toString())){
+    if(convertToArrayOfPlainObject(userToUpdate?.learnerLanguages).includes(courseToJoin!._id.toString())){
       Toast.show({
         type: 'error',
         text1: 'Oops!',
@@ -89,7 +89,6 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
 
     // close modal and open drawer
     setJoinCourseModalVisible(false)
-    navigation.dispatch(DrawerActions.openDrawer())
 
     setCode('')
     setCodeError('')

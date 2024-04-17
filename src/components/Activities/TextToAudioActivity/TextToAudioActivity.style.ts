@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   options: {
-    width: DEVICE_WIDTH * 0.9,
+    width: DEVICE_WIDTH * 0.95,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignSelf: 'center',
