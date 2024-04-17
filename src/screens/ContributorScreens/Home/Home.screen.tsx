@@ -743,14 +743,14 @@ const Home: React.FC<NavProps> = ({navigation}) => {
             </Text>
           )}
 
-          {learnerCourses.map(
+          {learnerCourses?.map(
             (course: Course, index: number) => {
 
               const units = allUnits.filter(
                 (unit: Unit & Realm.Object) => unit._course_id == course._id,
               );
 
-               const joinedCourse = allJoinedCourses.filtered(
+               const joinedCourse = allJoinedCourses?.filtered(
                 '_course_id == $0 && _user_id == $1',
                 course._id?.toString(),
                 user._id,
@@ -758,15 +758,15 @@ const Home: React.FC<NavProps> = ({navigation}) => {
 
                 const courseNotCompleted = units.length <=0 
                 ? false
-                : units.some(unit=>{
+                : units?.some(unit=>{
                   const unitLessons = allLessons.filter((lesson) => lesson._unit_id == unit._id.toString())
                   return unitLessons.some(
                     unitLesson =>
-                      !joinedCourse.completedLessons.some(
+                      !joinedCourse?.completedLessons.some(
                         completedLesson =>
                           completedLesson.lesson == unitLesson._id.toString(),
                       ) ||
-                      joinedCourse.completedLessons.some(
+                      joinedCourse?.completedLessons.some(
                         completedLesson =>
                           completedLesson.lesson == unitLesson._id.toString() &&
                           completedLesson.numberOfVocabsCompleted !==

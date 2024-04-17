@@ -104,11 +104,11 @@ const LearnerCourse: React.FC<NavProps> = ({ navigation, route }) => {
         ? false
         : unitLessons.some(
             unitLesson =>
-              !joinedCourse.completedLessons.some(
+              !joinedCourse?.completedLessons.some(
                 completedLesson =>
                   completedLesson.lesson == unitLesson._id.toString(),
               ) ||
-              joinedCourse.completedLessons.some(
+              joinedCourse?.completedLessons.some(
                 completedLesson =>
                   completedLesson.lesson == unitLesson._id.toString() &&
                   completedLesson.numberOfVocabsCompleted !==

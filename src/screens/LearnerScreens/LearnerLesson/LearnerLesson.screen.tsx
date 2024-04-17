@@ -41,7 +41,7 @@ const LearnerLesson:React.FC<NavProps> = ({ navigation, route }) => {
 
   const joinedCourse = useQuery(JoinedCourse, (jc)=>jc.filtered('_course_id == $0 && _user_id == $1', lesson._course_id, user._id))[0]
 
-  const LessonCompleted = joinedCourse.completedLessons.some(completedLesson=>completedLesson.lesson == lesson_id && completedLesson.numberOfVocabsCompleted == lesson.vocab.length)
+  const LessonCompleted = joinedCourse?.completedLessons.some(completedLesson=>completedLesson.lesson == lesson_id && completedLesson.numberOfVocabsCompleted == lesson.vocab.length)
 
   console.log("LessonCompleted", LessonCompleted);
   

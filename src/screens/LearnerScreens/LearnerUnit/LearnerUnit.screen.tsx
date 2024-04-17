@@ -96,7 +96,7 @@ const LearnerUnit: React.FC<NavProps> = ({navigation, route}) => {
   const renderItem = ({item, index}: {item: Lesson; index: number}) => {
     const {name, vocab, _id, local_image_path, _course_id} = item;
 
-    const LessonCompleted = joinedCourse.completedLessons.some(
+    const LessonCompleted = joinedCourse?.completedLessons.some(
       completedLesson =>
         completedLesson.lesson == _id &&
         completedLesson.numberOfVocabsCompleted == vocab.length,
