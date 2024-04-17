@@ -1,9 +1,9 @@
 PODS:
-  - AppAuth (1.6.2):
-    - AppAuth/Core (= 1.6.2)
-    - AppAuth/ExternalUserAgent (= 1.6.2)
-  - AppAuth/Core (1.6.2)
-  - AppAuth/ExternalUserAgent (1.6.2):
+  - AppAuth (1.7.3):
+    - AppAuth/Core (= 1.7.3)
+    - AppAuth/ExternalUserAgent (= 1.7.3)
+  - AppAuth/Core (1.7.3)
+  - AppAuth/ExternalUserAgent (1.7.3):
     - AppAuth/Core
   - boost (1.76.0)
   - CocoaAsyncSocket (7.6.5)
@@ -88,9 +88,9 @@ PODS:
     - hermes-engine/Pre-built (= 0.72.6)
   - hermes-engine/Pre-built (0.72.6)
   - libevent (2.1.12)
-  - MMKV (1.3.2):
-    - MMKVCore (~> 1.3.2)
-  - MMKVCore (1.3.2)
+  - MMKV (1.3.4):
+    - MMKVCore (~> 1.3.4)
+  - MMKVCore (1.3.4)
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.07.22.00):
     - boost
@@ -392,24 +392,25 @@ PODS:
   - React-jsinspector (0.72.6)
   - React-logger (0.72.6):
     - glog
-  - react-native-document-picker (8.2.0):
+  - react-native-document-picker (8.2.2):
     - React-Core
-  - react-native-get-random-values (1.8.0):
+  - react-native-get-random-values (1.11.0):
     - React-Core
-  - react-native-image-picker (5.3.1):
+  - react-native-image-picker (5.7.0):
     - React-Core
-  - react-native-mmkv (2.8.0):
-    - MMKV (>= 1.2.13)
+  - react-native-mmkv (2.12.2):
+    - MMKV (>= 1.3.3)
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - react-native-netinfo (9.3.10):
+  - react-native-netinfo (9.5.0):
     - React-Core
-  - react-native-safe-area-context (4.5.2):
-    - RCT-Folly
-    - RCTRequired
-    - RCTTypeSafety
+  - react-native-safe-area-context (4.9.0):
     - React-Core
-    - ReactCommon/turbomodule/core
-  - react-native-slider (4.4.2):
+  - react-native-slider (4.5.1):
+    - RCT-Folly (= 2021.07.22.00)
+    - React-Core
+  - react-native-webview (13.8.4):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
   - React-NativeModulesApple (0.72.6):
     - hermes-engine
@@ -521,22 +522,22 @@ PODS:
     - React-jsi (= 0.72.6)
     - React-logger (= 0.72.6)
     - React-perflogger (= 0.72.6)
-  - RealmJS (11.8.0):
+  - RealmJS (11.10.2):
     - React
-  - RNAudioRecorderPlayer (3.5.3):
+  - RNAudioRecorderPlayer (3.6.7):
     - React-Core
-  - RNCAsyncStorage (1.18.1):
+  - RNCAsyncStorage (1.23.1):
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
-  - RNCPicker (2.4.10):
+  - RNCPicker (2.7.5):
     - React-Core
   - RNFS (2.20.0):
     - React-Core
-  - RNGestureHandler (2.13.4):
+  - RNGestureHandler (2.16.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - RNGoogleSignin (9.0.2):
+  - RNGoogleSignin (9.1.0):
     - GoogleSignIn (~> 6.2)
     - React-Core
   - RNImageCropPicker (0.39.0):
@@ -550,38 +551,13 @@ PODS:
     - TOCropViewController
   - RNLocalize (2.2.6):
     - React-Core
-  - RNReanimated (3.5.4):
-    - DoubleConversion
-    - FBLazyVector
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCTRequired
-    - RCTTypeSafety
-    - React-callinvoker
+  - RNReanimated (3.8.1):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
-    - React-Core/DevSupport
-    - React-Core/RCTWebSocket
-    - React-CoreModules
-    - React-cxxreact
-    - React-hermes
-    - React-jsi
-    - React-jsiexecutor
-    - React-jsinspector
-    - React-RCTActionSheet
-    - React-RCTAnimation
-    - React-RCTAppDelegate
-    - React-RCTBlob
-    - React-RCTImage
-    - React-RCTLinking
-    - React-RCTNetwork
-    - React-RCTSettings
-    - React-RCTText
     - ReactCommon/turbomodule/core
-    - Yoga
-  - RNScreens (3.20.0):
+  - RNScreens (3.30.1):
+    - RCT-Folly (= 2021.07.22.00)
     - React-Core
-    - React-RCTImage
   - RNSound (0.11.2):
     - React-Core
     - RNSound/Core (= 0.11.2)
@@ -590,7 +566,7 @@ PODS:
   - RNVectorIcons (9.2.0):
     - React-Core
   - SocketRocket (0.6.1)
-  - TOCropViewController (2.6.1)
+  - TOCropViewController (2.7.2)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -648,6 +624,7 @@ DEPENDENCIES:
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-slider (from `../node_modules/@react-native-community/slider`)"
+  - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -763,6 +740,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-slider:
     :path: "../node_modules/@react-native-community/slider"
+  react-native-webview:
+    :path: "../node_modules/react-native-webview"
   React-NativeModulesApple:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-perflogger:
@@ -829,7 +808,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
+  AppAuth: a13994980c1ec792f7e2e665acd4d4aa6be43240
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
@@ -850,8 +829,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 3a63d75eecd6aa32c2fc79f578064e1214dfdec2
   hermes-engine: 8057e75cfc1437b178ac86c8654b24e7fead7f60
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
-  MMKV: f21593c0af4b3f2a0ceb8f820f28bb639ea22bb7
-  MMKVCore: 31b4cb83f8266467eef20a35b6d78e409a11060d
+  MMKV: ed58ad794b3f88c24d604a5b74f3fba17fcbaf74
+  MMKVCore: a67a1cede26175c413176f404a7cedec43f96a0b
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 28469809442eb4eb5528462705f7d852948c8a74
@@ -868,13 +847,14 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 3bf18ff7cb03cd8dfdce08fbbc0d15058c1d71ae
   React-jsinspector: 194e32c6aab382d88713ad3dd0025c5f5c4ee072
   React-logger: cebf22b6cf43434e471dc561e5911b40ac01d289
-  react-native-document-picker: 495c444c0c773c6e83a5d91165890ecb1c0a399a
-  react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a
-  react-native-image-picker: ec9b713e248760bfa0f879f0715391de4651a7cb
-  react-native-mmkv: 7da5e18e55c04a9af9a7e0ab9792a1e8d33765a1
-  react-native-netinfo: ccbe1085dffd16592791d550189772e13bf479e2
-  react-native-safe-area-context: 1d596539b05a78f2b346e954e7c577f6f9be7544
-  react-native-slider: 33b8d190b59d4f67a541061bb91775d53d617d9d
+  react-native-document-picker: cd4d6b36a5207ad7a9e599ebb9eb0c2e84fa0b87
+  react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
+  react-native-image-picker: 3269f75c251cdcd61ab51b911dd30d6fff8c6169
+  react-native-mmkv: 38d484ccd8f5760fe0e46d206ed07add5ddda1fc
+  react-native-netinfo: 48c5f79a84fbc3ba1d28a8b0d04adeda72885fa8
+  react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
+  react-native-slider: 1ceee2b429885bfcd452ebcdd6217ca6072b7bb8
+  react-native-webview: fa228e55c53372c2b361d2fa5e415844fa83eabf
   React-NativeModulesApple: 02e35e9a51e10c6422f04f5e4076a7c02243fff2
   React-perflogger: e3596db7e753f51766bceadc061936ef1472edc3
   React-RCTActionSheet: 17ab132c748b4471012abbcdcf5befe860660485
@@ -892,26 +872,22 @@ SPEC CHECKSUMS:
   React-runtimescheduler: f23e337008403341177fc52ee4ca94e442c17ede
   React-utils: fa59c9a3375fb6f4aeb66714fd3f7f76b43a9f16
   ReactCommon: dd03c17275c200496f346af93a7b94c53f3093a4
-<<<<<<< HEAD
   RealmJS: 73a36da3cbbe85e1bdcbf55683172b51f35070d3
-=======
-  RealmJS: 27b8d695fa4bc9606a4a4a378de55511edc2084c
->>>>>>> ce3e3e3 (iqra-ui updated with iqra)
-  RNAudioRecorderPlayer: 6638283925b46808310c9fdf803ebabc3abdbadc
-  RNCAsyncStorage: b90b71f45b8b97be43bc4284e71a6af48ac9f547
+  RNAudioRecorderPlayer: 9b34adc281800e5b19258f1b91d889b1ef3abdd6
+  RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNCPicker: 0bc2f0a29abcca7b7ed44a2d036aac9ab6d25700
+  RNCPicker: 3e2c37a8328f368ce14da050cdc8231deb5fc9f9
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
-  RNGestureHandler: 6e46dde1f87e5f018a54fe5d40cd0e0b942b49ee
-  RNGoogleSignin: 22e468a9474dbcb8618d8847205ad4f0b2575d13
+  RNGestureHandler: 69d0a928253547ef857a7be4f453220b9c472e07
+  RNGoogleSignin: c15bdaa7e8a9e190b6169d9c96a4e8380a740f22
   RNImageCropPicker: 14fe1c29298fb4018f3186f455c475ab107da332
   RNLocalize: d4b8af4e442d4bcca54e68fc687a2129b4d71a81
-  RNReanimated: ab2e96c6d5591c3dfbb38a464f54c8d17fb34a87
-  RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
+  RNReanimated: f4798af7dede23d41039f0bc372710ead86e90c7
+  RNScreens: bb06f14b5c352e603f2527caac02ca0d6398c6e5
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
+  TOCropViewController: bf38459e9da6efe414de22087ebd5c530640f4bd
   Yoga: b76f1acfda8212aa16b7e26bcce3983230c82603
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

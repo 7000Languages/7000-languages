@@ -41,15 +41,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent:'space-between',
         alignItems: 'center',
-        width: 117,
         height: 25,
+        gap: 10,
         borderRadius: 4,
-        backgroundColor: '#FBEAE9',
-        marginTop: 10,
         paddingHorizontal: 5,
     },
     manageUnits: {
-        color: '#DF4E47',
         fontWeight: 'bold',
         fontSize:12
     },
@@ -60,7 +57,8 @@ const styles = StyleSheet.create({
         width: DEVICE_WIDTH * 0.95 ,
         justifyContent: 'space-between',
         alignSelf: 'center',
-        marginBottom: 20
+        marginBottom: 20,
+        paddingVertical: 5
     },
     addUnitContainer: {
         maxWidth: 132,

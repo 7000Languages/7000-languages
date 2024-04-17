@@ -57,7 +57,7 @@ const MainNavigator = () => {
           existingRealmFileBehavior: existingRealmFileBehaviorConfig,
           initialSubscriptions: {
             update: (subs, realm) => {
-              subs.add(realm.objects(Course), {
+              subs.add(realm.objects('courses'), {
                 name: 'allCoursesSubscription',
               })
               subs.add(realm.objects('units'), {
@@ -77,6 +77,15 @@ const MainNavigator = () => {
               })
               subs.add(realm.objects('courseFlags'), {
                 name: 'allCourseFlagsSubscription',
+              })
+              subs.add(realm.objects('unitFlags'), {
+                name: 'allUnitFlagsSubscription',
+              })
+              subs.add(realm.objects('lessonFlags'), {
+                name: 'allLessonFlagsSubscription',
+              })
+              subs.add(realm.objects('joinedCourses'), {
+                name: 'allJoinedCoursesSubscription'
               })
             },
             rerunOnOpen: true,

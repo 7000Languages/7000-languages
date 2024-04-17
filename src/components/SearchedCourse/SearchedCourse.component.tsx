@@ -89,7 +89,7 @@ const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
       {showingDetails && (
         <>
           <Text style={styles.unitsAvailable}>xx Units available</Text>
-          <Text style={styles.description}>
+          <Text numberOfLines={2} style={styles.description}>
             {description}
           </Text>
           <TouchableOpacity style={styles.joinCourseTouch} onPress={onJoinCoursePress}>

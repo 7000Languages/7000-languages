@@ -27,6 +27,7 @@ export type CourseStackParamList = {
     }
     LearnerUnit: {
         unit_id: string
+        course_id?: string
     }
     LearnerLesson: {
         lesson_id: string

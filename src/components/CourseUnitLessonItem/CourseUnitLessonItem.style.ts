@@ -79,21 +79,24 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     iconsContainer: {
-        width: 60,
-        height: DEVICE_HEIGHT * 0.08,
         position: 'absolute',
-        right: '-25%',
+        right: '-30%',
         alignSelf: 'center',
+        justifyCenter: 'center',
         marginTop: '1.2%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     iconView: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: '50%',
         marginRight: 20,
+        flexDirection: 'row',
+        height: DEVICE_HEIGHT * 0.08,
+        gap: 10
+
+
     }
 });
 

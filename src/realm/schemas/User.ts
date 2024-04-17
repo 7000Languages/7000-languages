@@ -38,7 +38,6 @@ export default class User extends Realm.Object {
       learnerLanguages: { type: 'string[]', default: [] },
       collaboratorLanguages: { type: 'string[]', default: [] },
       completedActivityLevels: { type: 'string[]', default: []},
-      completedLessons: { type: 'string[]', default: []},
       created_at: { type: "date?", default: new Date },
       updated_at: { type: "date?", default: new Date },
     },

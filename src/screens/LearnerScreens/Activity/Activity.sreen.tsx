@@ -9,7 +9,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { CourseStackParamList } from '../../../navigation/types';
-import { AudioToTextActivity, FocusAwareStatusBar, Header, TextToImageActivity, TextToTextActivity } from '../../../components';
+import { AudioToImageActivity, AudioToTextActivity, FocusAwareStatusBar, Header, TextToImageActivity, TextToTextActivity } from '../../../components';
 import { SECONDARY_COLOR } from '../../../constants/colors';
 import { ActivityType, } from '../../../@types';
 import { TextToAudioActivity } from '../../../components';
@@ -35,6 +35,7 @@ const Activity: React.FC<NavProps> = ({ navigation, route }) => {
   const TextToAudioActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-audio') as any)?._id.toString() === activityLevel._activity_id);
   const TextToImageActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-image') as any)?._id.toString() === activityLevel._activity_id);
   const TextToTextActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'text-to-text') as any)?._id.toString() === activityLevel._activity_id);
+  const AudioToImageActivities = activityLevels.filter((activityLevel: any) => (activities.find((activity: any) => activity!.type == 'audio-to-image') as any)?._id.toString() === activityLevel._activity_id);
 
   const goToNextActivity = (type: ActivityType | 'completed') => {
     setCurentActivityType(type);
@@ -97,6 +98,15 @@ const Activity: React.FC<NavProps> = ({ navigation, route }) => {
               goToNextActivity={type => goToNextActivity(type)}
             />
           ) :
+          curtentActivityType == 'audio-to-image' &&
+          AudioToImageActivities.length > 0 ?
+          (
+            <AudioToImageActivity 
+              activityLevels={convertToArrayOfPlainObject(AudioToImageActivities)}
+              goToNextActivity={type => goToNextActivity(type)} 
+            />
+          )
+            :
           <View style={styles.noActivityContainer}>
             <Text>No activities for this lesson</Text>
           </View>
