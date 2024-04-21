@@ -104,7 +104,10 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
         ) : section == 'learner' && type == 'lesson' && showMarkAsCompleted ? (
           <TouchableOpacity
             disabled={lessonCompleted}
-            style={[styles.manageUnitsContainer, { backgroundColor: !lessonCompleted ? '#FBEAE9': '#69B0501A' }]}
+            style={[
+              styles.manageUnitsContainer,
+              {backgroundColor: !lessonCompleted ? '#FBEAE9' : '#69B0501A'},
+            ]}
             onPress={() =>
               Alert.alert(
                 'Mark this Lesson as Completed ?',
@@ -115,8 +118,16 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
                 ],
               )
             }>
-            <Text style={[styles.manageUnits, { color: !lessonCompleted ? '#DF4E47': '#69B050' }]}>{lessonCompleted ? 'Lesson completed' : `Mark as completed`}</Text>
-            {!lessonCompleted && <Ionicons name="settings" size={13} color="#DF4E47" />}
+            <Text
+              style={[
+                styles.manageUnits,
+                {color: !lessonCompleted ? '#DF4E47' : '#69B050'},
+              ]}>
+              {lessonCompleted ? 'Lesson completed' : `Mark as completed`}
+            </Text>
+            {!lessonCompleted && (
+              <Ionicons name="settings" size={13} color="#DF4E47" />
+            )}
           </TouchableOpacity>
         ) : (
           <></>
@@ -124,7 +135,9 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
       </View>
       <FlatList
         data={data}
-        style={{marginBottom: height * (Platform.OS == 'ios' ? 0.05 : 0.1)}}
+        style={{
+          // marginBottom: height * (Platform.OS == 'ios' ? 0.05 : 0.1),
+        }}
         horizontal={horizontalFlatList}
         showsHorizontalScrollIndicator={false}
         renderItem={renderItem}

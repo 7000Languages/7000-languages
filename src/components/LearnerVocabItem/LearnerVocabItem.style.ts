@@ -4,11 +4,12 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/sizes";
 const styles = StyleSheet.create({
     container: {
         width: DEVICE_WIDTH * 0.68,
+        height: DEVICE_HEIGHT * 0.4,
         borderRadius: 8,
         borderColor: '#DEE5E9',
         borderWidth: 1.5,
         paddingTop: 20,
-        paddingBottom: 10,
+        padding: 10,
         paddingHorizontal: 15,
         marginHorizontal: 10,
     },
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         marginLeft: 5,
         overflow: 'hidden',
-        flex: 1
+        flex: 1,
     },
     textAndImage: {
         flexDirection: 'row',
@@ -55,8 +56,7 @@ const styles = StyleSheet.create({
         height: 60,
         backgroundColor: '#496277',
         borderRadius: 1000,
-        position: 'absolute',
-        bottom: 10,
+        marginTop: 10,
         alignSelf: 'center'
     },
     playAudioText: {

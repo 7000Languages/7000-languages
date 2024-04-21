@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 import { StatusBarHeight } from "../../constants/sizes";
-import { SECONDARY_COLOR } from "../../constants/colors";
 
 const styles = StyleSheet.create({
   container: {
@@ -9,7 +8,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: StatusBarHeight! + 20,
     alignSelf: "center",
-    width: '92%',
+    width: '95%',
     overflow: 'hidden',
 
   },

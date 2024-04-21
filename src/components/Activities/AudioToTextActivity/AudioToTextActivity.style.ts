@@ -50,13 +50,9 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     flexDirection: 'row',
-    marginLeft: 70,
-  },
-  arrowButton: {
-    marginLeft: 20,
-  },
-  arrowButton2: {
-    marginHorizontal: 149,
+    alignSelf: 'center',
+    width: '60%',
+    justifyContent: 'space-between'
   }
 });
 

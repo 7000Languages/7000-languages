@@ -88,10 +88,10 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
       />
       <ActivityProgressIndicator onCirclePress={(item)=>changeActivityType(item)} activities={activities} currentActivityType={currentActivityType} />
       <View style={styles.arrowContainer}>
-        <Pressable style={styles.arrowButton} onPress={onPressBack}>
+        <Pressable onPress={onPressBack}>
           <Ionicons name="arrow-back-outline" size={30} />
         </Pressable>
-        <Pressable style={styles.arrowButton2} onPress={onPressForward}>
+        <Pressable onPress={onPressForward}>
           <Ionicons name="arrow-forward-outline" size={30} />
         </Pressable>
       </View>
