@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
   options: {
-    width: DEVICE_WIDTH * 0.95,
+    width: DEVICE_WIDTH * 0.98,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignSelf: 'center',
@@ -105,13 +105,9 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     flexDirection: 'row',
-    marginLeft: 70,
-  },
-  arrowButton: {
-    marginLeft: 20,
-  },
-  arrowButton2: {
-    marginHorizontal: 149,
+    width: '60%',
+    alignSelf: 'center',
+    justifyContent: 'space-between'
   }
 });
 

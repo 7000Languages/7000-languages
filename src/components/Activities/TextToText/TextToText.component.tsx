@@ -205,22 +205,46 @@ const TextToText: React.FC<IProps> = ({
           {currentActivityLevelIndex + 1}/{activityLevels.length}
         </Text>
         <Text style={[styles.correctNess, {color: correctNessColor}]}>
-        {correctNess}
+          {correctNess}
         </Text>
         <View style={styles.arrowContainer}>
-        <Pressable onPress={onPressBack} style={styles.arrowButton}>
-          <Ionicons name="arrow-back-outline" size={30} />
-        </Pressable>
-        <Pressable onPress={onPressForward} style={styles.arrowButton2}>
-          <Ionicons name="arrow-forward-outline" size={30} />
-        </Pressable>
-      </View>
+          <Pressable onPress={onPressBack}>
+            <Ionicons name="arrow-back-outline" size={30} />
+          </Pressable>
+          <Pressable onPress={onPressForward}>
+            <Ionicons name="arrow-forward-outline" size={30} />
+          </Pressable>
+        </View>
         <View style={styles.textsContainer}>
           <View style={styles.left}>
             {randomOriginalWords.map((word, index) => {
-              let borderColor = selectedOptions.includes(word.original) ? matches.includes(matches.find(match => match.original === word.original)) ? matches.find(match => match.original === word.original)['color'].textAndBorderColor : currentMatch['color'].textAndBorderColor : '#1C1C1C'
-              let textColor = selectedOptions.includes(word.original) ? matches.includes(matches.find(match => match.original === word.original)) ? matches.find(match => match.original === word.original)['color'].textAndBorderColor : currentMatch['color'].textAndBorderColor : '#1C1C1C'
-              let bgColor = selectedOptions.includes(word.original) ? matches.includes(matches.find(match => match.original === word.original)) ? matches.find(match => match.original === word.original)['color'].bgColor : currentMatch['color'].bgColor : 'transparent'
+              let borderColor = selectedOptions.includes(word.original)
+                ? matches.includes(
+                    matches.find(match => match.original === word.original),
+                  )
+                  ? matches.find(match => match.original === word.original)[
+                      'color'
+                    ].textAndBorderColor
+                  : currentMatch['color'].textAndBorderColor
+                : '#1C1C1C';
+              let textColor = selectedOptions.includes(word.original)
+                ? matches.includes(
+                    matches.find(match => match.original === word.original),
+                  )
+                  ? matches.find(match => match.original === word.original)[
+                      'color'
+                    ].textAndBorderColor
+                  : currentMatch['color'].textAndBorderColor
+                : '#1C1C1C';
+              let bgColor = selectedOptions.includes(word.original)
+                ? matches.includes(
+                    matches.find(match => match.original === word.original),
+                  )
+                  ? matches.find(match => match.original === word.original)[
+                      'color'
+                    ].bgColor
+                  : currentMatch['color'].bgColor
+                : 'transparent';
               return (
                 <TouchableOpacity
                   key={index}
@@ -233,9 +257,7 @@ const TextToText: React.FC<IProps> = ({
                     styles.originalWord,
                     {borderColor, backgroundColor: bgColor},
                   ]}>
-                  <Text 
-                    style={[styles.word, {color: textColor}]}
-                  >
+                  <Text style={[styles.word, {color: textColor}]}>
                     {word.original}
                   </Text>
                 </TouchableOpacity>
@@ -244,9 +266,39 @@ const TextToText: React.FC<IProps> = ({
           </View>
           <View style={styles.right}>
             {randomTranslationWords.map((word, index) => {
-              let borderColor = selectedOptions.includes(word.translation) ? matches.includes(matches.find(match => match.translation === word.translation)) ? matches.find(match => match.translation === word.translation)['color'].textAndBorderColor : currentMatch['color'].textAndBorderColor : '#1C1C1C'
-              let textColor = selectedOptions.includes(word.translation) ? matches.includes(matches.find(match => match.translation === word.translation)) ? matches.find(match => match.translation === word.translation)['color'].textAndBorderColor : currentMatch['color'].textAndBorderColor : '#1C1C1C'
-              let bgColor = selectedOptions.includes(word.translation) ? matches.includes(matches.find(match => match.translation === word.translation)) ? matches.find(match => match.translation === word.translation)['color'].bgColor : currentMatch['color'].bgColor : 'transparent'
+              let borderColor = selectedOptions.includes(word.translation)
+                ? matches.includes(
+                    matches.find(
+                      match => match.translation === word.translation,
+                    ),
+                  )
+                  ? matches.find(
+                      match => match.translation === word.translation,
+                    )['color'].textAndBorderColor
+                  : currentMatch['color'].textAndBorderColor
+                : '#1C1C1C';
+              let textColor = selectedOptions.includes(word.translation)
+                ? matches.includes(
+                    matches.find(
+                      match => match.translation === word.translation,
+                    ),
+                  )
+                  ? matches.find(
+                      match => match.translation === word.translation,
+                    )['color'].textAndBorderColor
+                  : currentMatch['color'].textAndBorderColor
+                : '#1C1C1C';
+              let bgColor = selectedOptions.includes(word.translation)
+                ? matches.includes(
+                    matches.find(
+                      match => match.translation === word.translation,
+                    ),
+                  )
+                  ? matches.find(
+                      match => match.translation === word.translation,
+                    )['color'].bgColor
+                  : currentMatch['color'].bgColor
+                : 'transparent';
               return (
                 <TouchableOpacity
                   key={index}
@@ -254,16 +306,12 @@ const TextToText: React.FC<IProps> = ({
                     sectionToSelectFrom == 'original' ||
                     selectedOptions.includes(word.translation)
                   }
-                  onPress={() =>
-                    addToMatches(word.translation, 'translation')
-                  }
+                  onPress={() => addToMatches(word.translation, 'translation')}
                   style={[
                     styles.originalWord,
                     {borderColor, backgroundColor: bgColor},
                   ]}>
-                  <Text 
-                  style={[styles.word, {color: textColor}]}
-                  >
+                  <Text style={[styles.word, {color: textColor}]}>
                     {word.translation}
                   </Text>
                 </TouchableOpacity>
@@ -275,20 +323,19 @@ const TextToText: React.FC<IProps> = ({
           onPress={determineMatch}
           style={[
             styles.selectAudioBtn,
-              {
-                elevation: matchingCompleted ? 6 : 0,
-                shadowColor:
-                  !matchingCompleted ? 'transparent' : 'rgba(0, 0, 0,0.9)',
-                backgroundColor:
-                  !matchingCompleted
-                    ? '#DEE5E9'
-                    : correctNess == 'Correct'
-                    ? '#91B38B'
-                    : '#F9F9F9',
-              },
+            {
+              elevation: matchingCompleted ? 6 : 0,
+              shadowColor: !matchingCompleted
+                ? 'transparent'
+                : 'rgba(0, 0, 0,0.9)',
+              backgroundColor: !matchingCompleted
+                ? '#DEE5E9'
+                : correctNess == 'Correct'
+                ? '#91B38B'
+                : '#F9F9F9',
+            },
           ]}
-          disabled={!matchingCompleted}
-        >
+          disabled={!matchingCompleted}>
           <Text
             style={[
               styles.selectAudioText,

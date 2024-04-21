@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../../constants/sizes";
 import { SECONDARY_COLOR } from "../../../constants/colors";
 
@@ -94,8 +94,9 @@ const styles = StyleSheet.create({
   arrowContainer: {
     flexDirection: 'row',
     marginLeft: 70,
-    marginTop: 10
-
+    marginTop: 10,
+    width: '60%',
+    justifyContent: 'space-between'
   },
   arrowButton: {
     marginLeft: 20,

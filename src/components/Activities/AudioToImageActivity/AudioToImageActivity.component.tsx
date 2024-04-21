@@ -172,10 +172,10 @@ import Sound from 'react-native-sound';
             {currentActivityLevelIndex + 1}/{activityLevels.length}
           </Text>
           <View style={styles.arrowContainer}>
-          <Pressable onPress={onPressBack} style={styles.arrowButton}>
+          <Pressable onPress={onPressBack}>
             <Ionicons name="arrow-back-outline" size={30} />
           </Pressable>
-          <Pressable onPress={onPressForward} style={styles.arrowButton2}>
+          <Pressable onPress={onPressForward}>
             <Ionicons name="arrow-forward-outline" size={30} />
           </Pressable>
         </View>

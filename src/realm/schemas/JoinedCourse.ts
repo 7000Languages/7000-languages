@@ -1,6 +1,6 @@
-import {BSON} from 'realm';
+import {BSON, Object} from 'realm';
 
-export default class JoinedCourse extends Realm.Object {
+export default class JoinedCourse extends Object {
   _id!: BSON.ObjectId;
   _course_id!: string;
   _user_id!: string;
