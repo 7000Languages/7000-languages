@@ -14,7 +14,7 @@ import styles from "./CourseUnitLessonDesign.style";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { PRIMARY_COLOR, SECONDARY_COLOR } from "../../constants/colors";
-import { DEVICE_WIDTH } from "../../constants/sizes";
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/sizes";
 import { ScrollView } from "react-native";
 
 interface IProps {
@@ -31,9 +31,8 @@ interface IProps {
   onManagePress?: () => void
   onMarkAsComplete?: () => void
   lessonCompleted?: boolean
+  onFlagPress?(): void
 }
-
-const { height } = Dimensions.get('screen')
 
 const CourseUnitLessonDesign: React.FC<IProps> = ({
   item,
@@ -48,7 +47,8 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
   onMarkAsComplete,
   section,
   horizontalFlatList,
-  lessonCompleted
+  lessonCompleted,
+  onFlagPress
 }) => {
 
   const itemTypeManage = type == 'course' ? `unit${data.length > 1 ? 's' : ''}` : type == 'unit' ? `Lesson${data.length > 1 ? 's' : ''}` : `Vocab${data.length > 1 ? 's' : ''}`
@@ -76,6 +76,9 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
               section == 'learner' ? SECONDARY_COLOR : PRIMARY_COLOR,
           },
         ]}>
+        {section == 'learner' && (
+          <Ionicons onPress={onFlagPress} name="flag" size={24} color={'white'} style={styles.flagIcon} />
+        )}
         <Text style={styles.language}>{item}</Text>
         <ScrollView>
           <Text style={styles.languageDescription}>{itemDescription}</Text>
@@ -133,24 +136,25 @@ const CourseUnitLessonDesign: React.FC<IProps> = ({
           <></>
         )}
       </View>
-      <FlatList
-        data={data}
-        style={{
-          // marginBottom: height * (Platform.OS == 'ios' ? 0.05 : 0.1),
-        }}
-        horizontal={horizontalFlatList}
-        showsHorizontalScrollIndicator={false}
-        renderItem={renderItem}
-        getItemLayout={(_, index) => ({
-          length: itemHeight,
-          offset: itemHeight * index,
-          index,
-        })}
-        showsVerticalScrollIndicator={false}
-        onScroll={e =>
-          determineShowMarkAsCompleted(e.nativeEvent.contentOffset.x)
-        }
-      />
+      <View  style={{
+          height: (Platform.OS == 'ios' ? DEVICE_HEIGHT * 0.45 : DEVICE_HEIGHT * 0.45)
+        }}>
+        <FlatList
+          data={data}
+          horizontal={horizontalFlatList}
+          showsHorizontalScrollIndicator={false}
+          renderItem={renderItem}
+          getItemLayout={(_, index) => ({
+            length: itemHeight,
+            offset: itemHeight * index,
+            index,
+          })}
+          showsVerticalScrollIndicator={false}
+          onScroll={e =>
+            determineShowMarkAsCompleted(e.nativeEvent.contentOffset.x)
+          }
+        />
+      </View>
       {section !== 'learner' && (
         <TouchableOpacity style={styles.addUnitContainer} onPress={onAddPress}>
           <Ionicons name="add-circle" size={24} color="#DF4E47" />

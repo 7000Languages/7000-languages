@@ -185,6 +185,7 @@ const TextToText: React.FC<IProps> = ({
     getRandomOriginalWords(currentActivityLevel.words_to_match);
     getRandomTranslationWords(currentActivityLevel.words_to_match);
     setColorsToSelect(colors)
+    setSelectedOptions([])
   }, [currentActivityLevelIndex]);
 
   useEffect(() => {

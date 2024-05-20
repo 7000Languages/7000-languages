@@ -96,6 +96,7 @@ const TextToImageActivity: React.FC<IProps> = ({
   
   useEffect(() => {
     getImages()
+    setSelectedOptions([])
   }, [currentActivityLevelIndex])
 
   const onPressBack = () => {
@@ -116,20 +117,20 @@ const TextToImageActivity: React.FC<IProps> = ({
         <Text style={styles.activityNumber}>
           {currentActivityLevelIndex + 1}/{activityLevels.length}
         </Text>
+        <View style={styles.arrowContainer}>
+          <Pressable onPress={onPressBack}>
+            <Ionicons name="arrow-back-outline" size={30} />
+          </Pressable>
+          <Pressable onPress={onPressForward}>
+            <Ionicons name="arrow-forward-outline" size={30} />
+          </Pressable>
+        </View>
         <Text style={styles.titleText}>
           {currentActivityLevel.text_for_images.text}
         </Text>
         <Text style={[styles.correctNess, {color: correctNessColor}]}>
           {correctNess}
         </Text>
-        <View style={styles.arrowContainer}>
-        <Pressable onPress={onPressBack}>
-          <Ionicons name="arrow-back-outline" size={30} />
-        </Pressable>
-        <Pressable onPress={onPressForward}>
-          <Ionicons name="arrow-forward-outline" size={30} />
-        </Pressable>
-      </View>
         <View style={styles.options}>
           {images.map((image, index) => {
             let rightOption =

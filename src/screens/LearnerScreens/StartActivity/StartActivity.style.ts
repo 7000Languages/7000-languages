@@ -13,10 +13,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F9F9",
     alignSelf: "center",
     marginTop: 20,
-    height:"55%",
-    //height: DEVICE_HEIGHT * (Platform.OS == 'android' ? 0.5 : 0.45),
+    maxHeight:"55%",
     paddingHorizontal: 10,
-    paddingBottom: 10
+    paddingBottom: '5%',
   },
   activityTitle: {
     alignSelf: "center",
@@ -25,9 +24,9 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   numberContainer: {
-    width: 130,
-    height: 130,
-    borderRadius: 65,
+    width: DEVICE_HEIGHT * 0.1,
+    height: DEVICE_HEIGHT * 0.1,
+    borderRadius: (DEVICE_HEIGHT * 0.1)/2,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#C6E3FC",
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     borderRadius: 10,
     position: "absolute",
-    bottom: 12,
+    bottom: '1%',
   },
   startActivityText: {
     color: "#FFFFFF",
@@ -93,10 +92,11 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     flexDirection: 'row',
-    marginLeft: 70,
     marginTop: 10,
-    width: '60%',
-    justifyContent: 'space-between'
+    width: '90%',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    paddingHorizontal: '20%'
   },
   arrowButton: {
     marginLeft: 20,

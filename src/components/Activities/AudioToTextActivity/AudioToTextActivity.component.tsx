@@ -145,6 +145,7 @@ const AudioToTextActivity: React.FC<IProps> = ({
 
   useEffect(() => {
     getAudio()
+    setSelectedOptions([])
   }, [currentActivityLevelIndex]);
 
   return (

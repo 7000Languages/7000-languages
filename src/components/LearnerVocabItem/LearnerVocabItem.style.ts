@@ -4,7 +4,7 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/sizes";
 const styles = StyleSheet.create({
     container: {
         width: DEVICE_WIDTH * 0.68,
-        height: DEVICE_HEIGHT * 0.4,
+        height: '95%',
         borderRadius: 8,
         borderColor: '#DEE5E9',
         borderWidth: 1.5,
@@ -53,11 +53,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: 227,
-        height: 60,
+        height: '18%',
         backgroundColor: '#496277',
         borderRadius: 1000,
         marginTop: 10,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        position: 'absolute',
+        bottom: '5%'
     },
     playAudioText: {
         color: '#DEE5E9',

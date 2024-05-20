@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     alignSelf: 'center',
-    marginVertical: DEVICE_HEIGHT * 0.02
+    marginVertical: DEVICE_HEIGHT * 0.01
   },
   left: {
     width: '50%',
@@ -91,9 +91,11 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     flexDirection: 'row',
-    width: '60%',
+    marginTop: 10,
+    width: '90%',
+    justifyContent: 'space-between',
     alignSelf: 'center',
-    justifyContent: 'space-between'
+    paddingHorizontal: '20%'
   }
 });
 

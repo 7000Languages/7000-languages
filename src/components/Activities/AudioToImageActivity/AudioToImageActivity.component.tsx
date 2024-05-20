@@ -159,6 +159,7 @@ import Sound from 'react-native-sound';
     useEffect(() => {
       getImages()
       getAudio()
+      setSelectedOptions([])
     }, [currentActivityLevelIndex])
 
     useEffect(() => {
@@ -180,12 +181,12 @@ import Sound from 'react-native-sound';
           </Pressable>
         </View>
           <Pressable style={styles.soundContainer} onPress={playPause}>
-          <Ionicons
-            name={!playing ? 'md-volume-medium' : 'pause-circle-sharp'}
-            size={34}
-            color="#496277"
-          />
-        </Pressable>
+            <Ionicons
+              name={!playing ? 'md-volume-medium' : 'pause-circle-sharp'}
+              size={34}
+              color="#496277"
+            />
+          </Pressable>
           <Text style={[styles.correctNess, {color: correctNessColor}]}>
             {correctNess}
           </Text>

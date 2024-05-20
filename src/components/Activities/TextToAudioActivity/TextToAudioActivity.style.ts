@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 5,
-    width: 165,
+    width: '40%',
     height: 60,
     borderRadius: 1666,
     marginVertical: 10,
@@ -105,9 +105,11 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     flexDirection: 'row',
-    width: '60%',
+    marginTop: 10,
+    width: '90%',
+    justifyContent: 'space-between',
     alignSelf: 'center',
-    justifyContent: 'space-between'
+    paddingHorizontal: '20%'
   }
 });
 

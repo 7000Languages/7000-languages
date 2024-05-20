@@ -6,7 +6,6 @@ import React, { useEffect, useState } from 'react';
 
 import styles from './Activity.style';
 import Feather from 'react-native-vector-icons/Feather';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { CourseStackParamList } from '../../../navigation/types';
 import { AudioToImageActivity, AudioToTextActivity, FocusAwareStatusBar, Header, TextToImageActivity, TextToTextActivity } from '../../../components';
@@ -91,7 +90,7 @@ const Activity: React.FC<NavProps> = ({ navigation, route }) => {
         />
       ) :
         curtentActivityType == 'text-to-text' &&
-          TextToImageActivities.length > 0 ?
+          TextToTextActivities.length > 0 ?
           (
             <TextToTextActivity
               activityLevels={convertToArrayOfPlainObject(TextToTextActivities)}

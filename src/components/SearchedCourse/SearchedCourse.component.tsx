@@ -4,8 +4,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import styles from "./SearchedCourse.style";
 
-import { CourseType } from "../../@types";
+import { CourseType, UnitType } from "../../@types";
 import Animated, { interpolateColor, useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
+import Course from "../../realm/schemas/Course";
+import { BSON } from "realm";
+import { realmContext } from "../../realm/realm";
+import Unit from "../../realm/schemas/Unit";
 
 interface IProps {
     item: CourseType
@@ -17,7 +21,11 @@ const AnimatedIcon = Animated.createAnimatedComponent(Ionicons)
 
 const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
 
+  const { useQuery } = realmContext
+  const { _id, } = item;
   const { name, translated_language, admin_name, description } = item.details;
+
+  const unitsOfCourse = useQuery<UnitType>('units', (units) => units.filtered('_course_id == $0', _id.toString()))
 
   const [showingDetails, setShowingDetails] = useState(false);
 
@@ -25,6 +33,7 @@ const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
   const animatedHeight = useSharedValue(66);
   const animatedChevronRotation = useSharedValue('0deg')
   const animatedBackgroundColor = useSharedValue(0);
+  const animatedPaddingVertical = useSharedValue(0);
 
   const toggleShowingDetails = () => {
       setShowingDetails(!showingDetails);
@@ -33,6 +42,7 @@ const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
   const rAnimatedHeightAndBackgroundStyle = useAnimatedStyle(() => {
     return {
       height: animatedHeight.value,
+      paddingVertical: animatedPaddingVertical.value,
       backgroundColor: interpolateColor(
         animatedBackgroundColor.value,
         [0, 1],
@@ -52,7 +62,8 @@ const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
   });
 
   const animationChanges = () => {
-    animatedHeight.value = withTiming(showingDetails ? 164 : 66)
+    animatedHeight.value = withTiming(showingDetails ? 180 : 66)
+    animatedPaddingVertical.value = withTiming(showingDetails ? 5 : 10)
     animatedChevronRotation.value = withTiming(showingDetails? '180deg' : '0deg', { duration: 500 })
     animatedBackgroundColor.value = withTiming(1 - animatedBackgroundColor.value, { duration: 1000 });
   }
@@ -69,9 +80,11 @@ const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
       <View style={styles.topView}>
         <View style={styles.textsContainer}>
           <View style={styles.nameTranslation}>
-            <Text numberOfLines={1} style={styles.name}>
-              {name}{" "}
-            </Text>
+            <View style={{ width: '60%' }}>
+              <Text numberOfLines={2} style={styles.name}>
+                {name}{" "}
+              </Text>
+            </View>
             <Text
               numberOfLines={1}
               style={styles.translatedLanguage}
@@ -88,7 +101,7 @@ const SearchedCourse:React.FC<IProps> = ({item, onJoinCoursePress}) => {
       </View>
       {showingDetails && (
         <>
-          <Text style={styles.unitsAvailable}>xx Units available</Text>
+          <Text style={styles.unitsAvailable}>{unitsOfCourse.length} Units available</Text>
           <Text numberOfLines={2} style={styles.description}>
             {description}
           </Text>

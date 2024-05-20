@@ -11,6 +11,7 @@ import { realmContext } from '../../../realm/realm'
 import { convertToArrayOfPlainObject } from '../../../utils/helpers'
 import { Activity, ActivityType } from '../../../@types'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ScrollView } from 'react-native-gesture-handler'
 
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'StartActivity'>
@@ -56,8 +57,6 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
   const currentActivityTypeIndex = activityTypes.indexOf(currentActivityType);
 
   const changeActivityType = (activity: Activity) => {
-    //console.log(activity);
-    // return
     setCurrentActivityType(activity.type)
   }
 
@@ -109,9 +108,11 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
               <Text style={styles.number}>{currentActivityTypeIndex + 1}</Text>
             </View>
             <Text style={styles.activity}>Matching {activities[currentActivityTypeIndex].type.split('-').join(' ')}</Text>
+            <ScrollView>
             <Text style={styles.activityDescription}>
               Instructions: {activities[currentActivityTypeIndex].instructions}
             </Text>
+            </ScrollView>
           </View>
       }
       {

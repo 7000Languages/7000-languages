@@ -150,6 +150,7 @@ const TextToAudioActivity: React.FC<IProps> = ({
   
   useEffect(() => {
     getAudios()
+    setSelectedOptions([])
   }, [currentActivityLevelIndex])
 
   const onPressBack = () => {
@@ -170,28 +171,33 @@ const TextToAudioActivity: React.FC<IProps> = ({
         <Text style={styles.activityNumber}>
           {currentActivityLevelIndex + 1}/{activityLevels.length}
         </Text>
+
+        <View style={styles.arrowContainer}>
+          <Pressable onPress={onPressBack}>
+            <Ionicons name="arrow-back-outline" size={30} />
+          </Pressable>
+          <Pressable onPress={onPressForward}>
+            <Ionicons name="arrow-forward-outline" size={30} />
+          </Pressable>
+        </View>
+
         <Text style={styles.titleText}>
           {currentActivityLevel.text_for_audios.text}
         </Text>
         <Text style={[styles.correctNess, {color: correctNessColor}]}>
           {correctNess}
         </Text>
-        <View style={styles.arrowContainer}>
-        <Pressable onPress={onPressBack}>
-          <Ionicons name="arrow-back-outline" size={30} />
-        </Pressable>
-        <Pressable onPress={onPressForward}>
-          <Ionicons name="arrow-forward-outline" size={30} />
-        </Pressable>
-      </View>
-        
+       
+
         <View style={styles.options}>
           {audios.map((option, index) => {
             let rightOption =
-              option.audioOption === currentActivityLevel.text_for_audios.correct_audio_option &&
+              option.audioOption ===
+                currentActivityLevel.text_for_audios.correct_audio_option &&
               selectedOptions.includes(option.audioOption);
             let wrongOption =
-              option.audioOption !== currentActivityLevel.text_for_audios.correct_audio_option &&
+              option.audioOption !==
+                currentActivityLevel.text_for_audios.correct_audio_option &&
               selectedOptions.includes(option.audioOption);
 
             return (
@@ -216,19 +222,22 @@ const TextToAudioActivity: React.FC<IProps> = ({
                     style={[
                       styles.text,
                       {
-                        color:
-                         rightOption
-                            ? '#E5F7F7'
-                            : wrongOption
-                            ? '#A6AFB5'
-                            : '#496277',
+                        color: rightOption
+                          ? '#E5F7F7'
+                          : wrongOption
+                          ? '#A6AFB5'
+                          : '#496277',
                       },
                     ]}>
                     Audio {index + 1}
                   </Text>
                 </View>
                 <Ionicons
-                  name={playing && selectedIndex == index ? 'pause-circle-sharp' : 'md-volume-medium'}
+                  name={
+                    playing && selectedIndex == index
+                      ? 'pause-circle-sharp'
+                      : 'md-volume-medium'
+                  }
                   size={34}
                   color={
                     selectedIndex == index

@@ -153,9 +153,6 @@ const LearnerUnit: React.FC<NavProps> = ({navigation, route}) => {
         }
       />
       <View style={styles.settingsContainer}>
-        <TouchableOpacity onPress={openFlagModal}>
-          <Ionicons name="flag" size={24} color={'white'} />
-        </TouchableOpacity>
         {flagModalVisible && (
           <Report
             isVisible={flagModalVisible}
@@ -177,6 +174,7 @@ const LearnerUnit: React.FC<NavProps> = ({navigation, route}) => {
         renderItem={renderItem}
         type="unit"
         section="learner"
+        onFlagPress={openFlagModal}
       />
     </View>
   );
