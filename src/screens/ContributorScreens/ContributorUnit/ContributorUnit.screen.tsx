@@ -87,7 +87,7 @@ const ContributorUnit: React.FC<NavProps> = ({ navigation, route }) => {
       <ManageUnitLessonVocab
         type="lesson"
         isModalVisible={manageModal}
-        data={convertToArrayOfPlainObject(lessons)}
+        data={lessons}
         onCloseModal={() => setManageModal(false)}
       />
       <AddUnitLessonModal
