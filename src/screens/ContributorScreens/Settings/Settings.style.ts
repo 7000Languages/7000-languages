@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { PRIMARY_COLOR } from '../../../constants/colors';
 import { DEVICE_HEIGHT, DEVICE_WIDTH, StatusBarHeight } from '../../../constants/sizes';
 
 const styles = StyleSheet.create({
@@ -167,6 +168,19 @@ const styles = StyleSheet.create({
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    securityCodeBtn: {
+        alignSelf: 'center',
+        width: '90%',
+        height: 45,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: PRIMARY_COLOR,
+        marginTop: 10
+    },
+    securityCodeText: {
+        color: "#FFFFFF"
     }
 });
 

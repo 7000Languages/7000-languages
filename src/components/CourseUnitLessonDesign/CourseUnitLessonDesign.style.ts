@@ -1,21 +1,20 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { PRIMARY_COLOR } from '../../constants/colors';
-import { DEVICE_WIDTH } from '../../constants/sizes';
+import { DEVICE_HEIGHT, DEVICE_WIDTH } from '../../constants/sizes';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#ffffff',
     },
     header: {
         width: DEVICE_WIDTH,
-        height: 140,
-        paddingTop: 30,
+        maxHeight: Platform.OS == 'ios' ? DEVICE_HEIGHT * 0.18 : DEVICE_HEIGHT * 0.15,
+        paddingVertical: 20,
         paddingHorizontal: 20,
         borderBottomEndRadius: 12,
-        borderBottomStartRadius: 12
+        borderBottomStartRadius: 12,
     },
     language: {
         color: '#FFFFFF',
@@ -41,15 +40,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent:'space-between',
         alignItems: 'center',
-        width: 117,
         height: 25,
+        gap: 10,
         borderRadius: 4,
-        backgroundColor: '#FBEAE9',
-        marginTop: 10,
         paddingHorizontal: 5,
     },
     manageUnits: {
-        color: '#DF4E47',
         fontWeight: 'bold',
         fontSize:12
     },
@@ -60,7 +56,8 @@ const styles = StyleSheet.create({
         width: DEVICE_WIDTH * 0.95 ,
         justifyContent: 'space-between',
         alignSelf: 'center',
-        marginBottom: 20
+        marginBottom: 20,
+        paddingVertical: 5
     },
     addUnitContainer: {
         maxWidth: 132,
@@ -84,7 +81,11 @@ const styles = StyleSheet.create({
         color: '#DF4E47',
         fontWeight: 'bold',
         fontSize: 16,
-       
+    },
+    flagIcon: {
+        position: 'absolute',
+        right: 20,
+        top: 5
     }
 });
 

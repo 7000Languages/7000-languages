@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Text,
   View,
-  TouchableOpacity,
   Platform,
   Image,
   ScrollView,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import Feather from 'react-native-vector-icons/Feather';
@@ -16,27 +17,24 @@ import styles from './Home.style';
 import { CourseStackParamList } from '../../../navigation/types';
 import { FocusAwareStatusBar, Header, PrimaryBtn } from '../../../components';
 import { PRIMARY_COLOR } from '../../../constants/colors';
-import { DrawerActions } from '@react-navigation/native';
 import { realmContext } from '../../../realm/realm';
-import { UnitType, UserType } from '../../../@types';
-import { useAppDispatch, useAppSelector } from '../../../redux/store';
-import { convertToArrayOfPlainObject, convertToPlainObject } from '../../../utils/helpers';
+import { UserType } from '../../../@types';
+import { useAppSelector } from '../../../redux/store';
+import { convertToPlainObject, deleteLocalFile } from '../../../utils/helpers';
 import { uploadFileToS3 } from '../../../utils/s3';
 import { BSON } from 'realm';
 import { getFileFromS3 } from '../../../utils/s3';
 import { getValueFor, save } from '../../../utils/storage';
-import { setDownloadedUnits } from '../../../redux/slices/unitsSlice';
-import { setDownloadedLessons } from '../../../redux/slices/lessonsSlice';
-import { setDownloadedVocabs } from '../../../redux/slices/vocabsSlice';
-import CourseUnitItem from "../../../components/CourseUnitLessonItem/CourseUnitLessonItem.component";
+import CourseUnitLessonItem from "../../../components/CourseUnitLessonItem/CourseUnitLessonItem.component";
 import Course from "../../../realm/schemas/Course";
 import Unit from "../../../realm/schemas/Unit";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Lesson from '../../../realm/schemas/Lesson';
 import Vocab from '../../../realm/schemas/Vocab';
+import { JoinedCourse } from '../../../realm/schemas';
 
-const {useRealm, useQuery} = realmContext;
+const {useRealm, useQuery, useObject} = realmContext;
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'Home'>;
 
@@ -47,14 +45,13 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const [downloadedLessons, setDownloadedLessons] = useState<{ downloadedDate: Date, _id: string }[]>([]);
   const [downloadedVocabsWithImage, setDownloadedVocabsWithImage] = useState<{ downloadedDate: Date, _id: string }[]>([]);
   const [downloadedVocabsWithAudio, setDownloadedVocabsWithAudio] = useState<{ downloadedDate: Date, _id: string }[]>([]);
+  const [courseDeletionLoader, setCourseDeletionLoader] = useState(false);
+
   // redux states
   const user: UserType = useAppSelector(state => state.auth.user);
 
   const userGoogleInfo = useAppSelector(state => state.auth.userGoogleInfo);
   const {i18n} = useAppSelector(state => state.locale);
-  const downloadedVocabs = useAppSelector(
-    state => state.vocabs.downloadedVocabs,
-  );
 
   const coursesNavigation =
     useNavigation<NativeStackNavigationProp<CourseStackParamList>>();
@@ -62,23 +59,24 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const coursesData = useQuery(Course)
   const allUnits = useQuery(Unit)
   const allLessons = useQuery(Lesson)
+  const allVocabs = useQuery(Vocab)
+  const allJoinedCourses = useQuery(JoinedCourse)
   const allVocabsWithImage = useQuery(Vocab).filter(v => (v.local_image_uploaded == true) && v.image.length > 0)
   const allVocabsWithAudio = useQuery(Vocab).filter(v => (v.local_audio_uploaded == true) && v.audio.length > 0)
-
-  console.log("User", user);
+  const userToUpdate: any = useObject('users', new BSON.ObjectId(user._id))!  
 
   let adminCourses = coursesData.filter(
     (course: Course & Realm.Object) => course.admin_id == user.authID,
   );
-  let learnerCourses = coursesData.filter((course: Course & Realm.Object) =>
-    user?.learnerLanguages?.includes(course._id.toString()),
+
+  let learnerCourses = coursesData.filter((course: Course) =>
+  convertToPlainObject(userToUpdate)?.learnerLanguages?.includes(course._id.toString()),
   );
 
   const goToContributorCourse = (course_id: string) =>
     coursesNavigation.navigate('ContributorCourse', {course_id});
   const goToLearnerCourse = (course_id: string) =>
     coursesNavigation.navigate('LearnerCourse', {course_id});
-  const dispatch = useAppDispatch();
 
   realm.subscriptions.update(subs => {
     subs.add(realm.objects('activityLevels'), {
@@ -194,13 +192,13 @@ const Home: React.FC<NavProps> = ({navigation}) => {
     try {
       const downloadedUnits = await getValueFor('downloadedUnits');
       if (!downloadedUnits) {
-        console.log("It's null");
+        // console.log("It's null");
         unitsDownloaded = [];
       } else {
         unitsDownloaded = downloadedUnits;
       }
       setTimeout(() => {
-        console.log("downloadedUnits", downloadedUnits);
+        // console.log("downloadedUnits", downloadedUnits);
         getUnitsNotDownloaded(unitsDownloaded)
       }, 2000);
     } catch (error) {
@@ -219,7 +217,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
         lessonsDownloaded = downloadedLessons;
       }
       setTimeout(() => {
-        console.log("downloadedLessons", downloadedLessons);
+        // console.log("downloadedLessons", downloadedLessons);
         getLessonsNotDownloaded(lessonsDownloaded)
       }, 2000);
     } catch (error) {
@@ -232,13 +230,13 @@ const Home: React.FC<NavProps> = ({navigation}) => {
     try {
       const downloadedVocabsWithImage = await getValueFor('downloadedVocabsWithImage');
       if(!downloadedVocabsWithImage){
-        console.log("downloadedVocabsWithImage is null"); 
+        // console.log("downloadedVocabsWithImage is null"); 
         vocabsDownloaded = []
       }else{
         vocabsDownloaded = downloadedVocabsWithImage
       }
       setTimeout(() => {
-        console.log("downloadedVocabsWithImage", downloadedVocabsWithImage);
+        // console.log("downloadedVocabsWithImage", downloadedVocabsWithImage);
         getVocabImagesNotDownloaded(vocabsDownloaded)
       }, 2000);
 
@@ -252,13 +250,13 @@ const Home: React.FC<NavProps> = ({navigation}) => {
     try {
       const downloadedVocabsWithAudio = await getValueFor('downloadedVocabsWithAudio');
       if(!downloadedVocabsWithAudio){
-        console.log("downloadedVocabsWithAudio is null"); 
+        // console.log("downloadedVocabsWithAudio is null"); 
         vocabsDownloaded = []
       }else{
         vocabsDownloaded = downloadedVocabsWithAudio
       }
       setTimeout(() => {
-        console.log("downloadedVocabsWithAudio", downloadedVocabsWithAudio);
+        // console.log("downloadedVocabsWithAudio", downloadedVocabsWithAudio);
         getVocabAudiosNotDownloaded(vocabsDownloaded)
       }, 2000);
 
@@ -266,7 +264,6 @@ const Home: React.FC<NavProps> = ({navigation}) => {
       
     }
   }
-
   
   let baseDirectory = RNFS.DocumentDirectoryPath;
 
@@ -433,7 +430,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const downloadUnitFilesFromS3 = async (unitsNotDownloaded: any) => {
     for (let unitNotDownloaded of unitsNotDownloaded) {
       if (unitNotDownloaded.image.length > 0) {
-        console.log(unitNotDownloaded.image);
+        // console.log(unitNotDownloaded.image);
         const resultToSave = await getFileFromS3(unitNotDownloaded.image);
 
         // Convert to base64 string
@@ -456,7 +453,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
                 downloadedDate: new Date(),
                 _id: unitNotDownloaded._id.toString(),
               };
-              console.log('newDownloadedUnit', newDownloadedUnit);
+              // console.log('newDownloadedUnit', newDownloadedUnit);
               setDownloadedUnits(prev => [...prev, newDownloadedUnit]);
             })
             .catch(err => {
@@ -492,7 +489,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
                 downloadedDate: new Date(),
                 _id: lessonNotDownloaded._id.toString(),
               };
-              console.log('newDownloadedLesson', newDownloadedLesson);
+              // console.log('newDownloadedLesson', newDownloadedLesson);
               setDownloadedLessons(prev => [...prev, newDownloadedLesson]);
             })
             .catch(err => {
@@ -524,7 +521,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
             .then(() => {
                 // Add vocab with downloaded image to the "downloadedVocabsWithImage" in storage
                 let newDownloadedVocabImage = { downloadedDate: new Date(), _id: vocabNotDownloaded._id.toString() };
-                console.log('newDownloadedVocabImage', newDownloadedVocabImage);
+                // console.log('newDownloadedVocabImage', newDownloadedVocabImage);
                 setDownloadedVocabsWithImage(prev => [...prev, newDownloadedVocabImage])
             })
             .catch(err => {
@@ -556,7 +553,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
             .then(() => {
               // Add vocab with downloaded audio to the "downloadedVocabsWithAudio" in storage
               let newDownloadedVocabAudio = { downloadedDate: new Date(), _id: vocabNotDownloaded._id.toString() };
-              console.log('newDownloadedVocabAudio', newDownloadedVocabAudio);
+              // console.log('newDownloadedVocabAudio', newDownloadedVocabAudio);
               setDownloadedVocabsWithAudio(prev => [...prev, newDownloadedVocabAudio])
             })
             .catch(err => {
@@ -567,6 +564,97 @@ const Home: React.FC<NavProps> = ({navigation}) => {
     }
   };
 
+  const deleteCourse = (course: Course) => {
+
+    setCourseDeletionLoader(true);
+  
+    // delete all vocabs of that course
+    realm.write(() => {
+
+      allVocabs.length > 0 &&
+        allVocabs
+          .filter(v => v._course_id == course!._id.toString())
+          .forEach(v => {
+            // delete the vocab image file locally and marked as deleted
+            deleteLocalFile(baseDirectory + '/' + v.local_image_path).then(
+              () => {
+                realm.create('deletedFiles', {
+                  _item_id: v?._id.toString(),
+                  itemType: 'vocab',
+                  fileType: 'image',
+                  filePath: v?.image,
+                });
+              },
+            );
+
+            // delete the vocab audio file locally and marked as deleted
+            deleteLocalFile(baseDirectory + '/' + v.local_audio_path).then(
+              () => {
+                realm.create('deletedFiles', {
+                  _item_id: v?._id.toString(),
+                  itemType: 'vocab',
+                  fileType: 'audio',
+                  filePath: v?.audio,
+                });
+              },
+            );
+            // delete the vocab audio file from AWS
+            // delete a vocab
+
+            realm.delete(v);
+          });
+
+      allLessons.length > 0 &&
+        allLessons
+          .filter(l => l._course_id == course!._id.toString())
+          .forEach(l => {
+            // delete the lesson image file locally and marked as deleted
+            deleteLocalFile(baseDirectory + '/' + l.local_image_path).then(
+              () => {
+                realm.create('deletedFiles', {
+                  _item_id: l?._id.toString(),
+                  itemType: 'lesson',
+                  fileType: 'image',
+                  filePath: l?.image,
+                });
+              },
+            );
+
+            // delete a lesson
+            realm.delete(l);
+          });
+
+      allUnits.length > 0 &&
+        allUnits
+          .filter(u => u._course_id == course!._id.toString())
+          .forEach(u => {
+            // delete the lesson image file locally and marked as deleted
+            deleteLocalFile(baseDirectory + '/' + u.local_image_path).then(
+              () => {
+                realm.create('deletedFiles', {
+                  _item_id: u?._id.toString(),
+                  itemType: 'unit',
+                  fileType: 'image',
+                  filePath: u?.image,
+                });
+              },
+            );
+
+            // delete a unit
+            realm.delete(u);
+          });
+
+      // Finally delete the course
+      realm.delete(course);
+    });
+    
+    setCourseDeletionLoader(false);
+    // delete all lessons of that course
+   
+
+    // delete all units of that course
+    
+  }
 
   useEffect(() => {
     getDownloadedUnits();
@@ -591,29 +679,37 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   useEffect(() => {
     if(downloadedUnits.length > 0)
       save('downloadedUnits', downloadedUnits)
-      console.log('downloadedUnits', downloadedUnits);
+      // console.log('downloadedUnits', downloadedUnits);
   }, [downloadedUnits])
 
   useEffect(() => {
     if(downloadedLessons.length > 0)
       save('downloadedLessons', downloadedLessons)
-    console.log('downloadedLessons', downloadedLessons);
+    // console.log('downloadedLessons', downloadedLessons);
   }, [downloadedLessons])
 
   useEffect(() => {
     if(downloadedVocabsWithImage.length > 0)
       save('downloadedVocabsWithImage', downloadedVocabsWithImage)
-    console.log('downloadedVocabsWithImage', downloadedVocabsWithImage);
+    // console.log('downloadedVocabsWithImage', downloadedVocabsWithImage);
   }, [downloadedVocabsWithImage])
 
   useEffect(() => {
     if(downloadedVocabsWithAudio.length > 0)
       save('downloadedVocabsWithAudio', downloadedVocabsWithAudio)
-    console.log('downloadedVocabsWithAudio', downloadedVocabsWithAudio);
+    // console.log('downloadedVocabsWithAudio', downloadedVocabsWithAudio);
   }, [downloadedVocabsWithAudio])
 
   return (
     <View style={styles.container}>
+      {
+        courseDeletionLoader
+        &&
+        <View style={{ alignSelf: 'center', position: 'absolute', top: '80%', zIndex: 9999 }}>
+          <ActivityIndicator size={'large'} color={PRIMARY_COLOR} />
+          <Text style={{ fontWeight: 'bold' }}>Deleting Course...</Text>
+        </View>
+      }
       <Image
         style={styles.backgroundImage}
         source={require('../../../../assets/images/homeBackgroundImage.png')}
@@ -628,14 +724,6 @@ const Home: React.FC<NavProps> = ({navigation}) => {
       <Header
         title="Home"
         headerStyle={{backgroundColor: PRIMARY_COLOR}}
-        leftIcon={
-          <Feather
-            name="menu"
-            size={24}
-            color="#ffffff"
-            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-          />
-        }
       />
 
       <ScrollView>
@@ -655,13 +743,40 @@ const Home: React.FC<NavProps> = ({navigation}) => {
             </Text>
           )}
 
-          {learnerCourses.map(
-            (course: Course & Realm.Object, index: number) => {
+          {learnerCourses?.map(
+            (course: Course, index: number) => {
+
               const units = allUnits.filter(
                 (unit: Unit & Realm.Object) => unit._course_id == course._id,
               );
+
+               const joinedCourse = allJoinedCourses?.filtered(
+                '_course_id == $0 && _user_id == $1',
+                course._id?.toString(),
+                user._id,
+              )[0]
+
+                const courseNotCompleted = units.length <=0 
+                ? false
+                : units?.some(unit=>{
+                  const unitLessons = allLessons.filter((lesson) => lesson._unit_id == unit._id.toString())
+                  return unitLessons.some(
+                    unitLesson =>
+                      !joinedCourse?.completedLessons.some(
+                        completedLesson =>
+                          completedLesson.lesson == unitLesson._id.toString(),
+                      ) ||
+                      joinedCourse?.completedLessons.some(
+                        completedLesson =>
+                          completedLesson.lesson == unitLesson._id.toString() &&
+                          completedLesson.numberOfVocabsCompleted !==
+                            unitLesson.vocab.length,
+                      ),
+                  );
+                })
+
               return (
-                <CourseUnitItem
+                <CourseUnitLessonItem
                   title={course.details.name}
                   numOfSubItems={units.length}
                   type="course"
@@ -670,6 +785,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
                   key={course._id}
                   onPress={() => goToLearnerCourse(course._id)}
                   section="learner"
+                  progress={courseNotCompleted ? 'in_progress' : 'completed'}
                 />
               );
             },
@@ -698,14 +814,15 @@ const Home: React.FC<NavProps> = ({navigation}) => {
             </Text>
           )}
 
-          {adminCourses.map((course: Course & Realm.Object, index: number) => {
+          {adminCourses.map((course: Course, index: number) => {
             const units = allUnits.filter(
               (unit: Unit & Realm.Object) => unit._course_id == course._id,
             );
-            console.log(adminCourses);
 
+           
+            
             return (
-              <CourseUnitItem
+              <CourseUnitLessonItem
                 title={course.details.name}
                 numOfSubItems={units.length}
                 type="course"
@@ -714,9 +831,30 @@ const Home: React.FC<NavProps> = ({navigation}) => {
                 key={course._id}
                 onPress={() => goToContributorCourse(course._id)}
                 section="contributor"
+                onDeletePress={() =>
+                  Alert.alert(
+                    'Delete This Course ?',
+                    "This course will be permanently Deleted with all of it's content",
+                    [
+                      {
+                        text: 'YES',
+                        onPress: () => deleteCourse(course),
+                        style: 'destructive',
+                      },
+                      {text: 'No'},
+                    ],
+                  )
+                }
               />
             );
           })}
+          <PrimaryBtn
+            label={i18n.t('actions.becomeContributor')}
+            onPress={() => navigation.navigate('BecomeContributor')}
+            style={styles.becomeAContributor}
+            labelStyle={styles.searchCoursesLabel}
+            leftIcon={<Feather name="edit-3" size={24} color="#ffffff" />}
+          />
         </View>
       </ScrollView>
     </View>

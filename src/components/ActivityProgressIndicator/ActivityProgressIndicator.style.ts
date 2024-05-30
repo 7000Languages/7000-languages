@@ -1,15 +1,14 @@
 import { StyleSheet } from "react-native";
-import { StatusBarHeight } from "../../constants/sizes";
-import { SECONDARY_COLOR } from "../../constants/colors";
+import { DEVICE_HEIGHT, StatusBarHeight } from "../../constants/sizes";
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     height: 55,
     alignItems: "center",
-    marginTop: StatusBarHeight! + 20,
+    marginTop: StatusBarHeight! ,
     alignSelf: "center",
-    width: '92%',
+    width: '95%',
     overflow: 'hidden',
 
   },

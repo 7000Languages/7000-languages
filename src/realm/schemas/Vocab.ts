@@ -4,6 +4,7 @@ export default class Vocab extends Realm.Object {
   _id!: string;
   _user_id!: string
   _course_id?: string
+  _unit_id?: string
   _lesson_id?: string
   _order!: number;
   original!: string;
@@ -41,6 +42,7 @@ export default class Vocab extends Realm.Object {
       _user_id: { type: 'string', default: '' },
       _course_id: { type: 'string?', default: ''},
       _lesson_id: { type: 'string?', default: ''},
+      _unit_id: { type: 'string?', default: ''},
       _order: 'int',
       original: 'string',
       translation: 'string',

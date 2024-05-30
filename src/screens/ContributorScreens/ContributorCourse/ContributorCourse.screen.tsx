@@ -47,6 +47,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
   const closeHelpModal = () => {
     setHelpModalVisible(false);
   }
+
   const goToUnitScreen = (unit_id: string) => {
     navigation.navigate('ContributorUnit', { unit_id })
   }
@@ -109,7 +110,7 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
         showStatusBackground
       />
       
-      <Header
+     <Header
         title="Course"
         headerStyle={{ backgroundColor: PRIMARY_COLOR }}
         leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />}

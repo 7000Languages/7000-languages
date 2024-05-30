@@ -24,6 +24,7 @@ interface IProps {
   progress?: 'in_progress' | 'completed';
   localImagePath?: string;
   onArchivePress?: () => void | undefined;
+  onDeletePress?: () => void;
   hidden?: boolean;
 }
 
@@ -40,6 +41,7 @@ const CourseUnitLessonItem: React.FC<IProps> = ({
   localImagePath,
   hidden,
   onArchivePress,
+  onDeletePress
 }) => {
   const subItemType =
     type == 'course' ? 'Units' : type == 'unit' ? 'Lessons' : 'Vocab Items';
@@ -120,31 +122,30 @@ const CourseUnitLessonItem: React.FC<IProps> = ({
   }, []);
 
   return (
-    <>
-      <ZoomImageModal onCloseImageModal={closeImageModal} images={imagesToShow} showImageModal={showImageModal} />
+    <View>
+      <ZoomImageModal
+        onCloseImageModal={closeImageModal}
+        images={imagesToShow}
+        showImageModal={showImageModal}
+      />
       <PanGestureHandler
         onGestureEvent={section == 'contributor' ? panGesture : undefined}
         failOffsetY={[-5, 5]}
-        activeOffsetX={[-5, 5]}
-      >
+        activeOffsetX={[-5, 5]}>
         <Animated.View style={[styles.container, rStyle]}>
-          <View
-            style={[styles.container, { backgroundColor }]}
-
-          >
+          <View style={[styles.container, {backgroundColor}]}>
             <TouchableOpacity
               style={[
                 styles.numberContainer,
-                { backgroundColor: section == 'learner' ? '#DEE5E9' : '#FBEAE9' },
+                {backgroundColor: section == 'learner' ? '#DEE5E9' : '#FBEAE9'},
               ]}
-              onPress={onImagePress}
-              >
+              onPress={onImagePress}>
               {image && image.length > 0 ? (
                 <Image
                   source={{
                     uri: Platform.OS === 'ios' ? image : `file://${image}`,
                   }}
-                  style={{ height: '100%', width: '100%' }}
+                  style={{height: '100%', width: '100%'}}
                 />
               ) : (
                 <>
@@ -160,7 +161,9 @@ const CourseUnitLessonItem: React.FC<IProps> = ({
                         styles.number,
                         {
                           color:
-                            section == 'learner' ? SECONDARY_COLOR : PRIMARY_COLOR,
+                            section == 'learner'
+                              ? SECONDARY_COLOR
+                              : PRIMARY_COLOR,
                         },
                       ]}>
                       {index}
@@ -173,26 +176,27 @@ const CourseUnitLessonItem: React.FC<IProps> = ({
             <TouchableOpacity
               style={styles.textsContainer}
               onPress={onPress}
-              activeOpacity={onPress !== undefined ? 0.5 : 0.7}
-            >
+              activeOpacity={onPress !== undefined ? 0.5 : 0.7}>
               <Text numberOfLines={1} style={styles.title}>
                 {title}
               </Text>
               <Text style={styles.numOfSubItems}>
                 {numOfSubItems} {subItemType}
               </Text>
-              <View style={styles.progressContainer}>
-                <View
-                  style={[
-                    styles.progressIndicator,
-                    {
-                      backgroundColor: progressBackgroundColor,
-                      borderWidth: progressBorderWidth,
-                    },
-                  ]}
-                />
-                <Text style={styles.progressText}>{courseProgress}</Text>
-              </View>
+              {section == 'learner' && numOfSubItems > 0 && (
+                <View style={styles.progressContainer}>
+                  <View
+                    style={[
+                      styles.progressIndicator,
+                      {
+                        backgroundColor: progressBackgroundColor,
+                        borderWidth: progressBorderWidth,
+                      },
+                    ]}
+                  />
+                  <Text style={styles.progressText}>{courseProgress}</Text>
+                </View>
+              )}
             </TouchableOpacity>
             <Entypo
               name="chevron-thin-right"
@@ -204,17 +208,35 @@ const CourseUnitLessonItem: React.FC<IProps> = ({
         </Animated.View>
       </PanGestureHandler>
       <Animated.View style={[styles.iconsContainer, rIconsContainerStyle]}>
-        <TouchableOpacity style={styles.iconView}>
+        <View style={styles.iconView}>
+          {type !== 'course' && (!hidden ? (
+            <Ionicons
+              name="md-archive"
+              size={30}
+              color="#778ca3"
+              onPress={onArchivePress}
+            />
+          ) : (
+            <MaterialCommunityIcons
+              name="archive-cancel"
+              size={30}
+              color="#778ca3"
+              onPress={onArchivePress}
+            />
+          ))}
           {
-            !hidden
-              ?
-              <Ionicons name="md-archive" size={30} color="#778ca3" onPress={onArchivePress} />
-              :
-              <MaterialCommunityIcons name="archive-cancel" size={30} color="#778ca3" onPress={onArchivePress} />
+            type == 'course'
+            &&
+            <Ionicons
+              name="trash"
+              size={30}
+              color="#ee5253"
+              onPress={onDeletePress}
+            />
           }
-        </TouchableOpacity>
+        </View>
       </Animated.View>
-    </>
+    </View>
   );
 };
 

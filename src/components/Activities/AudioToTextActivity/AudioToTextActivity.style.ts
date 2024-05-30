@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 55,
-    width: 110,
-    height: 110,
+    width: DEVICE_HEIGHT * 0.13,
+    height: DEVICE_HEIGHT * 0.13,
     backgroundColor: '#C6E3FC',
   },
   optionBtn: {
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DEE5E9',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: '2%',
     alignSelf: 'center',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.5,
@@ -50,14 +50,12 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     flexDirection: 'row',
-    marginLeft: 70,
-  },
-  arrowButton: {
-    marginLeft: 20,
-  },
-  arrowButton2: {
-    marginHorizontal: 149,
+    marginTop: 10,
+    width: '90%',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    paddingHorizontal: '20%'
   }
 });
 
-export default styles
+export default styles;

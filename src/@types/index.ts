@@ -60,6 +60,7 @@ export type VocabType = {
   _user_id: string;
   _course_id: string;
   _lesson_id: string;
+  _unit_id: string
   _order: number;
   original: string;
   translation: string;

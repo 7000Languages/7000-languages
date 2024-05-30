@@ -143,10 +143,23 @@ import Sound from 'react-native-sound';
         });
       }
     };
+
+  const onPressBack = () => {
+    if (currentActivityLevelIndex > 0) {
+      setCurrentActivityLevelIndex(prev => prev - 1);
+    }
+  };
+
+  const onPressForward = () => {
+    if (currentActivityLevelIndex < activityLevels.length - 1) {
+      setCurrentActivityLevelIndex(prev => prev + 1);
+    }
+  };
     
     useEffect(() => {
       getImages()
       getAudio()
+      setSelectedOptions([])
     }, [currentActivityLevelIndex])
 
     useEffect(() => {
@@ -159,13 +172,21 @@ import Sound from 'react-native-sound';
           <Text style={styles.activityNumber}>
             {currentActivityLevelIndex + 1}/{activityLevels.length}
           </Text>
+          <View style={styles.arrowContainer}>
+          <Pressable onPress={onPressBack}>
+            <Ionicons name="arrow-back-outline" size={30} />
+          </Pressable>
+          <Pressable onPress={onPressForward}>
+            <Ionicons name="arrow-forward-outline" size={30} />
+          </Pressable>
+        </View>
           <Pressable style={styles.soundContainer} onPress={playPause}>
-          <Ionicons
-            name={!playing ? 'md-volume-medium' : 'pause-circle-sharp'}
-            size={34}
-            color="#496277"
-          />
-        </Pressable>
+            <Ionicons
+              name={!playing ? 'md-volume-medium' : 'pause-circle-sharp'}
+              size={34}
+              color="#496277"
+            />
+          </Pressable>
           <Text style={[styles.correctNess, {color: correctNessColor}]}>
             {correctNess}
           </Text>

@@ -27,6 +27,7 @@ export type CourseStackParamList = {
     }
     LearnerUnit: {
         unit_id: string
+        course_id?: string
     }
     LearnerLesson: {
         lesson_id: string
@@ -55,4 +56,7 @@ export type SettingsStackParamList = {
     Settings: undefined
     AccountInfo : undefined
     Home : undefined
+    Login: undefined
+    BottomNavigator: undefined
+    Languages: undefined
 }

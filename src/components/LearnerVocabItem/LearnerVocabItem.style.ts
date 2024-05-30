@@ -4,13 +4,14 @@ import { DEVICE_HEIGHT, DEVICE_WIDTH } from "../../constants/sizes";
 const styles = StyleSheet.create({
     container: {
         width: DEVICE_WIDTH * 0.68,
-        height: DEVICE_HEIGHT * 0.46,
+        height: '95%',
         borderRadius: 8,
         borderColor: '#DEE5E9',
         borderWidth: 1.5,
-        paddingVertical: 20,
+        paddingTop: 20,
+        padding: 10,
         paddingHorizontal: 15,
-        marginHorizontal: 10
+        marginHorizontal: 10,
     },
     textsContainer: {
         marginBottom: 30
@@ -28,12 +29,11 @@ const styles = StyleSheet.create({
         height: '100%', 
     },
     imageContainer: {
-        // width: '50%',
         height: '100%',
         borderRadius: 4,
         marginLeft: 5,
         overflow: 'hidden',
-        flex: 1
+        flex: 1,
     },
     textAndImage: {
         flexDirection: 'row',
@@ -53,12 +53,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: 227,
-        height: 60,
+        height: '18%',
         backgroundColor: '#496277',
         borderRadius: 1000,
+        marginTop: 10,
+        alignSelf: 'center',
         position: 'absolute',
-        bottom: 20,
-        alignSelf: 'center'
+        bottom: '5%'
     },
     playAudioText: {
         color: '#DEE5E9',

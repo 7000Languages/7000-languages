@@ -13,7 +13,7 @@ const DrawerNavigator = () => {
 
   return ( //Changed Account Info to Settings 
     <Navigator
-      screenOptions={{ headerShown: false, drawerType: 'slide' }}
+      screenOptions={{ headerShown: false, drawerType: 'slide', swipeEnabled: false }} //Added swipeEnabled: false to prevent user from going to side drawer
       initialRouteName='BottomNavigator'
       drawerContent={(props: any) => <DrawerContent {...props} />}
     >

@@ -57,7 +57,7 @@ const MainNavigator = () => {
           existingRealmFileBehavior: existingRealmFileBehaviorConfig,
           initialSubscriptions: {
             update: (subs, realm) => {
-              subs.add(realm.objects(Course), {
+              subs.add(realm.objects('courses'), {
                 name: 'allCoursesSubscription',
               })
               subs.add(realm.objects('units'), {
@@ -75,6 +75,18 @@ const MainNavigator = () => {
               subs.add(realm.objects('users'), {
                 name: 'allUsersSubscription',
               })
+              subs.add(realm.objects('courseFlags'), {
+                name: 'allCourseFlagsSubscription',
+              })
+              subs.add(realm.objects('unitFlags'), {
+                name: 'allUnitFlagsSubscription',
+              })
+              subs.add(realm.objects('lessonFlags'), {
+                name: 'allLessonFlagsSubscription',
+              })
+              subs.add(realm.objects('joinedCourses'), {
+                name: 'allJoinedCoursesSubscription'
+              })
             },
             rerunOnOpen: true,
           },
@@ -89,7 +101,7 @@ const MainNavigator = () => {
         >
           <Screen name="Splash" component={Splash} />
           <Screen name="Onboarding" component={Onboarding} />
-          <Screen name="DrawerNavigator" component={DrawerNavigator} />
+          <Screen name="DrawerNavigator" component={DrawerNavigator}   options={{gestureEnabled: false}} /> 
           <Screen name="BottomNavigator" component={BottomNavigator} />
         </Navigator>
       </RealmProvider>

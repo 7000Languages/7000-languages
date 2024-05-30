@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 55,
-    width: 110,
-    height: 110,
+    width: DEVICE_HEIGHT * 0.13,
+    height: DEVICE_HEIGHT * 0.13,
     backgroundColor: '#C6E3FC',
   },
   optionBtn: {
@@ -109,6 +109,12 @@ const styles = StyleSheet.create({
     width: '90%',
     height: '90%',
     borderRadius: 4
+  },
+  arrowContainer: {
+    flexDirection: 'row',
+    width: '60%',
+    alignSelf: 'center',
+    justifyContent: 'space-between'
   }
 });
 

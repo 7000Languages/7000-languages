@@ -11,6 +11,7 @@ import { realmContext } from '../../../realm/realm'
 import { convertToArrayOfPlainObject } from '../../../utils/helpers'
 import { Activity, ActivityType } from '../../../@types'
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { ScrollView } from 'react-native-gesture-handler'
 
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'StartActivity'>
@@ -37,6 +38,18 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
     });
   }
 
+  const onPressBack = () => {
+    const currentIndex = activityTypes.indexOf(currentActivityType);
+    const newIndex = currentIndex > 0 ? currentIndex - 1 : 0;
+    setCurrentActivityType(activityTypes[newIndex]);
+  };
+
+  const onPressForward = () => {
+    const currentIndex = activityTypes.indexOf(currentActivityType);
+    const newIndex = currentIndex < activityTypes.length - 1 ? currentIndex + 1 : currentIndex;
+    setCurrentActivityType(activityTypes[newIndex]);
+  };
+
   useEffect(() => {
     activityType && setCurrentActivityType(activityType)
   }, [activityType]);
@@ -44,10 +57,9 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
   const currentActivityTypeIndex = activityTypes.indexOf(currentActivityType);
 
   const changeActivityType = (activity: Activity) => {
-    //console.log(activity);
-    // return
     setCurrentActivityType(activity.type)
   }
+
 
   return (
     <View style={styles.container}>
@@ -74,6 +86,14 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
         }
       />
       <ActivityProgressIndicator onCirclePress={(item)=>changeActivityType(item)} activities={activities} currentActivityType={currentActivityType} />
+      <View style={styles.arrowContainer}>
+        <Pressable onPress={onPressBack}>
+          <Ionicons name="arrow-back-outline" size={30} />
+        </Pressable>
+        <Pressable onPress={onPressForward}>
+          <Ionicons name="arrow-forward-outline" size={30} />
+        </Pressable>
+      </View>
       {
         currentActivityType == 'completed' ?
           <View style={styles.starsAndCongratulation}>
@@ -88,9 +108,11 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
               <Text style={styles.number}>{currentActivityTypeIndex + 1}</Text>
             </View>
             <Text style={styles.activity}>Matching {activities[currentActivityTypeIndex].type.split('-').join(' ')}</Text>
+            <ScrollView>
             <Text style={styles.activityDescription}>
               Instructions: {activities[currentActivityTypeIndex].instructions}
             </Text>
+            </ScrollView>
           </View>
       }
       {
@@ -104,4 +126,4 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
   );
 }
 
-export default StartActivity
+export default StartActivity;

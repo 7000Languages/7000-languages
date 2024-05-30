@@ -41,7 +41,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
   const { useQuery, useRealm, useObject } = realmContext
   const user: UserType = useAppSelector(state => state.auth.user)
   const userGoogleInfo = useAppSelector(state => state.auth.userGoogleInfo)
-  const userToUpdate = useObject(User, new BSON.ObjectId(user._id))!  
+  const userToUpdate: any = useObject('users', new BSON.ObjectId(user._id))!  
 
   const coursesData: any = useQuery(Course)
   const publicCourses: any = useQuery(Course).filter(course=>!(course.details.is_private))
@@ -50,7 +50,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
   
   const joinCourse = () => {
 
-    if(convertToArrayOfPlainObject(userToUpdate.learnerLanguages).includes(courseToJoin!._id.toString())){
+    if(convertToArrayOfPlainObject(userToUpdate?.learnerLanguages).includes(courseToJoin!._id.toString())){
       Toast.show({
         type: 'error',
         text1: 'Oops!',
@@ -66,7 +66,7 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
         hasError = true
         if(hasError) return
       }
-      if(courseToJoin.details.code.toString() !== code){
+      if((courseToJoin.details.code.toString() !== code) || courseToJoin.details.code.length == 0 ){
         setCodeError('Sorry! incorrect course code. Try again')
         hasError = true
         if(hasError) return
@@ -76,6 +76,11 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
    
     realm.write(()=>{
       userToUpdate.learnerLanguages.push(courseToJoin!._id.toString())
+      realm.create('joinedCourses', {
+        _course_id: courseToJoin!._id.toString(),
+        _user_id: user._id.toString(),
+        currentCodeUsed: courseToJoin!.details.code.toString()
+      })
     })
 
     // Update user in storage and redux
@@ -84,7 +89,6 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
 
     // close modal and open drawer
     setJoinCourseModalVisible(false)
-    navigation.dispatch(DrawerActions.openDrawer())
 
     setCode('')
     setCodeError('')
@@ -124,11 +128,11 @@ const Search: React.FC<NavProps> = ({ navigation }) => {
 
   const searchData = (courses: Course[]) => {
     return courses.filter((course: any) => search_parameters.some(param => course.details[param]?.toString().toLowerCase().includes(searchTerm.toLowerCase()))).sort((a, b) => a.details.name.localeCompare(b.details.name))
+    // return courses.filter((course: any) => search_parameters.some(param => course.details[param]?.toString().toLowerCase().includes(searchTerm.toLowerCase())) && course.approved).sort((a, b) => a.details.name.localeCompare(b.details.name))
   }
 
   useEffect(() => {
     if((searchTerm.length > 0) && inputFocused){
-      console.log('Typing');
       setCourses(coursesData)
     }else{
       setCourses(publicCourses)

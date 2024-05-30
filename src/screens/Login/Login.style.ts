@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   qouteAndAuthor: {
     position: "absolute",
-    bottom: DEVICE_HEIGHT * 0.3,
+    bottom: DEVICE_HEIGHT * 0.4,
     left: 30,
   },
   labelStyle: {
@@ -68,6 +68,18 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 60,
   },
+  belowText: {
+    fontSize: 12,
+    fontWeight: '600',
+    alignSelf: 'center',
+    color: '#ffffff',
+    marginTop: 56,
+    width: DEVICE_WIDTH * 0.8,
+    textAlign: 'center',
+    lineHeight: 17,
+    position: "absolute",
+    bottom: 140,
+  }
 });
 
 export default styles;

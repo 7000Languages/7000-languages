@@ -11,8 +11,14 @@ import {
   Activity,
   ActivityLevel,
   WordMatch,
-  DeletedFile
+  DeletedFile,
+  CourseFlag,
+  UnitFlag,
+  LessonFlag,
+  JoinedCourse
 } from './schemas'
+import { CompletedLesson } from './schemas/JoinedCourse';
+CompletedLesson
 
 export const realmContext = createRealmContext({
   schema: [
@@ -26,7 +32,12 @@ export const realmContext = createRealmContext({
     Activity,
     ActivityLevel,
     WordMatch,
-    DeletedFile
+    DeletedFile,
+    CourseFlag,
+    UnitFlag,
+    LessonFlag,
+    JoinedCourse,
+    CompletedLesson
   ],
   schemaVersion: 1,
 });

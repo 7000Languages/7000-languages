@@ -64,6 +64,7 @@ const EditCourseUnitLesson: React.FC<IProps> = ({
   const [alternativeName, setAlternativeName] = useState('');
   const [teachingLanguage, setTeachingLanguage] = useState('');
   const [description, setDescription] = useState('');
+  const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Error states
@@ -71,11 +72,12 @@ const EditCourseUnitLesson: React.FC<IProps> = ({
   const [descriptionError, setDescriptionError] = useState('');
   const [alternativeNameError, setAlternativeNameError] = useState('');
   const [teachingLanguageError, setTeachingLanguageError] = useState('');
+  const [locationError, setLocationError] = useState('');
   const [selectingImage, setSelectingImage] = useState(false);
 
-  const course: any = useObject(Course, new BSON.ObjectId(course_id));
-  const unit: any = useObject(Unit, new BSON.ObjectId(unit_id));
-  const lesson: any = useObject(Lesson, new BSON.ObjectId(lesson_id));
+  const course: any = useObject('courses', new BSON.ObjectId(course_id));
+  const unit: any = useObject('units', new BSON.ObjectId(unit_id));
+  const lesson: any = useObject('lessons', new BSON.ObjectId(lesson_id));
 
   let unitOrLesson = type == 'lesson' ? lesson : unit;
 
@@ -89,13 +91,6 @@ const EditCourseUnitLesson: React.FC<IProps> = ({
     setDescriptionError('');
     setAlternativeNameError('');
     setTeachingLanguageError('');
-  };
-
-  const resetStates = () => {
-    setName('');
-    setDescription('');
-    setAlternativeName('');
-    setTeachingLanguage('');
   };
 
   const realm = useRealm();
@@ -118,10 +113,14 @@ const EditCourseUnitLesson: React.FC<IProps> = ({
     }
     if (
       type == 'course' &&
-      alternativeName.length > 0 &&
-      alternativeName.length < 2
+      alternativeName?.length > 0 &&
+      alternativeName?.length < 2
     ) {
       setAlternativeNameError('Alternative name too short');
+      hasError = true;
+    }
+    if( type == 'course' && location.length < 3 ) {
+      setLocationError('Location should contain at least 3 characters')
       hasError = true;
     }
     if (hasError) {
@@ -280,6 +279,7 @@ const EditCourseUnitLesson: React.FC<IProps> = ({
         course.details.alternative_name = alternativeName;
         course.details.description = description;
         course.details.translated_language = teachingLanguage;
+        course.details.location = location
       });
     }
     Toast.show({
@@ -294,9 +294,10 @@ const EditCourseUnitLesson: React.FC<IProps> = ({
   const settingStatesForInputs = () => {
     if (course) {
       setName(course.details.name);
-      setAlternativeName(course.details.alternative_name);
-      setTeachingLanguage(course.details.translated_language);
-      setDescription(course.details.description);
+      setAlternativeName(course?.details.alternative_name);
+      setTeachingLanguage(course?.details.translated_language);
+      setDescription(course?.details.description);
+      setLocation(course?.details.location)
     }
     if (unit) {
       setName(unit.name);
@@ -482,7 +483,13 @@ const EditCourseUnitLesson: React.FC<IProps> = ({
                   value={teachingLanguage}
                   errorText={teachingLanguageError}
                   onChangeText={(text: string) => setTeachingLanguage(text)}
-                  textArea={true}
+                />
+                 <CustomInput
+                  label="Change language location"
+                  subLabel="This is where the language is spoken"
+                  value={location}
+                  errorText={locationError}
+                  onChangeText={(text: string) => setLocation(text)}
                 />
               </>
             )}

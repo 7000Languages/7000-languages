@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     alignSelf: 'center',
-    marginVertical: DEVICE_HEIGHT * 0.02
+    marginVertical: DEVICE_HEIGHT * 0.01
   },
   left: {
     width: '50%',
@@ -91,17 +91,12 @@ const styles = StyleSheet.create({
   },
   arrowContainer: {
     flexDirection: 'row',
-    marginLeft: 70,
-  },
-  arrowButton: {
-    marginLeft: 20,
-  },
-  arrowButton2: {
-    marginHorizontal: 149,
-    fontSize: 16,
-    textAlign: 'center',
-    width: '80%'
+    marginTop: 10,
+    width: '90%',
+    justifyContent: 'space-between',
+    alignSelf: 'center',
+    paddingHorizontal: '20%'
   }
 });
 
-export default styles
+export default styles;

@@ -3,7 +3,6 @@ import { StatusBar, StatusBarProps, View } from "react-native";
 import { useIsFocused } from "@react-navigation/native";
 
 import styles from "./FocusAwareStatusBar.style";
-import { PRIMARY_COLOR } from "../../constants/colors";
 
 interface IProps extends StatusBarProps {
   showStatusBackground?: boolean;

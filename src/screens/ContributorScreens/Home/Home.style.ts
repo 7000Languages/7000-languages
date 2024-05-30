@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { PRIMARY_COLOR } from "../../../constants/colors";
+import { PRIMARY_COLOR, SECONDARY_COLOR } from "../../../constants/colors";
 import { DEVICE_HEIGHT, DEVICE_WIDTH,StatusBarHeight } from "../../../constants/sizes";
 
 const styles = StyleSheet.create({
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignSelf: "center",
     marginTop: "10%",
-    marginBottom: 5
   },
   learnerText: {
     color: "black",
@@ -29,13 +28,22 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignSelf: "center",
     marginTop: 5,
-    marginBottom: 5
+    paddingBottom: 10,
   },
   
   searchBtn: {
     width: 250,
     marginTop: 20,
+    backgroundColor: SECONDARY_COLOR
+
+
   },
+  becomeAContributor:{
+    width: 250,
+    marginTop: 20,
+    backgroundColor: PRIMARY_COLOR
+  },
+
   searchCoursesLabel: {
     color: "#ffffff",
     fontWeight: "bold",
@@ -44,20 +52,18 @@ const styles = StyleSheet.create({
   divider: {
     width: 255,
     borderColor: "#C0C0C0",
-    marginVertical: 35,
+    marginVertical: 30,
     borderWidth: 0.5,
-
   },
   missionStatement: {
     textAlign: 'center',
     alignSelf: 'center',
     color: "black",
-    marginBottom: '5%',
-    marginTop: 1, 
+    marginBottom: 20
   },
   becomeText: {
     color: PRIMARY_COLOR,
-    marginTop: 10,
+    marginTop: 15,
     textAlign: 'center',
     alignSelf: 'center',
     fontSize: 16,
