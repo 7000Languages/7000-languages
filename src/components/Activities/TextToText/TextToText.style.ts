@@ -96,7 +96,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignSelf: 'center',
     paddingHorizontal: '20%'
-  }
+  },
+  helpIcon: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+  },
+  
 });
 
 export default styles;

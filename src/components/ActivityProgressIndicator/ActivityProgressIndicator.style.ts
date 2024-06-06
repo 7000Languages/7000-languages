@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: StatusBarHeight! ,
     alignSelf: "center",
-    width: '95%',
+    width: '91%',
     overflow: 'hidden',
 
   },

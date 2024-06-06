@@ -109,8 +109,11 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
             </View>
             <Text style={styles.activity}>Matching {activities[currentActivityTypeIndex].type.split('-').join(' ')}</Text>
             <ScrollView>
+              <Text style={styles.activityDescriptionInstruction}>
+              Instructions:
+              </Text>
             <Text style={styles.activityDescription}>
-              Instructions: {activities[currentActivityTypeIndex].instructions}
+             {activities[currentActivityTypeIndex].instructions}
             </Text>
             </ScrollView>
           </View>

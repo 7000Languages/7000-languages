@@ -236,6 +236,14 @@ const LearnerCourse: React.FC<NavProps> = ({navigation, route}) => {
       <Header
         title="Course"
         headerStyle={{backgroundColor: SECONDARY_COLOR}}
+        leftIcon={
+          <Feather
+            name="arrow-left"
+            size={24}
+            color="#ffffff"
+            onPress={() => navigation.goBack()}
+          />
+        }
         rightIcon={
           <TouchableOpacity
             style={styles.helpContainer}

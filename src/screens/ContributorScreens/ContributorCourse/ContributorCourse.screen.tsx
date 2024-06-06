@@ -113,7 +113,14 @@ const ContributorCourse: React.FC<NavProps> = ({ navigation, route }) => {
      <Header
         title="Course"
         headerStyle={{ backgroundColor: PRIMARY_COLOR }}
-        leftIcon={<Feather name="menu" size={24} color="#ffffff" onPress={() => navigation.dispatch(DrawerActions.openDrawer())} />}
+        leftIcon={
+          <Feather
+            name="arrow-left"
+            size={24}
+            color="#ffffff"
+            onPress={() => navigation.goBack()}
+          />
+        }
         rightIcon={
           <TouchableOpacity style={styles.helpContainer} onPress={openHelpModal}>
           <Ionicons name="help" size={20} color={PRIMARY_COLOR} />

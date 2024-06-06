@@ -98,14 +98,14 @@ const MainNavigator = () => {
           screenOptions={{
             headerShown: false,
           }}
-        >
+        > 
           <Screen name="Splash" component={Splash} />
           <Screen name="Onboarding" component={Onboarding} />
-          <Screen name="DrawerNavigator" component={DrawerNavigator}   options={{gestureEnabled: false}} /> 
+          <Screen name="DrawerNavigator" component={DrawerNavigator}   options={{gestureEnabled: false}} />  
           <Screen name="BottomNavigator" component={BottomNavigator} />
         </Navigator>
       </RealmProvider>
-  );
+  ); //Added gestureEnabled: false to DrawerNavigator to prevent user from going back to the splash screen and side drawer
 };
 
 export default MainNavigator;

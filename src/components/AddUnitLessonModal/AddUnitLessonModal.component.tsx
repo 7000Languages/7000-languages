@@ -180,7 +180,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
         visibilityTime: 5000,
         text2: 'Unit added successfully',
       });
-
+      onCloseModal();
       resetStates();
       setLoading(false);
     }
@@ -273,6 +273,7 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
             text2: 'Lesson added successfully',
         });
 
+        onCloseModal();
         resetStates()
         setLoading(false)
 
