@@ -139,19 +139,13 @@ const TextToText: React.FC<IProps> = ({
     if (currentActivityLevelIndex < activityLevels.length - 1) {
       setCurrentActivityLevelIndex(prev => prev + 1);
     }
+
   };
 
-  const openVocabContext = () => {
-    const wordsToMatch = currentActivityLevel.words_to_match;
-    let contextDataString = '';
-  
-    wordsToMatch.forEach((word) => {
-      const vocab = realm.objects('vocabs').filtered(`_user_id = "${user._id}" AND original = "${word.original}"`)[0];
-      const contextData = vocab ? (vocab as any).notes : 'Context data not found'; // Convert 'vocab' to 'any'
-      contextDataString += contextData + '\n'; // Concatenate context data with a newline separator
-    });
-  
-    setVocabContextData(contextDataString);
+const openVocabContext = (word: { original: string, translation: string }) => {
+    const vocab = realm.objects('vocabs').filtered(`_user_id = "${user._id}" AND original = "${word.original}"`)[0];
+    const contextData = vocab ? (vocab as any).notes : 'No context found';
+    setVocabContextData(contextData || 'No context found');
     setVocabContextVisable(true);
   };
 
@@ -283,21 +277,21 @@ const TextToText: React.FC<IProps> = ({
                     {borderColor, backgroundColor: bgColor},
                   ]}>
 
-                <View style={styles.iconAndTextContainer}>
-              <Text style={[styles.word, { color: textColor }]}>
-                {word.original}
-              </Text>
-              <TouchableOpacity style={styles.helpContainer} onPress={openVocabContext}>
-  <Ionicons name="information-circle" size={20} color={SECONDARY_COLOR} />
-  {vocabContextVisable && (
-    <VocabContext
-      isVisible={vocabContextVisable}
-      onClose={closeVocabContext}
-      contextData={vocabContextData}
-    />
-  )}
-</TouchableOpacity>
-            </View>
+            <View style={styles.iconAndTextContainer}>
+                    <Text style={[styles.word, { color: textColor }]}>
+                      {word.original}
+                    </Text>
+                    <TouchableOpacity style={styles.helpContainer} onPress={() => openVocabContext(word)}>
+                      <Ionicons name="information-circle" size={20} color={SECONDARY_COLOR} />
+                      {vocabContextVisable && (
+                        <VocabContext
+                          isVisible={vocabContextVisable}
+                          onClose={closeVocabContext}
+                          contextData={vocabContextData}
+                        />
+                      )}
+                    </TouchableOpacity>
+                  </View>
           </TouchableOpacity>
                 
               );

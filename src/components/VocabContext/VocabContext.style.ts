@@ -21,16 +21,17 @@ const styles = StyleSheet.create({
     midHeaderText: {
       fontSize: 18,
       marginBottom: 10,
-      fontWeight: '400'
+      fontWeight: '500'
     },
     bodyText: {
       fontSize: 16,
       marginBottom: 20,
     },
     closeButton: {
-      alignSelf: 'flex-end',
+      alignSelf: "flex-end",
+
     },
-    contextText: { // New style
+    contextText: {
         fontSize: 16,
         marginTop: 10,
       },

@@ -22,6 +22,7 @@ const VocabContext: React.FC<VocabContextProps> = ({ isVisible, onClose, context
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
             <Ionicons name="close" size={20} color="black" />
           </TouchableOpacity>
+          <Text style={styles.midHeaderText}>Vocabulary Context:</Text> 
           <Text style={styles.contextText}>{contextData}</Text> 
         </View>
       </View>
@@ -32,7 +33,7 @@ const VocabContext: React.FC<VocabContextProps> = ({ isVisible, onClose, context
 VocabContext.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  contextData: PropTypes.string.isRequired, // Add this prop type
+  contextData: PropTypes.string.isRequired,
 };
 
 export default VocabContext;
