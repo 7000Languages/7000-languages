@@ -307,6 +307,14 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
         animationChanges()
     }, [selectingImage])
 
+    const suggestionText = type === 'unit'
+    ? 'You could create a unit based on completing a task, like ordering in a restaurant, on a grammar point, like pronouns, or on a topic, like animals.'
+    : 'Just like units, you can create lessons based on tasks, grammar, topics, interactions, etc. It might make sense to create lessons focused on smaller pieces of your larger unit learning goals. For example, a lesson in a unit that teaches how to order in a restaurant might focus on food vocabulary, or phrases for common interactions with a server.';
+
+    const suggestionStyle = {
+      ...styles.suggestion,
+      height: type === 'lesson' ? 150 : 90
+  };
     return (
         <Modal isVisible={isModalVisible} backdropOpacity={0.8}>
             <KeyboardAvoidingView
@@ -331,12 +339,12 @@ const AddUnitLessonModal: React.FC<IProps> = ({ isModalVisible, type, onCloseMod
                             <Text style={styles.title}>Add Custom {type.charAt(0).toUpperCase() + type.slice(1)}</Text>
                             <AntDesign name='close' size={24} color="#111827" onPress={onCloseModal} />
                         </View>
-                        <View style={styles.suggestion}>
+                        <View style={suggestionStyle}>
                             <View style={{ marginBottom: 6, alignItems: 'center', flexDirection: 'row', height: 20 }}>
                                 <MaterialCommunityIcons name="lightbulb-on" size={15} color="#496277" />
                                 <Text style={[styles.suggestionText, { marginLeft: 5, marginTop: 3 }]}>Suggestion</Text>
                             </View>
-                            <Text style={styles.suggestionText}>When creating a {type}, think about how it will be used. More text here explaining what they should look for when making a {type}.</Text>
+                            <Text style={styles.suggestionText}>{suggestionText}</Text>
                         </View>
                         <CustomInput
                             label={`Give your ${type} a name`}

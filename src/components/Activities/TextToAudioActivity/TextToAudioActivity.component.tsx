@@ -280,7 +280,7 @@ const TextToAudioActivity: React.FC<IProps> = ({
             ]}>
             {selectedIndex !== -1
               ? 'Confirm Audio ' + (selectedIndex + 1)
-              : `Press Audio & Select`}
+              : `Select Audio`}
           </Text>
         </TouchableOpacity>
       </View>

@@ -581,7 +581,7 @@ const AddVocabModal: React.FC<IProps> = ({
                                 <MaterialCommunityIcons name="lightbulb-on" size={15} color="#496277" />
                                 <Text style={[styles.suggestionText, { marginLeft: 5, marginTop: 3 }]}>Suggestion</Text>
                             </View>
-                            <Text style={styles.suggestionText}>Vocabs are essential for language learning. Remember to provide context for duplicate vocabulary items, this helps learners differentiate between similar terms!</Text>
+                            <Text style={styles.suggestionText}>A vocabulary item can be a word, a phrase, or a complete sentence. Remember to provide context for duplicate vocabulary items, this helps learners differentiate between similar terms!</Text>
                         </View>
             <CustomInput
               label={`${course.details.name}*`}

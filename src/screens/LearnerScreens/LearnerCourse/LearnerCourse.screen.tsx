@@ -255,7 +255,7 @@ const LearnerCourse: React.FC<NavProps> = ({navigation, route}) => {
                 onClose={closeHelpModal}
                 headerText="Course Overview Help"
                 midHeaderText="Getting Started"
-                bodyText="Welcome to your course! To explore the lessons and their vocabularies, simply click on a unit below. Each unit contains lessons and vocabulary items to help you learn and improve your skills."
+                bodyText="Welcome to your course! To explore the lessons and their vocabularies items, simply click on a unit below. Each unit contains lessons and vocabulary items to help you learn and improve your skills."
               />
             )}
           </TouchableOpacity>

@@ -130,7 +130,7 @@ interface CheckBoxProps {
             {showTextField && (
               <TextInput
                 style={styles.textField}
-                placeholder="Other reason"
+                placeholder="Additional reason"
                 multiline={true}
                 value={textFieldValue}
                 onChangeText={handleTextFieldChange}

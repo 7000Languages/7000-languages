@@ -9,10 +9,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import styles from './TextToText.style';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import VocabContext from '../../VocabContext/VocabContext.component';
 import {ActivityLevelType, ActivityType, UserType} from '../../../@types';
 import {
   PRIMARY_GREEN_COLOR,
   PRIMARY_ORANGE_COLOR,
+  SECONDARY_COLOR
 } from '../../../constants/colors';
 import { convertToPlainObject, randomisedArray } from '../../../utils/helpers';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
@@ -63,6 +65,9 @@ const TextToText: React.FC<IProps> = ({
   const [randomOriginalWords, setRandomOriginalWords] = useState<any[]>([]);
   const [randomTranslationWords, setRandomTranslationWords] = useState<any[]>([]);
   const [colorsToSelect, setColorsToSelect] = useState<{}[]>([]);
+  const [vocabContextVisable, setVocabContextVisable] = useState(false);
+  const [vocabContextData, setVocabContextData] = useState('');
+
 
   const dispatch = useAppDispatch()
 
@@ -135,6 +140,25 @@ const TextToText: React.FC<IProps> = ({
       setCurrentActivityLevelIndex(prev => prev + 1);
     }
   };
+
+  const openVocabContext = () => {
+    const wordsToMatch = currentActivityLevel.words_to_match;
+    let contextDataString = '';
+  
+    wordsToMatch.forEach((word) => {
+      const vocab = realm.objects('vocabs').filtered(`_user_id = "${user._id}" AND original = "${word.original}"`)[0];
+      const contextData = vocab ? (vocab as any).notes : 'Context data not found'; // Convert 'vocab' to 'any'
+      contextDataString += contextData + '\n'; // Concatenate context data with a newline separator
+    });
+  
+    setVocabContextData(contextDataString);
+    setVocabContextVisable(true);
+  };
+
+
+  const closeVocabContext = () => {
+    setVocabContextVisable(false);
+  }
 
   const addToMatches = (originalOrTranslation: string, section: string) => {
     let newMatch = currentMatch
@@ -258,10 +282,24 @@ const TextToText: React.FC<IProps> = ({
                     styles.originalWord,
                     {borderColor, backgroundColor: bgColor},
                   ]}>
-                  <Text style={[styles.word, {color: textColor}]}>
-                    {word.original}
-                  </Text>
-                </TouchableOpacity>
+
+                <View style={styles.iconAndTextContainer}>
+              <Text style={[styles.word, { color: textColor }]}>
+                {word.original}
+              </Text>
+              <TouchableOpacity style={styles.helpContainer} onPress={openVocabContext}>
+  <Ionicons name="information-circle" size={20} color={SECONDARY_COLOR} />
+  {vocabContextVisable && (
+    <VocabContext
+      isVisible={vocabContextVisable}
+      onClose={closeVocabContext}
+      contextData={vocabContextData}
+    />
+  )}
+</TouchableOpacity>
+            </View>
+          </TouchableOpacity>
+                
               );
             })}
           </View>
@@ -315,6 +353,7 @@ const TextToText: React.FC<IProps> = ({
                   <Text style={[styles.word, {color: textColor}]}>
                     {word.translation}
                   </Text>
+                  
                 </TouchableOpacity>
               );
             })}

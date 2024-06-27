@@ -102,6 +102,20 @@ const styles = StyleSheet.create({
     top: 4,
     right: 4,
   },
+  iconAndTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+
+  },
+  helpContainer: {
+    backgroundColor: '#ffffff',
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center'
+},
   
 });
 

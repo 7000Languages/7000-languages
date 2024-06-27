@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   },
   suggestion: {
     width: '95%',
-    height: 90,
+    height: 110,
     backgroundColor: '#DEE5E9',
     borderRadius: 4,
     padding: 10,
