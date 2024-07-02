@@ -98,15 +98,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: '20%'
   },
   helpIcon: {
+
     position: 'absolute',
-    top: 4,
-    right: 4,
+    bottom: 40, 
+    right: 1, 
   },
+  
   iconAndTextContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-
+    position: 'relative', 
   },
   helpContainer: {
     backgroundColor: '#ffffff',
@@ -114,7 +116,9 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 12,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'absolute',
+   
 },
   
 });

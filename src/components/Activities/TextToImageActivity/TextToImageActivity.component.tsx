@@ -118,12 +118,12 @@ const TextToImageActivity: React.FC<IProps> = ({
           {currentActivityLevelIndex + 1}/{activityLevels.length}
         </Text>
         <View style={styles.arrowContainer}>
-          <Pressable onPress={onPressBack}>
+          <TouchableOpacity onPress={onPressBack}>
             <Ionicons name="arrow-back-outline" size={30} />
-          </Pressable>
-          <Pressable onPress={onPressForward}>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onPressForward}>
             <Ionicons name="arrow-forward-outline" size={30} />
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <Text style={styles.titleText}>
           {currentActivityLevel.text_for_images.text}

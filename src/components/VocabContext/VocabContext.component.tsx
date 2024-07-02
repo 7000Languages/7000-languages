@@ -7,7 +7,7 @@ import styles from './VocabContext.style';
 interface VocabContextProps {
   isVisible: boolean;
   onClose: () => void;
-  contextData: string;
+  contextData: string | null;
 }
 
 const VocabContext: React.FC<VocabContextProps> = ({ isVisible, onClose, contextData }) => {

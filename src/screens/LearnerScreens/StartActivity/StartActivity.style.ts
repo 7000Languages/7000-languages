@@ -101,13 +101,14 @@ const styles = StyleSheet.create({
   arrowContainer: {
     flexDirection: 'row',
     marginTop: 10,
-    width: '90%',
+    width: '100%',
     justifyContent: 'space-between',
     alignSelf: 'center',
-    paddingHorizontal: '20%'
+    paddingHorizontal: '10%'
   },
   arrowButton: {
     marginLeft: 20,
+ 
   },
   arrowButton2: {
     marginHorizontal: 149,
