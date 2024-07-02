@@ -159,6 +159,7 @@ const AudioToTextActivity: React.FC<IProps> = ({
             <Ionicons name="arrow-back-outline" size={30} />
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressForward}>
+
             <Ionicons name="arrow-forward-outline" size={30} />
           </TouchableOpacity>
         </View>

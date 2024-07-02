@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignSelf: 'center',
     paddingHorizontal: '10%'
+
   },
   arrowButton: {
     marginLeft: 20,

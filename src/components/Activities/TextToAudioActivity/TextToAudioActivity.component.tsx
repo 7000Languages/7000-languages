@@ -173,10 +173,12 @@ const TextToAudioActivity: React.FC<IProps> = ({
         </Text>
 
         <View style={styles.arrowContainer}>
+
           <TouchableOpacity onPress={onPressBack}>
             <Ionicons name="arrow-back-outline" size={30} />
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressForward}>
+
             <Ionicons name="arrow-forward-outline" size={30} />
           </TouchableOpacity>
         </View>
@@ -280,7 +282,9 @@ const TextToAudioActivity: React.FC<IProps> = ({
             ]}>
             {selectedIndex !== -1
               ? 'Confirm Audio ' + (selectedIndex + 1)
+
               : `Select Audio`}
+
           </Text>
         </TouchableOpacity>
       </View>

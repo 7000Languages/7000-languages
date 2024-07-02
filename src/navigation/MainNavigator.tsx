@@ -102,6 +102,7 @@ const MainNavigator = () => {
           <Screen name="Splash" component={Splash} />
           <Screen name="Onboarding" component={Onboarding} />
           <Screen name="DrawerNavigator" component={DrawerNavigator}   options={{gestureEnabled: false}} />  
+
           <Screen name="BottomNavigator" component={BottomNavigator} />
         </Navigator>
       </RealmProvider>

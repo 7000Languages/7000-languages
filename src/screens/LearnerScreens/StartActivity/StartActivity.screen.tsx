@@ -93,6 +93,7 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
         <TouchableOpacity onPress={onPressForward}>
           <Ionicons name="arrow-forward-outline" size={30}  color={SECONDARY_COLOR} />
         </TouchableOpacity>
+
       </View>
       {
         currentActivityType == 'completed' ?

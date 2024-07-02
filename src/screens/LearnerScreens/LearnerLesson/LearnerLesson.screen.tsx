@@ -201,6 +201,7 @@ const LearnerLesson: React.FC<NavProps> = ({navigation, route}) => {
                 headerText="Lesson & Vocabulary Help"
                 midHeaderText="Exploring Lessons"
                 bodyText="Lessons are your learning materials. This lesson screen contains the vocabulary items and various activities. Each vocabulary item contains audio, text, and sometimes images to help you learn. First, review the vocabulary, then try an activity!"
+
               />
             )}
           </TouchableOpacity>

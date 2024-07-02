@@ -46,6 +46,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
     setHelpModalVisible(false);
   }
 
+
     const openAlertModal = () => {
     setAlertModalVisible(true);
     }
@@ -53,6 +54,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
     const closeAlertModal = () => {
       setAlertModalVisible(false);
     }
+
 
   const renderItem = ({item, index}:{item: VocabType, index:number}) => {
     const { original, translation, image, audio, _id, local_image_path, local_audio_path, hidden } = item

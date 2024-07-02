@@ -98,12 +98,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: '20%'
   },
   helpIcon: {
-
     position: 'absolute',
     bottom: 40, 
     right: 1, 
   },
-  
   iconAndTextContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',

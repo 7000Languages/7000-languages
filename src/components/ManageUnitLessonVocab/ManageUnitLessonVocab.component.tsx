@@ -14,7 +14,6 @@ import { Pressable } from 'react-native'
 import Lesson from '../../realm/schemas/Lesson'
 import Vocab from '../../realm/schemas/Vocab'
 import Unit from '../../realm/schemas/Unit'
-import Course from '../../realm/schemas/Course'
 
 type IProps = {
     type: 'unit' | 'lesson' | 'vocab',
