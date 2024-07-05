@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     color: "#1C1C1C",
     fontSize: 18,
     fontWeight: "bold",
+    width: '90%'
   },
   addImageView: {
     width: "94%",

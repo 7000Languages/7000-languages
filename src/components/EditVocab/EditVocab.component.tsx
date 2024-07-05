@@ -38,6 +38,7 @@ import Animated, {
 import {PRIMARY_COLOR} from '../../constants/colors';
 import {realmContext} from '../../realm/realm';
 import {
+  convertToArrayOfPlainObject,
   deleteLocalFile,
   requestAudioRecordPermission,
   requestCameraPermission,
@@ -53,6 +54,8 @@ import AudioRecorderPlayer, {
 } from 'react-native-audio-recorder-player';
 import {BSON} from 'realm';
 import { useAppSelector } from '../../redux/store';
+import { ActivityLevel } from '../../realm/schemas';
+import Vocab from '../../realm/schemas/Vocab';
 
 type IProps = {
   isModalVisible: boolean;
@@ -62,6 +65,8 @@ type IProps = {
   unit: UnitType;
   vocab?: VocabType;
 };
+
+const {useRealm, useQuery, useObject} = realmContext;
 
 const EditVocab: React.FC<IProps> = ({
   isModalVisible,
@@ -107,6 +112,9 @@ const EditVocab: React.FC<IProps> = ({
   let baseDirectory = RNFS.DocumentDirectoryPath;
 
   const isOnline = useAppSelector(state=>state.connection.isOnline)
+
+  const activityLevels = useQuery(ActivityLevel)
+  const vocabs = useQuery(Vocab)
 
   const getImage = async () => {
     const response = await RNFS.readDir(
@@ -501,9 +509,11 @@ const EditVocab: React.FC<IProps> = ({
   
   const editVocab = async () => {    
     resetErrorStates();
-    setLoading(true);
+    // setLoading(true);
     let hasError = false;
 
+    let activityLevelsToDelete = activityLevels.filtered("ANY vocabs_used_to_generate == $0", getVocab._id.toString())
+    
     if((pickedAudio.uri.length <= 0 && recordedAudio.uri.length <= 0) && !audio)
     {
       setAudioError('Please provide an audio for this vocabulary item');
@@ -635,15 +645,29 @@ const EditVocab: React.FC<IProps> = ({
       visibilityTime: 5000,
       text2: 'Vocab updated successfully',
     });
-    
+
     realm.write(() => {
       getVocab.original = original;
       getVocab.translation = translation;
       getVocab.notes = context;
       getVocab.updated_at = new Date()
+      getVocab.activities = []
     });
 
-    //console.log("Reach here...");
+    realm.write(() => {
+      for (let activityLevel of activityLevelsToDelete) {
+        console.log('deletion ongoing');
+        realm.delete(activityLevel);
+      }
+    });
+
+    // This is just to clear out all activities of all vocabs when testing
+    // realm.write(() => {
+    //   for (let vocab of vocabs) {
+    //     vocab.activities = []
+    //   }
+    // });
+
   };
 
   return (
@@ -671,7 +695,7 @@ const EditVocab: React.FC<IProps> = ({
           </Animated.View>
           <View style={styles.container}>
             <View style={styles.header}>
-              <Text style={styles.title}>Edit {course.details.name}</Text>
+              <Text numberOfLines={1} style={styles.title}>Edit {course.details.name}</Text>
               <AntDesign
                 name="close"
                 size={24}

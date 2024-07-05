@@ -21,6 +21,7 @@ export default class ActivityLevel extends Realm.Object {
   image_options_for_audio!: {type: 'string[]', default: []};
 
   words_to_match!: {original: string; translation: string}[];
+  vocabs_used_to_generate?: string[]
 
   static schema = {
     name: 'activityLevels',
@@ -46,6 +47,9 @@ export default class ActivityLevel extends Realm.Object {
       image_options_for_audio: {type: 'string[]', default: []},
 
       words_to_match: {type: 'wordmatches[]', default: []},
+
+      vocabs_used_to_generate: { type: 'string[]', default: [] },
+
     },
   };
 }
