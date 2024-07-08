@@ -87,12 +87,13 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
       />
       <ActivityProgressIndicator onCirclePress={(item)=>changeActivityType(item)} activities={activities} currentActivityType={currentActivityType} />
       <View style={styles.arrowContainer}>
-        <Pressable onPress={onPressBack}>
-          <Ionicons name="arrow-back-outline" size={30} />
-        </Pressable>
-        <Pressable onPress={onPressForward}>
-          <Ionicons name="arrow-forward-outline" size={30} />
-        </Pressable>
+        <TouchableOpacity onPress={onPressBack}>
+          <Ionicons name="arrow-back-outline" size={30} color={SECONDARY_COLOR} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={onPressForward}>
+          <Ionicons name="arrow-forward-outline" size={30}  color={SECONDARY_COLOR} />
+        </TouchableOpacity>
+
       </View>
       {
         currentActivityType == 'completed' ?
@@ -109,8 +110,11 @@ const StartActivity: React.FC<NavProps> = ({ navigation, route }) => {
             </View>
             <Text style={styles.activity}>Matching {activities[currentActivityTypeIndex].type.split('-').join(' ')}</Text>
             <ScrollView>
+              <Text style={styles.activityDescriptionInstruction}>
+              Instructions:
+              </Text>
             <Text style={styles.activityDescription}>
-              Instructions: {activities[currentActivityTypeIndex].instructions}
+             {activities[currentActivityTypeIndex].instructions}
             </Text>
             </ScrollView>
           </View>

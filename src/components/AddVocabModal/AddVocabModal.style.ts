@@ -91,6 +91,13 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginLeft: 12,
   },
+  suggestion: {
+    width: '95%',
+    height: 110,
+    backgroundColor: '#DEE5E9',
+    borderRadius: 4,
+    padding: 10,
+  },
 });
 
 export default styles;

@@ -506,7 +506,7 @@ const EditVocab: React.FC<IProps> = ({
 
     if((pickedAudio.uri.length <= 0 && recordedAudio.uri.length <= 0) && !audio)
     {
-      setAudioError('Please provide an audio for this vovabulary item');
+      setAudioError('Please provide an audio for this vocabulary item');
       hasError = true;
     }
     if (original.length < 2) {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, TouchableOpacity } from 'react-native'
+import { View, TouchableOpacity, Pressable } from 'react-native'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 import styles from './ContributorLesson.style'
@@ -36,6 +36,7 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
   const [manageModal, setManageModal] = useState(false);
   const [vocab, setVocab] = useState<any>({});
   const [helpModalVisible, setHelpModalVisible] = useState(false);
+  const [alertModalVisible, setAlertModalVisible] = useState(false);
 
   const openHelpModal = () => {
     setHelpModalVisible(true);
@@ -44,6 +45,15 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
   const closeHelpModal = () => {
     setHelpModalVisible(false);
   }
+
+
+    const openAlertModal = () => {
+    setAlertModalVisible(true);
+    }
+
+    const closeAlertModal = () => {
+      setAlertModalVisible(false);
+    }
 
 
   const renderItem = ({item, index}:{item: VocabType, index:number}) => {
@@ -110,6 +120,18 @@ const ContributorLesson:React.FC<NavProps> = ({ navigation, route }) => {
           
         }
       />
+      <Pressable style={[styles.settingsContainer, { backgroundColor: PRIMARY_COLOR }]} onPress={openAlertModal}>
+      <Ionicons name="bulb" size={23} color={"white"} />
+          {alertModalVisible && (
+           <Help
+           isVisible={alertModalVisible}
+           onClose={closeAlertModal}
+           headerText="Important Suggestion"
+           midHeaderText="Use At Least 6 Vocabulary Items!"
+           bodyText="A vocabulary item can be a word, phrase, or even a full sentence. In order for the activities to work properly, please include at least 6 vocabulary items. We recommend 8-10 items. We also recommend you add audio and image wherever possible."
+          />
+          )}       
+        </Pressable>
       <CourseUnitLessonDesign
         item={lesson.name}
         itemDescription={lesson.description}

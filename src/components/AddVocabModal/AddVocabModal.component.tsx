@@ -18,6 +18,7 @@ import * as RNFS from 'react-native-fs';
 import Modal from 'react-native-modal';
 import CustomInput from '../CustomInput/CustomInput.component';
 import PrimaryBtn from '../PrimaryBtn/PrimaryBtn.component';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import AudioRecordBox from '../AudioRecordBox/AudioRecordBox.component';
 import uuid from 'react-native-uuid';
 import AudioRecorderPlayer, {
@@ -99,6 +100,7 @@ const AddVocabModal: React.FC<IProps> = ({
   const [translationError, setTranslationError] = useState('');
   const [audioError, setAudioError] = useState('');
   const [imageError, setImageError] = useState('');
+  const [duplicateError, setDuplicateError] = useState('')
 
   // animations
   const scale = useSharedValue(0);
@@ -375,6 +377,19 @@ const AddVocabModal: React.FC<IProps> = ({
     setPickedAudio({uri: ''});
     setRecordedAudio({uri: ''});
     setAudio(undefined);
+    setDuplicateError('');
+  };
+
+  const checkDuplicateVocab = ( // Check if the vocab already exists in the lesson
+    realm: Realm, 
+    original: string, 
+    courseId: string
+  ): boolean => {
+    const existingVocab = realm
+      .objects<VocabType>('vocabs')
+      .filtered('_course_id == $0 AND original == $1', courseId, original);
+  
+    return existingVocab.length > 0;
   };
 
   const addItem = async () => {
@@ -392,9 +407,17 @@ const AddVocabModal: React.FC<IProps> = ({
     }
     if(!audio)
     {
-      ! audio && setAudioError('Please provide an audio for this vovabulary item');
+      ! audio && setAudioError('Please provide an audio for this vocabulary item');
       hasError = true;
     }
+
+    const isDuplicate = checkDuplicateVocab(realm, original, course._id.toString());
+
+    if (isDuplicate && context.length === 0) {
+      setDuplicateError('This vocab already exists. Please add context to clarify the difference.');
+      hasError = true;
+    }
+
     if (hasError) {
       setLoading(false);
       return;
@@ -512,6 +535,8 @@ const AddVocabModal: React.FC<IProps> = ({
       visibilityTime: 5000,
       text2: 'Vocab added successfully',
     });
+  
+    onCloseModal(); 
 
     setLoading(false);
     resetStates()
@@ -542,23 +567,31 @@ const AddVocabModal: React.FC<IProps> = ({
           </Animated.View>
           <View style={styles.container}>
             <View style={styles.header}>
-              <Text style={styles.title}>Add a Vocab Item</Text>
+              <Text style={styles.title}>Add a Vocabulary Item</Text>
               <AntDesign
                 name="close"
                 size={24}
                 color="#111827"
                 onPress={onCloseModal}
               />
-              <Text style={styles.subTitle}>
-                A vocab item can be a word or a phrase
-              </Text>
+          
             </View>
+            <View style={styles.suggestion}>
+                            <View style={{ marginBottom: 6, alignItems: 'center', flexDirection: 'row', height: 20 }}>
+                                <MaterialCommunityIcons name="lightbulb-on" size={15} color="#496277" />
+                                <Text style={[styles.suggestionText, { marginLeft: 5, marginTop: 3 }]}>Suggestion</Text>
+                            </View>
+                            <Text style={styles.suggestionText}>A vocabulary item can be a word, a phrase, or a complete sentence. Remember to provide context for duplicate vocabulary items, this helps learners differentiate between similar terms!</Text>
+                        </View>
             <CustomInput
               label={`${course.details.name}*`}
               value={original}
               errorText={originalError}
               onChangeText={(text: string) => setOriginal(text)}
             />
+             {duplicateError.length > 0 && (
+             <Text style={styles.errorText}>{duplicateError}</Text>
+             )}
             {/* AudioRecordBox:: The AudioRecordBox deals with uploading and recording of Audio */}
             <AudioRecordBox
               pickedAudio={pickedAudio}
@@ -586,6 +619,7 @@ const AddVocabModal: React.FC<IProps> = ({
               &&
               <Text style={styles.errorText}>{audioError}</Text>
             }
+          
             <CustomInput
               label={`${course.details.translated_language}*`}
               value={translation}

@@ -146,7 +146,9 @@ const LearnerUnit: React.FC<NavProps> = ({navigation, route}) => {
                 onClose={closeHelpModal}
                 headerText="Unit Help"
                 midHeaderText="Navigating Units"
-                bodyText="Explore individual units to find lessons and vocabulary. Click on a unit to access its content and start your learning journey within that topic."
+
+                bodyText="Explore individual units to find lessons and vocabulary. Click on a unit to access its content and start your learning journey."
+
               />
             )}
           </TouchableOpacity>

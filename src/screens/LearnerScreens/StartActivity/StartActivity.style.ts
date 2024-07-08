@@ -48,8 +48,16 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginTop: 28,
     color: "#1C1C1C",
+    fontWeight: "400",
+  },
+  activityDescriptionInstruction: {
+    fontSize: 14,
+    alignSelf: "center",
+    marginTop: 10,
+    color: "#1C1C1C",
     fontWeight: "bold",
-    textAlign: "center"
+    textAlign: "center",
+    marginBottom: -15
   },
   startActivityBtn: {
     width: "80%",
@@ -93,13 +101,15 @@ const styles = StyleSheet.create({
   arrowContainer: {
     flexDirection: 'row',
     marginTop: 10,
-    width: '90%',
+    width: '100%',
     justifyContent: 'space-between',
     alignSelf: 'center',
-    paddingHorizontal: '20%'
+    paddingHorizontal: '10%'
+
   },
   arrowButton: {
     marginLeft: 20,
+ 
   },
   arrowButton2: {
     marginHorizontal: 149,

@@ -112,6 +112,7 @@ const LearnerCourse: React.FC<NavProps> = ({navigation, route}) => {
     const {name, _id, local_image_path, hidden} = item;
     const unitLessons = lessons.filter(lesson => lesson._unit_id == _id);
 
+
     /* Here we are checking which unit is completed or not.
     If a unit is not completed, it is neccessary to check whether there is a lesson where it is not found 
     in the 'completedLessons' of the JoinedCourse, or it is found but the 'numberOfVocabsCompleted' is not 
@@ -236,6 +237,15 @@ const LearnerCourse: React.FC<NavProps> = ({navigation, route}) => {
       <Header
         title="Course"
         headerStyle={{backgroundColor: SECONDARY_COLOR}}
+        leftIcon={
+          <Feather
+            name="arrow-left"
+            size={24}
+            color="#ffffff"
+            onPress={() => navigation.goBack()}
+          />
+        }
+
         rightIcon={
           <TouchableOpacity
             style={styles.helpContainer}
@@ -247,7 +257,9 @@ const LearnerCourse: React.FC<NavProps> = ({navigation, route}) => {
                 onClose={closeHelpModal}
                 headerText="Course Overview Help"
                 midHeaderText="Getting Started"
-                bodyText="Welcome to your course! To explore the lessons and their vocabularies, simply click on a unit below. Each unit contains lessons and vocabulary items to help you learn and improve your skills."
+
+                bodyText="Welcome to your course! To explore the lessons and their vocabularies items, simply click on a unit below. Each unit contains lessons and vocabulary items to help you learn and improve your skills."
+
               />
             )}
           </TouchableOpacity>

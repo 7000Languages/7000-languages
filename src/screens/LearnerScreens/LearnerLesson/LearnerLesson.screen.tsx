@@ -200,7 +200,8 @@ const LearnerLesson: React.FC<NavProps> = ({navigation, route}) => {
                 onClose={closeHelpModal}
                 headerText="Lesson & Vocabulary Help"
                 midHeaderText="Exploring Lessons"
-                bodyText="Lessons are your learning materials. This lesson screen contains the vocabulary items and various activities. Each vocabulary contains audio, images and translated text to help you learn. First, review the vocabulary and their translations, then try an activity!"
+                bodyText="Lessons are your learning materials. This lesson screen contains the vocabulary items and various activities. Each vocabulary item contains audio, text, and sometimes images to help you learn. First, review the vocabulary, then try an activity!"
+
               />
             )}
           </TouchableOpacity>

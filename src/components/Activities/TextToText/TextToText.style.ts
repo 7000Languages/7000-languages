@@ -96,7 +96,29 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignSelf: 'center',
     paddingHorizontal: '20%'
-  }
+  },
+  helpIcon: {
+    position: 'absolute',
+    bottom: 40, 
+    right: 1, 
+  },
+  iconAndTextContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    position: 'relative', 
+  },
+  helpContainer: {
+    backgroundColor: '#ffffff',
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+   
+},
+  
 });
 
 export default styles;

@@ -9,10 +9,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import styles from './TextToText.style';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import VocabContext from '../../VocabContext/VocabContext.component';
 import {ActivityLevelType, ActivityType, UserType} from '../../../@types';
 import {
   PRIMARY_GREEN_COLOR,
   PRIMARY_ORANGE_COLOR,
+  SECONDARY_COLOR
 } from '../../../constants/colors';
 import { convertToPlainObject, randomisedArray } from '../../../utils/helpers';
 import { useAppDispatch, useAppSelector } from '../../../redux/store';
@@ -63,6 +65,9 @@ const TextToText: React.FC<IProps> = ({
   const [randomOriginalWords, setRandomOriginalWords] = useState<any[]>([]);
   const [randomTranslationWords, setRandomTranslationWords] = useState<any[]>([]);
   const [colorsToSelect, setColorsToSelect] = useState<{}[]>([]);
+  const [vocabContextVisable, setVocabContextVisable] = useState(false);
+  const [vocabContextData, setVocabContextData] = useState<string | null>(null);
+
 
   const dispatch = useAppDispatch()
 
@@ -134,7 +139,20 @@ const TextToText: React.FC<IProps> = ({
     if (currentActivityLevelIndex < activityLevels.length - 1) {
       setCurrentActivityLevelIndex(prev => prev + 1);
     }
+
   };
+
+  const openVocabContext = (word: { original: string, translation: string }) => {
+    const vocab = realm.objects('vocabs').filtered(`_user_id = "${user._id}" AND original = "${word.original}"`)[0];
+    const contextData = vocab ? (vocab as any).notes : null; // Set to null if no context found
+    setVocabContextData(contextData);
+    setVocabContextVisable(!!contextData); // Show only if contextData exists
+  };
+
+
+  const closeVocabContext = () => {
+    setVocabContextVisable(false);
+  }
 
   const addToMatches = (originalOrTranslation: string, section: string) => {
     let newMatch = currentMatch
@@ -209,62 +227,84 @@ const TextToText: React.FC<IProps> = ({
           {correctNess}
         </Text>
         <View style={styles.arrowContainer}>
-          <Pressable onPress={onPressBack}>
-            <Ionicons name="arrow-back-outline" size={30} />
-          </Pressable>
-          <Pressable onPress={onPressForward}>
+          <TouchableOpacity onPress={onPressBack}>
+            <Ionicons name="arrow-back-outline" size={30}  />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onPressForward}>
             <Ionicons name="arrow-forward-outline" size={30} />
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <View style={styles.textsContainer}>
-          <View style={styles.left}>
-            {randomOriginalWords.map((word, index) => {
-              let borderColor = selectedOptions.includes(word.original)
-                ? matches.includes(
-                    matches.find(match => match.original === word.original),
-                  )
-                  ? matches.find(match => match.original === word.original)[
-                      'color'
-                    ].textAndBorderColor
-                  : currentMatch['color'].textAndBorderColor
-                : '#1C1C1C';
-              let textColor = selectedOptions.includes(word.original)
-                ? matches.includes(
-                    matches.find(match => match.original === word.original),
-                  )
-                  ? matches.find(match => match.original === word.original)[
-                      'color'
-                    ].textAndBorderColor
-                  : currentMatch['color'].textAndBorderColor
-                : '#1C1C1C';
-              let bgColor = selectedOptions.includes(word.original)
-                ? matches.includes(
-                    matches.find(match => match.original === word.original),
-                  )
-                  ? matches.find(match => match.original === word.original)[
-                      'color'
-                    ].bgColor
-                  : currentMatch['color'].bgColor
-                : 'transparent';
-              return (
-                <TouchableOpacity
-                  key={index}
-                  disabled={
-                    sectionToSelectFrom == 'translation' ||
-                    selectedOptions.includes(word.original)
-                  }
-                  onPress={() => addToMatches(word.original, 'original')}
-                  style={[
-                    styles.originalWord,
-                    {borderColor, backgroundColor: bgColor},
-                  ]}>
-                  <Text style={[styles.word, {color: textColor}]}>
+        <View style={styles.left}>
+          {randomOriginalWords.map((word, index) => {
+            let borderColor = selectedOptions.includes(word.original)
+              ? matches.includes(
+                matches.find(match => match.original === word.original),
+              )
+                ? matches.find(match => match.original === word.original)[
+                'color'
+                ].textAndBorderColor
+                : currentMatch['color'].textAndBorderColor
+              : '#1C1C1C';
+            let textColor = selectedOptions.includes(word.original)
+              ? matches.includes(
+                matches.find(match => match.original === word.original),
+              )
+                ? matches.find(match => match.original === word.original)[
+                'color'
+                ].textAndBorderColor
+                : currentMatch['color'].textAndBorderColor
+              : '#1C1C1C';
+            let bgColor = selectedOptions.includes(word.original)
+              ? matches.includes(
+                matches.find(match => match.original === word.original),
+              )
+                ? matches.find(match => match.original === word.original)[
+                'color'
+                ].bgColor
+                : currentMatch['color'].bgColor
+              : 'transparent';
+
+            const vocab = realm.objects('vocabs').filtered(`_user_id = "${user._id}" AND original = "${word.original}"`)[0];
+            const contextData = vocab ? (vocab as any).notes : null;
+
+            return (
+              <TouchableOpacity
+                key={index}
+                disabled={
+                  sectionToSelectFrom == 'translation' ||
+                  selectedOptions.includes(word.original)
+                }
+                onPress={() => addToMatches(word.original, 'original')}
+                style={[
+                  styles.originalWord,
+                  { borderColor, backgroundColor: bgColor },
+                ]}>
+
+                <View style={styles.iconAndTextContainer}>
+                  <Text style={[styles.word, { color: textColor }]}>
                     {word.original}
                   </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
+            
+                </View>
+                {contextData && (
+                <TouchableOpacity
+                style={[styles.helpContainer, styles.helpIcon]}
+                onPress={() => openVocabContext(word)}>
+                <Ionicons name="information-circle" size={23} color={SECONDARY_COLOR} />
+                {vocabContextVisable && (
+                  <VocabContext
+                    isVisible={vocabContextVisable}
+                    onClose={closeVocabContext}
+                    contextData={vocabContextData}
+                  />
+                )}
+              </TouchableOpacity>
+                  )}
+              </TouchableOpacity>
+            );
+          })}
+        </View>
           <View style={styles.right}>
             {randomTranslationWords.map((word, index) => {
               let borderColor = selectedOptions.includes(word.translation)
@@ -315,6 +355,7 @@ const TextToText: React.FC<IProps> = ({
                   <Text style={[styles.word, {color: textColor}]}>
                     {word.translation}
                   </Text>
+                  
                 </TouchableOpacity>
               );
             })}
