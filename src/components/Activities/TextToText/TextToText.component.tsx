@@ -2,8 +2,6 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Pressable,
-  ScrollView
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 

@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 5,
     justifyContent: 'space-between',
-    borderWidth: 1
+    // borderWidth: 1
   },
   suggestion: {
     width: '95%',

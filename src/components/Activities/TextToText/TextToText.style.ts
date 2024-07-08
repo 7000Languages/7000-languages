@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
   originalWord: {
     width: '80%',
-    height: 60,
+    height: 70,
     borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
@@ -87,7 +87,9 @@ const styles = StyleSheet.create({
   },
   word: {
     color: '#1C1C1C',
-    fontSize: 16
+    fontSize: 16,
+    textAlign: 'center',
+    width: '80%'
   },
   arrowContainer: {
     flexDirection: 'row',
