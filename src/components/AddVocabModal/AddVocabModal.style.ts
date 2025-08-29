@@ -87,9 +87,10 @@ const styles = StyleSheet.create({
   errorText: {
     color: '#ee5253',
     fontSize: 12,
-    marginVertical: 10,
+    marginBottom: 10,
     alignSelf: 'flex-start',
     marginLeft: 12,
+    width: '95%'
   },
   suggestion: {
     width: '95%',

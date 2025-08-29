@@ -100,7 +100,8 @@ const AddVocabModal: React.FC<IProps> = ({
   const [translationError, setTranslationError] = useState('');
   const [audioError, setAudioError] = useState('');
   const [imageError, setImageError] = useState('');
-  const [duplicateError, setDuplicateError] = useState('')
+  const [duplicateOriginalError, setDuplicateOriginalError] = useState('')
+  const [duplicateTranslationError, setDuplicateTranslationError] = useState('')
 
   // animations
   const scale = useSharedValue(0);
@@ -380,22 +381,39 @@ const AddVocabModal: React.FC<IProps> = ({
     setDuplicateError('');
   };
 
-  const checkDuplicateVocab = ( // Check if the vocab already exists in the lesson
+  const checkDuplicateVocabWithSameOriginal = ( // Check if the vocab already exists in the lesson
     realm: Realm, 
     original: string, 
     courseId: string
   ): boolean => {
-    const existingVocab = realm
+    const existingVocabWithSameOriginal = realm
       .objects<VocabType>('vocabs')
       .filtered('_course_id == $0 AND original == $1', courseId, original);
   
-    return existingVocab.length > 0;
+    return existingVocabWithSameOriginal.length > 0;
   };
+
+  const checkDuplicateVocabWithSameTranslation = ( // Check if the vocab already exists in the lesson
+    realm: Realm, 
+    translation: string,
+    courseId: string
+  ): boolean => {
+      const existingVocabWithSameTranslation = realm
+      .objects<VocabType>('vocabs')
+      .filtered('_course_id == $0 AND translation == $1', courseId, translation);
+  
+    return existingVocabWithSameTranslation.length > 0;
+  };
+
+  
 
   const addItem = async () => {
     resetErrorStates();
     setLoading(true);
     let hasError = false;
+
+    const isDuplicateOriginal = checkDuplicateVocabWithSameOriginal(realm, original, course._id.toString());
+    const isDuplicateTranslation = checkDuplicateVocabWithSameTranslation(realm, translation, course._id.toString())
 
     if (original.length < 2) {
       setOriginalError('Vocab text is too short');
@@ -410,14 +428,14 @@ const AddVocabModal: React.FC<IProps> = ({
       ! audio && setAudioError('Please provide an audio for this vocabulary item');
       hasError = true;
     }
-
-    const isDuplicate = checkDuplicateVocab(realm, original, course._id.toString());
-
-    if (isDuplicate && context.length === 0) {
-      setDuplicateError('This vocab already exists. Please add context to clarify the difference.');
+    if (isDuplicateOriginal && context.length === 0) {
+      setDuplicateOriginalError('A vocab with this original word already exists. Please add context to clarify the difference.');
       hasError = true;
     }
-
+    if (isDuplicateTranslation && context.length === 0) {
+      setDuplicateTranslationError('A vocab with this translation word already exists. Please add context to clarify the difference.');
+      hasError = true;
+    }
     if (hasError) {
       setLoading(false);
       return;
@@ -574,24 +592,43 @@ const AddVocabModal: React.FC<IProps> = ({
                 color="#111827"
                 onPress={onCloseModal}
               />
-          
             </View>
             <View style={styles.suggestion}>
-                            <View style={{ marginBottom: 6, alignItems: 'center', flexDirection: 'row', height: 20 }}>
-                                <MaterialCommunityIcons name="lightbulb-on" size={15} color="#496277" />
-                                <Text style={[styles.suggestionText, { marginLeft: 5, marginTop: 3 }]}>Suggestion</Text>
-                            </View>
-                            <Text style={styles.suggestionText}>A vocabulary item can be a word, a phrase, or a complete sentence. Remember to provide context for duplicate vocabulary items, this helps learners differentiate between similar terms!</Text>
-                        </View>
+              <View
+                style={{
+                  marginBottom: 6,
+                  alignItems: 'center',
+                  flexDirection: 'row',
+                  height: 20,
+                }}>
+                <MaterialCommunityIcons
+                  name="lightbulb-on"
+                  size={15}
+                  color="#496277"
+                />
+                <Text
+                  style={[
+                    styles.suggestionText,
+                    {marginLeft: 5, marginTop: 3},
+                  ]}>
+                  Suggestion
+                </Text>
+              </View>
+              <Text style={styles.suggestionText}>
+                A vocabulary item can be a word, a phrase, or a complete
+                sentence. Remember to provide context for duplicate vocabulary
+                items, this helps learners differentiate between similar terms!
+              </Text>
+            </View>
             <CustomInput
               label={`${course.details.name}*`}
               value={original}
               errorText={originalError}
               onChangeText={(text: string) => setOriginal(text)}
             />
-             {duplicateError.length > 0 && (
-             <Text style={styles.errorText}>{duplicateError}</Text>
-             )}
+            {duplicateOriginalError && (
+              <Text style={styles.errorText}>{duplicateOriginalError}</Text>
+            )}
             {/* AudioRecordBox:: The AudioRecordBox deals with uploading and recording of Audio */}
             <AudioRecordBox
               pickedAudio={pickedAudio}
@@ -614,18 +651,19 @@ const AddVocabModal: React.FC<IProps> = ({
               onStopRecord={onStopRecord}
               selectingAudio={selectingAudio}
             />
-            {
-              audioError.length > 0
-              &&
+            {audioError.length > 0 && (
               <Text style={styles.errorText}>{audioError}</Text>
-            }
-          
+            )}
+
             <CustomInput
               label={`${course.details.translated_language}*`}
               value={translation}
               errorText={translationError}
               onChangeText={(text: string) => setTranslation(text)}
             />
+            {duplicateTranslationError && (
+              <Text style={styles.errorText}>{'A vocab with this translation word already exists. Please add context to clarify the difference.'}</Text>
+            )}
             <CustomInput
               label="Context"
               subLabel="Use this space to give additional information about the Vocab Item, such as grammatical and cultural information, usage, or additional translations/meanings."
@@ -652,11 +690,9 @@ const AddVocabModal: React.FC<IProps> = ({
                 <Text style={styles.addImageText}>Add Image</Text>
               </TouchableOpacity>
             )}
-            {
-              imageError.length > 0
-              &&
+            {imageError.length > 0 && (
               <Text style={styles.errorText}>{imageError}</Text>
-            }
+            )}
             {loading ? (
               <ActivityIndicator
                 style={{alignSelf: 'center'}}
@@ -664,7 +700,11 @@ const AddVocabModal: React.FC<IProps> = ({
                 color={PRIMARY_COLOR}
               />
             ) : (
-              <PrimaryBtn style={{ marginTop: 30 }} label="Add Item" onPress={addItem} />
+              <PrimaryBtn
+                style={{marginTop: 30}}
+                label="Add Item"
+                onPress={addItem}
+              />
             )}
           </View>
         </ScrollView>

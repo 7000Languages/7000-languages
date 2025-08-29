@@ -1,6 +1,5 @@
 import RNFS from "react-native-fs"
 import { PermissionsAndroid, Platform } from "react-native";
-import { ActivityLevelType } from "../@types";
 
 /**
  * This function is responsible for taking in an array 
@@ -30,7 +29,6 @@ export const hasEmoji = (text: string): boolean => {
     /[\p{Extended_Pictographic}\u{1F3FB}-\u{1F3FF}\u{1F9B0}-\u{1F9B3}]/u;
   return regex_emoji.test(text);
 };
-
 
 export const formatAudioDuration = (seconds: number): string => {
   let calMinutes = Math.floor(seconds / 60);

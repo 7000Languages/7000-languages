@@ -21,6 +21,7 @@ import { PRIMARY_COLOR } from "../../../constants/colors";
 import { LessonType } from "../../../@types";
 import { convertToArrayOfPlainObject, convertToPlainObject } from "../../../utils/helpers";
 import { realmContext } from "../../../realm/realm";
+import Unit from "../../../realm/schemas/Unit";
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, "ContributorUnit">;
 

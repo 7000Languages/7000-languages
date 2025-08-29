@@ -131,7 +131,7 @@ const Login = () => {
 
       try {
       } catch (error) {
-        // //console.log("Error: ", error);
+        //console.log("Error: ", error);
       }
 
       setQuote(getRandomQuote());
@@ -155,7 +155,7 @@ const Login = () => {
         // //console.log("Error: ", error);
       }
     } catch (error: any) {
-      //console.log("Message___", error.message);
+      console.log("Message___", error);
       setLoading(false);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // //console.log("User cancelled Login Flow");

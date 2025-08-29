@@ -1,4 +1,4 @@
-package com.languages7000.app;
+package com.languages.app;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

@@ -164,6 +164,7 @@ const EditVocab: React.FC<IProps> = ({
   const {useObject} = realmContext;
 
   const getVocab: any = useObject('vocabs', new BSON.ObjectId(vocab?._id));
+  const vocabsToClearActivitiesArray = vocabs.filtered("_lesson_id == $0", vocab?._lesson_id)
 
   // animations
   const scale = useSharedValue(0);
@@ -512,7 +513,8 @@ const EditVocab: React.FC<IProps> = ({
     // setLoading(true);
     let hasError = false;
 
-    let activityLevelsToDelete = activityLevels.filtered("ANY vocabs_used_to_generate == $0", getVocab._id.toString())
+    let activityLevelsToDelete = activityLevels
+    .filtered("ANY vocabs_used_to_generate == $0", getVocab._id.toString())
     
     if((pickedAudio.uri.length <= 0 && recordedAudio.uri.length <= 0) && !audio)
     {
@@ -656,12 +658,19 @@ const EditVocab: React.FC<IProps> = ({
 
     realm.write(() => {
       for (let activityLevel of activityLevelsToDelete) {
-        console.log('deletion ongoing');
+        // console.log('deletion ongoing');
         realm.delete(activityLevel);
       }
     });
 
-    // This is just to clear out all activities of all vocabs when testing
+    // This is just to clear out all activities of all vocabs in the lesson of the edited vocab
+    realm.write(() => {
+      for (let vocab of vocabsToClearActivitiesArray) {
+        vocab.activities = []
+      }
+    });
+
+     // This is just to clear out all activities of all vocabs when testing
     // realm.write(() => {
     //   for (let vocab of vocabs) {
     //     vocab.activities = []

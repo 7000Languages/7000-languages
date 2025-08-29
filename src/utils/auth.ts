@@ -4,7 +4,7 @@ import { Platform } from "react-native";
 // The redirect uri must contain the iOS bundle identifier or android package name.
 const scheme =
   Platform.OS === "android"
-    ? "com.languages7000.app://"
+    ? "com.languages.app://"
     : "com.7000languages.app://";
 
 // Set the redirectUri - this is neccessary for AuthSession.exchangeCodeAsync();

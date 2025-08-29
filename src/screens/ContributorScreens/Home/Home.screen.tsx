@@ -33,6 +33,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import Lesson from '../../../realm/schemas/Lesson';
 import Vocab from '../../../realm/schemas/Vocab';
 import { JoinedCourse } from '../../../realm/schemas';
+import { useUser } from '@realm/react';
 
 const {useRealm, useQuery, useObject} = realmContext;
 
@@ -49,6 +50,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
 
   // redux states
   const user: UserType = useAppSelector(state => state.auth.user);
+  const userFromRealm: any = useObject('users', new BSON.ObjectId(user._id))!  
 
   const userGoogleInfo = useAppSelector(state => state.auth.userGoogleInfo);
   const {i18n} = useAppSelector(state => state.locale);
@@ -123,8 +125,8 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const getUnitsNotDownloaded = (unitsDownloaded: any) => {    
     let unitsNotDownloaded = allUnits.filter(
       unit =>
-        (user.adminLanguages.includes(unit._course_id) ||
-          user.learnerLanguages.includes(unit._course_id)) &&
+        (convertToPlainObject(userFromRealm).adminLanguages.includes(unit._course_id) ||
+      convertToPlainObject(userFromRealm).learnerLanguages.includes(unit._course_id)) &&
         !unitsDownloaded
           .map((u: any) => u._id.toString())
           .includes(unit._id.toString()),
@@ -138,10 +140,10 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const getLessonsNotDownloaded = (lessonsDownloaded: any) => {
     let lessonsNotDownloaded: any = allLessons.filter(
       (lesson: any) =>
-        (convertToPlainObject(user).adminLanguages.includes(
+        (convertToPlainObject(userFromRealm).adminLanguages.includes(
           lesson._course_id,
         ) ||
-          convertToPlainObject(user).learnerLanguages.includes(
+          convertToPlainObject(userFromRealm).learnerLanguages.includes(
             lesson._course_id,
           ))
         &&
@@ -155,10 +157,10 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const getVocabImagesNotDownloaded = (vocabImagesNotDownloaded: any) => {
     let vocabsNotDownloaded: any = allVocabsWithImage.filter(
       (vocab: any) =>
-        ((user).adminLanguages.includes(
+        (convertToPlainObject(userFromRealm).adminLanguages.includes(
           vocab._course_id,
         ) ||
-          (user).learnerLanguages.includes(
+        convertToPlainObject(userFromRealm).learnerLanguages.includes(
             vocab._course_id,
           ))
         &&
@@ -172,10 +174,10 @@ const Home: React.FC<NavProps> = ({navigation}) => {
   const getVocabAudiosNotDownloaded = (vocabAudiosNotDownloaded: any) => {
     let vocabsNotDownloaded: any = allVocabsWithAudio.filter(
       (vocab: any) =>
-        ((user).adminLanguages.includes(
+        (convertToPlainObject(userFromRealm).adminLanguages.includes(
           vocab._course_id,
         ) ||
-          (user).learnerLanguages.includes(
+        convertToPlainObject(userFromRealm).learnerLanguages.includes(
             vocab._course_id,
           ))
         &&
@@ -191,6 +193,8 @@ const Home: React.FC<NavProps> = ({navigation}) => {
     let unitsDownloaded: any = []
     try {
       const downloadedUnits = await getValueFor('downloadedUnits');
+      // console.log("downloadedUnits", downloadedUnits);
+      
       if (!downloadedUnits) {
         // console.log("It's null");
         unitsDownloaded = [];
@@ -276,7 +280,7 @@ const Home: React.FC<NavProps> = ({navigation}) => {
         `${baseDirectory}/${unitWithLocalFiles.local_image_path}`,
       );
       let file = response[0];
-      // //console.log(response);
+      console.log(response);
 
       let dataToUpload = {
         fileName,

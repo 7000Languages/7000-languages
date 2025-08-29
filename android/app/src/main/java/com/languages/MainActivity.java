@@ -1,4 +1,4 @@
-package com.languages7000.app;
+package com.languages.app;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

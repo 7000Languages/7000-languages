@@ -1,3 +1,5 @@
+import { BSON } from "realm";
+
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
@@ -16,7 +18,7 @@ import { RootState, useAppSelector } from "../../../redux/store";
 import { CourseType } from "../../../@types";
 import Course from "../../../realm/schemas/Course";
 
-const { useRealm } = realmContext
+const { useRealm, useObject } = realmContext
 
 type NavProps = NativeStackScreenProps<CourseStackParamList, 'BecomeContributor'>
 
@@ -71,7 +73,8 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
   const realm = useRealm()
   const user = useUser()
   const userData: any = useAppSelector((state: RootState) => state.auth.user)
-  
+  const userToUpdate: any = useObject('users', new BSON.ObjectId(userData._id))!  
+
   const submit = () => {
 
     resetErrorStates()
@@ -87,10 +90,6 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
     }
     if(languageName.length < 3){
       setLanguageNameError('Language name should be at least 3 characters')
-      hasError = true
-    }
-    if(description.length < 20){
-      setDescriptionError('Description should be at least 20 characters')
       hasError = true
     }
     if(teachingLanguage.length < 3){
@@ -117,6 +116,7 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
     let newCourse!: CourseType & Realm.Object 
 
     realm.write(async() => {
+
       newCourse = realm.create('courses', {
         approved: false,
         admin_id: userData.authID,
@@ -134,7 +134,10 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
           is_private: true,
           code: isoCode,
         }
-      })
+      });
+
+      userToUpdate.adminLanguages.push(newCourse!._id.toString())
+
     })
 
     Toast.show({
@@ -143,6 +146,7 @@ const BecomeContributor:React.FC<NavProps> = ({ navigation }) => {
       visibilityTime: 6000,
       text2: `Your ${newCourse.details.name} course has been submitted for approval. We will get back to you in less than a week.`
     });
+
 
     resetStates()
     
